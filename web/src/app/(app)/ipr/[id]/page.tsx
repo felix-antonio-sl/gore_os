@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useParams, useRouter, usePathname } from "next/navigation";
+import { useTabParam } from "@/hooks/use-tab-param";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
-import { StatusBadge } from "@/components/status-badge";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,12 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, UserPlus, Pencil, CheckCircle2, ShieldCheck, ShieldX, ChevronRight, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import type { IprTransition, TrackInfo } from "@/types";
 import { WRITE_OPERATIONAL_ROLES } from "@/types";
-import { formatDate, formatCurrency } from "@/lib/format";
 import { TrackCard } from "../components/track-card";
+import { IprHeroCard } from "../components/ipr-hero-card";
+import { IprPhaseStepper } from "../components/ipr-phase-stepper";
+import { IprTransitionPanel } from "../components/ipr-transition-panel";
+import type { IprDetail } from "../components/ipr-constants";
 import { TabCompromisos } from "../components/tab-compromisos";
 import { TabProblemas } from "../components/tab-problemas";
 import { TabAlertas } from "../components/tab-alertas";
@@ -36,29 +39,8 @@ import { TabResoluciones } from "../components/tab-resoluciones";
 import { TabEvaluaciones } from "../components/tab-evaluaciones";
 import { TabParentesco } from "../components/tab-parentesco";
 import { TabAdmisibilidad } from "../components/tab-admisibilidad";
-
-interface IprDetail {
-  id: string;
-  codigo_bip: string;
-  name: string;
-  description?: string;
-  ipr_type?: string;
-  status?: string;
-  investment_sector?: string;
-  funding_source?: string;
-  fund_category?: string;
-  fund_category_label?: string;
-  mechanism?: string;
-  mechanism_label?: string;
-  mcd_phase?: string;
-  mcd_phase_label?: string;
-  alert_level?: string;
-  executor_name?: string;
-  formulator_name?: string;
-  total_budget?: number;
-  start_date?: string;
-  end_date?: string;
-}
+import { TabModificaciones } from "../components/tab-modificaciones";
+import { TabEvaluacionExpost } from "../components/tab-evaluacion-expost";
 
 interface UserOption {
   id: string;
@@ -67,46 +49,13 @@ interface UserOption {
   division_name: string | null;
 }
 
-const alertBorderMap: Record<string, string> = {
-  CRITICO: "border-l-red-600",
-  ALTO: "border-l-orange-500",
-  ATENCION: "border-l-amber-400",
-  INFO: "border-l-blue-500",
-};
-
-const mechanismColors: Record<string, string> = {
-  SNI: "bg-indigo-100 text-indigo-800 border-indigo-200",
-  C33: "bg-violet-100 text-violet-800 border-violet-200",
-  FRIL: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  GLOSA06: "bg-sky-100 text-sky-800 border-sky-200",
-  TRANSFER: "bg-amber-100 text-amber-800 border-amber-200",
-  SUBV8: "bg-rose-100 text-rose-800 border-rose-200",
-  FRPD: "bg-teal-100 text-teal-800 border-teal-200",
-};
-
-const mcdPhaseColors: Record<string, string> = {
-  F0: "bg-slate-100 text-slate-700 border-slate-200",
-  F1: "bg-blue-100 text-blue-700 border-blue-200",
-  F2: "bg-cyan-100 text-cyan-700 border-cyan-200",
-  F3: "bg-amber-100 text-amber-700 border-amber-200",
-  F4: "bg-green-100 text-green-700 border-green-200",
-  F5: "bg-gray-100 text-gray-700 border-gray-200",
-};
-
-const MCD_PHASES = [
-  { code: "F0", label: "Formulación" },
-  { code: "F1", label: "Admisibilidad" },
-  { code: "F2", label: "Evaluación" },
-  { code: "F3", label: "Priorización" },
-  { code: "F4", label: "Ejecución" },
-  { code: "F5", label: "Cierre" },
-];
-
-export default function IprDetailPage() {
+function IprDetailPageInner() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
   const id = params.id as string;
+  const [activeTab, setActiveTab] = useTabParam("tab", "compromisos");
 
   const [ipr, setIpr] = useState<IprDetail | null>(null);
   const [iprLoading, setIprLoading] = useState(true);
@@ -178,7 +127,6 @@ export default function IprDetailPage() {
     setTransError(null);
     try {
       await api.patch(`/api/ipr/${id}`, { status_id: selectedTransition });
-      // Refresh IPR data and transitions
       const updated = await api.get<IprDetail>(`/api/ipr/${id}`);
       setIpr(updated);
       setTransitions(null);
@@ -210,7 +158,6 @@ export default function IprDetailPage() {
       await api.patch(`/api/ipr/${id}`, { name: editName.trim() });
       setShowEdit(false);
       setRefreshKey((k) => k + 1);
-      // Refresh IPR data
       api.get<IprDetail>(`/api/ipr/${id}`).then(setIpr).catch(() => {});
     } catch (err) {
       setEditError(err instanceof Error ? err.message : "Error al actualizar IPR");
@@ -245,9 +192,6 @@ export default function IprDetailPage() {
     }
   };
 
-  const alertLevel = ipr?.alert_level;
-  const borderClass = alertLevel ? alertBorderMap[alertLevel] : "";
-
   if (iprLoading) {
     return (
       <div className="p-6 space-y-4">
@@ -271,232 +215,38 @@ export default function IprDetailPage() {
 
   return (
     <div className="p-6 space-y-4">
+      <Breadcrumb items={buildBreadcrumbs(pathname, ipr?.codigo_bip)} />
       <Button variant="ghost" size="sm" onClick={() => router.back()}>
         <ArrowLeft className="size-4 mr-2" />
         Volver a IPR
       </Button>
 
-      {/* Header card */}
-      <div
-        className={cn(
-          "rounded-xl border bg-card p-5 border-l-4",
-          borderClass || "border-l-border"
-        )}
-      >
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="font-mono text-xs text-muted-foreground">{ipr.codigo_bip}</span>
-              {ipr.ipr_type && (
-                <Badge variant="outline" className="text-xs">{ipr.ipr_type}</Badge>
-              )}
-              {ipr.status && <StatusBadge status={ipr.status} size="sm" />}
-            </div>
-            <h1 className="text-xl font-bold">{ipr.name}</h1>
-            {ipr.description && (
-              <p className="text-sm text-muted-foreground mt-1">{ipr.description}</p>
-            )}
-          </div>
-          <div className="flex flex-col items-end gap-2 shrink-0">
-            <div className="text-right">
-              <p className="text-2xl font-bold">{formatCurrency(ipr.total_budget)}</p>
-              <p className="text-xs text-muted-foreground">Presupuesto total</p>
-            </div>
-            <div className="flex gap-2">
-              {canEdit && (
-                <Button size="sm" variant="outline" onClick={openEditDrawer}>
-                  <Pencil className="size-4 mr-1" />
-                  Editar
-                </Button>
-              )}
-              {canAssign && (
-                <Button size="sm" variant="outline" onClick={openAssigneeDrawer}>
-                  <UserPlus className="size-4 mr-1" />
-                  Asignar Responsable
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-          {ipr.mechanism && (
-            <div className="flex items-center gap-1.5">
-              <span className="text-muted-foreground">Mecanismo:</span>
-              <Badge variant="outline" className={cn("text-xs", mechanismColors[ipr.mechanism])}>
-                {ipr.mechanism}
-              </Badge>
-              {ipr.mechanism_label && (
-                <span className="text-xs text-muted-foreground">{ipr.mechanism_label}</span>
-              )}
-            </div>
-          )}
-          {ipr.funding_source && (
-            <div className="flex items-center gap-1.5">
-              <span className="text-muted-foreground">Fuente:</span>
-              <span className="font-medium">{ipr.fund_category_label || ipr.funding_source}</span>
-            </div>
-          )}
-          {ipr.mcd_phase && (
-            <div className="flex items-center gap-1.5">
-              <span className="text-muted-foreground">Fase MCD:</span>
-              <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[ipr.mcd_phase])}>
-                {ipr.mcd_phase}
-              </Badge>
-              {ipr.mcd_phase_label && (
-                <span className="text-xs text-muted-foreground">{ipr.mcd_phase_label}</span>
-              )}
-            </div>
-          )}
-          {ipr.executor_name && (
-            <div>
-              <span className="text-muted-foreground">Ejecutor: </span>
-              <span className="font-medium">{ipr.executor_name}</span>
-            </div>
-          )}
-          {ipr.investment_sector && (
-            <div>
-              <span className="text-muted-foreground">Sector: </span>
-              <span className="font-medium">{ipr.investment_sector}</span>
-            </div>
-          )}
-          {ipr.start_date && (
-            <div>
-              <span className="text-muted-foreground">Inicio: </span>
-              <span className="font-medium">{formatDate(ipr.start_date)}</span>
-            </div>
-          )}
-          {ipr.end_date && (
-            <div>
-              <span className="text-muted-foreground">Termino: </span>
-              <span className="font-medium">{formatDate(ipr.end_date)}</span>
-            </div>
-          )}
-        </div>
-      </div>
+      <IprHeroCard
+        ipr={ipr}
+        canEdit={!!canEdit}
+        canAssign={!!canAssign}
+        onEdit={openEditDrawer}
+        onAssign={openAssigneeDrawer}
+      />
 
-      {/* Phase Stepper */}
       {ipr.mcd_phase && (
-        <div className="rounded-xl border bg-card p-4">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-medium text-muted-foreground">Ciclo de Vida MCD</h3>
-            {ipr.mcd_phase && (
-              <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[ipr.mcd_phase])}>
-                {ipr.mcd_phase} — {ipr.mcd_phase_label}
-              </Badge>
-            )}
-          </div>
-          <div className="flex items-center gap-0">
-            {MCD_PHASES.map((phase, idx) => {
-              const currentIdx = MCD_PHASES.findIndex(p => p.code === ipr.mcd_phase);
-              const isActive = idx === currentIdx;
-              const isPast = idx < currentIdx;
-              return (
-                <div key={phase.code} className="flex items-center flex-1 min-w-0">
-                  <div className="flex flex-col items-center flex-1">
-                    <div
-                      className={cn(
-                        "size-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors",
-                        isActive && "bg-primary text-primary-foreground border-primary",
-                        isPast && "bg-primary/20 text-primary border-primary/40",
-                        !isActive && !isPast && "bg-muted text-muted-foreground border-border",
-                      )}
-                    >
-                      {isPast ? <CheckCircle2 className="size-4" /> : phase.code}
-                    </div>
-                    <span className={cn(
-                      "text-[10px] mt-1 text-center leading-tight",
-                      isActive ? "font-semibold text-foreground" : "text-muted-foreground",
-                    )}>
-                      {phase.label}
-                    </span>
-                  </div>
-                  {idx < MCD_PHASES.length - 1 && (
-                    <div className={cn(
-                      "h-0.5 flex-1 min-w-2",
-                      idx < currentIdx ? "bg-primary/40" : "bg-border",
-                    )} />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <IprPhaseStepper
+          currentPhase={ipr.mcd_phase}
+          currentPhaseLabel={ipr.mcd_phase_label}
+        />
       )}
 
-      {/* Transition Section */}
-      {canTransition && transitions && transitions.length > 0 && (
-        <div className="rounded-xl border bg-card p-4">
-          <h3 className="text-sm font-medium mb-3">Avanzar Estado</h3>
-          <div className="flex items-end gap-3 flex-wrap">
-            <div className="flex-1 min-w-[200px]">
-              <Select value={selectedTransition} onValueChange={setSelectedTransition}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Seleccionar estado destino..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {transitions.map((t) => (
-                    <SelectItem key={t.id} value={t.id} disabled={t.blocked}>
-                      <span className="flex items-center gap-2">
-                        <span>{t.label}</span>
-                        {t.target_phase && (
-                          <Badge variant="outline" className={cn("text-[10px] py-0", mcdPhaseColors[t.target_phase] || "")}>
-                            {t.target_phase}
-                          </Badge>
-                        )}
-                        {t.phase_change && !t.blocked && (
-                          <ChevronRight className="size-3 text-green-600" />
-                        )}
-                        {t.blocked && (
-                          <ShieldX className="size-3 text-red-500" />
-                        )}
-                      </span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <Button
-              size="sm"
-              disabled={!selectedTransition || transSubmitting}
-              onClick={handleTransition}
-            >
-              {transSubmitting && <Loader2 className="size-4 mr-1 animate-spin" />}
-              Transicionar
-            </Button>
-          </div>
-          {/* Gate details for selected transition */}
-          {selectedTransition && (() => {
-            const sel = transitions.find(t => t.id === selectedTransition);
-            if (!sel || sel.gates.length === 0) return null;
-            return (
-              <div className="mt-3 space-y-1">
-                <p className="text-xs font-medium text-muted-foreground">
-                  Gates para {ipr.mcd_phase} → {sel.target_phase}:
-                </p>
-                {sel.gates.map((g) => (
-                  <div key={g.name} className="flex items-center gap-2 text-xs">
-                    {g.met ? (
-                      <ShieldCheck className="size-3.5 text-green-600 shrink-0" />
-                    ) : (
-                      <ShieldX className="size-3.5 text-red-500 shrink-0" />
-                    )}
-                    <span className={g.met ? "text-muted-foreground" : "text-red-600 font-medium"}>
-                      {g.detail}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-          {transError && (
-            <p className="text-xs text-red-600 mt-2">{transError}</p>
-          )}
-        </div>
-      )}
-      {canTransition && transLoading && (
-        <div className="rounded-xl border bg-card p-4">
-          <div className="h-8 rounded bg-muted animate-pulse" />
-        </div>
+      {canTransition && (
+        <IprTransitionPanel
+          transitions={transitions ?? []}
+          loading={transLoading}
+          selectedTransition={selectedTransition}
+          onSelectTransition={setSelectedTransition}
+          submitting={transSubmitting}
+          onTransition={handleTransition}
+          error={transError}
+          currentPhase={ipr.mcd_phase}
+        />
       )}
 
       {/* Track Card (Poly-Switch) */}
@@ -505,7 +255,7 @@ export default function IprDetailPage() {
       )}
 
       {/* Tabs */}
-      <Tabs defaultValue="compromisos">
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="flex-wrap">
           <TabsTrigger value="compromisos">Compromisos</TabsTrigger>
           <TabsTrigger value="problemas">Problemas</TabsTrigger>
@@ -520,6 +270,8 @@ export default function IprDetailPage() {
           <TabsTrigger value="evaluaciones">Evaluación</TabsTrigger>
           <TabsTrigger value="parentesco">Parentesco</TabsTrigger>
           <TabsTrigger value="admisibilidad">Admisibilidad</TabsTrigger>
+          <TabsTrigger value="modificaciones">Modificaciones</TabsTrigger>
+          <TabsTrigger value="evaluacion-expost">Ex-Post</TabsTrigger>
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">
@@ -572,6 +324,14 @@ export default function IprDetailPage() {
 
         <TabsContent value="admisibilidad" className="mt-4">
           <TabAdmisibilidad key={refreshKey} iprId={id} canManage={!!canManageChildren} />
+        </TabsContent>
+
+        <TabsContent value="modificaciones" className="mt-4">
+          <TabModificaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} />
+        </TabsContent>
+
+        <TabsContent value="evaluacion-expost" className="mt-4">
+          <TabEvaluacionExpost key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
       </Tabs>
 
@@ -654,5 +414,13 @@ export default function IprDetailPage() {
       </DrawerPanel>
 
     </div>
+  );
+}
+
+export default function IprDetailPage() {
+  return (
+    <Suspense>
+      <IprDetailPageInner />
+    </Suspense>
   );
 }

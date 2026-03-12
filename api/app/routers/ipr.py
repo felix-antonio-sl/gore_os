@@ -1,16 +1,16 @@
 import json
 import math
-from datetime import timedelta
+from datetime import date, timedelta
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from typing import Optional
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.security import OPERATIONAL_ROLES, DGI_ROLES, WRITE_OPERATIONAL_ROLES
 from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate, TrackInfo
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
@@ -18,6 +18,7 @@ from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
 from app.schemas.ipr_milestone import IprMilestoneCreate, IprMilestoneUpdate, IprMilestoneItem
 from app.schemas.evaluation import EvaluationAssignmentCreate, EvaluationAssignmentUpdate, EvaluationAssignmentItem
 from app.schemas.kinship import KinshipDeclarationCreate, KinshipDeclarationItem, KinshipDeclarationValidate
+from app.schemas.ipr_modification import IprModificationCreate, IprModificationUpdate, IprModificationItem
 from app.schemas.common import PaginatedResponse
 from app.routers.presupuesto import check_glosa_rules, check_glosa07_transfer_limits
 
@@ -51,11 +52,13 @@ STATUS_PHASE_FIBER: dict[str, str] = {
     # F4: Formalización & Ejecución
     "EN_FORMALIZACION": "F4", "FORMALIZADO": "F4",
     "EN_EJECUCION": "F4", "EN_LICITACION": "F4",
-    "ADJUDICADO": "F4", "EN_OBRA": "F4",
+    "ADJUDICADO": "F4", "CONTRATO_FIRMADO": "F4", "EN_OBRA": "F4",
     "RECEPCION_PROVISORIA": "F4", "RECEPCION_DEFINITIVA": "F4",
     "SUSPENDIDO": "F4",
     # F5: Cierre
-    "EN_RENDICION": "F5", "CERRADO": "F5",
+    "EN_RENDICION": "F5", "RENDICION_APROBADA": "F5",
+    "EN_CIERRE_ADMINISTRATIVO": "F5", "CERRADO": "F5",
+    "TERMINADO_ANTICIPADAMENTE": "F5",
 }
 
 _PHASE_ORDER = {"F0": 0, "F1": 1, "F2": 2, "F3": 3, "F4": 4, "F5": 5}
@@ -1454,6 +1457,16 @@ async def _evaluate_phase_gates(
         track_gates = await _check_track_amount_gates(ipr_id, mechanism_code, "F2->F3", db)
         gates.extend(track_gates)
 
+        # Informational: evaluation SLA check
+        eval_sla = await _check_evaluation_sla(ipr_id, db)
+        if eval_sla is not None:
+            gates.append(eval_sla)
+
+        # Informational: Gobernador delegation
+        deleg_gate = await _check_gobernador_delegation(ipr_id, db)
+        if deleg_gate is not None:
+            gates.append(deleg_gate)
+
         # HΩ-12: Evaluation type match warning
         eval_match = await _check_evaluation_type_match(ipr_id, db)
         if eval_match is not None:
@@ -1582,7 +1595,150 @@ async def _evaluate_phase_gates(
         if morosos_gate_f45 is not None:
             gates.append(morosos_gate_f45)
 
+        # Informational: pending modifications
+        pending_mods = (await db.execute(
+            text("""
+                SELECT COUNT(*) FROM core.ipr_modification m
+                JOIN ref.category ms ON ms.id = m.status_id
+                WHERE m.ipr_id = :id AND m.deleted_at IS NULL
+                  AND ms.code IN ('SOLICITADA', 'EN_REVISION')
+            """),
+            {"id": str(ipr_id)},
+        )).scalar() or 0
+        if pending_mods > 0:
+            gates.append({
+                "name": "pending_modifications",
+                "met": True,
+                "detail": f"Advertencia: {pending_mods} modificación(es) pendiente(s) de resolución (informativo)",
+            })
+
+        # Informational: report periodicity compliance
+        report_gate = await _check_report_periodicity(ipr_id, db)
+        if report_gate is not None:
+            gates.append(report_gate)
+
     return gates
+
+
+async def _check_report_periodicity(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """Check if progress reports are overdue per financing track SLA."""
+    row = (await db.execute(
+        text("""
+            SELECT ft.sla_days, ft.label AS track_label
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.id = :id
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or not row["sla_days"]:
+        return None
+    sla_days = row["sla_days"]
+    freq = sla_days.get("report_frequency_days")
+    if not freq:
+        return None
+
+    # Get last report date
+    last_report = (await db.execute(
+        text("""
+            SELECT MAX(report_date) AS last_date
+            FROM core.progress_report
+            WHERE ipr_id = :id AND deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    last_date = last_report["last_date"] if last_report else None
+
+    if last_date is None:
+        return {
+            "name": "report_periodicity",
+            "met": True,
+            "detail": f"Advertencia: sin informes de avance registrados. Periodicidad requerida: cada {freq} días ({row['track_label']}) (informativo)",
+        }
+
+    from datetime import date as dt_date
+    today = dt_date.today()
+    days_since = (today - last_date).days if isinstance(last_date, dt_date) else 0
+    overdue = days_since > freq
+    return {
+        "name": "report_periodicity",
+        "met": True,
+        "detail": (
+            f"{'Advertencia: informe de avance vencido' if overdue else 'Periodicidad OK'}: "
+            f"último informe hace {days_since} días, frecuencia {freq}d ({row['track_label']}) (informativo)"
+        ),
+    }
+
+
+async def _check_evaluation_sla(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """Informational: check if IPR evaluation duration exceeds track SLA."""
+    row = (await db.execute(
+        text("""
+            SELECT i.phase_entered_at, ft.sla_days, ft.label AS track_label,
+                   s.code AS status_code
+            FROM core.ipr i
+            JOIN ref.category s ON s.id = i.status_id
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.id = :id
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or not row["sla_days"] or not row["phase_entered_at"]:
+        return None
+    max_days = row["sla_days"].get("evaluation_max_days")
+    if not max_days:
+        return None
+    # Only relevant if currently in evaluation phase
+    if row["status_code"] not in ("EN_EVALUACION", "RS", "FI", "FC", "OT", "AD", "RF", "ITF", "AT"):
+        return None
+    from datetime import datetime, timezone
+    entered = row["phase_entered_at"]
+    if entered.tzinfo is None:
+        entered = entered.replace(tzinfo=timezone.utc)
+    days_in = (datetime.now(timezone.utc) - entered).days
+    overdue = days_in > max_days
+    return {
+        "name": "evaluation_sla",
+        "met": True,
+        "detail": (
+            f"{'Advertencia: evaluación excede plazo SLA' if overdue else 'SLA evaluación OK'}: "
+            f"{days_in} días (máx {max_days}d, track: {row['track_label']}) (informativo)"
+        ),
+    }
+
+
+async def _check_gobernador_delegation(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """Informational: check if IPR amount triggers CORE approval or Gobernador delegation."""
+    row = (await db.execute(
+        text("""
+            SELECT i.metadata->>'monto_total' AS monto
+            FROM core.ipr i WHERE i.id = :id
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or not row["monto"]:
+        return None
+    try:
+        monto = float(row["monto"])
+    except (ValueError, TypeError):
+        return None
+    utm = await _get_utm_value(db)
+    threshold = await _get_threshold("CORE_UTM", db)
+    core_utm = int(threshold["value_utm"]) if threshold else 7000
+    monto_utm = monto / utm if utm > 0 else 0
+    if monto_utm > core_utm:
+        return {
+            "name": "gobernador_delegation",
+            "met": True,
+            "detail": f"Monto {monto_utm:,.0f} UTM > {core_utm:,} UTM: requiere sesión CORE (informativo)",
+        }
+    return {
+        "name": "gobernador_delegation",
+        "met": True,
+        "detail": f"Monto {monto_utm:,.0f} UTM ≤ {core_utm:,} UTM: aprobación delegada al Gobernador (informativo)",
+    }
 
 
 def _require_roles(user: dict, *roles: str) -> None:
@@ -2098,8 +2254,8 @@ async def update_ipr(
             current_phase = STATUS_PHASE_FIBER.get(current_code)
             target_phase = STATUS_PHASE_FIBER.get(target_code)
 
-            # ANULADO: preserve current phase, no gates
-            if target_code != "ANULADO" and current_phase and target_phase and current_phase != target_phase:
+            # ANULADO / TERMINADO_ANTICIPADAMENTE: preserve current phase, no gates
+            if target_code not in ("ANULADO", "TERMINADO_ANTICIPADAMENTE") and current_phase and target_phase and current_phase != target_phase:
                 gates = await _evaluate_phase_gates(ipr_id, current_phase, target_phase, db)
                 failed = [g for g in gates if not g["met"]]
                 if failed:
@@ -2123,6 +2279,66 @@ async def update_ipr(
                 if not gate["met"]:
                     raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=gate["detail"])
 
+            # Nature-aware gates: bifurcación F4
+            if current_code == "EN_FORMALIZACION" and target_code == "EN_LICITACION":
+                nature = (await db.execute(
+                    text("SELECT ipr_nature FROM core.ipr WHERE id = :id"),
+                    {"id": str(ipr_id)},
+                )).scalar()
+                if nature != "PROYECTO":
+                    raise HTTPException(
+                        status_code=status.HTTP_409_CONFLICT,
+                        detail="Solo proyectos pueden avanzar a En Licitación",
+                    )
+
+            if current_code == "FORMALIZADO" and target_code == "EN_EJECUCION":
+                nature = (await db.execute(
+                    text("SELECT ipr_nature FROM core.ipr WHERE id = :id"),
+                    {"id": str(ipr_id)},
+                )).scalar()
+                if nature == "PROYECTO":
+                    raise HTTPException(
+                        status_code=status.HTTP_409_CONFLICT,
+                        detail="Proyectos deben ir a En Licitación, no directamente a Ejecución",
+                    )
+
+            # Custom gate: EN_LICITACION → ADJUDICADO requires ITO for PROYECTO
+            if current_code == "EN_LICITACION" and target_code == "ADJUDICADO":
+                nature = (await db.execute(
+                    text("SELECT ipr_nature FROM core.ipr WHERE id = :id"),
+                    {"id": str(ipr_id)},
+                )).scalar()
+                if nature == "PROYECTO":
+                    ito_count = (await db.execute(
+                        text("""
+                            SELECT COUNT(*) FROM core.ipr_party ip
+                            JOIN ref.category r ON r.id = ip.party_role_id
+                            WHERE ip.ipr_id = :id AND r.code = 'ITO' AND ip.deleted_at IS NULL
+                        """),
+                        {"id": str(ipr_id)},
+                    )).scalar() or 0
+                    if ito_count == 0:
+                        raise HTTPException(
+                            status_code=status.HTTP_409_CONFLICT,
+                            detail="Proyecto requiere ITO (Inspector Técnico de Obra) asignado antes de adjudicar",
+                        )
+
+            # Custom gate: EN_CIERRE_ADMINISTRATIVO → CERRADO requires signed closure
+            if current_code == "EN_CIERRE_ADMINISTRATIVO" and target_code == "CERRADO":
+                closure = (await db.execute(
+                    text("""
+                        SELECT signed_by_id, signed_at
+                        FROM core.ipr_closure
+                        WHERE ipr_id = :id
+                    """),
+                    {"id": str(ipr_id)},
+                )).mappings().first()
+                if not closure or not closure["signed_by_id"] or not closure["signed_at"]:
+                    raise HTTPException(
+                        status_code=status.HTTP_409_CONFLICT,
+                        detail="Cierre administrativo requiere acta de cierre firmada",
+                    )
+
     set_clauses = []
     params: dict = {"id": str(ipr_id), "user_id": str(user["id"])}
     for field, value in updates.items():
@@ -2139,8 +2355,14 @@ async def update_ipr(
     set_clauses.append("updated_at = NOW()")
 
     sql = text(f"UPDATE core.ipr SET {', '.join(set_clauses)} WHERE id = :id")
-    await db.execute(sql, params)
-    await db.commit()
+    try:
+        await db.execute(sql, params)
+        await db.commit()
+    except DBAPIError as e:
+        await db.rollback()
+        if "Transición de estado inválida" in str(e):
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e.orig))
+        raise
 
     return {"message": "IPR actualizado exitosamente"}
 
@@ -2159,7 +2381,7 @@ async def get_ipr_transitions(
     row = (await db.execute(
         text("""
             SELECT st.code AS current_code, st.valid_transitions,
-                   mcd.code AS current_phase
+                   mcd.code AS current_phase, i.ipr_nature
             FROM core.ipr i
             JOIN ref.category st ON st.id = i.status_id
             LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
@@ -2188,11 +2410,27 @@ async def get_ipr_transitions(
     )).mappings().all()
 
     current_code = row["current_code"]
+    ipr_nature = row["ipr_nature"]
+
+    # Nature-aware transition filter: hide inapplicable transitions
+    _NATURE_FILTER = {
+        # EN_FORMALIZACION: PROYECTO → EN_LICITACION, no-PROYECTO → FORMALIZADO
+        ("EN_FORMALIZACION", "EN_LICITACION"): lambda n: n == "PROYECTO",
+        ("EN_FORMALIZACION", "FORMALIZADO"): lambda n: n != "PROYECTO",
+        # FORMALIZADO → EN_EJECUCION: solo no-PROYECTO (PROYECTO va por licitación)
+        ("FORMALIZADO", "EN_EJECUCION"): lambda n: n != "PROYECTO",
+    }
+
     result = []
     for d in dests:
+        # Skip transitions not applicable to this IPR's nature
+        nature_check = _NATURE_FILTER.get((current_code, d["code"]))
+        if nature_check and not nature_check(ipr_nature):
+            continue
+
         target_phase = STATUS_PHASE_FIBER.get(d["code"])
         phase_change = (
-            d["code"] != "ANULADO"
+            d["code"] not in ("ANULADO", "TERMINADO_ANTICIPADAMENTE")
             and current_phase is not None
             and target_phase is not None
             and target_phase != current_phase
@@ -2205,6 +2443,36 @@ async def get_ipr_transitions(
         if current_code == "PRE_ADMISIBLE" and d["code"] == "ADMISIBLE":
             adm_gate = await _check_admissibility_checklist(str(ipr_id), db)
             gates.append(adm_gate)
+
+        # Custom gate: EN_LICITACION → ADJUDICADO requires ITO for PROYECTO
+        if current_code == "EN_LICITACION" and d["code"] == "ADJUDICADO":
+            if ipr_nature == "PROYECTO":
+                ito_count = (await db.execute(
+                    text("""
+                        SELECT COUNT(*) FROM core.ipr_party ip
+                        JOIN ref.category r ON r.id = ip.party_role_id
+                        WHERE ip.ipr_id = :id AND r.code = 'ITO' AND ip.deleted_at IS NULL
+                    """),
+                    {"id": str(ipr_id)},
+                )).scalar() or 0
+                gates.append({
+                    "name": "ito_assigned",
+                    "met": ito_count > 0,
+                    "detail": "Proyecto requiere ITO asignado" if ito_count == 0 else "ITO asignado",
+                })
+
+        # Custom gate: EN_CIERRE_ADMINISTRATIVO → CERRADO requires signed closure
+        if current_code == "EN_CIERRE_ADMINISTRATIVO" and d["code"] == "CERRADO":
+            closure = (await db.execute(
+                text("SELECT signed_by_id, signed_at FROM core.ipr_closure WHERE ipr_id = :id"),
+                {"id": str(ipr_id)},
+            )).mappings().first()
+            signed = bool(closure and closure["signed_by_id"] and closure["signed_at"])
+            gates.append({
+                "name": "closure_signed",
+                "met": signed,
+                "detail": "Acta de cierre debe estar firmada" if not signed else "Acta de cierre firmada",
+            })
 
         blocked = any(not g["met"] for g in gates)
         result.append({
@@ -3511,3 +3779,646 @@ async def resolver_certification(
         "resolved_by": resolver_name,
         "document_reference": doc_ref,
     }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/modificaciones — List modifications
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/modificaciones")
+async def list_modifications(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all formal modifications for an IPR."""
+    _require_roles(user, *OPERATIONAL_ROLES, *DGI_ROLES)
+
+    rows = (await db.execute(
+        text("""
+            SELECT m.id, m.code,
+                   mt.code AS modification_type_code, mt.label AS modification_type_label,
+                   ms.code AS status_code, ms.label AS status_label,
+                   m.description, m.justification,
+                   m.field_changed, m.old_value, m.new_value, m.amount_delta,
+                   CONCAT(req.names, ' ', req.paternal_surname) AS requested_by_name,
+                   CASE WHEN m.approved_by_id IS NOT NULL
+                        THEN CONCAT(appr.names, ' ', appr.paternal_surname)
+                        ELSE NULL END AS approved_by_name,
+                   m.approved_at, m.created_at
+            FROM core.ipr_modification m
+            JOIN ref.category mt ON mt.id = m.modification_type_id
+            JOIN ref.category ms ON ms.id = m.status_id
+            JOIN core."user" req_u ON req_u.id = m.requested_by_id
+            JOIN core.person req ON req.id = req_u.person_id
+            LEFT JOIN core."user" appr_u ON appr_u.id = m.approved_by_id
+            LEFT JOIN core.person appr ON appr.id = appr_u.person_id
+            WHERE m.ipr_id = :ipr_id AND m.deleted_at IS NULL
+            ORDER BY m.created_at DESC
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().all()
+
+    return [dict(r) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/{id}/modificaciones — Create modification
+# ---------------------------------------------------------------------------
+
+@router.post("/{ipr_id}/modificaciones", status_code=status.HTTP_201_CREATED)
+async def create_modification(
+    ipr_id: UUID,
+    body: IprModificationCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create a formal modification request for an IPR."""
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
+
+    check = await db.execute(
+        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(ipr_id)},
+    )
+    if not check.first():
+        raise HTTPException(status_code=404, detail="IPR no encontrado")
+
+    # Get initial status (SOLICITADA)
+    status_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'modification_status' AND code = 'SOLICITADA'"),
+    )).scalar()
+    if not status_id:
+        raise HTTPException(status_code=500, detail="modification_status SOLICITADA no encontrado")
+
+    # Advisory-locked code generation
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('mod_code'))"))
+    from datetime import date as dt_date
+    year = dt_date.today().year
+    seq = (await db.execute(
+        text("""
+            SELECT COALESCE(MAX(CAST(SUBSTRING(code FROM '[0-9]+$') AS INT)), 0) + 1
+            FROM core.ipr_modification
+            WHERE code LIKE :prefix
+        """),
+        {"prefix": f"MOD-{year}-%"},
+    )).scalar() or 1
+    code = f"MOD-{year}-{seq:04d}"
+
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.ipr_modification (
+                ipr_id, code, modification_type_id, status_id,
+                description, justification, field_changed,
+                old_value, new_value, amount_delta,
+                requested_by_id, created_at, updated_at
+            ) VALUES (
+                CAST(:ipr_id AS uuid), :code,
+                CAST(:type_id AS uuid), CAST(:status_id AS uuid),
+                :description, :justification, :field_changed,
+                :old_value, :new_value, :amount_delta,
+                CAST(:user_id AS uuid), NOW(), NOW()
+            )
+            RETURNING id, code
+        """),
+        {
+            "ipr_id": str(ipr_id), "code": code,
+            "type_id": str(body.modification_type_id),
+            "status_id": str(status_id),
+            "description": body.description,
+            "justification": body.justification,
+            "field_changed": body.field_changed,
+            "old_value": body.old_value,
+            "new_value": body.new_value,
+            "amount_delta": body.amount_delta,
+            "user_id": str(user["id"]),
+        },
+    )).mappings().first()
+    await db.commit()
+
+    return {"id": str(row["id"]), "code": row["code"]}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/ipr/{id}/modificaciones/{mod_id} — Update modification status
+# ---------------------------------------------------------------------------
+
+_MOD_FIELD_ALLOWLIST = {"status_id": "status_id", "description": "description", "justification": "justification"}
+
+@router.patch("/{ipr_id}/modificaciones/{mod_id}")
+async def update_modification(
+    ipr_id: UUID,
+    mod_id: UUID,
+    body: IprModificationUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update a modification (status transitions, description edits)."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+
+    check = (await db.execute(
+        text("SELECT id FROM core.ipr_modification WHERE id = :id AND ipr_id = :ipr_id AND deleted_at IS NULL"),
+        {"id": str(mod_id), "ipr_id": str(ipr_id)},
+    )).first()
+    if not check:
+        raise HTTPException(status_code=404, detail="Modificación no encontrada")
+
+    updates = body.model_dump(exclude_none=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    set_clauses = []
+    params: dict = {"id": str(mod_id)}
+    for field, value in updates.items():
+        col = _MOD_FIELD_ALLOWLIST.get(field)
+        if col is None:
+            continue
+        set_clauses.append(f"{col} = :{field}")
+        params[field] = str(value) if value is not None else None
+
+    # If status changes to APROBADA/RECHAZADA, record approver
+    if "status_id" in updates:
+        new_status_code = (await db.execute(
+            text("SELECT code FROM ref.category WHERE id = CAST(:sid AS uuid)"),
+            {"sid": str(updates["status_id"])},
+        )).scalar()
+        if new_status_code in ("APROBADA", "RECHAZADA"):
+            set_clauses.append("approved_by_id = CAST(:approver AS uuid)")
+            set_clauses.append("approved_at = NOW()")
+            params["approver"] = str(user["id"])
+
+    if not set_clauses:
+        return {"message": "Sin cambios válidos"}
+
+    set_clauses.append("updated_at = NOW()")
+    sql = text(f"UPDATE core.ipr_modification SET {', '.join(set_clauses)} WHERE id = CAST(:id AS uuid)")
+    try:
+        await db.execute(sql, params)
+        await db.commit()
+    except DBAPIError as e:
+        await db.rollback()
+        if "Transición de estado inválida" in str(e):
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e.orig))
+        raise
+
+    return {"message": "Modificación actualizada"}
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/check-report-compliance — Batch check report periodicity
+# ---------------------------------------------------------------------------
+
+@router.post("/check-report-compliance")
+async def check_report_compliance(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Scan IPRs in F4 execution states and create alerts for overdue reports."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    # IPRs in execution states
+    iprs = (await db.execute(
+        text("""
+            SELECT i.id, i.codigo_bip, i.name, s.code AS status_code,
+                   ft.sla_days, ft.label AS track_label,
+                   (SELECT MAX(pr.report_date) FROM core.progress_report pr
+                    WHERE pr.ipr_id = i.id AND pr.deleted_at IS NULL) AS last_report
+            FROM core.ipr i
+            JOIN ref.category s ON s.id = i.status_id
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.deleted_at IS NULL
+              AND s.code IN ('EN_EJECUCION', 'EN_OBRA', 'CONTRATO_FIRMADO')
+              AND ft.sla_days IS NOT NULL
+        """),
+    )).mappings().all()
+
+    from datetime import date as dt_date
+    today = dt_date.today()
+    alert_severity_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = 'ATENCION'"),
+    )).scalar()
+    alert_type_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_type' AND code = 'PLAZO_LEGAL'"),
+    )).scalar()
+    created = 0
+
+    for ipr in iprs:
+        sla = ipr["sla_days"] or {}
+        freq = sla.get("report_frequency_days")
+        if not freq:
+            continue
+
+        last_report = ipr["last_report"]
+        if last_report is None:
+            overdue = True
+        else:
+            days_since = (today - last_report).days if isinstance(last_report, dt_date) else 0
+            overdue = days_since > freq
+
+        if overdue:
+            # Check if alert already exists for this IPR today
+            existing = (await db.execute(
+                text("""
+                    SELECT id FROM core.alert
+                    WHERE subject_type = 'core.ipr' AND subject_id = CAST(:ipr_id AS uuid)
+                      AND message LIKE '%informe de avance vencido%'
+                      AND created_at::date = CURRENT_DATE
+                """),
+                {"ipr_id": str(ipr["id"])},
+            )).first()
+            if existing:
+                continue
+
+            await db.execute(
+                text("""
+                    INSERT INTO core.alert (
+                        alert_type_id, subject_type, subject_id, severity_id,
+                        message, created_by_id, created_at, updated_at
+                    ) VALUES (
+                        CAST(:alert_type AS uuid),
+                        'core.ipr', CAST(:ipr_id AS uuid), CAST(:sev AS uuid),
+                        :msg, CAST(:uid AS uuid), NOW(), NOW()
+                    )
+                """),
+                {
+                    "alert_type": str(alert_type_id),
+                    "ipr_id": str(ipr["id"]),
+                    "sev": str(alert_severity_id),
+                    "msg": f"Informe de avance vencido para {ipr['codigo_bip']} ({ipr['track_label']}). Periodicidad: cada {freq} días.",
+                    "uid": str(user["id"]),
+                },
+            )
+            created += 1
+
+    await db.commit()
+    return {"checked": len(iprs), "alerts_created": created}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/cierre — Get closure record
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/cierre")
+async def get_closure(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Get the closure record for an IPR."""
+    _require_roles(user, *OPERATIONAL_ROLES, *DGI_ROLES)
+    row = (await db.execute(
+        text("""
+            SELECT c.id, c.closure_date, c.closure_report,
+                   c.physical_completion, c.financial_completion,
+                   c.final_amount, c.signed_at, c.closure_act_id,
+                   CONCAT(sp.names, ' ', sp.paternal_surname) AS signed_by_name,
+                   CONCAT(cp.names, ' ', cp.paternal_surname) AS created_by_name,
+                   c.created_at
+            FROM core.ipr_closure c
+            LEFT JOIN core."user" su ON su.id = c.signed_by_id
+            LEFT JOIN core.person sp ON sp.id = su.person_id
+            JOIN core."user" cu ON cu.id = c.created_by_id
+            JOIN core.person cp ON cp.id = cu.person_id
+            WHERE c.ipr_id = :ipr_id
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().first()
+    if not row:
+        return None
+    return dict(row)
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/{id}/cierre — Create closure record
+# ---------------------------------------------------------------------------
+
+@router.post("/{ipr_id}/cierre", status_code=status.HTTP_201_CREATED)
+async def create_closure(
+    ipr_id: UUID,
+    body: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create a closure record for an IPR."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+
+    check = await db.execute(
+        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(ipr_id)},
+    )
+    if not check.first():
+        raise HTTPException(status_code=404, detail="IPR no encontrado")
+
+    # Check if closure already exists
+    existing = (await db.execute(
+        text("SELECT id FROM core.ipr_closure WHERE ipr_id = :id"),
+        {"id": str(ipr_id)},
+    )).first()
+    if existing:
+        raise HTTPException(status_code=409, detail="Ya existe un registro de cierre para este IPR")
+
+    closure_date_raw = body.get("closure_date")
+    closure_date_val = date.fromisoformat(closure_date_raw) if isinstance(closure_date_raw, str) else closure_date_raw
+
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.ipr_closure (
+                ipr_id, closure_date, closure_report,
+                physical_completion, financial_completion, final_amount,
+                created_by_id
+            ) VALUES (
+                CAST(:ipr_id AS uuid), :closure_date, :closure_report,
+                :physical, :financial, :amount,
+                CAST(:uid AS uuid)
+            )
+            RETURNING id
+        """),
+        {
+            "ipr_id": str(ipr_id),
+            "closure_date": closure_date_val,
+            "closure_report": body.get("closure_report"),
+            "physical": body.get("physical_completion"),
+            "financial": body.get("financial_completion"),
+            "amount": body.get("final_amount"),
+            "uid": str(user["id"]),
+        },
+    )).mappings().first()
+    await db.commit()
+    return {"id": str(row["id"]), "message": "Registro de cierre creado"}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/ipr/{id}/cierre — Update closure (sign)
+# ---------------------------------------------------------------------------
+
+@router.patch("/{ipr_id}/cierre")
+async def update_closure(
+    ipr_id: UUID,
+    body: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update closure record — sign, update completion percentages."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+
+    check = (await db.execute(
+        text("SELECT id FROM core.ipr_closure WHERE ipr_id = :id"),
+        {"id": str(ipr_id)},
+    )).first()
+    if not check:
+        raise HTTPException(status_code=404, detail="Registro de cierre no encontrado")
+
+    set_clauses = ["updated_at = NOW()"]
+    params: dict = {"ipr_id": str(ipr_id)}
+
+    allowed = {"closure_date", "closure_report", "physical_completion", "financial_completion", "final_amount", "closure_act_id"}
+    for key in allowed:
+        if key in body:
+            set_clauses.append(f"{key} = :{key}")
+            params[key] = str(body[key]) if body[key] is not None else None
+
+    # Handle signing
+    if body.get("sign"):
+        set_clauses.append("signed_by_id = CAST(:signer AS uuid)")
+        set_clauses.append("signed_at = NOW()")
+        params["signer"] = str(user["id"])
+
+    sql = text(f"UPDATE core.ipr_closure SET {', '.join(set_clauses)} WHERE ipr_id = CAST(:ipr_id AS uuid)")
+    await db.execute(sql, params)
+    await db.commit()
+    return {"message": "Registro de cierre actualizado"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/evaluacion-expost — List ex-post evaluations
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/evaluacion-expost")
+async def list_expost_evaluations(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List ex-post evaluations for an IPR."""
+    _require_roles(user, *OPERATIONAL_ROLES, *DGI_ROLES)
+
+    rows = (await db.execute(
+        text("""
+            SELECT e.id, e.evaluation_date,
+                   CONCAT(ep.names, ' ', ep.paternal_surname) AS evaluator_name,
+                   et.code AS eval_type_code, et.label AS eval_type_label,
+                   e.impact_score, e.sustainability_score,
+                   e.efficiency_score, e.effectiveness_score,
+                   r.code AS rating_code, r.label AS rating_label,
+                   e.findings, e.recommendations, e.lessons_learned,
+                   e.created_at
+            FROM core.ipr_expost_evaluation e
+            JOIN core."user" eu ON eu.id = e.evaluator_id
+            JOIN core.person ep ON ep.id = eu.person_id
+            JOIN ref.category et ON et.id = e.evaluation_type_id
+            LEFT JOIN ref.category r ON r.id = e.overall_rating_id
+            WHERE e.ipr_id = :ipr_id
+            ORDER BY e.evaluation_date DESC
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().all()
+
+    return [dict(r) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/{id}/evaluacion-expost — Create ex-post evaluation
+# ---------------------------------------------------------------------------
+
+@router.post("/{ipr_id}/evaluacion-expost", status_code=status.HTTP_201_CREATED)
+async def create_expost_evaluation(
+    ipr_id: UUID,
+    body: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create an ex-post evaluation for an IPR (only for CERRADO IPRs)."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    # Verify IPR exists and is CERRADO
+    ipr_row = (await db.execute(
+        text("""
+            SELECT s.code FROM core.ipr i
+            JOIN ref.category s ON s.id = i.status_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row:
+        raise HTTPException(status_code=404, detail="IPR no encontrado")
+    if ipr_row["code"] != "CERRADO":
+        raise HTTPException(status_code=409, detail="Evaluación ex-post solo disponible para IPRs cerrados")
+
+    eval_date_raw = body.get("evaluation_date")
+    eval_date_val = date.fromisoformat(eval_date_raw) if isinstance(eval_date_raw, str) else eval_date_raw
+
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.ipr_expost_evaluation (
+                ipr_id, evaluation_date, evaluator_id,
+                evaluation_type_id,
+                impact_score, sustainability_score,
+                efficiency_score, effectiveness_score,
+                overall_rating_id,
+                findings, recommendations, lessons_learned
+            ) VALUES (
+                CAST(:ipr_id AS uuid), :eval_date, CAST(:uid AS uuid),
+                CAST(:type_id AS uuid),
+                :impact, :sustainability, :efficiency, :effectiveness,
+                CAST(:rating_id AS uuid),
+                :findings, :recommendations, :lessons
+            )
+            RETURNING id
+        """),
+        {
+            "ipr_id": str(ipr_id),
+            "eval_date": eval_date_val,
+            "uid": str(user["id"]),
+            "type_id": body.get("evaluation_type_id"),
+            "impact": body.get("impact_score"),
+            "sustainability": body.get("sustainability_score"),
+            "efficiency": body.get("efficiency_score"),
+            "effectiveness": body.get("effectiveness_score"),
+            "rating_id": body.get("overall_rating_id"),
+            "findings": body.get("findings"),
+            "recommendations": body.get("recommendations"),
+            "lessons": body.get("lessons_learned"),
+        },
+    )).mappings().first()
+    await db.commit()
+    return {"id": str(row["id"]), "message": "Evaluación ex-post creada"}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/ipr/{id}/evaluacion-expost/{eval_id} — Update ex-post evaluation
+# ---------------------------------------------------------------------------
+
+@router.patch("/{ipr_id}/evaluacion-expost/{eval_id}")
+async def update_expost_evaluation(
+    ipr_id: UUID,
+    eval_id: UUID,
+    body: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update an ex-post evaluation."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    check = (await db.execute(
+        text("SELECT id FROM core.ipr_expost_evaluation WHERE id = :id AND ipr_id = :ipr_id"),
+        {"id": str(eval_id), "ipr_id": str(ipr_id)},
+    )).first()
+    if not check:
+        raise HTTPException(status_code=404, detail="Evaluación ex-post no encontrada")
+
+    allowed = {
+        "evaluation_date", "impact_score", "sustainability_score",
+        "efficiency_score", "effectiveness_score", "overall_rating_id",
+        "findings", "recommendations", "lessons_learned",
+    }
+    set_clauses = ["updated_at = NOW()"]
+    params: dict = {"id": str(eval_id)}
+    for key in allowed:
+        if key in body:
+            if key == "overall_rating_id":
+                set_clauses.append(f"{key} = CAST(:{key} AS uuid)")
+            else:
+                set_clauses.append(f"{key} = :{key}")
+            params[key] = body[key]
+
+    sql = text(f"UPDATE core.ipr_expost_evaluation SET {', '.join(set_clauses)} WHERE id = CAST(:id AS uuid)")
+    await db.execute(sql, params)
+    await db.commit()
+    return {"message": "Evaluación ex-post actualizada"}
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/check-evaluation-slas — Batch check evaluation SLA compliance
+# ---------------------------------------------------------------------------
+
+@router.post("/check-evaluation-slas")
+async def check_evaluation_slas(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Scan IPRs in evaluation states and create alerts for overdue evaluations."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    iprs = (await db.execute(
+        text("""
+            SELECT i.id, i.codigo_bip, i.name, i.phase_entered_at,
+                   s.code AS status_code, ft.sla_days, ft.label AS track_label
+            FROM core.ipr i
+            JOIN ref.category s ON s.id = i.status_id
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.deleted_at IS NULL
+              AND s.code IN ('EN_EVALUACION', 'RS', 'FI', 'FC', 'OT', 'AD', 'RF', 'ITF', 'AT')
+              AND i.phase_entered_at IS NOT NULL
+              AND ft.sla_days IS NOT NULL
+        """),
+    )).mappings().all()
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    alert_severity_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = 'ATENCION'"),
+    )).scalar()
+    alert_type_id_eval = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_type' AND code = 'PLAZO_LEGAL'"),
+    )).scalar()
+    created = 0
+
+    for ipr in iprs:
+        sla = ipr["sla_days"] or {}
+        max_days = sla.get("evaluation_max_days")
+        if not max_days:
+            continue
+
+        entered = ipr["phase_entered_at"]
+        if entered.tzinfo is None:
+            entered = entered.replace(tzinfo=timezone.utc)
+        days_in = (now - entered).days
+        if days_in <= max_days:
+            continue
+
+        existing = (await db.execute(
+            text("""
+                SELECT id FROM core.alert
+                WHERE subject_type = 'core.ipr' AND subject_id = CAST(:ipr_id AS uuid)
+                  AND message LIKE '%evaluación excede plazo%'
+                  AND created_at::date = CURRENT_DATE
+            """),
+            {"ipr_id": str(ipr["id"])},
+        )).first()
+        if existing:
+            continue
+
+        await db.execute(
+            text("""
+                INSERT INTO core.alert (
+                    alert_type_id, subject_type, subject_id, severity_id,
+                    message, created_by_id, created_at, updated_at
+                ) VALUES (
+                    CAST(:alert_type AS uuid),
+                    'core.ipr', CAST(:ipr_id AS uuid), CAST(:sev AS uuid),
+                    :msg, CAST(:uid AS uuid), NOW(), NOW()
+                )
+            """),
+            {
+                "alert_type": str(alert_type_id_eval),
+                "ipr_id": str(ipr["id"]),
+                "sev": str(alert_severity_id),
+                "msg": f"Evaluación excede plazo SLA para {ipr['codigo_bip']} ({ipr['track_label']}): {days_in} días (máx {max_days}d)",
+                "uid": str(user["id"]),
+            },
+        )
+        created += 1
+
+    await db.commit()
+    return {"checked": len(iprs), "alerts_created": created}

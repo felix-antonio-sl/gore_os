@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict OFrvKOIOIiuckJe77arhEFZwgdtCVDCWg5EhOFHYabvjYKEd8cErc1KLiIb4A2J
+\restrict AYIWhkWAIyeBxPyRMDdjNMTP0Ha6e8Mb1aH9sYl9zDaZSyR4Pbl6bvnft3lCf1V
 
 -- Dumped from database version 16.11
 -- Dumped by pg_dump version 16.11
@@ -19,40 +19,32 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: core; Type: SCHEMA; Schema: -; Owner: goreos
+-- Name: core; Type: SCHEMA; Schema: -; Owner: -
 --
 
 CREATE SCHEMA core;
 
 
-ALTER SCHEMA core OWNER TO goreos;
-
 --
--- Name: meta; Type: SCHEMA; Schema: -; Owner: goreos
+-- Name: meta; Type: SCHEMA; Schema: -; Owner: -
 --
 
 CREATE SCHEMA meta;
 
 
-ALTER SCHEMA meta OWNER TO goreos;
-
 --
--- Name: ref; Type: SCHEMA; Schema: -; Owner: goreos
+-- Name: ref; Type: SCHEMA; Schema: -; Owner: -
 --
 
 CREATE SCHEMA ref;
 
 
-ALTER SCHEMA ref OWNER TO goreos;
-
 --
--- Name: txn; Type: SCHEMA; Schema: -; Owner: goreos
+-- Name: txn; Type: SCHEMA; Schema: -; Owner: -
 --
 
 CREATE SCHEMA txn;
 
-
-ALTER SCHEMA txn OWNER TO goreos;
 
 --
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
@@ -62,7 +54,7 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
@@ -76,14 +68,14 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
--- Name: agent_type_enum; Type: TYPE; Schema: public; Owner: goreos
+-- Name: agent_type_enum; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.agent_type_enum AS ENUM (
@@ -96,10 +88,8 @@ CREATE TYPE public.agent_type_enum AS ENUM (
 );
 
 
-ALTER TYPE public.agent_type_enum OWNER TO goreos;
-
 --
--- Name: cognition_level_enum; Type: TYPE; Schema: public; Owner: goreos
+-- Name: cognition_level_enum; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.cognition_level_enum AS ENUM (
@@ -110,10 +100,8 @@ CREATE TYPE public.cognition_level_enum AS ENUM (
 );
 
 
-ALTER TYPE public.cognition_level_enum OWNER TO goreos;
-
 --
--- Name: delegation_mode_enum; Type: TYPE; Schema: public; Owner: goreos
+-- Name: delegation_mode_enum; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.delegation_mode_enum AS ENUM (
@@ -126,10 +114,8 @@ CREATE TYPE public.delegation_mode_enum AS ENUM (
 );
 
 
-ALTER TYPE public.delegation_mode_enum OWNER TO goreos;
-
 --
--- Name: ipr_nature_enum; Type: TYPE; Schema: public; Owner: goreos
+-- Name: ipr_nature_enum; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.ipr_nature_enum AS ENUM (
@@ -141,10 +127,8 @@ CREATE TYPE public.ipr_nature_enum AS ENUM (
 );
 
 
-ALTER TYPE public.ipr_nature_enum OWNER TO goreos;
-
 --
--- Name: process_layer_enum; Type: TYPE; Schema: public; Owner: goreos
+-- Name: process_layer_enum; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.process_layer_enum AS ENUM (
@@ -154,10 +138,8 @@ CREATE TYPE public.process_layer_enum AS ENUM (
 );
 
 
-ALTER TYPE public.process_layer_enum OWNER TO goreos;
-
 --
--- Name: story_status_enum; Type: TYPE; Schema: public; Owner: goreos
+-- Name: story_status_enum; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.story_status_enum AS ENUM (
@@ -168,10 +150,8 @@ CREATE TYPE public.story_status_enum AS ENUM (
 );
 
 
-ALTER TYPE public.story_status_enum OWNER TO goreos;
-
 --
--- Name: trg_ar_decision_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+-- Name: trg_ar_decision_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: -
 --
 
 CREATE FUNCTION core.trg_ar_decision_state_transition_fn() RETURNS trigger
@@ -204,10 +184,8 @@ END;
 $$;
 
 
-ALTER FUNCTION core.trg_ar_decision_state_transition_fn() OWNER TO goreos;
-
 --
--- Name: trg_escalation_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+-- Name: trg_escalation_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: -
 --
 
 CREATE FUNCTION core.trg_escalation_state_transition_fn() RETURNS trigger
@@ -235,10 +213,8 @@ END;
 $$;
 
 
-ALTER FUNCTION core.trg_escalation_state_transition_fn() OWNER TO goreos;
-
 --
--- Name: trg_initiative_timing_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+-- Name: trg_initiative_timing_fn(); Type: FUNCTION; Schema: core; Owner: -
 --
 
 CREATE FUNCTION core.trg_initiative_timing_fn() RETURNS trigger
@@ -274,10 +250,8 @@ END;
 $$;
 
 
-ALTER FUNCTION core.trg_initiative_timing_fn() OWNER TO goreos;
-
 --
--- Name: trg_request_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+-- Name: trg_request_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: -
 --
 
 CREATE FUNCTION core.trg_request_state_transition_fn() RETURNS trigger
@@ -305,10 +279,8 @@ END;
 $$;
 
 
-ALTER FUNCTION core.trg_request_state_transition_fn() OWNER TO goreos;
-
 --
--- Name: trg_request_timing_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+-- Name: trg_request_timing_fn(); Type: FUNCTION; Schema: core; Owner: -
 --
 
 CREATE FUNCTION core.trg_request_timing_fn() RETURNS trigger
@@ -334,10 +306,8 @@ END;
 $$;
 
 
-ALTER FUNCTION core.trg_request_timing_fn() OWNER TO goreos;
-
 --
--- Name: fn_act_history(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_act_history(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_act_history() RETURNS trigger
@@ -357,10 +327,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_act_history() OWNER TO goreos;
-
 --
--- Name: fn_agreement_history(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_agreement_history(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_agreement_history() RETURNS trigger
@@ -380,10 +348,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_agreement_history() OWNER TO goreos;
-
 --
--- Name: fn_audit_to_event(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_audit_to_event(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_audit_to_event() RETURNS trigger
@@ -441,17 +407,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_audit_to_event() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_audit_to_event(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_audit_to_event(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_audit_to_event() IS 'Registra cambios en txn.event para tablas críticas (event sourcing)';
 
 
 --
--- Name: fn_budget_program_current_amount(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_budget_program_current_amount(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_budget_program_current_amount() RETURNS trigger
@@ -481,17 +445,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_budget_program_current_amount() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_budget_program_current_amount(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_budget_program_current_amount(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_budget_program_current_amount() IS 'Mantiene current_amount sincronizado con initial_amount. Modificaciones adicionales via txn.magnitude.';
 
 
 --
--- Name: fn_commitment_history(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_commitment_history(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_commitment_history() RETURNS trigger
@@ -517,17 +479,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_commitment_history() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_commitment_history(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_commitment_history(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_commitment_history() IS 'Registra cambios de estado en commitment_history';
 
 
 --
--- Name: fn_ensure_single_primary_party(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_ensure_single_primary_party(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_ensure_single_primary_party() RETURNS trigger
@@ -549,10 +509,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_ensure_single_primary_party() OWNER TO goreos;
-
 --
--- Name: fn_ensure_single_primary_territory(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_ensure_single_primary_territory(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_ensure_single_primary_territory() RETURNS trigger
@@ -573,10 +531,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_ensure_single_primary_territory() OWNER TO goreos;
-
 --
--- Name: fn_generate_code(character varying, character varying); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_generate_code(character varying, character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_generate_code(p_prefix character varying, p_table_name character varying) RETURNS character varying
@@ -610,17 +566,31 @@ END;
 $_$;
 
 
-ALTER FUNCTION public.fn_generate_code(p_prefix character varying, p_table_name character varying) OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_generate_code(p_prefix character varying, p_table_name character varying); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_generate_code(p_prefix character varying, p_table_name character varying); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_generate_code(p_prefix character varying, p_table_name character varying) IS 'Genera código secuencial thread-safe: PREFIX-YYYY-NNNNN (usa advisory lock)';
 
 
 --
--- Name: fn_rendition_history(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_ipr_phase_entered(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.fn_ipr_phase_entered() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF OLD.status_id IS DISTINCT FROM NEW.status_id THEN
+        NEW.phase_entered_at = NOW();
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: fn_rendition_history(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_rendition_history() RETURNS trigger
@@ -640,10 +610,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_rendition_history() OWNER TO goreos;
-
 --
--- Name: fn_soft_delete(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_soft_delete(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_soft_delete() RETURNS trigger
@@ -672,17 +640,15 @@ END;
 $_$;
 
 
-ALTER FUNCTION public.fn_soft_delete() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_soft_delete(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_soft_delete(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_soft_delete() IS 'Convierte DELETE en soft delete (marca deleted_at en lugar de eliminar)';
 
 
 --
--- Name: fn_sync_category_parent(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_sync_category_parent(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_sync_category_parent() RETURNS trigger
@@ -709,17 +675,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_sync_category_parent() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_sync_category_parent(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_sync_category_parent(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_sync_category_parent() IS 'STR-001 FIX: Mantiene parent_id sincronizado con parent_code en ref.category';
 
 
 --
--- Name: fn_update_ipr_problems_flag(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_update_ipr_problems_flag(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_update_ipr_problems_flag() RETURNS trigger
@@ -754,17 +718,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_update_ipr_problems_flag() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_update_ipr_problems_flag(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_update_ipr_problems_flag(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_update_ipr_problems_flag() IS 'Mantiene actualizado has_open_problems en core.ipr';
 
 
 --
--- Name: fn_update_timestamp(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_update_timestamp(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_update_timestamp() RETURNS trigger
@@ -777,17 +739,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_update_timestamp() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_update_timestamp(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_update_timestamp(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_update_timestamp() IS 'Actualiza automaticamente updated_at en UPDATE';
 
 
 --
--- Name: fn_validate_agreement_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_agreement_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_agreement_schemes() RETURNS trigger
@@ -811,10 +771,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_agreement_schemes() OWNER TO goreos;
-
 --
--- Name: fn_validate_category_scheme(uuid, character varying); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_category_scheme(uuid, character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_category_scheme(p_category_id uuid, p_expected_scheme character varying) RETURNS boolean
@@ -836,17 +794,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_category_scheme(p_category_id uuid, p_expected_scheme character varying) OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_validate_category_scheme(p_category_id uuid, p_expected_scheme character varying); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_validate_category_scheme(p_category_id uuid, p_expected_scheme character varying); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_validate_category_scheme(p_category_id uuid, p_expected_scheme character varying) IS 'Valida que un category_id pertenece al scheme esperado';
 
 
 --
--- Name: fn_validate_commitment_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_commitment_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_commitment_schemes() RETURNS trigger
@@ -864,10 +820,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_commitment_schemes() OWNER TO goreos;
-
 --
--- Name: fn_validate_ipr_milestone_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_ipr_milestone_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_ipr_milestone_schemes() RETURNS trigger
@@ -884,10 +838,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_ipr_milestone_schemes() OWNER TO goreos;
-
 --
--- Name: fn_validate_ipr_party_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_ipr_party_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_ipr_party_schemes() RETURNS trigger
@@ -904,10 +856,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_ipr_party_schemes() OWNER TO goreos;
-
 --
--- Name: fn_validate_ipr_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_ipr_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_ipr_schemes() RETURNS trigger
@@ -983,17 +933,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_ipr_schemes() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_validate_ipr_schemes(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_validate_ipr_schemes(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_validate_ipr_schemes() IS 'R-01/R-02 FIX: Valida 10 FK→ref.category en core.ipr (5 originales + 5 añadidos en migración categorical_univocity)';
 
 
 --
--- Name: fn_validate_ipr_territory_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_ipr_territory_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_ipr_territory_schemes() RETURNS trigger
@@ -1010,10 +958,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_ipr_territory_schemes() OWNER TO goreos;
-
 --
--- Name: fn_validate_mechanism_attrs(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_mechanism_attrs(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_mechanism_attrs() RETURNS trigger
@@ -1090,10 +1036,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_mechanism_attrs() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_validate_mechanism_attrs(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_validate_mechanism_attrs(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_validate_mechanism_attrs() IS 'PRO-001 FIX (Auditoría v5): Valida atributos requeridos según mecanismo de la IPR.
@@ -1101,7 +1045,7 @@ Garantiza coproducto disjunto (SNI, C33, FRIL, GLOSA06, TRANSFER, SUBV8, FRPD).'
 
 
 --
--- Name: fn_validate_state_transition(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_state_transition(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_state_transition() RETURNS trigger
@@ -1150,17 +1094,15 @@ END;
 $_$;
 
 
-ALTER FUNCTION public.fn_validate_state_transition() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_validate_state_transition(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_validate_state_transition(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_validate_state_transition() IS 'Valida transiciones de estado usando TG_ARGV[0] como nombre de columna (default: state_id)';
 
 
 --
--- Name: fn_validate_work_item_schemes(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_validate_work_item_schemes(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_validate_work_item_schemes() RETURNS trigger
@@ -1190,10 +1132,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_validate_work_item_schemes() OWNER TO goreos;
-
 --
--- Name: fn_work_item_history(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: fn_work_item_history(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.fn_work_item_history() RETURNS trigger
@@ -1262,17 +1202,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.fn_work_item_history() OWNER TO goreos;
-
 --
--- Name: FUNCTION fn_work_item_history(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION fn_work_item_history(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.fn_work_item_history() IS 'Registra cambios de work_item en work_item_history';
 
 
 --
--- Name: get_current_user(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: get_current_user(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.get_current_user() RETURNS uuid
@@ -1286,17 +1224,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.get_current_user() OWNER TO goreos;
-
 --
--- Name: FUNCTION get_current_user(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION get_current_user(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.get_current_user() IS 'Obtiene el usuario actual del contexto de sesión';
 
 
 --
--- Name: get_current_user_safe(); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: get_current_user_safe(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.get_current_user_safe() RETURNS uuid
@@ -1325,17 +1261,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.get_current_user_safe() OWNER TO goreos;
-
 --
--- Name: FUNCTION get_current_user_safe(); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION get_current_user_safe(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.get_current_user_safe() IS 'BEH-002 FIX: Versión defensiva de get_current_user() con validación de formato UUID';
 
 
 --
--- Name: set_current_user(uuid); Type: FUNCTION; Schema: public; Owner: goreos
+-- Name: set_current_user(uuid); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.set_current_user(p_user_id uuid) RETURNS void
@@ -1347,10 +1281,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.set_current_user(p_user_id uuid) OWNER TO goreos;
-
 --
--- Name: FUNCTION set_current_user(p_user_id uuid); Type: COMMENT; Schema: public; Owner: goreos
+-- Name: FUNCTION set_current_user(p_user_id uuid); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.set_current_user(p_user_id uuid) IS 'Establece el usuario actual para auditoría. Llamar al inicio de cada request.';
@@ -1361,7 +1293,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: administrative_act; Type: TABLE; Schema: core; Owner: goreos
+-- Name: administrative_act; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.administrative_act (
@@ -1393,17 +1325,15 @@ CREATE TABLE core.administrative_act (
 );
 
 
-ALTER TABLE core.administrative_act OWNER TO goreos;
-
 --
--- Name: TABLE administrative_act; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE administrative_act; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.administrative_act IS 'Acto administrativo - manifestacion de voluntad con efectos juridicos';
 
 
 --
--- Name: administrative_act_history; Type: TABLE; Schema: core; Owner: goreos
+-- Name: administrative_act_history; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.administrative_act_history (
@@ -1419,17 +1349,15 @@ CREATE TABLE core.administrative_act_history (
 );
 
 
-ALTER TABLE core.administrative_act_history OWNER TO goreos;
-
 --
--- Name: TABLE administrative_act_history; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE administrative_act_history; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.administrative_act_history IS 'Historial de cambios de estado de actos administrativos';
 
 
 --
--- Name: administrative_procedure; Type: TABLE; Schema: core; Owner: goreos
+-- Name: administrative_procedure; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.administrative_procedure (
@@ -1455,17 +1383,15 @@ CREATE TABLE core.administrative_procedure (
 );
 
 
-ALTER TABLE core.administrative_procedure OWNER TO goreos;
-
 --
--- Name: TABLE administrative_procedure; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE administrative_procedure; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.administrative_procedure IS 'Procedimiento administrativo - secuencia de tramites';
 
 
 --
--- Name: admissibility_check; Type: TABLE; Schema: core; Owner: goreos
+-- Name: admissibility_check; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.admissibility_check (
@@ -1479,10 +1405,8 @@ CREATE TABLE core.admissibility_check (
 );
 
 
-ALTER TABLE core.admissibility_check OWNER TO goreos;
-
 --
--- Name: admissibility_item; Type: TABLE; Schema: core; Owner: goreos
+-- Name: admissibility_item; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.admissibility_item (
@@ -1500,10 +1424,8 @@ CREATE TABLE core.admissibility_item (
 );
 
 
-ALTER TABLE core.admissibility_item OWNER TO goreos;
-
 --
--- Name: agenda_item_context; Type: TABLE; Schema: core; Owner: goreos
+-- Name: agenda_item_context; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.agenda_item_context (
@@ -1517,10 +1439,8 @@ CREATE TABLE core.agenda_item_context (
 );
 
 
-ALTER TABLE core.agenda_item_context OWNER TO goreos;
-
 --
--- Name: agreement; Type: TABLE; Schema: core; Owner: goreos
+-- Name: agreement; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.agreement (
@@ -1550,24 +1470,22 @@ CREATE TABLE core.agreement (
 );
 
 
-ALTER TABLE core.agreement OWNER TO goreos;
-
 --
--- Name: TABLE agreement; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE agreement; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.agreement IS 'Convenio GORE - transferencia, mandato, colaboracion';
 
 
 --
--- Name: COLUMN agreement.technical_referent_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN agreement.technical_referent_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.agreement.technical_referent_id IS 'gnub:TechnicalReferent, tde:ResponsableAsignado - Persona responsable del seguimiento técnico del convenio. Normalized from metadata.referente_tecnico on 2026-01-30.';
 
 
 --
--- Name: agreement_history; Type: TABLE; Schema: core; Owner: goreos
+-- Name: agreement_history; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.agreement_history (
@@ -1583,10 +1501,8 @@ CREATE TABLE core.agreement_history (
 );
 
 
-ALTER TABLE core.agreement_history OWNER TO goreos;
-
 --
--- Name: agreement_installment; Type: TABLE; Schema: core; Owner: goreos
+-- Name: agreement_installment; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.agreement_installment (
@@ -1611,24 +1527,22 @@ CREATE TABLE core.agreement_installment (
 );
 
 
-ALTER TABLE core.agreement_installment OWNER TO goreos;
-
 --
--- Name: TABLE agreement_installment; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE agreement_installment; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.agreement_installment IS 'Cuota de pago programada de un convenio';
 
 
 --
--- Name: CONSTRAINT chk_paid_lte_amount ON agreement_installment; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: CONSTRAINT chk_paid_lte_amount ON agreement_installment; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON CONSTRAINT chk_paid_lte_amount ON core.agreement_installment IS 'PRO-002 FIX (Auditoría v5): Garantiza que el monto pagado no exceda el monto de la cuota';
 
 
 --
--- Name: alert; Type: TABLE; Schema: core; Owner: goreos
+-- Name: alert; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.alert (
@@ -1659,17 +1573,15 @@ CREATE TABLE core.alert (
 );
 
 
-ALTER TABLE core.alert OWNER TO goreos;
-
 --
--- Name: TABLE alert; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE alert; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.alert IS 'Alerta del sistema nervioso digital';
 
 
 --
--- Name: budget_carryover; Type: TABLE; Schema: core; Owner: goreos
+-- Name: budget_carryover; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.budget_carryover (
@@ -1686,38 +1598,36 @@ CREATE TABLE core.budget_carryover (
 );
 
 
-ALTER TABLE core.budget_carryover OWNER TO goreos;
-
 --
--- Name: TABLE budget_carryover; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE budget_carryover; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.budget_carryover IS 'gnub:BudgetCarryover - Arrastres presupuestarios anuales por programa. Modelo time-series para tracking de saldos arrastrados entre ejercicios fiscales.';
 
 
 --
--- Name: COLUMN budget_carryover.budget_program_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_carryover.budget_program_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_carryover.budget_program_id IS 'FK al programa presupuestario origen del arrastre';
 
 
 --
--- Name: COLUMN budget_carryover.fiscal_year; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_carryover.fiscal_year; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_carryover.fiscal_year IS 'Anio fiscal destino del arrastre (ej: 2024 = arrastre hacia 2024)';
 
 
 --
--- Name: COLUMN budget_carryover.amount; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_carryover.amount; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_carryover.amount IS 'Monto arrastrado en CLP';
 
 
 --
--- Name: budget_commitment; Type: TABLE; Schema: core; Owner: goreos
+-- Name: budget_commitment; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.budget_commitment (
@@ -1745,17 +1655,15 @@ CREATE TABLE core.budget_commitment (
 );
 
 
-ALTER TABLE core.budget_commitment OWNER TO goreos;
-
 --
--- Name: TABLE budget_commitment; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE budget_commitment; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.budget_commitment IS 'Compromiso presupuestario (CDP, Compromiso, Devengado)';
 
 
 --
--- Name: budget_cycle_milestone; Type: TABLE; Schema: core; Owner: goreos
+-- Name: budget_cycle_milestone; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.budget_cycle_milestone (
@@ -1774,10 +1682,8 @@ CREATE TABLE core.budget_cycle_milestone (
 );
 
 
-ALTER TABLE core.budget_cycle_milestone OWNER TO goreos;
-
 --
--- Name: budget_cycle_tracking; Type: TABLE; Schema: core; Owner: goreos
+-- Name: budget_cycle_tracking; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.budget_cycle_tracking (
@@ -1796,10 +1702,8 @@ CREATE TABLE core.budget_cycle_tracking (
 );
 
 
-ALTER TABLE core.budget_cycle_tracking OWNER TO goreos;
-
 --
--- Name: budget_program; Type: TABLE; Schema: core; Owner: goreos
+-- Name: budget_program; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.budget_program (
@@ -1835,45 +1739,43 @@ CREATE TABLE core.budget_program (
 );
 
 
-ALTER TABLE core.budget_program OWNER TO goreos;
-
 --
--- Name: TABLE budget_program; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE budget_program; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.budget_program IS 'Programa de Presupuesto Publico Regional (PPR)';
 
 
 --
--- Name: COLUMN budget_program.item_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_program.item_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_program.item_id IS 'gnub:BudgetItem - Item del Clasificador Presupuestario Publico (Ley de Presupuestos Chile). Normalizado desde metadata.item en 2026-01-30.';
 
 
 --
--- Name: COLUMN budget_program.allocation_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_program.allocation_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_program.allocation_id IS 'gnub:BudgetAllocation - Asignacion del Clasificador Presupuestario Publico. Normalizado desde metadata.asignacion en 2026-01-30.';
 
 
 --
--- Name: COLUMN budget_program.fndr_amount; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_program.fndr_amount; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_program.fndr_amount IS 'Monto FNDR (Fondo Nacional de Desarrollo Regional) asignado al programa. Normalizado desde metadata.monto_fndr en 2026-01-30.';
 
 
 --
--- Name: COLUMN budget_program.sectorial_amount; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN budget_program.sectorial_amount; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.budget_program.sectorial_amount IS 'Monto de origen sectorial (ministerial) asignado al programa. Normalizado desde metadata.monto_sectorial en 2026-01-30.';
 
 
 --
--- Name: commitment_history; Type: TABLE; Schema: core; Owner: goreos
+-- Name: commitment_history; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.commitment_history (
@@ -1889,17 +1791,15 @@ CREATE TABLE core.commitment_history (
 );
 
 
-ALTER TABLE core.commitment_history OWNER TO goreos;
-
 --
--- Name: TABLE commitment_history; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE commitment_history; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.commitment_history IS 'Historial de cambios de estado en compromisos operativos';
 
 
 --
--- Name: committee; Type: TABLE; Schema: core; Owner: goreos
+-- Name: committee; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.committee (
@@ -1921,17 +1821,15 @@ CREATE TABLE core.committee (
 );
 
 
-ALTER TABLE core.committee OWNER TO goreos;
-
 --
--- Name: TABLE committee; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE committee; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.committee IS 'Organo colegiado de decision (CORE, Comite Inversiones)';
 
 
 --
--- Name: committee_member; Type: TABLE; Schema: core; Owner: goreos
+-- Name: committee_member; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.committee_member (
@@ -1952,17 +1850,15 @@ CREATE TABLE core.committee_member (
 );
 
 
-ALTER TABLE core.committee_member OWNER TO goreos;
-
 --
--- Name: TABLE committee_member; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE committee_member; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.committee_member IS 'Membresia en comite';
 
 
 --
--- Name: crisis_meeting; Type: TABLE; Schema: core; Owner: goreos
+-- Name: crisis_meeting; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.crisis_meeting (
@@ -1984,10 +1880,8 @@ CREATE TABLE core.crisis_meeting (
 );
 
 
-ALTER TABLE core.crisis_meeting OWNER TO goreos;
-
 --
--- Name: dgi_ar_decision; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_ar_decision (
@@ -2009,10 +1903,8 @@ CREATE TABLE core.dgi_ar_decision (
 );
 
 
-ALTER TABLE core.dgi_ar_decision OWNER TO goreos;
-
 --
--- Name: dgi_bottleneck_investigation; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_bottleneck_investigation (
@@ -2040,10 +1932,8 @@ CREATE TABLE core.dgi_bottleneck_investigation (
 );
 
 
-ALTER TABLE core.dgi_bottleneck_investigation OWNER TO goreos;
-
 --
--- Name: dgi_bpmn_model; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_bpmn_model (
@@ -2068,17 +1958,15 @@ CREATE TABLE core.dgi_bpmn_model (
 );
 
 
-ALTER TABLE core.dgi_bpmn_model OWNER TO goreos;
-
 --
--- Name: TABLE dgi_bpmn_model; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE dgi_bpmn_model; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.dgi_bpmn_model IS 'Metadata de modelos BPMN de procesos institucionales';
 
 
 --
--- Name: dgi_committee_session; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_committee_session; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_committee_session (
@@ -2101,17 +1989,15 @@ CREATE TABLE core.dgi_committee_session (
 );
 
 
-ALTER TABLE core.dgi_committee_session OWNER TO goreos;
-
 --
--- Name: TABLE dgi_committee_session; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE dgi_committee_session; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.dgi_committee_session IS 'Sesiones del Comité de Transformación Digital';
 
 
 --
--- Name: dgi_data_source_status; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_data_source_status (
@@ -2134,17 +2020,15 @@ CREATE TABLE core.dgi_data_source_status (
 );
 
 
-ALTER TABLE core.dgi_data_source_status OWNER TO goreos;
-
 --
--- Name: TABLE dgi_data_source_status; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE dgi_data_source_status; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.dgi_data_source_status IS 'Estado de las fuentes de datos por división';
 
 
 --
--- Name: dgi_decree; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_decree; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_decree (
@@ -2161,10 +2045,8 @@ CREATE TABLE core.dgi_decree (
 );
 
 
-ALTER TABLE core.dgi_decree OWNER TO goreos;
-
 --
--- Name: dgi_division_interaction; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_division_interaction; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_division_interaction (
@@ -2185,10 +2067,8 @@ CREATE TABLE core.dgi_division_interaction (
 );
 
 
-ALTER TABLE core.dgi_division_interaction OWNER TO goreos;
-
 --
--- Name: dgi_escalation; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_escalation; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_escalation (
@@ -2216,10 +2096,8 @@ CREATE TABLE core.dgi_escalation (
 );
 
 
-ALTER TABLE core.dgi_escalation OWNER TO goreos;
-
 --
--- Name: dgi_improvement_opportunity; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_improvement_opportunity; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_improvement_opportunity (
@@ -2243,10 +2121,8 @@ CREATE TABLE core.dgi_improvement_opportunity (
 );
 
 
-ALTER TABLE core.dgi_improvement_opportunity OWNER TO goreos;
-
 --
--- Name: dgi_indicator; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_indicator; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_indicator (
@@ -2284,17 +2160,15 @@ CREATE TABLE core.dgi_indicator (
 );
 
 
-ALTER TABLE core.dgi_indicator OWNER TO goreos;
-
 --
--- Name: TABLE dgi_indicator; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE dgi_indicator; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.dgi_indicator IS 'Indicadores institucionales del semáforo DGI';
 
 
 --
--- Name: dgi_indicator_lifecycle_history; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_indicator_lifecycle_history; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_indicator_lifecycle_history (
@@ -2308,10 +2182,8 @@ CREATE TABLE core.dgi_indicator_lifecycle_history (
 );
 
 
-ALTER TABLE core.dgi_indicator_lifecycle_history OWNER TO goreos;
-
 --
--- Name: dgi_indicator_snapshot; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_indicator_snapshot; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_indicator_snapshot (
@@ -2324,10 +2196,8 @@ CREATE TABLE core.dgi_indicator_snapshot (
 );
 
 
-ALTER TABLE core.dgi_indicator_snapshot OWNER TO goreos;
-
 --
--- Name: dgi_initiative; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_initiative; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_initiative (
@@ -2362,31 +2232,29 @@ CREATE TABLE core.dgi_initiative (
 );
 
 
-ALTER TABLE core.dgi_initiative OWNER TO goreos;
-
 --
--- Name: TABLE dgi_initiative; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE dgi_initiative; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.dgi_initiative IS 'Iniciativas de mejora DGI con tracking Kanban/DMAIC';
 
 
 --
--- Name: COLUMN dgi_initiative.started_at; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN dgi_initiative.started_at; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.dgi_initiative.started_at IS 'Auto-set on first move to EN_CURSO (cycle time start)';
 
 
 --
--- Name: COLUMN dgi_initiative.completed_at; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN dgi_initiative.completed_at; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.dgi_initiative.completed_at IS 'Auto-set on move to COMPLETADA (cycle/lead time end)';
 
 
 --
--- Name: dgi_process; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_process; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_process (
@@ -2411,10 +2279,8 @@ CREATE TABLE core.dgi_process (
 );
 
 
-ALTER TABLE core.dgi_process OWNER TO goreos;
-
 --
--- Name: dgi_process_actor; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_process_actor; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_process_actor (
@@ -2429,10 +2295,8 @@ CREATE TABLE core.dgi_process_actor (
 );
 
 
-ALTER TABLE core.dgi_process_actor OWNER TO goreos;
-
 --
--- Name: dgi_process_metric; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_process_metric; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_process_metric (
@@ -2450,10 +2314,8 @@ CREATE TABLE core.dgi_process_metric (
 );
 
 
-ALTER TABLE core.dgi_process_metric OWNER TO goreos;
-
 --
--- Name: dgi_process_pain_point; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_process_pain_point; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_process_pain_point (
@@ -2468,10 +2330,8 @@ CREATE TABLE core.dgi_process_pain_point (
 );
 
 
-ALTER TABLE core.dgi_process_pain_point OWNER TO goreos;
-
 --
--- Name: dgi_process_rule; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_process_rule; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_process_rule (
@@ -2485,10 +2345,8 @@ CREATE TABLE core.dgi_process_rule (
 );
 
 
-ALTER TABLE core.dgi_process_rule OWNER TO goreos;
-
 --
--- Name: dgi_report; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_report; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_report (
@@ -2518,17 +2376,15 @@ CREATE TABLE core.dgi_report (
 );
 
 
-ALTER TABLE core.dgi_report OWNER TO goreos;
-
 --
--- Name: TABLE dgi_report; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE dgi_report; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.dgi_report IS 'Informes institucionales DGI (Flash, Semanal, Mensual, Temático)';
 
 
 --
--- Name: dgi_service; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_service; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_service (
@@ -2549,10 +2405,8 @@ CREATE TABLE core.dgi_service (
 );
 
 
-ALTER TABLE core.dgi_service OWNER TO goreos;
-
 --
--- Name: dgi_service_request; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_service_request; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_service_request (
@@ -2578,10 +2432,8 @@ CREATE TABLE core.dgi_service_request (
 );
 
 
-ALTER TABLE core.dgi_service_request OWNER TO goreos;
-
 --
--- Name: dgi_sla; Type: TABLE; Schema: core; Owner: goreos
+-- Name: dgi_sla; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.dgi_sla (
@@ -2601,10 +2453,8 @@ CREATE TABLE core.dgi_sla (
 );
 
 
-ALTER TABLE core.dgi_sla OWNER TO goreos;
-
 --
--- Name: digital_platform; Type: TABLE; Schema: core; Owner: goreos
+-- Name: digital_platform; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.digital_platform (
@@ -2626,17 +2476,15 @@ CREATE TABLE core.digital_platform (
 );
 
 
-ALTER TABLE core.digital_platform OWNER TO goreos;
-
 --
--- Name: TABLE digital_platform; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE digital_platform; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.digital_platform IS 'Sistema o plataforma digital (SIGFE, BIP, Portal)';
 
 
 --
--- Name: document; Type: TABLE; Schema: core; Owner: goreos
+-- Name: document; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.document (
@@ -2661,31 +2509,29 @@ CREATE TABLE core.document (
 );
 
 
-ALTER TABLE core.document OWNER TO goreos;
-
 --
--- Name: TABLE document; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE document; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.document IS 'Documento digital o fisico en el sistema';
 
 
 --
--- Name: COLUMN document.sort_order; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN document.sort_order; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.document.sort_order IS 'TDE-001: Orden de foliación digital en expediente (Art. 20 DS10)';
 
 
 --
--- Name: COLUMN document.folio_number; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN document.folio_number; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.document.folio_number IS 'TDE-001: Número de folio asignado al documento';
 
 
 --
--- Name: electronic_file; Type: TABLE; Schema: core; Owner: goreos
+-- Name: electronic_file; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.electronic_file (
@@ -2708,17 +2554,15 @@ CREATE TABLE core.electronic_file (
 );
 
 
-ALTER TABLE core.electronic_file OWNER TO goreos;
-
 --
--- Name: TABLE electronic_file; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE electronic_file; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.electronic_file IS 'Expediente electronico de un tramite';
 
 
 --
--- Name: evaluation_assignment; Type: TABLE; Schema: core; Owner: goreos
+-- Name: evaluation_assignment; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.evaluation_assignment (
@@ -2749,24 +2593,22 @@ CREATE TABLE core.evaluation_assignment (
 );
 
 
-ALTER TABLE core.evaluation_assignment OWNER TO goreos;
-
 --
--- Name: TABLE evaluation_assignment; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE evaluation_assignment; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.evaluation_assignment IS 'Asignación de evaluación: quién evalúa un IPR y con qué resultado (Poly-Switch Wave 7)';
 
 
 --
--- Name: COLUMN evaluation_assignment.numeric_score; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN evaluation_assignment.numeric_score; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.evaluation_assignment.numeric_score IS 'Numeric evaluation score (0-100). Used by FRPD puntaje_min gate at F2→F3.';
 
 
 --
--- Name: financial_threshold; Type: TABLE; Schema: core; Owner: goreos
+-- Name: financial_threshold; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.financial_threshold (
@@ -2784,59 +2626,57 @@ CREATE TABLE core.financial_threshold (
 );
 
 
-ALTER TABLE core.financial_threshold OWNER TO goreos;
-
 --
--- Name: TABLE financial_threshold; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE financial_threshold; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.financial_threshold IS 'Umbrales financieros parametrizables (universales + glosa). Administrables sin code change.';
 
 
 --
--- Name: COLUMN financial_threshold.code; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN financial_threshold.code; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.financial_threshold.code IS 'Identificador unico del umbral (e.g. CORE_APPROVAL, GLOSA_ADMIN_MAX)';
 
 
 --
--- Name: COLUMN financial_threshold.value_utm; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN financial_threshold.value_utm; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.financial_threshold.value_utm IS 'Valor en UTM (NULL si es porcentual)';
 
 
 --
--- Name: COLUMN financial_threshold.value_pct; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN financial_threshold.value_pct; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.financial_threshold.value_pct IS 'Valor porcentual (NULL si es UTM)';
 
 
 --
--- Name: COLUMN financial_threshold.enforcement_point; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN financial_threshold.enforcement_point; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.financial_threshold.enforcement_point IS 'Punto de aplicacion: F3_F4, F1_F2, ACTO, CONVENIO, GLOSA, CONFIG';
 
 
 --
--- Name: COLUMN financial_threshold.source_normativa; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN financial_threshold.source_normativa; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.financial_threshold.source_normativa IS 'Fuente legal: LOC GORE Art. 36, Ley Presupuestos, etc.';
 
 
 --
--- Name: COLUMN financial_threshold.applies_to_track; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN financial_threshold.applies_to_track; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.financial_threshold.applies_to_track IS 'NULL = universal, codigo track = track-especifico';
 
 
 --
--- Name: financing_track; Type: TABLE; Schema: core; Owner: goreos
+-- Name: financing_track; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.financing_track (
@@ -2858,10 +2698,8 @@ CREATE TABLE core.financing_track (
 );
 
 
-ALTER TABLE core.financing_track OWNER TO goreos;
-
 --
--- Name: fril_category; Type: TABLE; Schema: core; Owner: goreos
+-- Name: fril_category; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.fril_category (
@@ -2882,17 +2720,15 @@ CREATE TABLE core.fril_category (
 );
 
 
-ALTER TABLE core.fril_category OWNER TO goreos;
-
 --
--- Name: TABLE fril_category; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE fril_category; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.fril_category IS 'TP-04: FRIL project categories (12 types in 4 groups A-D)';
 
 
 --
--- Name: fund_program; Type: TABLE; Schema: core; Owner: goreos
+-- Name: fund_program; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.fund_program (
@@ -2919,17 +2755,15 @@ CREATE TABLE core.fund_program (
 );
 
 
-ALTER TABLE core.fund_program OWNER TO goreos;
-
 --
--- Name: TABLE fund_program; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE fund_program; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.fund_program IS 'Programa especifico financiado por un fondo';
 
 
 --
--- Name: installment_milestone; Type: TABLE; Schema: core; Owner: goreos
+-- Name: installment_milestone; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.installment_milestone (
@@ -2940,24 +2774,22 @@ CREATE TABLE core.installment_milestone (
 );
 
 
-ALTER TABLE core.installment_milestone OWNER TO goreos;
-
 --
--- Name: TABLE installment_milestone; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE installment_milestone; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.installment_milestone IS 'OO-008: Relación N:M cuota↔hito siguiendo gnub:triggersPayment';
 
 
 --
--- Name: COLUMN installment_milestone.is_required; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN installment_milestone.is_required; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.installment_milestone.is_required IS 'Si TRUE, el hito es requisito para liberar el pago de la cuota';
 
 
 --
--- Name: inventory_item; Type: TABLE; Schema: core; Owner: goreos
+-- Name: inventory_item; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.inventory_item (
@@ -2983,17 +2815,15 @@ CREATE TABLE core.inventory_item (
 );
 
 
-ALTER TABLE core.inventory_item OWNER TO goreos;
-
 --
--- Name: TABLE inventory_item; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE inventory_item; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.inventory_item IS 'Bien mueble o activo del GORE';
 
 
 --
--- Name: ipr; Type: TABLE; Schema: core; Owner: goreos
+-- Name: ipr; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.ipr (
@@ -3029,6 +2859,7 @@ CREATE TABLE core.ipr (
     investment_sector_id uuid,
     fund_category_id uuid,
     is_municipal_origin boolean DEFAULT false,
+    phase_entered_at timestamp with time zone,
     CONSTRAINT chk_alert_level_scheme CHECK (((alert_level_id IS NULL) OR public.fn_validate_category_scheme(alert_level_id, 'alert_level'::character varying))),
     CONSTRAINT chk_budget_subtitle_scheme CHECK (((budget_subtitle_id IS NULL) OR public.fn_validate_category_scheme(budget_subtitle_id, 'budget_subtitle'::character varying))),
     CONSTRAINT chk_fund_category_scheme CHECK (((fund_category_id IS NULL) OR public.fn_validate_category_scheme(fund_category_id, 'fondo_8pct'::character varying))),
@@ -3042,45 +2873,89 @@ CREATE TABLE core.ipr (
 );
 
 
-ALTER TABLE core.ipr OWNER TO goreos;
-
 --
--- Name: TABLE ipr; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE ipr; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.ipr IS 'Iniciativa de Inversion Publica Regional - transformacion territorial';
 
 
 --
--- Name: COLUMN ipr.ipr_nature; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr.ipr_nature; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr.ipr_nature IS 'PROYECTO|PROGRAMA (ENUM)';
 
 
 --
--- Name: COLUMN ipr.mcd_phase_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr.mcd_phase_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr.mcd_phase_id IS 'scheme=mcd_phase: F0|F1|F2|F3|F4|F5 (6 fases MCD)';
 
 
 --
--- Name: COLUMN ipr.mechanism_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr.mechanism_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr.mechanism_id IS 'scheme=mechanism: SNI|C33|FRIL|GLOSA06|TRANSFER|SUBV8|FRPD';
 
 
 --
--- Name: COLUMN ipr.investment_sector_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr.investment_sector_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr.investment_sector_id IS 'gnub:InvestmentTypology - Thematic sector of the investment initiative. Determines applicable Sectoral Information Requirements (RIS). Normalized from metadata.tipologia_original (sectoral codes only) on 2026-01-30.';
 
 
 --
--- Name: ipr_mechanism; Type: TABLE; Schema: core; Owner: goreos
+-- Name: ipr_closure; Type: TABLE; Schema: core; Owner: -
+--
+
+CREATE TABLE core.ipr_closure (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    ipr_id uuid NOT NULL,
+    closure_date date,
+    closure_report text,
+    physical_completion numeric(5,2),
+    financial_completion numeric(5,2),
+    final_amount numeric(18,2),
+    signed_by_id uuid,
+    signed_at timestamp with time zone,
+    closure_act_id uuid,
+    created_by_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: ipr_expost_evaluation; Type: TABLE; Schema: core; Owner: -
+--
+
+CREATE TABLE core.ipr_expost_evaluation (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    ipr_id uuid NOT NULL,
+    evaluation_date date NOT NULL,
+    evaluator_id uuid NOT NULL,
+    evaluation_type_id uuid NOT NULL,
+    impact_score numeric(5,2),
+    sustainability_score numeric(5,2),
+    efficiency_score numeric(5,2),
+    effectiveness_score numeric(5,2),
+    overall_rating_id uuid,
+    findings text,
+    recommendations text,
+    lessons_learned text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT chk_expost_eval_type_scheme CHECK (public.fn_validate_category_scheme(evaluation_type_id, 'expost_eval_type'::character varying)),
+    CONSTRAINT chk_expost_rating_scheme CHECK (((overall_rating_id IS NULL) OR public.fn_validate_category_scheme(overall_rating_id, 'expost_rating'::character varying)))
+);
+
+
+--
+-- Name: ipr_mechanism; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.ipr_mechanism (
@@ -3116,17 +2991,15 @@ CREATE TABLE core.ipr_mechanism (
 );
 
 
-ALTER TABLE core.ipr_mechanism OWNER TO goreos;
-
 --
--- Name: TABLE ipr_mechanism; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE ipr_mechanism; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.ipr_mechanism IS 'Atributos especificos por mecanismo (el mecanismo se obtiene de core.ipr.mechanism_id)';
 
 
 --
--- Name: ipr_milestone; Type: TABLE; Schema: core; Owner: goreos
+-- Name: ipr_milestone; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.ipr_milestone (
@@ -3156,24 +3029,49 @@ END) STORED,
 );
 
 
-ALTER TABLE core.ipr_milestone OWNER TO goreos;
-
 --
--- Name: TABLE ipr_milestone; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE ipr_milestone; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.ipr_milestone IS 'OO-002: Hitos de proyecto (gnub:ProjectMilestone) con fechas planificadas vs reales';
 
 
 --
--- Name: COLUMN ipr_milestone.deviation_days; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr_milestone.deviation_days; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr_milestone.deviation_days IS 'Desviación calculada: actual - planned. Positivo = atraso, Negativo = adelanto';
 
 
 --
--- Name: ipr_party; Type: TABLE; Schema: core; Owner: goreos
+-- Name: ipr_modification; Type: TABLE; Schema: core; Owner: -
+--
+
+CREATE TABLE core.ipr_modification (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    ipr_id uuid NOT NULL,
+    code character varying(20) NOT NULL,
+    modification_type_id uuid NOT NULL,
+    status_id uuid NOT NULL,
+    description text NOT NULL,
+    justification text,
+    field_changed character varying(100),
+    old_value text,
+    new_value text,
+    amount_delta numeric(18,2),
+    requested_by_id uuid NOT NULL,
+    approved_by_id uuid,
+    approved_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_ipr_mod_status_scheme CHECK (public.fn_validate_category_scheme(status_id, 'modification_status'::character varying)),
+    CONSTRAINT chk_ipr_mod_type_scheme CHECK (public.fn_validate_category_scheme(modification_type_id, 'modification_type'::character varying))
+);
+
+
+--
+-- Name: ipr_party; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.ipr_party (
@@ -3200,24 +3098,22 @@ CREATE TABLE core.ipr_party (
 );
 
 
-ALTER TABLE core.ipr_party OWNER TO goreos;
-
 --
--- Name: TABLE ipr_party; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE ipr_party; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.ipr_party IS 'OO-003: Partes de IPR siguiendo gist:hasParty con roles categorizados (N:M)';
 
 
 --
--- Name: COLUMN ipr_party.is_primary; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr_party.is_primary; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr_party.is_primary IS 'Parte principal para este rol (cuando hay múltiples ejecutores, uno es el principal)';
 
 
 --
--- Name: ipr_problem; Type: TABLE; Schema: core; Owner: goreos
+-- Name: ipr_problem; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.ipr_problem (
@@ -3249,17 +3145,15 @@ CREATE TABLE core.ipr_problem (
 );
 
 
-ALTER TABLE core.ipr_problem OWNER TO goreos;
-
 --
--- Name: TABLE ipr_problem; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE ipr_problem; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.ipr_problem IS 'Problema/nudo detectado en una IPR que bloquea avance';
 
 
 --
--- Name: ipr_territory; Type: TABLE; Schema: core; Owner: goreos
+-- Name: ipr_territory; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.ipr_territory (
@@ -3280,24 +3174,22 @@ CREATE TABLE core.ipr_territory (
 );
 
 
-ALTER TABLE core.ipr_territory OWNER TO goreos;
-
 --
--- Name: TABLE ipr_territory; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE ipr_territory; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.ipr_territory IS 'OO-001: Relación N:M IPR↔Territory siguiendo gnub:isLocatedIn con tipo de impacto';
 
 
 --
--- Name: COLUMN ipr_territory.is_primary; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN ipr_territory.is_primary; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.ipr_territory.is_primary IS 'Territorio principal de la IPR (para queries rápidas)';
 
 
 --
--- Name: kinship_declaration; Type: TABLE; Schema: core; Owner: goreos
+-- Name: kinship_declaration; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.kinship_declaration (
@@ -3321,10 +3213,8 @@ CREATE TABLE core.kinship_declaration (
 );
 
 
-ALTER TABLE core.kinship_declaration OWNER TO goreos;
-
 --
--- Name: legal_document; Type: TABLE; Schema: core; Owner: goreos
+-- Name: legal_document; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.legal_document (
@@ -3345,17 +3235,15 @@ CREATE TABLE core.legal_document (
 );
 
 
-ALTER TABLE core.legal_document OWNER TO goreos;
-
 --
--- Name: TABLE legal_document; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE legal_document; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.legal_document IS 'Documento legal (Ley, DFL, Reglamento)';
 
 
 --
--- Name: legal_mandate; Type: TABLE; Schema: core; Owner: goreos
+-- Name: legal_mandate; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.legal_mandate (
@@ -3375,17 +3263,15 @@ CREATE TABLE core.legal_mandate (
 );
 
 
-ALTER TABLE core.legal_mandate OWNER TO goreos;
-
 --
--- Name: TABLE legal_mandate; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE legal_mandate; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.legal_mandate IS 'Mandato legal - constraint institucional derivado de norma';
 
 
 --
--- Name: minute; Type: TABLE; Schema: core; Owner: goreos
+-- Name: minute; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.minute (
@@ -3406,10 +3292,8 @@ CREATE TABLE core.minute (
 );
 
 
-ALTER TABLE core.minute OWNER TO goreos;
-
 --
--- Name: operational_commitment; Type: TABLE; Schema: core; Owner: goreos
+-- Name: operational_commitment; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.operational_commitment (
@@ -3442,17 +3326,15 @@ CREATE TABLE core.operational_commitment (
 );
 
 
-ALTER TABLE core.operational_commitment OWNER TO goreos;
-
 --
--- Name: TABLE operational_commitment; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE operational_commitment; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.operational_commitment IS 'Tarea asignada a un responsable con plazo y seguimiento';
 
 
 --
--- Name: organization; Type: TABLE; Schema: core; Owner: goreos
+-- Name: organization; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.organization (
@@ -3477,24 +3359,22 @@ CREATE TABLE core.organization (
 );
 
 
-ALTER TABLE core.organization OWNER TO goreos;
-
 --
--- Name: TABLE organization; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE organization; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.organization IS 'Organizacion - Division, Departamento, Unidad';
 
 
 --
--- Name: COLUMN organization.rut; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN organization.rut; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.organization.rut IS 'tde:RUT, gnub:IdentificadorTributario - Rol Único Tributario. Identificador único de personas jurídicas en Chile (SII). Formato: XX.XXX.XXX-X. Normalizado desde metadata.rut el 2026-01-30.';
 
 
 --
--- Name: person; Type: TABLE; Schema: core; Owner: goreos
+-- Name: person; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.person (
@@ -3525,24 +3405,22 @@ CREATE TABLE core.person (
 );
 
 
-ALTER TABLE core.person OWNER TO goreos;
-
 --
--- Name: TABLE person; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE person; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.person IS 'Persona natural - funcionario, ciudadano, proveedor';
 
 
 --
--- Name: COLUMN person.estamento_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN person.estamento_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.person.estamento_id IS 'tde:Estamento - Clasificación funcionaria según Ley 18.834. Normalized from metadata.estamento on 2026-01-30. Valid values: PROFESIONAL, DIRECTIVO, ADMINISTRATIVO, TECNICO, AUXILIAR, HONORARIOS, AUTORIDAD.';
 
 
 --
--- Name: planning_instrument; Type: TABLE; Schema: core; Owner: goreos
+-- Name: planning_instrument; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.planning_instrument (
@@ -3565,17 +3443,15 @@ CREATE TABLE core.planning_instrument (
 );
 
 
-ALTER TABLE core.planning_instrument OWNER TO goreos;
-
 --
--- Name: TABLE planning_instrument; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE planning_instrument; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.planning_instrument IS 'Instrumento de planificacion (ERD, PROT, ARI)';
 
 
 --
--- Name: position; Type: TABLE; Schema: core; Owner: goreos
+-- Name: position; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core."position" (
@@ -3590,17 +3466,15 @@ CREATE TABLE core."position" (
 );
 
 
-ALTER TABLE core."position" OWNER TO goreos;
-
 --
--- Name: TABLE "position"; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE "position"; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core."position" IS 'Cargos y posiciones laborales (tde:Cargo, v3.0 MEDIA)';
 
 
 --
--- Name: procedure; Type: TABLE; Schema: core; Owner: goreos
+-- Name: procedure; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.procedure (
@@ -3624,17 +3498,15 @@ CREATE TABLE core.procedure (
 );
 
 
-ALTER TABLE core.procedure OWNER TO goreos;
-
 --
--- Name: TABLE procedure; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE procedure; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.procedure IS 'Tramite o servicio ofrecido al ciudadano';
 
 
 --
--- Name: progress_report; Type: TABLE; Schema: core; Owner: goreos
+-- Name: progress_report; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.progress_report (
@@ -3660,17 +3532,15 @@ CREATE TABLE core.progress_report (
 );
 
 
-ALTER TABLE core.progress_report OWNER TO goreos;
-
 --
--- Name: TABLE progress_report; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE progress_report; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.progress_report IS 'Reporte periodico de avance fisico/financiero de IPR';
 
 
 --
--- Name: rendition; Type: TABLE; Schema: core; Owner: goreos
+-- Name: rendition; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.rendition (
@@ -3698,24 +3568,22 @@ CREATE TABLE core.rendition (
 );
 
 
-ALTER TABLE core.rendition OWNER TO goreos;
-
 --
--- Name: TABLE rendition; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE rendition; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.rendition IS 'Rendicion de cuentas de un convenio';
 
 
 --
--- Name: COLUMN rendition.amount; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN rendition.amount; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core.rendition.amount IS 'Monto rendido en la rendición';
 
 
 --
--- Name: rendition_escalation; Type: TABLE; Schema: core; Owner: goreos
+-- Name: rendition_escalation; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.rendition_escalation (
@@ -3731,10 +3599,8 @@ CREATE TABLE core.rendition_escalation (
 );
 
 
-ALTER TABLE core.rendition_escalation OWNER TO goreos;
-
 --
--- Name: rendition_history; Type: TABLE; Schema: core; Owner: goreos
+-- Name: rendition_history; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.rendition_history (
@@ -3750,17 +3616,15 @@ CREATE TABLE core.rendition_history (
 );
 
 
-ALTER TABLE core.rendition_history OWNER TO goreos;
-
 --
--- Name: TABLE rendition_history; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE rendition_history; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.rendition_history IS 'Historial de cambios de estado de rendiciones (SISREC)';
 
 
 --
--- Name: rendition_phase; Type: TABLE; Schema: core; Owner: goreos
+-- Name: rendition_phase; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.rendition_phase (
@@ -3777,10 +3641,8 @@ CREATE TABLE core.rendition_phase (
 );
 
 
-ALTER TABLE core.rendition_phase OWNER TO goreos;
-
 --
--- Name: resolution; Type: TABLE; Schema: core; Owner: goreos
+-- Name: resolution; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.resolution (
@@ -3803,17 +3665,15 @@ CREATE TABLE core.resolution (
 );
 
 
-ALTER TABLE core.resolution OWNER TO goreos;
-
 --
--- Name: TABLE resolution; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE resolution; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.resolution IS 'Resolucion - EXENTA, AFECTA o CONJUNTA';
 
 
 --
--- Name: risk; Type: TABLE; Schema: core; Owner: goreos
+-- Name: risk; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.risk (
@@ -3842,17 +3702,15 @@ CREATE TABLE core.risk (
 );
 
 
-ALTER TABLE core.risk OWNER TO goreos;
-
 --
--- Name: TABLE risk; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE risk; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.risk IS 'Riesgo identificado en un proceso o IPR';
 
 
 --
--- Name: schema_migration; Type: TABLE; Schema: core; Owner: goreos
+-- Name: schema_migration; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.schema_migration (
@@ -3864,10 +3722,8 @@ CREATE TABLE core.schema_migration (
 );
 
 
-ALTER TABLE core.schema_migration OWNER TO goreos;
-
 --
--- Name: schema_migration_id_seq; Type: SEQUENCE; Schema: core; Owner: goreos
+-- Name: schema_migration_id_seq; Type: SEQUENCE; Schema: core; Owner: -
 --
 
 CREATE SEQUENCE core.schema_migration_id_seq
@@ -3879,17 +3735,15 @@ CREATE SEQUENCE core.schema_migration_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE core.schema_migration_id_seq OWNER TO goreos;
-
 --
--- Name: schema_migration_id_seq; Type: SEQUENCE OWNED BY; Schema: core; Owner: goreos
+-- Name: schema_migration_id_seq; Type: SEQUENCE OWNED BY; Schema: core; Owner: -
 --
 
 ALTER SEQUENCE core.schema_migration_id_seq OWNED BY core.schema_migration.id;
 
 
 --
--- Name: session; Type: TABLE; Schema: core; Owner: goreos
+-- Name: session; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.session (
@@ -3913,10 +3767,8 @@ CREATE TABLE core.session (
 );
 
 
-ALTER TABLE core.session OWNER TO goreos;
-
 --
--- Name: session_agreement; Type: TABLE; Schema: core; Owner: goreos
+-- Name: session_agreement; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.session_agreement (
@@ -3940,10 +3792,8 @@ CREATE TABLE core.session_agreement (
 );
 
 
-ALTER TABLE core.session_agreement OWNER TO goreos;
-
 --
--- Name: session_vote; Type: TABLE; Schema: core; Owner: goreos
+-- Name: session_vote; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.session_vote (
@@ -3957,10 +3807,8 @@ CREATE TABLE core.session_vote (
 );
 
 
-ALTER TABLE core.session_vote OWNER TO goreos;
-
 --
--- Name: sni_level_config; Type: TABLE; Schema: core; Owner: goreos
+-- Name: sni_level_config; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.sni_level_config (
@@ -3977,17 +3825,15 @@ CREATE TABLE core.sni_level_config (
 );
 
 
-ALTER TABLE core.sni_level_config OWNER TO goreos;
-
 --
--- Name: TABLE sni_level_config; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE sni_level_config; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.sni_level_config IS 'SNI proporcionalidad: evaluation levels by project amount (HΩ-11)';
 
 
 --
--- Name: subv8_fund; Type: TABLE; Schema: core; Owner: goreos
+-- Name: subv8_fund; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.subv8_fund (
@@ -4005,17 +3851,15 @@ CREATE TABLE core.subv8_fund (
 );
 
 
-ALTER TABLE core.subv8_fund OWNER TO goreos;
-
 --
--- Name: TABLE subv8_fund; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE subv8_fund; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.subv8_fund IS 'TP-02: Subvención 8% thematic funds with budget ceilings';
 
 
 --
--- Name: subv8_fund_ceiling; Type: TABLE; Schema: core; Owner: goreos
+-- Name: subv8_fund_ceiling; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.subv8_fund_ceiling (
@@ -4031,17 +3875,15 @@ CREATE TABLE core.subv8_fund_ceiling (
 );
 
 
-ALTER TABLE core.subv8_fund_ceiling OWNER TO goreos;
-
 --
--- Name: TABLE subv8_fund_ceiling; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE subv8_fund_ceiling; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.subv8_fund_ceiling IS 'TP-02: Max project amount per fund × institution type × area';
 
 
 --
--- Name: territorial_indicator; Type: TABLE; Schema: core; Owner: goreos
+-- Name: territorial_indicator; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.territorial_indicator (
@@ -4067,17 +3909,15 @@ CREATE TABLE core.territorial_indicator (
 );
 
 
-ALTER TABLE core.territorial_indicator OWNER TO goreos;
-
 --
--- Name: TABLE territorial_indicator; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE territorial_indicator; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.territorial_indicator IS 'Indicador socioeconomico o de gestion territorial';
 
 
 --
--- Name: territory; Type: TABLE; Schema: core; Owner: goreos
+-- Name: territory; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.territory (
@@ -4099,17 +3939,15 @@ CREATE TABLE core.territory (
 );
 
 
-ALTER TABLE core.territory OWNER TO goreos;
-
 --
--- Name: TABLE territory; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE territory; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.territory IS 'Unidad territorial (Region, Provincia, Comuna)';
 
 
 --
--- Name: user; Type: TABLE; Schema: core; Owner: goreos
+-- Name: user; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core."user" (
@@ -4134,24 +3972,22 @@ CREATE TABLE core."user" (
 );
 
 
-ALTER TABLE core."user" OWNER TO goreos;
-
 --
--- Name: TABLE "user"; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE "user"; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core."user" IS 'Usuario del sistema con credenciales de autenticacion';
 
 
 --
--- Name: COLUMN "user".system_role_id; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: COLUMN "user".system_role_id; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON COLUMN core."user".system_role_id IS 'scheme=system_role: ADMIN_SISTEMA|ADMIN_REGIONAL|JEFE_DIVISION|ENCARGADO';
 
 
 --
--- Name: vehicle; Type: TABLE; Schema: core; Owner: goreos
+-- Name: vehicle; Type: TABLE; Schema: core; Owner: -
 --
 
 CREATE TABLE core.vehicle (
@@ -4176,17 +4012,15 @@ CREATE TABLE core.vehicle (
 );
 
 
-ALTER TABLE core.vehicle OWNER TO goreos;
-
 --
--- Name: TABLE vehicle; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TABLE vehicle; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TABLE core.vehicle IS 'Vehiculo institucional';
 
 
 --
--- Name: category; Type: TABLE; Schema: ref; Owner: goreos
+-- Name: category; Type: TABLE; Schema: ref; Owner: -
 --
 
 CREATE TABLE ref.category (
@@ -4212,38 +4046,36 @@ CREATE TABLE ref.category (
 );
 
 
-ALTER TABLE ref.category OWNER TO goreos;
-
 --
--- Name: TABLE category; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: TABLE category; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON TABLE ref.category IS 'Patron Category (Gist 14.0) - 75+ schemes de taxonomias flexibles';
 
 
 --
--- Name: COLUMN category.phase_id; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: COLUMN category.phase_id; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON COLUMN ref.category.phase_id IS 'Para scheme=ipr_state: FK a mcd_phase al que pertenece este estado';
 
 
 --
--- Name: COLUMN category.valid_transitions; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: COLUMN category.valid_transitions; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON COLUMN ref.category.valid_transitions IS 'Array JSON de codigos de estado validos como destino';
 
 
 --
--- Name: CONSTRAINT chk_category_metadata_object ON category; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: CONSTRAINT chk_category_metadata_object ON category; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON CONSTRAINT chk_category_metadata_object ON ref.category IS 'STR-003 FIX: Garantiza que metadata sea objeto JSON, no array o primitivo';
 
 
 --
--- Name: vw_ipr_applicant; Type: VIEW; Schema: core; Owner: goreos
+-- Name: vw_ipr_applicant; Type: VIEW; Schema: core; Owner: -
 --
 
 CREATE VIEW core.vw_ipr_applicant AS
@@ -4256,17 +4088,15 @@ CREATE VIEW core.vw_ipr_applicant AS
   WHERE (((c.scheme)::text = 'ipr_party_role'::text) AND ((c.code)::text = 'POSTULANTE'::text) AND (p.is_primary = true) AND (p.deleted_at IS NULL));
 
 
-ALTER VIEW core.vw_ipr_applicant OWNER TO goreos;
-
 --
--- Name: VIEW vw_ipr_applicant; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: VIEW vw_ipr_applicant; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON VIEW core.vw_ipr_applicant IS 'Vista de compatibilidad: Postulante principal de cada IPR';
 
 
 --
--- Name: vw_ipr_executor; Type: VIEW; Schema: core; Owner: goreos
+-- Name: vw_ipr_executor; Type: VIEW; Schema: core; Owner: -
 --
 
 CREATE VIEW core.vw_ipr_executor AS
@@ -4279,17 +4109,15 @@ CREATE VIEW core.vw_ipr_executor AS
   WHERE (((c.scheme)::text = 'ipr_party_role'::text) AND ((c.code)::text = 'EJECUTOR'::text) AND (p.is_primary = true) AND (p.deleted_at IS NULL));
 
 
-ALTER VIEW core.vw_ipr_executor OWNER TO goreos;
-
 --
--- Name: VIEW vw_ipr_executor; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: VIEW vw_ipr_executor; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON VIEW core.vw_ipr_executor IS 'Vista de compatibilidad: Ejecutor principal de cada IPR';
 
 
 --
--- Name: vw_ipr_formulator; Type: VIEW; Schema: core; Owner: goreos
+-- Name: vw_ipr_formulator; Type: VIEW; Schema: core; Owner: -
 --
 
 CREATE VIEW core.vw_ipr_formulator AS
@@ -4302,17 +4130,15 @@ CREATE VIEW core.vw_ipr_formulator AS
   WHERE (((c.scheme)::text = 'ipr_party_role'::text) AND ((c.code)::text = 'FORMULADOR'::text) AND (p.is_primary = true) AND (p.deleted_at IS NULL));
 
 
-ALTER VIEW core.vw_ipr_formulator OWNER TO goreos;
-
 --
--- Name: VIEW vw_ipr_formulator; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: VIEW vw_ipr_formulator; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON VIEW core.vw_ipr_formulator IS 'Vista de compatibilidad: Formulador principal de cada IPR';
 
 
 --
--- Name: vw_ipr_parties; Type: VIEW; Schema: core; Owner: goreos
+-- Name: vw_ipr_parties; Type: VIEW; Schema: core; Owner: -
 --
 
 CREATE VIEW core.vw_ipr_parties AS
@@ -4333,17 +4159,15 @@ CREATE VIEW core.vw_ipr_parties AS
   WHERE ((p.deleted_at IS NULL) AND ((c.scheme)::text = 'ipr_party_role'::text));
 
 
-ALTER VIEW core.vw_ipr_parties OWNER TO goreos;
-
 --
--- Name: VIEW vw_ipr_parties; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: VIEW vw_ipr_parties; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON VIEW core.vw_ipr_parties IS 'Vista consolidada de todas las partes de cada IPR con sus roles';
 
 
 --
--- Name: entity; Type: TABLE; Schema: meta; Owner: goreos
+-- Name: entity; Type: TABLE; Schema: meta; Owner: -
 --
 
 CREATE TABLE meta.entity (
@@ -4362,17 +4186,15 @@ CREATE TABLE meta.entity (
 );
 
 
-ALTER TABLE meta.entity OWNER TO goreos;
-
 --
--- Name: TABLE entity; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: TABLE entity; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON TABLE meta.entity IS 'Entidad del dominio - estructura de informacion';
 
 
 --
--- Name: process; Type: TABLE; Schema: meta; Owner: goreos
+-- Name: process; Type: TABLE; Schema: meta; Owner: -
 --
 
 CREATE TABLE meta.process (
@@ -4390,24 +4212,22 @@ CREATE TABLE meta.process (
 );
 
 
-ALTER TABLE meta.process OWNER TO goreos;
-
 --
--- Name: TABLE process; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: TABLE process; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON TABLE meta.process IS 'Proceso - perspectiva dinamica del sistema';
 
 
 --
--- Name: COLUMN process.layer; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: COLUMN process.layer; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON COLUMN meta.process.layer IS 'STRATEGIC|TACTICAL|OPERATIONAL';
 
 
 --
--- Name: role; Type: TABLE; Schema: meta; Owner: goreos
+-- Name: role; Type: TABLE; Schema: meta; Owner: -
 --
 
 CREATE TABLE meta.role (
@@ -4430,38 +4250,36 @@ CREATE TABLE meta.role (
 );
 
 
-ALTER TABLE meta.role OWNER TO goreos;
-
 --
--- Name: TABLE role; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: TABLE role; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON TABLE meta.role IS 'Rol con soporte HAIC - capacidad de ejecutar transformacion';
 
 
 --
--- Name: COLUMN role.agent_type; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: COLUMN role.agent_type; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON COLUMN meta.role.agent_type IS 'HUMAN|AI|ALGORITHMIC|ORGANIZATIONAL|MACHINE|MIXED (Sustrato)';
 
 
 --
--- Name: COLUMN role.cognition_level; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: COLUMN role.cognition_level; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON COLUMN meta.role.cognition_level IS 'C0|C1|C2|C3 (Nivel de decision ORKO)';
 
 
 --
--- Name: COLUMN role.delegation_mode; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: COLUMN role.delegation_mode; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON COLUMN meta.role.delegation_mode IS 'M1-M6 (modo de delegacion ORKO)';
 
 
 --
--- Name: story; Type: TABLE; Schema: meta; Owner: goreos
+-- Name: story; Type: TABLE; Schema: meta; Owner: -
 --
 
 CREATE TABLE meta.story (
@@ -4491,17 +4309,15 @@ CREATE TABLE meta.story (
 );
 
 
-ALTER TABLE meta.story OWNER TO goreos;
-
 --
--- Name: TABLE story; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: TABLE story; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON TABLE meta.story IS 'Historia de usuario - atomo fundamental, origen de todo requerimiento';
 
 
 --
--- Name: story_entity; Type: TABLE; Schema: meta; Owner: goreos
+-- Name: story_entity; Type: TABLE; Schema: meta; Owner: -
 --
 
 CREATE TABLE meta.story_entity (
@@ -4518,17 +4334,15 @@ CREATE TABLE meta.story_entity (
 );
 
 
-ALTER TABLE meta.story_entity OWNER TO goreos;
-
 --
--- Name: TABLE story_entity; Type: COMMENT; Schema: meta; Owner: goreos
+-- Name: TABLE story_entity; Type: COMMENT; Schema: meta; Owner: -
 --
 
 COMMENT ON TABLE meta.story_entity IS 'Relacion N:M entre historias y entidades';
 
 
 --
--- Name: acceptance_criteria; Type: TABLE; Schema: public; Owner: goreos
+-- Name: acceptance_criteria; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.acceptance_criteria (
@@ -4538,10 +4352,8 @@ CREATE TABLE public.acceptance_criteria (
 );
 
 
-ALTER TABLE public.acceptance_criteria OWNER TO goreos;
-
 --
--- Name: acceptance_criteria_id_seq; Type: SEQUENCE; Schema: public; Owner: goreos
+-- Name: acceptance_criteria_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.acceptance_criteria_id_seq
@@ -4553,17 +4365,15 @@ CREATE SEQUENCE public.acceptance_criteria_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.acceptance_criteria_id_seq OWNER TO goreos;
-
 --
--- Name: acceptance_criteria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: goreos
+-- Name: acceptance_criteria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.acceptance_criteria_id_seq OWNED BY public.acceptance_criteria.id;
 
 
 --
--- Name: bridge_us_entity; Type: TABLE; Schema: public; Owner: goreos
+-- Name: bridge_us_entity; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.bridge_us_entity (
@@ -4573,10 +4383,8 @@ CREATE TABLE public.bridge_us_entity (
 );
 
 
-ALTER TABLE public.bridge_us_entity OWNER TO goreos;
-
 --
--- Name: bridge_us_extra_tag; Type: TABLE; Schema: public; Owner: goreos
+-- Name: bridge_us_extra_tag; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.bridge_us_extra_tag (
@@ -4585,10 +4393,8 @@ CREATE TABLE public.bridge_us_extra_tag (
 );
 
 
-ALTER TABLE public.bridge_us_extra_tag OWNER TO goreos;
-
 --
--- Name: dim_entity; Type: TABLE; Schema: public; Owner: goreos
+-- Name: dim_entity; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dim_entity (
@@ -4598,10 +4404,8 @@ CREATE TABLE public.dim_entity (
 );
 
 
-ALTER TABLE public.dim_entity OWNER TO goreos;
-
 --
--- Name: dim_extra_tag; Type: TABLE; Schema: public; Owner: goreos
+-- Name: dim_extra_tag; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dim_extra_tag (
@@ -4610,10 +4414,8 @@ CREATE TABLE public.dim_extra_tag (
 );
 
 
-ALTER TABLE public.dim_extra_tag OWNER TO goreos;
-
 --
--- Name: dim_process; Type: TABLE; Schema: public; Owner: goreos
+-- Name: dim_process; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dim_process (
@@ -4622,10 +4424,8 @@ CREATE TABLE public.dim_process (
 );
 
 
-ALTER TABLE public.dim_process OWNER TO goreos;
-
 --
--- Name: dim_role; Type: TABLE; Schema: public; Owner: goreos
+-- Name: dim_role; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dim_role (
@@ -4639,10 +4439,8 @@ CREATE TABLE public.dim_role (
 );
 
 
-ALTER TABLE public.dim_role OWNER TO goreos;
-
 --
--- Name: dim_role_canonical; Type: TABLE; Schema: public; Owner: goreos
+-- Name: dim_role_canonical; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dim_role_canonical (
@@ -4659,10 +4457,8 @@ CREATE TABLE public.dim_role_canonical (
 );
 
 
-ALTER TABLE public.dim_role_canonical OWNER TO goreos;
-
 --
--- Name: fact_user_story; Type: TABLE; Schema: public; Owner: goreos
+-- Name: fact_user_story; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.fact_user_story (
@@ -4684,10 +4480,8 @@ CREATE TABLE public.fact_user_story (
 );
 
 
-ALTER TABLE public.fact_user_story OWNER TO goreos;
-
 --
--- Name: role_especialidad; Type: TABLE; Schema: public; Owner: goreos
+-- Name: role_especialidad; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.role_especialidad (
@@ -4697,10 +4491,8 @@ CREATE TABLE public.role_especialidad (
 );
 
 
-ALTER TABLE public.role_especialidad OWNER TO goreos;
-
 --
--- Name: role_mapping; Type: TABLE; Schema: public; Owner: goreos
+-- Name: role_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.role_mapping (
@@ -4711,10 +4503,8 @@ CREATE TABLE public.role_mapping (
 );
 
 
-ALTER TABLE public.role_mapping OWNER TO goreos;
-
 --
--- Name: v_role_mapping; Type: VIEW; Schema: public; Owner: goreos
+-- Name: v_role_mapping; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.v_role_mapping AS
@@ -4728,10 +4518,8 @@ CREATE VIEW public.v_role_mapping AS
      LEFT JOIN public.dim_role_canonical drc ON (((dr.canonical_id)::text = (drc.id)::text)));
 
 
-ALTER VIEW public.v_role_mapping OWNER TO goreos;
-
 --
--- Name: v_roles_por_division; Type: VIEW; Schema: public; Owner: goreos
+-- Name: v_roles_por_division; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.v_roles_por_division AS
@@ -4758,10 +4546,8 @@ CREATE VIEW public.v_roles_por_division AS
   ORDER BY (sum(usage_count)) DESC;
 
 
-ALTER VIEW public.v_roles_por_division OWNER TO goreos;
-
 --
--- Name: v_roles_summary; Type: VIEW; Schema: public; Owner: goreos
+-- Name: v_roles_summary; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.v_roles_summary AS
@@ -4780,10 +4566,8 @@ CREATE VIEW public.v_roles_summary AS
   ORDER BY r.division, r.funcion;
 
 
-ALTER VIEW public.v_roles_summary OWNER TO goreos;
-
 --
--- Name: actor; Type: TABLE; Schema: ref; Owner: goreos
+-- Name: actor; Type: TABLE; Schema: ref; Owner: -
 --
 
 CREATE TABLE ref.actor (
@@ -4811,31 +4595,29 @@ CREATE TABLE ref.actor (
 );
 
 
-ALTER TABLE ref.actor OWNER TO goreos;
-
 --
--- Name: TABLE actor; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: TABLE actor; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON TABLE ref.actor IS 'Actores en flujos de proceso - humanos, algoritmicos, organizacionales';
 
 
 --
--- Name: COLUMN actor.agent_type; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: COLUMN actor.agent_type; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON COLUMN ref.actor.agent_type IS 'HUMAN|AI|ALGORITHMIC|ORGANIZATIONAL|MACHINE|MIXED';
 
 
 --
--- Name: COLUMN actor.agent_definition_uri; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: COLUMN actor.agent_definition_uri; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON COLUMN ref.actor.agent_definition_uri IS 'URI al YAML/JSON de definicion del agente (koda://...)';
 
 
 --
--- Name: operational_commitment_type; Type: TABLE; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type; Type: TABLE; Schema: ref; Owner: -
 --
 
 CREATE TABLE ref.operational_commitment_type (
@@ -4857,17 +4639,15 @@ CREATE TABLE ref.operational_commitment_type (
 );
 
 
-ALTER TABLE ref.operational_commitment_type OWNER TO goreos;
-
 --
--- Name: TABLE operational_commitment_type; Type: COMMENT; Schema: ref; Owner: goreos
+-- Name: TABLE operational_commitment_type; Type: COMMENT; Schema: ref; Owner: -
 --
 
 COMMENT ON TABLE ref.operational_commitment_type IS 'Tipos de compromiso operativo para gestion';
 
 
 --
--- Name: event; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event (
@@ -4886,38 +4666,36 @@ CREATE TABLE txn.event (
 PARTITION BY RANGE (occurred_at);
 
 
-ALTER TABLE txn.event OWNER TO goreos;
-
 --
--- Name: TABLE event; Type: COMMENT; Schema: txn; Owner: goreos
+-- Name: TABLE event; Type: COMMENT; Schema: txn; Owner: -
 --
 
 COMMENT ON TABLE txn.event IS 'Evento del sistema - Event Sourcing (particionado por mes)';
 
 
 --
--- Name: COLUMN event.subject_id; Type: COMMENT; Schema: txn; Owner: goreos
+-- Name: COLUMN event.subject_id; Type: COMMENT; Schema: txn; Owner: -
 --
 
 COMMENT ON COLUMN txn.event.subject_id IS 'UUID del sujeto';
 
 
 --
--- Name: COLUMN event.actor_id; Type: COMMENT; Schema: txn; Owner: goreos
+-- Name: COLUMN event.actor_id; Type: COMMENT; Schema: txn; Owner: -
 --
 
 COMMENT ON COLUMN txn.event.actor_id IS 'UUID del usuario que ejecuta la acción (core.user)';
 
 
 --
--- Name: COLUMN event.actor_ref_id; Type: COMMENT; Schema: txn; Owner: goreos
+-- Name: COLUMN event.actor_ref_id; Type: COMMENT; Schema: txn; Owner: -
 --
 
 COMMENT ON COLUMN txn.event.actor_ref_id IS 'UUID opcional del actor en ref.actor (agentes algorítmicos)';
 
 
 --
--- Name: event_2026_01; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_01; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_01 (
@@ -4935,10 +4713,8 @@ CREATE TABLE txn.event_2026_01 (
 );
 
 
-ALTER TABLE txn.event_2026_01 OWNER TO goreos;
-
 --
--- Name: event_2026_02; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_02; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_02 (
@@ -4956,10 +4732,8 @@ CREATE TABLE txn.event_2026_02 (
 );
 
 
-ALTER TABLE txn.event_2026_02 OWNER TO goreos;
-
 --
--- Name: event_2026_03; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_03; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_03 (
@@ -4977,10 +4751,8 @@ CREATE TABLE txn.event_2026_03 (
 );
 
 
-ALTER TABLE txn.event_2026_03 OWNER TO goreos;
-
 --
--- Name: event_2026_04; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_04; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_04 (
@@ -4998,10 +4770,8 @@ CREATE TABLE txn.event_2026_04 (
 );
 
 
-ALTER TABLE txn.event_2026_04 OWNER TO goreos;
-
 --
--- Name: event_2026_05; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_05; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_05 (
@@ -5019,10 +4789,8 @@ CREATE TABLE txn.event_2026_05 (
 );
 
 
-ALTER TABLE txn.event_2026_05 OWNER TO goreos;
-
 --
--- Name: event_2026_06; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_06; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_06 (
@@ -5040,10 +4808,8 @@ CREATE TABLE txn.event_2026_06 (
 );
 
 
-ALTER TABLE txn.event_2026_06 OWNER TO goreos;
-
 --
--- Name: event_2026_07; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_07; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_07 (
@@ -5061,10 +4827,8 @@ CREATE TABLE txn.event_2026_07 (
 );
 
 
-ALTER TABLE txn.event_2026_07 OWNER TO goreos;
-
 --
--- Name: event_2026_08; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_08; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_08 (
@@ -5082,10 +4846,8 @@ CREATE TABLE txn.event_2026_08 (
 );
 
 
-ALTER TABLE txn.event_2026_08 OWNER TO goreos;
-
 --
--- Name: event_2026_09; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_09; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_09 (
@@ -5103,10 +4865,8 @@ CREATE TABLE txn.event_2026_09 (
 );
 
 
-ALTER TABLE txn.event_2026_09 OWNER TO goreos;
-
 --
--- Name: event_2026_10; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_10; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_10 (
@@ -5124,10 +4884,8 @@ CREATE TABLE txn.event_2026_10 (
 );
 
 
-ALTER TABLE txn.event_2026_10 OWNER TO goreos;
-
 --
--- Name: event_2026_11; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_11; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_11 (
@@ -5145,10 +4903,8 @@ CREATE TABLE txn.event_2026_11 (
 );
 
 
-ALTER TABLE txn.event_2026_11 OWNER TO goreos;
-
 --
--- Name: event_2026_12; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_2026_12; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_2026_12 (
@@ -5166,10 +4922,8 @@ CREATE TABLE txn.event_2026_12 (
 );
 
 
-ALTER TABLE txn.event_2026_12 OWNER TO goreos;
-
 --
--- Name: event_default; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: event_default; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.event_default (
@@ -5187,10 +4941,8 @@ CREATE TABLE txn.event_default (
 );
 
 
-ALTER TABLE txn.event_default OWNER TO goreos;
-
 --
--- Name: magnitude; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: magnitude; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.magnitude (
@@ -5208,17 +4960,15 @@ CREATE TABLE txn.magnitude (
 PARTITION BY RANGE (as_of_date);
 
 
-ALTER TABLE txn.magnitude OWNER TO goreos;
-
 --
--- Name: TABLE magnitude; Type: COMMENT; Schema: txn; Owner: goreos
+-- Name: TABLE magnitude; Type: COMMENT; Schema: txn; Owner: -
 --
 
 COMMENT ON TABLE txn.magnitude IS 'Magnitude Pattern (Gist 14.0) - particionado por fecha';
 
 
 --
--- Name: magnitude_2026_q1; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.magnitude_2026_q1 (
@@ -5235,10 +4985,8 @@ CREATE TABLE txn.magnitude_2026_q1 (
 );
 
 
-ALTER TABLE txn.magnitude_2026_q1 OWNER TO goreos;
-
 --
--- Name: magnitude_2026_q2; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.magnitude_2026_q2 (
@@ -5255,10 +5003,8 @@ CREATE TABLE txn.magnitude_2026_q2 (
 );
 
 
-ALTER TABLE txn.magnitude_2026_q2 OWNER TO goreos;
-
 --
--- Name: magnitude_2026_q3; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.magnitude_2026_q3 (
@@ -5275,10 +5021,8 @@ CREATE TABLE txn.magnitude_2026_q3 (
 );
 
 
-ALTER TABLE txn.magnitude_2026_q3 OWNER TO goreos;
-
 --
--- Name: magnitude_2026_q4; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.magnitude_2026_q4 (
@@ -5295,10 +5039,8 @@ CREATE TABLE txn.magnitude_2026_q4 (
 );
 
 
-ALTER TABLE txn.magnitude_2026_q4 OWNER TO goreos;
-
 --
--- Name: magnitude_default; Type: TABLE; Schema: txn; Owner: goreos
+-- Name: magnitude_default; Type: TABLE; Schema: txn; Owner: -
 --
 
 CREATE TABLE txn.magnitude_default (
@@ -5315,150 +5057,148 @@ CREATE TABLE txn.magnitude_default (
 );
 
 
-ALTER TABLE txn.magnitude_default OWNER TO goreos;
-
 --
--- Name: event_2026_01; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_01 FOR VALUES FROM ('2026-01-01 00:00:00+00') TO ('2026-02-01 00:00:00+00');
 
 
 --
--- Name: event_2026_02; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_02 FOR VALUES FROM ('2026-02-01 00:00:00+00') TO ('2026-03-01 00:00:00+00');
 
 
 --
--- Name: event_2026_03; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_03 FOR VALUES FROM ('2026-03-01 00:00:00+00') TO ('2026-04-01 00:00:00+00');
 
 
 --
--- Name: event_2026_04; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_04 FOR VALUES FROM ('2026-04-01 00:00:00+00') TO ('2026-05-01 00:00:00+00');
 
 
 --
--- Name: event_2026_05; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_05 FOR VALUES FROM ('2026-05-01 00:00:00+00') TO ('2026-06-01 00:00:00+00');
 
 
 --
--- Name: event_2026_06; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_06 FOR VALUES FROM ('2026-06-01 00:00:00+00') TO ('2026-07-01 00:00:00+00');
 
 
 --
--- Name: event_2026_07; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_07 FOR VALUES FROM ('2026-07-01 00:00:00+00') TO ('2026-08-01 00:00:00+00');
 
 
 --
--- Name: event_2026_08; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_08 FOR VALUES FROM ('2026-08-01 00:00:00+00') TO ('2026-09-01 00:00:00+00');
 
 
 --
--- Name: event_2026_09; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_09 FOR VALUES FROM ('2026-09-01 00:00:00+00') TO ('2026-10-01 00:00:00+00');
 
 
 --
--- Name: event_2026_10; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_10 FOR VALUES FROM ('2026-10-01 00:00:00+00') TO ('2026-11-01 00:00:00+00');
 
 
 --
--- Name: event_2026_11; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_11 FOR VALUES FROM ('2026-11-01 00:00:00+00') TO ('2026-12-01 00:00:00+00');
 
 
 --
--- Name: event_2026_12; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_2026_12 FOR VALUES FROM ('2026-12-01 00:00:00+00') TO ('2027-01-01 00:00:00+00');
 
 
 --
--- Name: event_default; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event ATTACH PARTITION txn.event_default DEFAULT;
 
 
 --
--- Name: magnitude_2026_q1; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude ATTACH PARTITION txn.magnitude_2026_q1 FOR VALUES FROM ('2026-01-01') TO ('2026-04-01');
 
 
 --
--- Name: magnitude_2026_q2; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude ATTACH PARTITION txn.magnitude_2026_q2 FOR VALUES FROM ('2026-04-01') TO ('2026-07-01');
 
 
 --
--- Name: magnitude_2026_q3; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude ATTACH PARTITION txn.magnitude_2026_q3 FOR VALUES FROM ('2026-07-01') TO ('2026-10-01');
 
 
 --
--- Name: magnitude_2026_q4; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude ATTACH PARTITION txn.magnitude_2026_q4 FOR VALUES FROM ('2026-10-01') TO ('2027-01-01');
 
 
 --
--- Name: magnitude_default; Type: TABLE ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_default; Type: TABLE ATTACH; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude ATTACH PARTITION txn.magnitude_default DEFAULT;
 
 
 --
--- Name: schema_migration id; Type: DEFAULT; Schema: core; Owner: goreos
+-- Name: schema_migration id; Type: DEFAULT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.schema_migration ALTER COLUMN id SET DEFAULT nextval('core.schema_migration_id_seq'::regclass);
 
 
 --
--- Name: acceptance_criteria id; Type: DEFAULT; Schema: public; Owner: goreos
+-- Name: acceptance_criteria id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.acceptance_criteria ALTER COLUMN id SET DEFAULT nextval('public.acceptance_criteria_id_seq'::regclass);
 
 
 --
--- Name: administrative_act_history administrative_act_history_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act_history administrative_act_history_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act_history
@@ -5466,7 +5206,7 @@ ALTER TABLE ONLY core.administrative_act_history
 
 
 --
--- Name: administrative_act administrative_act_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -5474,7 +5214,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_procedure administrative_procedure_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -5482,7 +5222,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -5490,7 +5230,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: admissibility_check admissibility_check_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_check admissibility_check_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_check
@@ -5498,7 +5238,7 @@ ALTER TABLE ONLY core.admissibility_check
 
 
 --
--- Name: admissibility_item admissibility_item_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_item admissibility_item_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_item
@@ -5506,7 +5246,7 @@ ALTER TABLE ONLY core.admissibility_item
 
 
 --
--- Name: agenda_item_context agenda_item_context_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agenda_item_context agenda_item_context_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agenda_item_context
@@ -5514,7 +5254,7 @@ ALTER TABLE ONLY core.agenda_item_context
 
 
 --
--- Name: agenda_item_context agenda_item_context_session_agreement_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agenda_item_context agenda_item_context_session_agreement_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agenda_item_context
@@ -5522,7 +5262,7 @@ ALTER TABLE ONLY core.agenda_item_context
 
 
 --
--- Name: agreement_history agreement_history_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_history agreement_history_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_history
@@ -5530,7 +5270,7 @@ ALTER TABLE ONLY core.agreement_history
 
 
 --
--- Name: agreement_installment agreement_installment_agreement_id_installment_number_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_agreement_id_installment_number_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -5538,7 +5278,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement_installment agreement_installment_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -5546,7 +5286,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement agreement_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -5554,7 +5294,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: alert alert_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -5562,7 +5302,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: budget_carryover budget_carryover_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_carryover budget_carryover_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_carryover
@@ -5570,7 +5310,7 @@ ALTER TABLE ONLY core.budget_carryover
 
 
 --
--- Name: budget_carryover budget_carryover_unique_year; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_carryover budget_carryover_unique_year; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_carryover
@@ -5578,7 +5318,7 @@ ALTER TABLE ONLY core.budget_carryover
 
 
 --
--- Name: budget_commitment budget_commitment_commitment_number_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_commitment_number_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -5586,7 +5326,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment budget_commitment_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -5594,7 +5334,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_cycle_milestone budget_cycle_milestone_ordinal_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_cycle_milestone budget_cycle_milestone_ordinal_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_cycle_milestone
@@ -5602,7 +5342,7 @@ ALTER TABLE ONLY core.budget_cycle_milestone
 
 
 --
--- Name: budget_cycle_milestone budget_cycle_milestone_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_cycle_milestone budget_cycle_milestone_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_cycle_milestone
@@ -5610,7 +5350,7 @@ ALTER TABLE ONLY core.budget_cycle_milestone
 
 
 --
--- Name: budget_cycle_tracking budget_cycle_tracking_milestone_id_fiscal_year_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_cycle_tracking budget_cycle_tracking_milestone_id_fiscal_year_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_cycle_tracking
@@ -5618,7 +5358,7 @@ ALTER TABLE ONLY core.budget_cycle_tracking
 
 
 --
--- Name: budget_cycle_tracking budget_cycle_tracking_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_cycle_tracking budget_cycle_tracking_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_cycle_tracking
@@ -5626,7 +5366,7 @@ ALTER TABLE ONLY core.budget_cycle_tracking
 
 
 --
--- Name: budget_program budget_program_code_fiscal_year_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_code_fiscal_year_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -5634,7 +5374,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -5642,7 +5382,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: commitment_history commitment_history_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: commitment_history commitment_history_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.commitment_history
@@ -5650,7 +5390,7 @@ ALTER TABLE ONLY core.commitment_history
 
 
 --
--- Name: committee committee_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -5658,7 +5398,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: committee_member committee_member_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -5666,7 +5406,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee committee_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -5674,7 +5414,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: crisis_meeting crisis_meeting_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -5682,7 +5422,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: crisis_meeting crisis_meeting_session_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_session_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -5690,7 +5430,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: dgi_ar_decision dgi_ar_decision_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision dgi_ar_decision_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_ar_decision
@@ -5698,7 +5438,7 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -5706,7 +5446,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -5714,7 +5454,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -5722,7 +5462,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -5730,7 +5470,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_committee_session dgi_committee_session_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_committee_session dgi_committee_session_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_committee_session
@@ -5738,7 +5478,7 @@ ALTER TABLE ONLY core.dgi_committee_session
 
 
 --
--- Name: dgi_data_source_status dgi_data_source_status_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status dgi_data_source_status_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_data_source_status
@@ -5746,7 +5486,7 @@ ALTER TABLE ONLY core.dgi_data_source_status
 
 
 --
--- Name: dgi_decree dgi_decree_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_decree dgi_decree_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_decree
@@ -5754,7 +5494,7 @@ ALTER TABLE ONLY core.dgi_decree
 
 
 --
--- Name: dgi_decree dgi_decree_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_decree dgi_decree_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_decree
@@ -5762,7 +5502,7 @@ ALTER TABLE ONLY core.dgi_decree
 
 
 --
--- Name: dgi_division_interaction dgi_division_interaction_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_division_interaction dgi_division_interaction_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_division_interaction
@@ -5770,7 +5510,7 @@ ALTER TABLE ONLY core.dgi_division_interaction
 
 
 --
--- Name: dgi_escalation dgi_escalation_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_escalation dgi_escalation_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_escalation
@@ -5778,7 +5518,7 @@ ALTER TABLE ONLY core.dgi_escalation
 
 
 --
--- Name: dgi_escalation dgi_escalation_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_escalation dgi_escalation_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_escalation
@@ -5786,7 +5526,7 @@ ALTER TABLE ONLY core.dgi_escalation
 
 
 --
--- Name: dgi_improvement_opportunity dgi_improvement_opportunity_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_improvement_opportunity dgi_improvement_opportunity_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_improvement_opportunity
@@ -5794,7 +5534,7 @@ ALTER TABLE ONLY core.dgi_improvement_opportunity
 
 
 --
--- Name: dgi_indicator dgi_indicator_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -5802,7 +5542,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
@@ -5810,7 +5550,7 @@ ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
 
 
 --
--- Name: dgi_indicator dgi_indicator_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -5818,7 +5558,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator_snapshot dgi_indicator_snapshot_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_snapshot dgi_indicator_snapshot_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_snapshot
@@ -5826,7 +5566,7 @@ ALTER TABLE ONLY core.dgi_indicator_snapshot
 
 
 --
--- Name: dgi_initiative dgi_initiative_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -5834,7 +5574,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -5842,7 +5582,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_process_actor dgi_process_actor_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_actor dgi_process_actor_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_actor
@@ -5850,7 +5590,7 @@ ALTER TABLE ONLY core.dgi_process_actor
 
 
 --
--- Name: dgi_process dgi_process_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process dgi_process_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process
@@ -5858,7 +5598,7 @@ ALTER TABLE ONLY core.dgi_process
 
 
 --
--- Name: dgi_process_metric dgi_process_metric_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_metric dgi_process_metric_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_metric
@@ -5866,7 +5606,7 @@ ALTER TABLE ONLY core.dgi_process_metric
 
 
 --
--- Name: dgi_process_pain_point dgi_process_pain_point_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_pain_point dgi_process_pain_point_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_pain_point
@@ -5874,7 +5614,7 @@ ALTER TABLE ONLY core.dgi_process_pain_point
 
 
 --
--- Name: dgi_process dgi_process_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process dgi_process_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process
@@ -5882,7 +5622,7 @@ ALTER TABLE ONLY core.dgi_process
 
 
 --
--- Name: dgi_process_rule dgi_process_rule_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_rule dgi_process_rule_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_rule
@@ -5890,7 +5630,7 @@ ALTER TABLE ONLY core.dgi_process_rule
 
 
 --
--- Name: dgi_process_rule dgi_process_rule_process_id_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_rule dgi_process_rule_process_id_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_rule
@@ -5898,7 +5638,7 @@ ALTER TABLE ONLY core.dgi_process_rule
 
 
 --
--- Name: dgi_report dgi_report_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -5906,7 +5646,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -5914,7 +5654,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_service dgi_service_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service dgi_service_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service
@@ -5922,7 +5662,7 @@ ALTER TABLE ONLY core.dgi_service
 
 
 --
--- Name: dgi_service dgi_service_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service dgi_service_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service
@@ -5930,7 +5670,7 @@ ALTER TABLE ONLY core.dgi_service
 
 
 --
--- Name: dgi_service_request dgi_service_request_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -5938,7 +5678,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service_request dgi_service_request_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -5946,7 +5686,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_sla dgi_sla_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_sla dgi_sla_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_sla
@@ -5954,7 +5694,7 @@ ALTER TABLE ONLY core.dgi_sla
 
 
 --
--- Name: dgi_sla dgi_sla_service_id_product_type_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_sla dgi_sla_service_id_product_type_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_sla
@@ -5962,7 +5702,7 @@ ALTER TABLE ONLY core.dgi_sla
 
 
 --
--- Name: digital_platform digital_platform_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -5970,7 +5710,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: digital_platform digital_platform_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -5978,7 +5718,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: document document_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -5986,7 +5726,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -5994,7 +5734,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: electronic_file electronic_file_file_number_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_file_number_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -6002,7 +5742,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -6010,7 +5750,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -6018,7 +5758,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: financial_threshold financial_threshold_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: financial_threshold financial_threshold_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.financial_threshold
@@ -6026,7 +5766,7 @@ ALTER TABLE ONLY core.financial_threshold
 
 
 --
--- Name: financial_threshold financial_threshold_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: financial_threshold financial_threshold_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.financial_threshold
@@ -6034,7 +5774,7 @@ ALTER TABLE ONLY core.financial_threshold
 
 
 --
--- Name: financing_track financing_track_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: financing_track financing_track_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.financing_track
@@ -6042,7 +5782,7 @@ ALTER TABLE ONLY core.financing_track
 
 
 --
--- Name: financing_track financing_track_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: financing_track financing_track_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.financing_track
@@ -6050,7 +5790,7 @@ ALTER TABLE ONLY core.financing_track
 
 
 --
--- Name: fril_category fril_category_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fril_category fril_category_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fril_category
@@ -6058,7 +5798,7 @@ ALTER TABLE ONLY core.fril_category
 
 
 --
--- Name: fril_category fril_category_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fril_category fril_category_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fril_category
@@ -6066,7 +5806,7 @@ ALTER TABLE ONLY core.fril_category
 
 
 --
--- Name: fund_program fund_program_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -6074,7 +5814,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: fund_program fund_program_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -6082,7 +5822,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: installment_milestone installment_milestone_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: installment_milestone installment_milestone_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.installment_milestone
@@ -6090,7 +5830,7 @@ ALTER TABLE ONLY core.installment_milestone
 
 
 --
--- Name: inventory_item inventory_item_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -6098,7 +5838,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -6106,7 +5846,23 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: ipr ipr_codigo_bip_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_closure ipr_closure_ipr_id_key; Type: CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_closure
+    ADD CONSTRAINT ipr_closure_ipr_id_key UNIQUE (ipr_id);
+
+
+--
+-- Name: ipr_closure ipr_closure_pkey; Type: CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_closure
+    ADD CONSTRAINT ipr_closure_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ipr ipr_codigo_bip_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -6114,7 +5870,15 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr_mechanism ipr_mechanism_ipr_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_expost_evaluation ipr_expost_evaluation_pkey; Type: CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_expost_evaluation
+    ADD CONSTRAINT ipr_expost_evaluation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ipr_mechanism ipr_mechanism_ipr_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_mechanism
@@ -6122,7 +5886,7 @@ ALTER TABLE ONLY core.ipr_mechanism
 
 
 --
--- Name: ipr_mechanism ipr_mechanism_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_mechanism ipr_mechanism_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_mechanism
@@ -6130,7 +5894,7 @@ ALTER TABLE ONLY core.ipr_mechanism
 
 
 --
--- Name: ipr_milestone ipr_milestone_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -6138,7 +5902,15 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_party ipr_party_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_modification ipr_modification_pkey; Type: CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_modification
+    ADD CONSTRAINT ipr_modification_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ipr_party ipr_party_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -6146,7 +5918,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr ipr_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -6154,7 +5926,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr_problem ipr_problem_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -6162,7 +5934,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -6170,7 +5942,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_territory ipr_territory_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -6178,7 +5950,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: kinship_declaration kinship_declaration_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: kinship_declaration kinship_declaration_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.kinship_declaration
@@ -6186,7 +5958,7 @@ ALTER TABLE ONLY core.kinship_declaration
 
 
 --
--- Name: legal_document legal_document_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_document legal_document_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_document
@@ -6194,7 +5966,7 @@ ALTER TABLE ONLY core.legal_document
 
 
 --
--- Name: legal_document legal_document_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_document legal_document_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_document
@@ -6202,7 +5974,7 @@ ALTER TABLE ONLY core.legal_document
 
 
 --
--- Name: legal_mandate legal_mandate_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_mandate legal_mandate_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_mandate
@@ -6210,7 +5982,7 @@ ALTER TABLE ONLY core.legal_mandate
 
 
 --
--- Name: minute minute_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -6218,7 +5990,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: minute minute_session_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_session_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -6226,7 +5998,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: operational_commitment operational_commitment_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -6234,7 +6006,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -6242,7 +6014,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: organization organization_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization organization_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -6250,7 +6022,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: organization organization_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization organization_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -6258,7 +6030,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: person person_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -6266,7 +6038,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person person_rut_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_rut_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -6274,7 +6046,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: planning_instrument planning_instrument_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -6282,7 +6054,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: planning_instrument planning_instrument_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -6290,7 +6062,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: position position_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: position position_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."position"
@@ -6298,7 +6070,7 @@ ALTER TABLE ONLY core."position"
 
 
 --
--- Name: position position_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: position position_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."position"
@@ -6306,7 +6078,7 @@ ALTER TABLE ONLY core."position"
 
 
 --
--- Name: procedure procedure_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -6314,7 +6086,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: procedure procedure_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -6322,7 +6094,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: progress_report progress_report_ipr_id_report_number_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_ipr_id_report_number_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -6330,7 +6102,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: progress_report progress_report_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -6338,7 +6110,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: rendition_escalation rendition_escalation_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_escalation rendition_escalation_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_escalation
@@ -6346,7 +6118,7 @@ ALTER TABLE ONLY core.rendition_escalation
 
 
 --
--- Name: rendition_history rendition_history_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_history rendition_history_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_history
@@ -6354,7 +6126,7 @@ ALTER TABLE ONLY core.rendition_history
 
 
 --
--- Name: rendition_phase rendition_phase_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_phase rendition_phase_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_phase
@@ -6362,7 +6134,7 @@ ALTER TABLE ONLY core.rendition_phase
 
 
 --
--- Name: rendition_phase rendition_phase_ordinal_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_phase rendition_phase_ordinal_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_phase
@@ -6370,7 +6142,7 @@ ALTER TABLE ONLY core.rendition_phase
 
 
 --
--- Name: rendition_phase rendition_phase_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_phase rendition_phase_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_phase
@@ -6378,7 +6150,7 @@ ALTER TABLE ONLY core.rendition_phase
 
 
 --
--- Name: rendition rendition_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -6386,7 +6158,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: resolution resolution_administrative_act_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_administrative_act_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -6394,7 +6166,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -6402,7 +6174,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: risk risk_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -6410,7 +6182,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -6418,7 +6190,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: schema_migration schema_migration_filename_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: schema_migration schema_migration_filename_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.schema_migration
@@ -6426,7 +6198,7 @@ ALTER TABLE ONLY core.schema_migration
 
 
 --
--- Name: schema_migration schema_migration_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: schema_migration schema_migration_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.schema_migration
@@ -6434,7 +6206,7 @@ ALTER TABLE ONLY core.schema_migration
 
 
 --
--- Name: session_agreement session_agreement_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -6442,7 +6214,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session session_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session session_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session
@@ -6450,7 +6222,7 @@ ALTER TABLE ONLY core.session
 
 
 --
--- Name: session_vote session_vote_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_vote session_vote_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_vote
@@ -6458,7 +6230,7 @@ ALTER TABLE ONLY core.session_vote
 
 
 --
--- Name: session_vote session_vote_session_agreement_id_voter_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_vote session_vote_session_agreement_id_voter_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_vote
@@ -6466,7 +6238,7 @@ ALTER TABLE ONLY core.session_vote
 
 
 --
--- Name: sni_level_config sni_level_config_level_number_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: sni_level_config sni_level_config_level_number_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.sni_level_config
@@ -6474,7 +6246,7 @@ ALTER TABLE ONLY core.sni_level_config
 
 
 --
--- Name: sni_level_config sni_level_config_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: sni_level_config sni_level_config_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.sni_level_config
@@ -6482,7 +6254,7 @@ ALTER TABLE ONLY core.sni_level_config
 
 
 --
--- Name: subv8_fund_ceiling subv8_fund_ceiling_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: subv8_fund_ceiling subv8_fund_ceiling_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.subv8_fund_ceiling
@@ -6490,7 +6262,7 @@ ALTER TABLE ONLY core.subv8_fund_ceiling
 
 
 --
--- Name: subv8_fund subv8_fund_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: subv8_fund subv8_fund_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.subv8_fund
@@ -6498,7 +6270,7 @@ ALTER TABLE ONLY core.subv8_fund
 
 
 --
--- Name: subv8_fund subv8_fund_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: subv8_fund subv8_fund_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.subv8_fund
@@ -6506,7 +6278,7 @@ ALTER TABLE ONLY core.subv8_fund
 
 
 --
--- Name: territorial_indicator territorial_indicator_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -6514,7 +6286,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territorial_indicator territorial_indicator_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -6522,7 +6294,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territory territory_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_code_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -6530,7 +6302,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: territory territory_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -6538,7 +6310,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: admissibility_check uq_admissibility_check_ipr_item; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_check uq_admissibility_check_ipr_item; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_check
@@ -6546,7 +6318,7 @@ ALTER TABLE ONLY core.admissibility_check
 
 
 --
--- Name: admissibility_item uq_admissibility_item_track_code; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_item uq_admissibility_item_track_code; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_item
@@ -6554,7 +6326,7 @@ ALTER TABLE ONLY core.admissibility_item
 
 
 --
--- Name: ipr_territory uq_ipr_territory_impact; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory uq_ipr_territory_impact; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -6562,7 +6334,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: kinship_declaration uq_kinship_decl; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: kinship_declaration uq_kinship_decl; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.kinship_declaration
@@ -6570,7 +6342,7 @@ ALTER TABLE ONLY core.kinship_declaration
 
 
 --
--- Name: user user_email_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_email_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -6578,7 +6350,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_person_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_person_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -6586,7 +6358,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -6594,7 +6366,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: vehicle vehicle_inventory_item_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_inventory_item_id_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -6602,7 +6374,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_pkey; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -6610,7 +6382,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_plate_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_plate_key; Type: CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -6618,7 +6390,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: entity entity_code_key; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: entity entity_code_key; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.entity
@@ -6626,7 +6398,7 @@ ALTER TABLE ONLY meta.entity
 
 
 --
--- Name: entity entity_pkey; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: entity entity_pkey; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.entity
@@ -6634,7 +6406,7 @@ ALTER TABLE ONLY meta.entity
 
 
 --
--- Name: process process_code_key; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: process process_code_key; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.process
@@ -6642,7 +6414,7 @@ ALTER TABLE ONLY meta.process
 
 
 --
--- Name: process process_pkey; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: process process_pkey; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.process
@@ -6650,7 +6422,7 @@ ALTER TABLE ONLY meta.process
 
 
 --
--- Name: role role_code_key; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: role role_code_key; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.role
@@ -6658,7 +6430,7 @@ ALTER TABLE ONLY meta.role
 
 
 --
--- Name: role role_pkey; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.role
@@ -6666,7 +6438,7 @@ ALTER TABLE ONLY meta.role
 
 
 --
--- Name: story story_code_key; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story story_code_key; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -6674,7 +6446,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: story_entity story_entity_pkey; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity story_entity_pkey; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -6682,7 +6454,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story_entity story_entity_story_id_entity_id_key; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity story_entity_story_id_entity_id_key; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -6690,7 +6462,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story story_pkey; Type: CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story story_pkey; Type: CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -6698,7 +6470,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: acceptance_criteria acceptance_criteria_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: acceptance_criteria acceptance_criteria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.acceptance_criteria
@@ -6706,7 +6478,7 @@ ALTER TABLE ONLY public.acceptance_criteria
 
 
 --
--- Name: bridge_us_entity bridge_us_entity_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: bridge_us_entity bridge_us_entity_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bridge_us_entity
@@ -6714,7 +6486,7 @@ ALTER TABLE ONLY public.bridge_us_entity
 
 
 --
--- Name: bridge_us_extra_tag bridge_us_extra_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: bridge_us_extra_tag bridge_us_extra_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bridge_us_extra_tag
@@ -6722,7 +6494,7 @@ ALTER TABLE ONLY public.bridge_us_extra_tag
 
 
 --
--- Name: dim_entity dim_entity_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: dim_entity dim_entity_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_entity
@@ -6730,7 +6502,7 @@ ALTER TABLE ONLY public.dim_entity
 
 
 --
--- Name: dim_extra_tag dim_extra_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: dim_extra_tag dim_extra_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_extra_tag
@@ -6738,7 +6510,7 @@ ALTER TABLE ONLY public.dim_extra_tag
 
 
 --
--- Name: dim_process dim_process_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: dim_process dim_process_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_process
@@ -6746,7 +6518,7 @@ ALTER TABLE ONLY public.dim_process
 
 
 --
--- Name: dim_role_canonical dim_role_canonical_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: dim_role_canonical dim_role_canonical_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_role_canonical
@@ -6754,7 +6526,7 @@ ALTER TABLE ONLY public.dim_role_canonical
 
 
 --
--- Name: dim_role dim_role_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: dim_role dim_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_role
@@ -6762,7 +6534,7 @@ ALTER TABLE ONLY public.dim_role
 
 
 --
--- Name: fact_user_story fact_user_story_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: fact_user_story fact_user_story_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fact_user_story
@@ -6770,7 +6542,7 @@ ALTER TABLE ONLY public.fact_user_story
 
 
 --
--- Name: role_especialidad role_especialidad_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: role_especialidad role_especialidad_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_especialidad
@@ -6778,7 +6550,7 @@ ALTER TABLE ONLY public.role_especialidad
 
 
 --
--- Name: role_mapping role_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: goreos
+-- Name: role_mapping role_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_mapping
@@ -6786,7 +6558,7 @@ ALTER TABLE ONLY public.role_mapping
 
 
 --
--- Name: actor actor_code_key; Type: CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: actor actor_code_key; Type: CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.actor
@@ -6794,7 +6566,7 @@ ALTER TABLE ONLY ref.actor
 
 
 --
--- Name: actor actor_pkey; Type: CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: actor actor_pkey; Type: CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.actor
@@ -6802,7 +6574,7 @@ ALTER TABLE ONLY ref.actor
 
 
 --
--- Name: category category_pkey; Type: CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -6810,7 +6582,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: category category_scheme_code_key; Type: CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category category_scheme_code_key; Type: CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -6818,7 +6590,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: operational_commitment_type operational_commitment_type_code_key; Type: CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type operational_commitment_type_code_key; Type: CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.operational_commitment_type
@@ -6826,7 +6598,7 @@ ALTER TABLE ONLY ref.operational_commitment_type
 
 
 --
--- Name: operational_commitment_type operational_commitment_type_pkey; Type: CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type operational_commitment_type_pkey; Type: CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.operational_commitment_type
@@ -6834,7 +6606,7 @@ ALTER TABLE ONLY ref.operational_commitment_type
 
 
 --
--- Name: event event_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event event_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event
@@ -6842,7 +6614,7 @@ ALTER TABLE ONLY txn.event
 
 
 --
--- Name: event_2026_01 event_2026_01_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_01 event_2026_01_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_01
@@ -6850,7 +6622,7 @@ ALTER TABLE ONLY txn.event_2026_01
 
 
 --
--- Name: event_2026_02 event_2026_02_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_02 event_2026_02_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_02
@@ -6858,7 +6630,7 @@ ALTER TABLE ONLY txn.event_2026_02
 
 
 --
--- Name: event_2026_03 event_2026_03_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_03 event_2026_03_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_03
@@ -6866,7 +6638,7 @@ ALTER TABLE ONLY txn.event_2026_03
 
 
 --
--- Name: event_2026_04 event_2026_04_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_04 event_2026_04_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_04
@@ -6874,7 +6646,7 @@ ALTER TABLE ONLY txn.event_2026_04
 
 
 --
--- Name: event_2026_05 event_2026_05_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_05 event_2026_05_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_05
@@ -6882,7 +6654,7 @@ ALTER TABLE ONLY txn.event_2026_05
 
 
 --
--- Name: event_2026_06 event_2026_06_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_06 event_2026_06_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_06
@@ -6890,7 +6662,7 @@ ALTER TABLE ONLY txn.event_2026_06
 
 
 --
--- Name: event_2026_07 event_2026_07_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_07 event_2026_07_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_07
@@ -6898,7 +6670,7 @@ ALTER TABLE ONLY txn.event_2026_07
 
 
 --
--- Name: event_2026_08 event_2026_08_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_08 event_2026_08_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_08
@@ -6906,7 +6678,7 @@ ALTER TABLE ONLY txn.event_2026_08
 
 
 --
--- Name: event_2026_09 event_2026_09_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_09 event_2026_09_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_09
@@ -6914,7 +6686,7 @@ ALTER TABLE ONLY txn.event_2026_09
 
 
 --
--- Name: event_2026_10 event_2026_10_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_10 event_2026_10_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_10
@@ -6922,7 +6694,7 @@ ALTER TABLE ONLY txn.event_2026_10
 
 
 --
--- Name: event_2026_11 event_2026_11_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_11 event_2026_11_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_11
@@ -6930,7 +6702,7 @@ ALTER TABLE ONLY txn.event_2026_11
 
 
 --
--- Name: event_2026_12 event_2026_12_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_2026_12 event_2026_12_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_2026_12
@@ -6938,7 +6710,7 @@ ALTER TABLE ONLY txn.event_2026_12
 
 
 --
--- Name: event_default event_default_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event_default event_default_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.event_default
@@ -6946,7 +6718,7 @@ ALTER TABLE ONLY txn.event_default
 
 
 --
--- Name: magnitude magnitude_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude magnitude_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude
@@ -6954,7 +6726,7 @@ ALTER TABLE ONLY txn.magnitude
 
 
 --
--- Name: magnitude_2026_q1 magnitude_2026_q1_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1 magnitude_2026_q1_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q1
@@ -6962,7 +6734,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q1
 
 
 --
--- Name: magnitude magnitude_subject_type_subject_id_aspect_id_as_of_date_key; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude magnitude_subject_type_subject_id_aspect_id_as_of_date_key; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude
@@ -6970,7 +6742,7 @@ ALTER TABLE ONLY txn.magnitude
 
 
 --
--- Name: magnitude_2026_q1 magnitude_2026_q1_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1 magnitude_2026_q1_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q1
@@ -6978,7 +6750,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q1
 
 
 --
--- Name: magnitude_2026_q2 magnitude_2026_q2_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2 magnitude_2026_q2_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q2
@@ -6986,7 +6758,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q2
 
 
 --
--- Name: magnitude_2026_q2 magnitude_2026_q2_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2 magnitude_2026_q2_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q2
@@ -6994,7 +6766,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q2
 
 
 --
--- Name: magnitude_2026_q3 magnitude_2026_q3_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3 magnitude_2026_q3_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q3
@@ -7002,7 +6774,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q3
 
 
 --
--- Name: magnitude_2026_q3 magnitude_2026_q3_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3 magnitude_2026_q3_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q3
@@ -7010,7 +6782,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q3
 
 
 --
--- Name: magnitude_2026_q4 magnitude_2026_q4_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4 magnitude_2026_q4_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q4
@@ -7018,7 +6790,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q4
 
 
 --
--- Name: magnitude_2026_q4 magnitude_2026_q4_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4 magnitude_2026_q4_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_2026_q4
@@ -7026,7 +6798,7 @@ ALTER TABLE ONLY txn.magnitude_2026_q4
 
 
 --
--- Name: magnitude_default magnitude_default_pkey; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_default magnitude_default_pkey; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_default
@@ -7034,7 +6806,7 @@ ALTER TABLE ONLY txn.magnitude_default
 
 
 --
--- Name: magnitude_default magnitude_default_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude_default magnitude_default_subject_type_subject_id_aspect_id_as_of_d_key; Type: CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE ONLY txn.magnitude_default
@@ -7042,3066 +6814,3101 @@ ALTER TABLE ONLY txn.magnitude_default
 
 
 --
--- Name: idx_act_history_act; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_act_history_act; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_act_history_act ON core.administrative_act_history USING btree (act_id);
 
 
 --
--- Name: idx_admin_act_state; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_admin_act_state; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_admin_act_state ON core.administrative_act USING btree (state_id);
 
 
 --
--- Name: idx_admin_act_type; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_admin_act_type; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_admin_act_type ON core.administrative_act USING btree (act_type_id);
 
 
 --
--- Name: idx_admissibility_check_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_admissibility_check_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_admissibility_check_ipr ON core.admissibility_check USING btree (ipr_id);
 
 
 --
--- Name: idx_agreement_active; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_active; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_active ON core.agreement USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_agreement_giver; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_giver; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_giver ON core.agreement USING btree (giver_id);
 
 
 --
--- Name: idx_agreement_history_agreement; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_history_agreement; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_history_agreement ON core.agreement_history USING btree (agreement_id);
 
 
 --
--- Name: idx_agreement_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_ipr ON core.agreement USING btree (ipr_id);
 
 
 --
--- Name: idx_agreement_metadata; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_metadata; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_metadata ON core.agreement USING gin (metadata jsonb_path_ops);
 
 
 --
--- Name: idx_agreement_receiver; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_receiver; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_receiver ON core.agreement USING btree (receiver_id);
 
 
 --
--- Name: idx_agreement_state; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_state; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_state ON core.agreement USING btree (state_id);
 
 
 --
--- Name: idx_agreement_technical_referent; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_technical_referent; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_technical_referent ON core.agreement USING btree (technical_referent_id) WHERE (technical_referent_id IS NOT NULL);
 
 
 --
--- Name: idx_agreement_valid_to; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_agreement_valid_to; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_agreement_valid_to ON core.agreement USING btree (valid_to) WHERE (valid_to IS NOT NULL);
 
 
 --
--- Name: idx_alert_severity; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_alert_severity; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_alert_severity ON core.alert USING btree (severity_id, triggered_at);
 
 
 --
--- Name: idx_alert_subject; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_alert_subject; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_alert_subject ON core.alert USING btree (subject_type, subject_id);
 
 
 --
--- Name: idx_alert_unattended; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_alert_unattended; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_alert_unattended ON core.alert USING btree (alert_type_id, severity_id) WHERE (attended_at IS NULL);
 
 
 --
--- Name: idx_bct_fiscal_year; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_bct_fiscal_year; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_bct_fiscal_year ON core.budget_cycle_tracking USING btree (fiscal_year);
 
 
 --
--- Name: idx_budget_carryover_program; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_carryover_program; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_carryover_program ON core.budget_carryover USING btree (budget_program_id);
 
 
 --
--- Name: idx_budget_carryover_year; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_carryover_year; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_carryover_year ON core.budget_carryover USING btree (fiscal_year);
 
 
 --
--- Name: idx_budget_commitment_agreement; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_commitment_agreement; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_commitment_agreement ON core.budget_commitment USING btree (agreement_id) WHERE (agreement_id IS NOT NULL);
 
 
 --
--- Name: idx_budget_commitment_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_commitment_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_commitment_ipr ON core.budget_commitment USING btree (ipr_id) WHERE (ipr_id IS NOT NULL);
 
 
 --
--- Name: idx_budget_commitment_program; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_commitment_program; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_commitment_program ON core.budget_commitment USING btree (budget_program_id);
 
 
 --
--- Name: idx_budget_program_allocation; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_program_allocation; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_program_allocation ON core.budget_program USING btree (allocation_id) WHERE (allocation_id IS NOT NULL);
 
 
 --
--- Name: idx_budget_program_item; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_program_item; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_program_item ON core.budget_program USING btree (item_id) WHERE (item_id IS NOT NULL);
 
 
 --
--- Name: idx_budget_program_metadata_gin; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_program_metadata_gin; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_program_metadata_gin ON core.budget_program USING gin (metadata);
 
 
 --
--- Name: idx_budget_program_subtitle; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_program_subtitle; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_program_subtitle ON core.budget_program USING btree (subtitle_id) WHERE (subtitle_id IS NOT NULL);
 
 
 --
--- Name: idx_budget_program_year; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_program_year; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_program_year ON core.budget_program USING btree (fiscal_year);
 
 
 --
--- Name: idx_budget_program_year_item_allocation; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_budget_program_year_item_allocation; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_budget_program_year_item_allocation ON core.budget_program USING btree (fiscal_year, item_id, allocation_id) WHERE (((fiscal_year >= 2023) AND (fiscal_year <= 2026)) AND (item_id IS NOT NULL) AND (allocation_id IS NOT NULL));
 
 
 --
--- Name: idx_commitment_division; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_division; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_division ON core.operational_commitment USING btree (division_id) WHERE (division_id IS NOT NULL);
 
 
 --
--- Name: idx_commitment_due; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_due; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_due ON core.operational_commitment USING btree (due_date);
 
 
 --
--- Name: idx_commitment_history_commitment; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_history_commitment; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_history_commitment ON core.commitment_history USING btree (commitment_id);
 
 
 --
--- Name: idx_commitment_history_date; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_history_date; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_history_date ON core.commitment_history USING btree (changed_at);
 
 
 --
--- Name: idx_commitment_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_ipr ON core.operational_commitment USING btree (ipr_id);
 
 
 --
--- Name: idx_commitment_responsible; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_responsible; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_responsible ON core.operational_commitment USING btree (responsible_id);
 
 
 --
--- Name: idx_commitment_state; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_commitment_state; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_commitment_state ON core.operational_commitment USING btree (state_id);
 
 
 --
--- Name: idx_dgi_bottleneck_division; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_bottleneck_division; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_bottleneck_division ON core.dgi_bottleneck_investigation USING btree (division_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_dgi_bottleneck_status; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_bottleneck_status; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_bottleneck_status ON core.dgi_bottleneck_investigation USING btree (status_id);
 
 
 --
--- Name: idx_dgi_bpmn_model_process; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_bpmn_model_process; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_bpmn_model_process ON core.dgi_bpmn_model USING btree (process_id);
 
 
 --
--- Name: idx_dgi_decree_status; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_decree_status; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_decree_status ON core.dgi_decree USING btree (status_id);
 
 
 --
--- Name: idx_dgi_indicator_dimension; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_indicator_dimension; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_indicator_dimension ON core.dgi_indicator USING btree (dimension_id);
 
 
 --
--- Name: idx_dgi_indicator_lifecycle; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_indicator_lifecycle; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_indicator_lifecycle ON core.dgi_indicator USING btree (lifecycle_status_id);
 
 
 --
--- Name: idx_dgi_indicator_lifecycle_history_ind; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_indicator_lifecycle_history_ind; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_indicator_lifecycle_history_ind ON core.dgi_indicator_lifecycle_history USING btree (indicator_id);
 
 
 --
--- Name: idx_dgi_initiative_responsible; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_initiative_responsible; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_initiative_responsible ON core.dgi_initiative USING btree (responsible_id);
 
 
 --
--- Name: idx_dgi_initiative_status; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_initiative_status; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_initiative_status ON core.dgi_initiative USING btree (status_id);
 
 
 --
--- Name: idx_dgi_opportunity_initiative; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_opportunity_initiative; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_opportunity_initiative ON core.dgi_improvement_opportunity USING btree (initiative_id);
 
 
 --
--- Name: idx_dgi_opportunity_process; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_opportunity_process; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_opportunity_process ON core.dgi_improvement_opportunity USING btree (process_id);
 
 
 --
--- Name: idx_dgi_process_actor_process; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_actor_process; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_actor_process ON core.dgi_process_actor USING btree (process_id);
 
 
 --
--- Name: idx_dgi_process_division; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_division; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_division ON core.dgi_process USING btree (division_id);
 
 
 --
--- Name: idx_dgi_process_metric_process; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_metric_process; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_metric_process ON core.dgi_process_metric USING btree (process_id);
 
 
 --
--- Name: idx_dgi_process_owner; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_owner; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_owner ON core.dgi_process USING btree (owner_id);
 
 
 --
--- Name: idx_dgi_process_pain_point_process; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_pain_point_process; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_pain_point_process ON core.dgi_process_pain_point USING btree (process_id);
 
 
 --
--- Name: idx_dgi_process_rule_process; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_rule_process; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_rule_process ON core.dgi_process_rule USING btree (process_id);
 
 
 --
--- Name: idx_dgi_process_status; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_process_status; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_process_status ON core.dgi_process USING btree (status_id);
 
 
 --
--- Name: idx_dgi_report_type; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_dgi_report_type; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_dgi_report_type ON core.dgi_report USING btree (report_type_id);
 
 
 --
--- Name: idx_document_folio; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_document_folio; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_document_folio ON core.document USING btree (file_id, sort_order);
 
 
 --
--- Name: idx_eval_assignment_evaluator; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_eval_assignment_evaluator; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_eval_assignment_evaluator ON core.evaluation_assignment USING btree (evaluator_type_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_eval_assignment_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_eval_assignment_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_eval_assignment_ipr ON core.evaluation_assignment USING btree (ipr_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_eval_convocatoria; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_eval_convocatoria; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_eval_convocatoria ON core.evaluation_assignment USING btree (convocatoria_code) WHERE (convocatoria_code IS NOT NULL);
 
 
 --
--- Name: idx_indicator_snapshot_lookup; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_expost_eval_ipr; Type: INDEX; Schema: core; Owner: -
+--
+
+CREATE INDEX idx_expost_eval_ipr ON core.ipr_expost_evaluation USING btree (ipr_id);
+
+
+--
+-- Name: idx_indicator_snapshot_lookup; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_indicator_snapshot_lookup ON core.dgi_indicator_snapshot USING btree (indicator_id, recorded_at);
 
 
 --
--- Name: idx_inst_milestone_inst; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_inst_milestone_inst; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_inst_milestone_inst ON core.installment_milestone USING btree (installment_id);
 
 
 --
--- Name: idx_inst_milestone_mile; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_inst_milestone_mile; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_inst_milestone_mile ON core.installment_milestone USING btree (milestone_id);
 
 
 --
--- Name: idx_inst_milestone_required; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_inst_milestone_required; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_inst_milestone_required ON core.installment_milestone USING btree (installment_id) WHERE (is_required = true);
 
 
 --
--- Name: idx_installment_agreement; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_installment_agreement; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_installment_agreement ON core.agreement_installment USING btree (agreement_id);
 
 
 --
--- Name: idx_installment_due; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_installment_due; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_installment_due ON core.agreement_installment USING btree (due_date, payment_status_id);
 
 
 --
--- Name: idx_ipr_active; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_active; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_active ON core.ipr USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_ipr_alert; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_alert; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_alert ON core.ipr USING btree (alert_level_id) WHERE (alert_level_id IS NOT NULL);
 
 
 --
--- Name: idx_ipr_assignee; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_assignee; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_assignee ON core.ipr USING btree (assignee_id) WHERE (assignee_id IS NOT NULL);
 
 
 --
--- Name: idx_ipr_fts; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_fts; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_fts ON core.ipr USING gin (to_tsvector('spanish'::regconfig, COALESCE(name, ''::text)));
 
 
 --
--- Name: idx_ipr_fund_category; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_fund_category; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_fund_category ON core.ipr USING btree (fund_category_id) WHERE (fund_category_id IS NOT NULL);
 
 
 --
--- Name: idx_ipr_investment_sector; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_investment_sector; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_investment_sector ON core.ipr USING btree (investment_sector_id) WHERE (investment_sector_id IS NOT NULL);
 
 
 --
--- Name: idx_ipr_mechanism; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_mechanism; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_mechanism ON core.ipr USING btree (mechanism_id);
 
 
 --
--- Name: idx_ipr_metadata; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_metadata; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_metadata ON core.ipr USING gin (metadata jsonb_path_ops);
 
 
 --
--- Name: idx_ipr_metadata_gin; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_metadata_gin; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_metadata_gin ON core.ipr USING gin (metadata);
 
 
 --
--- Name: idx_ipr_municipal_origin; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_modification_ipr; Type: INDEX; Schema: core; Owner: -
+--
+
+CREATE INDEX idx_ipr_modification_ipr ON core.ipr_modification USING btree (ipr_id);
+
+
+--
+-- Name: idx_ipr_modification_status; Type: INDEX; Schema: core; Owner: -
+--
+
+CREATE INDEX idx_ipr_modification_status ON core.ipr_modification USING btree (status_id);
+
+
+--
+-- Name: idx_ipr_municipal_origin; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_municipal_origin ON core.ipr USING btree (is_municipal_origin) WHERE (is_municipal_origin = true);
 
 
 --
--- Name: idx_ipr_party_agreement; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_party_agreement; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_party_agreement ON core.ipr_party USING btree (agreement_id) WHERE (agreement_id IS NOT NULL);
 
 
 --
--- Name: idx_ipr_party_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_party_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_party_ipr ON core.ipr_party USING btree (ipr_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_ipr_party_org; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_party_org; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_party_org ON core.ipr_party USING btree (organization_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_ipr_party_primary; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_party_primary; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_party_primary ON core.ipr_party USING btree (ipr_id, party_role_id) WHERE ((is_primary = true) AND (deleted_at IS NULL));
 
 
 --
--- Name: idx_ipr_party_role; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_party_role; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_party_role ON core.ipr_party USING btree (party_role_id);
 
 
 --
--- Name: idx_ipr_party_sponsor_division; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_party_sponsor_division; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_party_sponsor_division ON core.ipr_party USING btree (sponsor_division_id) WHERE (sponsor_division_id IS NOT NULL);
 
 
 --
--- Name: idx_ipr_phase; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_phase; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_phase ON core.ipr USING btree (mcd_phase_id);
 
 
 --
--- Name: idx_ipr_phase_mechanism; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_phase_mechanism; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_phase_mechanism ON core.ipr USING btree (mcd_phase_id, mechanism_id);
 
 
 --
--- Name: idx_ipr_problem_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_problem_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_problem_ipr ON core.ipr_problem USING btree (ipr_id);
 
 
 --
--- Name: idx_ipr_problem_state; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_problem_state; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_problem_state ON core.ipr_problem USING btree (state_id);
 
 
 --
--- Name: idx_ipr_problems; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_problems; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_problems ON core.ipr USING btree (has_open_problems) WHERE (has_open_problems = true);
 
 
 --
--- Name: idx_ipr_status; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_status; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_status ON core.ipr USING btree (status_id);
 
 
 --
--- Name: idx_ipr_territory_impact; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_territory_impact; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_territory_impact ON core.ipr_territory USING btree (impact_type_id);
 
 
 --
--- Name: idx_ipr_territory_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_territory_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_territory_ipr ON core.ipr_territory USING btree (ipr_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_ipr_territory_primary; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_territory_primary; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_territory_primary ON core.ipr_territory USING btree (ipr_id) WHERE ((is_primary = true) AND (deleted_at IS NULL));
 
 
 --
--- Name: idx_ipr_territory_territory; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_territory_territory; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_territory_territory ON core.ipr_territory USING btree (territory_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_ipr_year; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_ipr_year; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_ipr_year ON core.ipr USING btree (EXTRACT(year FROM (created_at AT TIME ZONE 'UTC'::text)));
 
 
 --
--- Name: idx_kinship_declaration_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_kinship_declaration_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_kinship_declaration_ipr ON core.kinship_declaration USING btree (ipr_id);
 
 
 --
--- Name: idx_milestone_actual; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_milestone_actual; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_milestone_actual ON core.ipr_milestone USING btree (actual_date) WHERE (actual_date IS NOT NULL);
 
 
 --
--- Name: idx_milestone_deviation; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_milestone_deviation; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_milestone_deviation ON core.ipr_milestone USING btree (deviation_days) WHERE (deviation_days IS NOT NULL);
 
 
 --
--- Name: idx_milestone_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_milestone_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_milestone_ipr ON core.ipr_milestone USING btree (ipr_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_milestone_pending; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_milestone_pending; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_milestone_pending ON core.ipr_milestone USING btree (ipr_id, planned_date) WHERE ((actual_date IS NULL) AND (deleted_at IS NULL));
 
 
 --
--- Name: idx_milestone_planned; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_milestone_planned; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_milestone_planned ON core.ipr_milestone USING btree (planned_date);
 
 
 --
--- Name: idx_milestone_type; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_milestone_type; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_milestone_type ON core.ipr_milestone USING btree (milestone_type_id);
 
 
 --
--- Name: idx_org_active; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_org_active; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_org_active ON core.organization USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_org_parent; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_org_parent; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_org_parent ON core.organization USING btree (parent_id);
 
 
 --
--- Name: idx_org_rut; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_org_rut; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE UNIQUE INDEX idx_org_rut ON core.organization USING btree (rut) WHERE (rut IS NOT NULL);
 
 
 --
--- Name: idx_org_type; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_org_type; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_org_type ON core.organization USING btree (org_type_id);
 
 
 --
--- Name: idx_person_active; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_person_active; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_person_active ON core.person USING btree (id) WHERE ((deleted_at IS NULL) AND (is_active = true));
 
 
 --
--- Name: idx_person_estamento; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_person_estamento; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_person_estamento ON core.person USING btree (estamento_id) WHERE (estamento_id IS NOT NULL);
 
 
 --
--- Name: idx_person_org; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_person_org; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_person_org ON core.person USING btree (organization_id);
 
 
 --
--- Name: idx_problem_fts; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_problem_fts; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_problem_fts ON core.ipr_problem USING gin (to_tsvector('spanish'::regconfig, ((COALESCE(description, ''::text) || ' '::text) || COALESCE(solution_applied, ''::text))));
 
 
 --
--- Name: idx_problem_unresolved; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_problem_unresolved; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_problem_unresolved ON core.ipr_problem USING btree (detected_at) WHERE ((resolved_at IS NULL) AND (deleted_at IS NULL));
 
 
 --
--- Name: idx_progress_report_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_progress_report_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_progress_report_ipr ON core.progress_report USING btree (ipr_id);
 
 
 --
--- Name: idx_rendition_archived; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_rendition_archived; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_rendition_archived ON core.rendition USING btree (archived_at) WHERE ((archived_at IS NOT NULL) AND (deleted_at IS NULL));
 
 
 --
--- Name: idx_rendition_escalation_rendition; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_rendition_escalation_rendition; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_rendition_escalation_rendition ON core.rendition_escalation USING btree (rendition_id);
 
 
 --
--- Name: idx_rendition_history_rendition; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_rendition_history_rendition; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_rendition_history_rendition ON core.rendition_history USING btree (rendition_id);
 
 
 --
--- Name: idx_rendition_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_rendition_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_rendition_ipr ON core.rendition USING btree (ipr_id) WHERE (ipr_id IS NOT NULL);
 
 
 --
--- Name: idx_rendition_responsible; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_rendition_responsible; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_rendition_responsible ON core.rendition USING btree (responsible_id) WHERE ((responsible_id IS NOT NULL) AND (deleted_at IS NULL));
 
 
 --
--- Name: idx_resolution_ipr; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_resolution_ipr; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_resolution_ipr ON core.resolution USING btree (ipr_id);
 
 
 --
--- Name: idx_session_vote_agreement; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_session_vote_agreement; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_session_vote_agreement ON core.session_vote USING btree (session_agreement_id);
 
 
 --
--- Name: idx_session_vote_voter; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_session_vote_voter; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_session_vote_voter ON core.session_vote USING btree (voter_id);
 
 
 --
--- Name: idx_subv8_fund_ceiling_fund; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_subv8_fund_ceiling_fund; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_subv8_fund_ceiling_fund ON core.subv8_fund_ceiling USING btree (fund_id);
 
 
 --
--- Name: idx_territory_parent; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_territory_parent; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_territory_parent ON core.territory USING btree (parent_id, territory_type_id);
 
 
 --
--- Name: idx_user_active; Type: INDEX; Schema: core; Owner: goreos
+-- Name: idx_user_active; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE INDEX idx_user_active ON core."user" USING btree (is_active, system_role_id) WHERE ((is_active = true) AND (deleted_at IS NULL));
 
 
 --
--- Name: uq_ipr_party_role; Type: INDEX; Schema: core; Owner: goreos
+-- Name: uq_ipr_party_role; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE UNIQUE INDEX uq_ipr_party_role ON core.ipr_party USING btree (ipr_id, organization_id, party_role_id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: uq_subv8_ceiling_fund_type_area; Type: INDEX; Schema: core; Owner: goreos
+-- Name: uq_subv8_ceiling_fund_type_area; Type: INDEX; Schema: core; Owner: -
 --
 
 CREATE UNIQUE INDEX uq_subv8_ceiling_fund_type_area ON core.subv8_fund_ceiling USING btree (fund_id, institution_type, COALESCE(area, ''::character varying));
 
 
 --
--- Name: idx_entity_active; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_entity_active; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_entity_active ON meta.entity USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_entity_domain; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_entity_domain; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_entity_domain ON meta.entity USING btree (domain);
 
 
 --
--- Name: idx_process_active; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_process_active; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_process_active ON meta.process USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_process_layer; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_process_layer; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_process_layer ON meta.process USING btree (layer);
 
 
 --
--- Name: idx_role_active; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_role_active; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_role_active ON meta.role USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_role_agent_type; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_role_agent_type; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_role_agent_type ON meta.role USING btree (agent_type);
 
 
 --
--- Name: idx_story_active; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_active; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_active ON meta.story USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_story_domain; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_domain; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_domain ON meta.story USING btree (domain);
 
 
 --
--- Name: idx_story_entity_entity; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_entity_entity; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_entity_entity ON meta.story_entity USING btree (entity_id);
 
 
 --
--- Name: idx_story_entity_story; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_entity_story; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_entity_story ON meta.story_entity USING btree (story_id);
 
 
 --
--- Name: idx_story_process; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_process; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_process ON meta.story USING btree (process_id);
 
 
 --
--- Name: idx_story_role; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_role; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_role ON meta.story USING btree (role_id);
 
 
 --
--- Name: idx_story_status; Type: INDEX; Schema: meta; Owner: goreos
+-- Name: idx_story_status; Type: INDEX; Schema: meta; Owner: -
 --
 
 CREATE INDEX idx_story_status ON meta.story USING btree (status);
 
 
 --
--- Name: idx_role_canonical_agent_type; Type: INDEX; Schema: public; Owner: goreos
+-- Name: idx_role_canonical_agent_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_role_canonical_agent_type ON public.dim_role_canonical USING btree (agent_type);
 
 
 --
--- Name: idx_role_canonical_division; Type: INDEX; Schema: public; Owner: goreos
+-- Name: idx_role_canonical_division; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_role_canonical_division ON public.dim_role_canonical USING btree (division);
 
 
 --
--- Name: idx_role_legacy_canonical; Type: INDEX; Schema: public; Owner: goreos
+-- Name: idx_role_legacy_canonical; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_role_legacy_canonical ON public.dim_role USING btree (canonical_id);
 
 
 --
--- Name: idx_actor_active; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_actor_active; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_actor_active ON ref.actor USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_actor_agent_type; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_actor_agent_type; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_actor_agent_type ON ref.actor USING btree (agent_type);
 
 
 --
--- Name: idx_actor_internal; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_actor_internal; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_actor_internal ON ref.actor USING btree (is_internal);
 
 
 --
--- Name: idx_category_active; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_category_active; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_category_active ON ref.category USING btree (id) WHERE (deleted_at IS NULL);
 
 
 --
--- Name: idx_category_parent; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_category_parent; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_category_parent ON ref.category USING btree (parent_id) WHERE (parent_id IS NOT NULL);
 
 
 --
--- Name: idx_category_phase; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_category_phase; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_category_phase ON ref.category USING btree (phase_id) WHERE (phase_id IS NOT NULL);
 
 
 --
--- Name: idx_category_scheme; Type: INDEX; Schema: ref; Owner: goreos
+-- Name: idx_category_scheme; Type: INDEX; Schema: ref; Owner: -
 --
 
 CREATE INDEX idx_category_scheme ON ref.category USING btree (scheme);
 
 
 --
--- Name: idx_event_actor; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_event_actor; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_event_actor ON ONLY txn.event USING btree (actor_id);
 
 
 --
--- Name: event_2026_01_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_01_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_01_actor_id_idx ON txn.event_2026_01 USING btree (actor_id);
 
 
 --
--- Name: idx_event_actor_ref; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_event_actor_ref; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_event_actor_ref ON ONLY txn.event USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_01_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_01_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_01_actor_ref_id_idx ON txn.event_2026_01 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: idx_event_created_by; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_event_created_by; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_event_created_by ON ONLY txn.event USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_01_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_01_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_01_created_by_id_idx ON txn.event_2026_01 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: idx_event_type; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_event_type; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_event_type ON ONLY txn.event USING btree (event_type_id);
 
 
 --
--- Name: event_2026_01_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_01_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_01_event_type_id_idx ON txn.event_2026_01 USING btree (event_type_id);
 
 
 --
--- Name: idx_event_occurred; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_event_occurred; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_event_occurred ON ONLY txn.event USING btree (occurred_at);
 
 
 --
--- Name: event_2026_01_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_01_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_01_occurred_at_idx ON txn.event_2026_01 USING btree (occurred_at);
 
 
 --
--- Name: idx_event_subject; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_event_subject; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_event_subject ON ONLY txn.event USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_01_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_01_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_01_subject_type_subject_id_idx ON txn.event_2026_01 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_02_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_02_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_02_actor_id_idx ON txn.event_2026_02 USING btree (actor_id);
 
 
 --
--- Name: event_2026_02_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_02_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_02_actor_ref_id_idx ON txn.event_2026_02 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_02_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_02_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_02_created_by_id_idx ON txn.event_2026_02 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_02_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_02_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_02_event_type_id_idx ON txn.event_2026_02 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_02_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_02_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_02_occurred_at_idx ON txn.event_2026_02 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_02_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_02_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_02_subject_type_subject_id_idx ON txn.event_2026_02 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_03_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_03_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_03_actor_id_idx ON txn.event_2026_03 USING btree (actor_id);
 
 
 --
--- Name: event_2026_03_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_03_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_03_actor_ref_id_idx ON txn.event_2026_03 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_03_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_03_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_03_created_by_id_idx ON txn.event_2026_03 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_03_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_03_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_03_event_type_id_idx ON txn.event_2026_03 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_03_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_03_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_03_occurred_at_idx ON txn.event_2026_03 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_03_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_03_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_03_subject_type_subject_id_idx ON txn.event_2026_03 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_04_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_04_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_04_actor_id_idx ON txn.event_2026_04 USING btree (actor_id);
 
 
 --
--- Name: event_2026_04_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_04_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_04_actor_ref_id_idx ON txn.event_2026_04 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_04_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_04_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_04_created_by_id_idx ON txn.event_2026_04 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_04_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_04_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_04_event_type_id_idx ON txn.event_2026_04 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_04_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_04_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_04_occurred_at_idx ON txn.event_2026_04 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_04_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_04_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_04_subject_type_subject_id_idx ON txn.event_2026_04 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_05_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_05_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_05_actor_id_idx ON txn.event_2026_05 USING btree (actor_id);
 
 
 --
--- Name: event_2026_05_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_05_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_05_actor_ref_id_idx ON txn.event_2026_05 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_05_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_05_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_05_created_by_id_idx ON txn.event_2026_05 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_05_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_05_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_05_event_type_id_idx ON txn.event_2026_05 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_05_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_05_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_05_occurred_at_idx ON txn.event_2026_05 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_05_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_05_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_05_subject_type_subject_id_idx ON txn.event_2026_05 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_06_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_06_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_06_actor_id_idx ON txn.event_2026_06 USING btree (actor_id);
 
 
 --
--- Name: event_2026_06_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_06_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_06_actor_ref_id_idx ON txn.event_2026_06 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_06_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_06_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_06_created_by_id_idx ON txn.event_2026_06 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_06_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_06_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_06_event_type_id_idx ON txn.event_2026_06 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_06_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_06_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_06_occurred_at_idx ON txn.event_2026_06 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_06_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_06_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_06_subject_type_subject_id_idx ON txn.event_2026_06 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_07_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_07_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_07_actor_id_idx ON txn.event_2026_07 USING btree (actor_id);
 
 
 --
--- Name: event_2026_07_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_07_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_07_actor_ref_id_idx ON txn.event_2026_07 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_07_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_07_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_07_created_by_id_idx ON txn.event_2026_07 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_07_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_07_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_07_event_type_id_idx ON txn.event_2026_07 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_07_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_07_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_07_occurred_at_idx ON txn.event_2026_07 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_07_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_07_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_07_subject_type_subject_id_idx ON txn.event_2026_07 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_08_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_08_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_08_actor_id_idx ON txn.event_2026_08 USING btree (actor_id);
 
 
 --
--- Name: event_2026_08_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_08_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_08_actor_ref_id_idx ON txn.event_2026_08 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_08_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_08_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_08_created_by_id_idx ON txn.event_2026_08 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_08_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_08_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_08_event_type_id_idx ON txn.event_2026_08 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_08_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_08_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_08_occurred_at_idx ON txn.event_2026_08 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_08_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_08_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_08_subject_type_subject_id_idx ON txn.event_2026_08 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_09_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_09_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_09_actor_id_idx ON txn.event_2026_09 USING btree (actor_id);
 
 
 --
--- Name: event_2026_09_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_09_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_09_actor_ref_id_idx ON txn.event_2026_09 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_09_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_09_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_09_created_by_id_idx ON txn.event_2026_09 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_09_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_09_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_09_event_type_id_idx ON txn.event_2026_09 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_09_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_09_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_09_occurred_at_idx ON txn.event_2026_09 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_09_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_09_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_09_subject_type_subject_id_idx ON txn.event_2026_09 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_10_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_10_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_10_actor_id_idx ON txn.event_2026_10 USING btree (actor_id);
 
 
 --
--- Name: event_2026_10_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_10_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_10_actor_ref_id_idx ON txn.event_2026_10 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_10_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_10_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_10_created_by_id_idx ON txn.event_2026_10 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_10_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_10_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_10_event_type_id_idx ON txn.event_2026_10 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_10_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_10_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_10_occurred_at_idx ON txn.event_2026_10 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_10_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_10_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_10_subject_type_subject_id_idx ON txn.event_2026_10 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_11_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_11_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_11_actor_id_idx ON txn.event_2026_11 USING btree (actor_id);
 
 
 --
--- Name: event_2026_11_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_11_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_11_actor_ref_id_idx ON txn.event_2026_11 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_11_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_11_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_11_created_by_id_idx ON txn.event_2026_11 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_11_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_11_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_11_event_type_id_idx ON txn.event_2026_11 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_11_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_11_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_11_occurred_at_idx ON txn.event_2026_11 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_11_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_11_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_11_subject_type_subject_id_idx ON txn.event_2026_11 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_12_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_12_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_12_actor_id_idx ON txn.event_2026_12 USING btree (actor_id);
 
 
 --
--- Name: event_2026_12_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_12_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_12_actor_ref_id_idx ON txn.event_2026_12 USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_2026_12_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_12_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_12_created_by_id_idx ON txn.event_2026_12 USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_2026_12_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_12_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_12_event_type_id_idx ON txn.event_2026_12 USING btree (event_type_id);
 
 
 --
--- Name: event_2026_12_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_12_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_12_occurred_at_idx ON txn.event_2026_12 USING btree (occurred_at);
 
 
 --
--- Name: event_2026_12_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_2026_12_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_2026_12_subject_type_subject_id_idx ON txn.event_2026_12 USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_default_actor_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_default_actor_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_default_actor_id_idx ON txn.event_default USING btree (actor_id);
 
 
 --
--- Name: event_default_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_default_actor_ref_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_default_actor_ref_id_idx ON txn.event_default USING btree (actor_ref_id) WHERE (actor_ref_id IS NOT NULL);
 
 
 --
--- Name: event_default_created_by_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_default_created_by_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_default_created_by_id_idx ON txn.event_default USING btree (created_by_id) WHERE (created_by_id IS NOT NULL);
 
 
 --
--- Name: event_default_event_type_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_default_event_type_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_default_event_type_id_idx ON txn.event_default USING btree (event_type_id);
 
 
 --
--- Name: event_default_occurred_at_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_default_occurred_at_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_default_occurred_at_idx ON txn.event_default USING btree (occurred_at);
 
 
 --
--- Name: event_default_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: event_default_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX event_default_subject_type_subject_id_idx ON txn.event_default USING btree (subject_type, subject_id);
 
 
 --
--- Name: idx_magnitude_aspect; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_magnitude_aspect; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_magnitude_aspect ON ONLY txn.magnitude USING btree (aspect_id);
 
 
 --
--- Name: idx_magnitude_date; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_magnitude_date; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_magnitude_date ON ONLY txn.magnitude USING btree (as_of_date);
 
 
 --
--- Name: idx_magnitude_subject; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: idx_magnitude_subject; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX idx_magnitude_subject ON ONLY txn.magnitude USING btree (subject_type, subject_id);
 
 
 --
--- Name: magnitude_2026_q1_as_of_date_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_as_of_date_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q1_as_of_date_idx ON txn.magnitude_2026_q1 USING btree (as_of_date);
 
 
 --
--- Name: magnitude_2026_q1_aspect_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_aspect_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q1_aspect_id_idx ON txn.magnitude_2026_q1 USING btree (aspect_id);
 
 
 --
--- Name: magnitude_2026_q1_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q1_subject_type_subject_id_idx ON txn.magnitude_2026_q1 USING btree (subject_type, subject_id);
 
 
 --
--- Name: magnitude_2026_q2_as_of_date_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_as_of_date_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q2_as_of_date_idx ON txn.magnitude_2026_q2 USING btree (as_of_date);
 
 
 --
--- Name: magnitude_2026_q2_aspect_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_aspect_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q2_aspect_id_idx ON txn.magnitude_2026_q2 USING btree (aspect_id);
 
 
 --
--- Name: magnitude_2026_q2_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q2_subject_type_subject_id_idx ON txn.magnitude_2026_q2 USING btree (subject_type, subject_id);
 
 
 --
--- Name: magnitude_2026_q3_as_of_date_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_as_of_date_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q3_as_of_date_idx ON txn.magnitude_2026_q3 USING btree (as_of_date);
 
 
 --
--- Name: magnitude_2026_q3_aspect_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_aspect_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q3_aspect_id_idx ON txn.magnitude_2026_q3 USING btree (aspect_id);
 
 
 --
--- Name: magnitude_2026_q3_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q3_subject_type_subject_id_idx ON txn.magnitude_2026_q3 USING btree (subject_type, subject_id);
 
 
 --
--- Name: magnitude_2026_q4_as_of_date_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_as_of_date_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q4_as_of_date_idx ON txn.magnitude_2026_q4 USING btree (as_of_date);
 
 
 --
--- Name: magnitude_2026_q4_aspect_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_aspect_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q4_aspect_id_idx ON txn.magnitude_2026_q4 USING btree (aspect_id);
 
 
 --
--- Name: magnitude_2026_q4_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_2026_q4_subject_type_subject_id_idx ON txn.magnitude_2026_q4 USING btree (subject_type, subject_id);
 
 
 --
--- Name: magnitude_default_as_of_date_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_default_as_of_date_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_default_as_of_date_idx ON txn.magnitude_default USING btree (as_of_date);
 
 
 --
--- Name: magnitude_default_aspect_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_default_aspect_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_default_aspect_id_idx ON txn.magnitude_default USING btree (aspect_id);
 
 
 --
--- Name: magnitude_default_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: goreos
+-- Name: magnitude_default_subject_type_subject_id_idx; Type: INDEX; Schema: txn; Owner: -
 --
 
 CREATE INDEX magnitude_default_subject_type_subject_id_idx ON txn.magnitude_default USING btree (subject_type, subject_id);
 
 
 --
--- Name: event_2026_01_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_01_actor_id_idx;
 
 
 --
--- Name: event_2026_01_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_01_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_01_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_01_created_by_id_idx;
 
 
 --
--- Name: event_2026_01_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_01_event_type_id_idx;
 
 
 --
--- Name: event_2026_01_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_01_occurred_at_idx;
 
 
 --
--- Name: event_2026_01_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_01_pkey;
 
 
 --
--- Name: event_2026_01_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_01_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_01_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_02_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_02_actor_id_idx;
 
 
 --
--- Name: event_2026_02_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_02_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_02_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_02_created_by_id_idx;
 
 
 --
--- Name: event_2026_02_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_02_event_type_id_idx;
 
 
 --
--- Name: event_2026_02_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_02_occurred_at_idx;
 
 
 --
--- Name: event_2026_02_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_02_pkey;
 
 
 --
--- Name: event_2026_02_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_02_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_02_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_03_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_03_actor_id_idx;
 
 
 --
--- Name: event_2026_03_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_03_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_03_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_03_created_by_id_idx;
 
 
 --
--- Name: event_2026_03_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_03_event_type_id_idx;
 
 
 --
--- Name: event_2026_03_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_03_occurred_at_idx;
 
 
 --
--- Name: event_2026_03_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_03_pkey;
 
 
 --
--- Name: event_2026_03_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_03_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_03_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_04_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_04_actor_id_idx;
 
 
 --
--- Name: event_2026_04_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_04_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_04_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_04_created_by_id_idx;
 
 
 --
--- Name: event_2026_04_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_04_event_type_id_idx;
 
 
 --
--- Name: event_2026_04_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_04_occurred_at_idx;
 
 
 --
--- Name: event_2026_04_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_04_pkey;
 
 
 --
--- Name: event_2026_04_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_04_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_04_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_05_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_05_actor_id_idx;
 
 
 --
--- Name: event_2026_05_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_05_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_05_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_05_created_by_id_idx;
 
 
 --
--- Name: event_2026_05_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_05_event_type_id_idx;
 
 
 --
--- Name: event_2026_05_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_05_occurred_at_idx;
 
 
 --
--- Name: event_2026_05_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_05_pkey;
 
 
 --
--- Name: event_2026_05_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_05_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_05_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_06_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_06_actor_id_idx;
 
 
 --
--- Name: event_2026_06_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_06_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_06_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_06_created_by_id_idx;
 
 
 --
--- Name: event_2026_06_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_06_event_type_id_idx;
 
 
 --
--- Name: event_2026_06_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_06_occurred_at_idx;
 
 
 --
--- Name: event_2026_06_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_06_pkey;
 
 
 --
--- Name: event_2026_06_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_06_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_06_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_07_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_07_actor_id_idx;
 
 
 --
--- Name: event_2026_07_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_07_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_07_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_07_created_by_id_idx;
 
 
 --
--- Name: event_2026_07_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_07_event_type_id_idx;
 
 
 --
--- Name: event_2026_07_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_07_occurred_at_idx;
 
 
 --
--- Name: event_2026_07_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_07_pkey;
 
 
 --
--- Name: event_2026_07_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_07_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_07_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_08_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_08_actor_id_idx;
 
 
 --
--- Name: event_2026_08_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_08_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_08_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_08_created_by_id_idx;
 
 
 --
--- Name: event_2026_08_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_08_event_type_id_idx;
 
 
 --
--- Name: event_2026_08_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_08_occurred_at_idx;
 
 
 --
--- Name: event_2026_08_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_08_pkey;
 
 
 --
--- Name: event_2026_08_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_08_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_08_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_09_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_09_actor_id_idx;
 
 
 --
--- Name: event_2026_09_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_09_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_09_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_09_created_by_id_idx;
 
 
 --
--- Name: event_2026_09_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_09_event_type_id_idx;
 
 
 --
--- Name: event_2026_09_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_09_occurred_at_idx;
 
 
 --
--- Name: event_2026_09_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_09_pkey;
 
 
 --
--- Name: event_2026_09_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_09_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_09_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_10_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_10_actor_id_idx;
 
 
 --
--- Name: event_2026_10_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_10_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_10_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_10_created_by_id_idx;
 
 
 --
--- Name: event_2026_10_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_10_event_type_id_idx;
 
 
 --
--- Name: event_2026_10_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_10_occurred_at_idx;
 
 
 --
--- Name: event_2026_10_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_10_pkey;
 
 
 --
--- Name: event_2026_10_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_10_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_10_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_11_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_11_actor_id_idx;
 
 
 --
--- Name: event_2026_11_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_11_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_11_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_11_created_by_id_idx;
 
 
 --
--- Name: event_2026_11_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_11_event_type_id_idx;
 
 
 --
--- Name: event_2026_11_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_11_occurred_at_idx;
 
 
 --
--- Name: event_2026_11_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_11_pkey;
 
 
 --
--- Name: event_2026_11_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_11_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_11_subject_type_subject_id_idx;
 
 
 --
--- Name: event_2026_12_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_2026_12_actor_id_idx;
 
 
 --
--- Name: event_2026_12_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_2026_12_actor_ref_id_idx;
 
 
 --
--- Name: event_2026_12_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_2026_12_created_by_id_idx;
 
 
 --
--- Name: event_2026_12_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_2026_12_event_type_id_idx;
 
 
 --
--- Name: event_2026_12_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_2026_12_occurred_at_idx;
 
 
 --
--- Name: event_2026_12_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_2026_12_pkey;
 
 
 --
--- Name: event_2026_12_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_2026_12_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_2026_12_subject_type_subject_id_idx;
 
 
 --
--- Name: event_default_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_actor_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor ATTACH PARTITION txn.event_default_actor_id_idx;
 
 
 --
--- Name: event_default_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_actor_ref_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_actor_ref ATTACH PARTITION txn.event_default_actor_ref_id_idx;
 
 
 --
--- Name: event_default_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_created_by_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_created_by ATTACH PARTITION txn.event_default_created_by_id_idx;
 
 
 --
--- Name: event_default_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_event_type_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_type ATTACH PARTITION txn.event_default_event_type_id_idx;
 
 
 --
--- Name: event_default_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_occurred_at_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_occurred ATTACH PARTITION txn.event_default_occurred_at_idx;
 
 
 --
--- Name: event_default_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.event_pkey ATTACH PARTITION txn.event_default_pkey;
 
 
 --
--- Name: event_default_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: event_default_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_event_subject ATTACH PARTITION txn.event_default_subject_type_subject_id_idx;
 
 
 --
--- Name: magnitude_2026_q1_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_date ATTACH PARTITION txn.magnitude_2026_q1_as_of_date_idx;
 
 
 --
--- Name: magnitude_2026_q1_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_aspect ATTACH PARTITION txn.magnitude_2026_q1_aspect_id_idx;
 
 
 --
--- Name: magnitude_2026_q1_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_pkey ATTACH PARTITION txn.magnitude_2026_q1_pkey;
 
 
 --
--- Name: magnitude_2026_q1_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_subject_type_subject_id_aspect_id_as_of_date_key ATTACH PARTITION txn.magnitude_2026_q1_subject_type_subject_id_aspect_id_as_of_d_key;
 
 
 --
--- Name: magnitude_2026_q1_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q1_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_subject ATTACH PARTITION txn.magnitude_2026_q1_subject_type_subject_id_idx;
 
 
 --
--- Name: magnitude_2026_q2_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_date ATTACH PARTITION txn.magnitude_2026_q2_as_of_date_idx;
 
 
 --
--- Name: magnitude_2026_q2_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_aspect ATTACH PARTITION txn.magnitude_2026_q2_aspect_id_idx;
 
 
 --
--- Name: magnitude_2026_q2_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_pkey ATTACH PARTITION txn.magnitude_2026_q2_pkey;
 
 
 --
--- Name: magnitude_2026_q2_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_subject_type_subject_id_aspect_id_as_of_date_key ATTACH PARTITION txn.magnitude_2026_q2_subject_type_subject_id_aspect_id_as_of_d_key;
 
 
 --
--- Name: magnitude_2026_q2_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q2_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_subject ATTACH PARTITION txn.magnitude_2026_q2_subject_type_subject_id_idx;
 
 
 --
--- Name: magnitude_2026_q3_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_date ATTACH PARTITION txn.magnitude_2026_q3_as_of_date_idx;
 
 
 --
--- Name: magnitude_2026_q3_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_aspect ATTACH PARTITION txn.magnitude_2026_q3_aspect_id_idx;
 
 
 --
--- Name: magnitude_2026_q3_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_pkey ATTACH PARTITION txn.magnitude_2026_q3_pkey;
 
 
 --
--- Name: magnitude_2026_q3_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_subject_type_subject_id_aspect_id_as_of_date_key ATTACH PARTITION txn.magnitude_2026_q3_subject_type_subject_id_aspect_id_as_of_d_key;
 
 
 --
--- Name: magnitude_2026_q3_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q3_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_subject ATTACH PARTITION txn.magnitude_2026_q3_subject_type_subject_id_idx;
 
 
 --
--- Name: magnitude_2026_q4_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_date ATTACH PARTITION txn.magnitude_2026_q4_as_of_date_idx;
 
 
 --
--- Name: magnitude_2026_q4_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_aspect ATTACH PARTITION txn.magnitude_2026_q4_aspect_id_idx;
 
 
 --
--- Name: magnitude_2026_q4_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_pkey ATTACH PARTITION txn.magnitude_2026_q4_pkey;
 
 
 --
--- Name: magnitude_2026_q4_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_subject_type_subject_id_aspect_id_as_of_date_key ATTACH PARTITION txn.magnitude_2026_q4_subject_type_subject_id_aspect_id_as_of_d_key;
 
 
 --
--- Name: magnitude_2026_q4_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_2026_q4_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_subject ATTACH PARTITION txn.magnitude_2026_q4_subject_type_subject_id_idx;
 
 
 --
--- Name: magnitude_default_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_default_as_of_date_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_date ATTACH PARTITION txn.magnitude_default_as_of_date_idx;
 
 
 --
--- Name: magnitude_default_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_default_aspect_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_aspect ATTACH PARTITION txn.magnitude_default_aspect_id_idx;
 
 
 --
--- Name: magnitude_default_pkey; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_default_pkey; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_pkey ATTACH PARTITION txn.magnitude_default_pkey;
 
 
 --
--- Name: magnitude_default_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_default_subject_type_subject_id_aspect_id_as_of_d_key; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.magnitude_subject_type_subject_id_aspect_id_as_of_date_key ATTACH PARTITION txn.magnitude_default_subject_type_subject_id_aspect_id_as_of_d_key;
 
 
 --
--- Name: magnitude_default_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: goreos
+-- Name: magnitude_default_subject_type_subject_id_idx; Type: INDEX ATTACH; Schema: txn; Owner: -
 --
 
 ALTER INDEX txn.idx_magnitude_subject ATTACH PARTITION txn.magnitude_default_subject_type_subject_id_idx;
 
 
 --
--- Name: administrative_act trg_act_history; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: administrative_act trg_act_history; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_act_history AFTER UPDATE ON core.administrative_act FOR EACH ROW EXECUTE FUNCTION public.fn_act_history();
 
 
 --
--- Name: administrative_act trg_act_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: administrative_act trg_act_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_act_state_transition BEFORE UPDATE OF state_id ON core.administrative_act FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
 
 
 --
--- Name: administrative_act trg_administrative_act_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: administrative_act trg_administrative_act_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_administrative_act_updated_at BEFORE UPDATE ON core.administrative_act FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: administrative_procedure trg_administrative_procedure_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: administrative_procedure trg_administrative_procedure_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_administrative_procedure_updated_at BEFORE UPDATE ON core.administrative_procedure FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: agreement trg_agreement_history; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: agreement trg_agreement_history; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_agreement_history AFTER UPDATE ON core.agreement FOR EACH ROW EXECUTE FUNCTION public.fn_agreement_history();
 
 
 --
--- Name: agreement_installment trg_agreement_installment_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: agreement_installment trg_agreement_installment_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_agreement_installment_updated_at BEFORE UPDATE ON core.agreement_installment FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: agreement trg_agreement_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: agreement trg_agreement_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_agreement_state_transition BEFORE UPDATE OF state_id ON core.agreement FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
 
 
 --
--- Name: agreement trg_agreement_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: agreement trg_agreement_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_agreement_updated_at BEFORE UPDATE ON core.agreement FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: agreement trg_agreement_validate_schemes; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: agreement trg_agreement_validate_schemes; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_agreement_validate_schemes BEFORE INSERT OR UPDATE ON core.agreement FOR EACH ROW EXECUTE FUNCTION public.fn_validate_agreement_schemes();
 
 
 --
--- Name: alert trg_alert_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: alert trg_alert_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_alert_updated_at BEFORE UPDATE ON core.alert FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: dgi_ar_decision trg_ar_decision_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision trg_ar_decision_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ar_decision_state_transition BEFORE UPDATE ON core.dgi_ar_decision FOR EACH ROW EXECUTE FUNCTION core.trg_ar_decision_state_transition_fn();
 
 
 --
--- Name: budget_carryover trg_budget_carryover_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: budget_carryover trg_budget_carryover_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_budget_carryover_updated_at BEFORE UPDATE ON core.budget_carryover FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: budget_commitment trg_budget_commitment_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: budget_commitment trg_budget_commitment_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_budget_commitment_status_transition BEFORE UPDATE ON core.budget_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: budget_commitment trg_budget_commitment_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: budget_commitment trg_budget_commitment_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_budget_commitment_updated_at BEFORE UPDATE ON core.budget_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: budget_program trg_budget_program_current; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: budget_program trg_budget_program_current; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_budget_program_current BEFORE INSERT OR UPDATE ON core.budget_program FOR EACH ROW EXECUTE FUNCTION public.fn_budget_program_current_amount();
 
 
 --
--- Name: budget_program trg_budget_program_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: budget_program trg_budget_program_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_budget_program_updated_at BEFORE UPDATE ON core.budget_program FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: operational_commitment trg_commitment_history; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: operational_commitment trg_commitment_history; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_commitment_history BEFORE UPDATE ON core.operational_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_commitment_history();
 
 
 --
--- Name: operational_commitment trg_commitment_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: operational_commitment trg_commitment_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_commitment_state_transition BEFORE UPDATE ON core.operational_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
 
 
 --
--- Name: committee_member trg_committee_member_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: committee_member trg_committee_member_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_committee_member_updated_at BEFORE UPDATE ON core.committee_member FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: committee trg_committee_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: committee trg_committee_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_committee_updated_at BEFORE UPDATE ON core.committee FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: dgi_bpmn_model trg_dgi_bpmn_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model trg_dgi_bpmn_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_dgi_bpmn_status_transition BEFORE UPDATE ON core.dgi_bpmn_model FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: dgi_initiative trg_dgi_initiative_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_initiative trg_dgi_initiative_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_dgi_initiative_status_transition BEFORE UPDATE ON core.dgi_initiative FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: dgi_report trg_dgi_report_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_report trg_dgi_report_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_dgi_report_status_transition BEFORE UPDATE ON core.dgi_report FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: dgi_committee_session trg_dgi_session_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_committee_session trg_dgi_session_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_dgi_session_status_transition BEFORE UPDATE ON core.dgi_committee_session FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: digital_platform trg_digital_platform_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: digital_platform trg_digital_platform_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_digital_platform_updated_at BEFORE UPDATE ON core.digital_platform FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: document trg_document_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: document trg_document_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_document_updated_at BEFORE UPDATE ON core.document FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: electronic_file trg_electronic_file_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: electronic_file trg_electronic_file_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_electronic_file_updated_at BEFORE UPDATE ON core.electronic_file FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: dgi_escalation trg_escalation_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_escalation trg_escalation_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_escalation_state_transition BEFORE UPDATE ON core.dgi_escalation FOR EACH ROW EXECUTE FUNCTION core.trg_escalation_state_transition_fn();
 
 
 --
--- Name: electronic_file trg_file_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: electronic_file trg_file_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_file_status_transition BEFORE UPDATE OF status_id ON core.electronic_file FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: fund_program trg_fund_program_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: fund_program trg_fund_program_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_fund_program_updated_at BEFORE UPDATE ON core.fund_program FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: dgi_initiative trg_initiative_timing; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_initiative trg_initiative_timing; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_initiative_timing BEFORE UPDATE ON core.dgi_initiative FOR EACH ROW EXECUTE FUNCTION core.trg_initiative_timing_fn();
 
 
 --
--- Name: agreement_installment trg_installment_payment_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: agreement_installment trg_installment_payment_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_installment_payment_transition BEFORE UPDATE OF payment_status_id ON core.agreement_installment FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('payment_status_id');
 
 
 --
--- Name: inventory_item trg_inventory_item_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: inventory_item trg_inventory_item_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_inventory_item_updated_at BEFORE UPDATE ON core.inventory_item FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: ipr_mechanism trg_ipr_mechanism_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_mechanism trg_ipr_mechanism_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_mechanism_updated_at BEFORE UPDATE ON core.ipr_mechanism FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: ipr_milestone trg_ipr_milestone_validate_schemes; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_milestone trg_ipr_milestone_validate_schemes; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_milestone_validate_schemes BEFORE INSERT OR UPDATE ON core.ipr_milestone FOR EACH ROW EXECUTE FUNCTION public.fn_validate_ipr_milestone_schemes();
 
 
 --
--- Name: ipr_party trg_ipr_party_single_primary; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_party trg_ipr_party_single_primary; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_party_single_primary BEFORE INSERT OR UPDATE OF is_primary ON core.ipr_party FOR EACH ROW WHEN ((new.is_primary = true)) EXECUTE FUNCTION public.fn_ensure_single_primary_party();
 
 
 --
--- Name: ipr_party trg_ipr_party_validate_schemes; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_party trg_ipr_party_validate_schemes; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_party_validate_schemes BEFORE INSERT OR UPDATE ON core.ipr_party FOR EACH ROW EXECUTE FUNCTION public.fn_validate_ipr_party_schemes();
 
 
 --
--- Name: ipr_problem trg_ipr_problem_flag; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr trg_ipr_phase_entered; Type: TRIGGER; Schema: core; Owner: -
+--
+
+CREATE TRIGGER trg_ipr_phase_entered BEFORE UPDATE OF status_id ON core.ipr FOR EACH ROW EXECUTE FUNCTION public.fn_ipr_phase_entered();
+
+
+--
+-- Name: ipr_problem trg_ipr_problem_flag; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_problem_flag AFTER INSERT OR DELETE OR UPDATE ON core.ipr_problem FOR EACH ROW EXECUTE FUNCTION public.fn_update_ipr_problems_flag();
 
 
 --
--- Name: ipr_problem trg_ipr_problem_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_problem trg_ipr_problem_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_problem_updated_at BEFORE UPDATE ON core.ipr_problem FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: ipr trg_ipr_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr trg_ipr_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_state_transition BEFORE UPDATE OF status_id ON core.ipr FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: ipr_territory trg_ipr_territory_single_primary; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_territory trg_ipr_territory_single_primary; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_territory_single_primary BEFORE INSERT OR UPDATE OF is_primary ON core.ipr_territory FOR EACH ROW WHEN ((new.is_primary = true)) EXECUTE FUNCTION public.fn_ensure_single_primary_territory();
 
 
 --
--- Name: ipr_territory trg_ipr_territory_validate_schemes; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_territory trg_ipr_territory_validate_schemes; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_territory_validate_schemes BEFORE INSERT OR UPDATE ON core.ipr_territory FOR EACH ROW EXECUTE FUNCTION public.fn_validate_ipr_territory_schemes();
 
 
 --
--- Name: ipr trg_ipr_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr trg_ipr_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_updated_at BEFORE UPDATE ON core.ipr FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: ipr trg_ipr_validate_schemes; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr trg_ipr_validate_schemes; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_ipr_validate_schemes BEFORE INSERT OR UPDATE ON core.ipr FOR EACH ROW EXECUTE FUNCTION public.fn_validate_ipr_schemes();
 
 
 --
--- Name: legal_document trg_legal_document_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: legal_document trg_legal_document_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_legal_document_updated_at BEFORE UPDATE ON core.legal_document FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: legal_mandate trg_legal_mandate_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: legal_mandate trg_legal_mandate_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_legal_mandate_updated_at BEFORE UPDATE ON core.legal_mandate FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: ipr_mechanism trg_mechanism_validate_attrs; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_mechanism trg_mechanism_validate_attrs; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_mechanism_validate_attrs BEFORE INSERT OR UPDATE ON core.ipr_mechanism FOR EACH ROW EXECUTE FUNCTION public.fn_validate_mechanism_attrs();
 
 
 --
--- Name: TRIGGER trg_mechanism_validate_attrs ON ipr_mechanism; Type: COMMENT; Schema: core; Owner: goreos
+-- Name: TRIGGER trg_mechanism_validate_attrs ON ipr_mechanism; Type: COMMENT; Schema: core; Owner: -
 --
 
 COMMENT ON TRIGGER trg_mechanism_validate_attrs ON core.ipr_mechanism IS 'PRO-001 FIX: Valida atributos específicos por mecanismo para garantizar coproducto controlado';
 
 
 --
--- Name: organization trg_organization_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_modification trg_modification_state_transition; Type: TRIGGER; Schema: core; Owner: -
+--
+
+CREATE TRIGGER trg_modification_state_transition BEFORE UPDATE OF status_id ON core.ipr_modification FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
+
+
+--
+-- Name: organization trg_organization_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_organization_updated_at BEFORE UPDATE ON core.organization FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: person trg_person_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: person trg_person_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_person_updated_at BEFORE UPDATE ON core.person FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: planning_instrument trg_planning_instrument_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: planning_instrument trg_planning_instrument_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_planning_instrument_updated_at BEFORE UPDATE ON core.planning_instrument FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: ipr_problem trg_problem_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: ipr_problem trg_problem_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_problem_state_transition BEFORE UPDATE ON core.ipr_problem FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
 
 
 --
--- Name: procedure trg_procedure_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: procedure trg_procedure_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_procedure_updated_at BEFORE UPDATE ON core.procedure FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: progress_report trg_progress_report_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: progress_report trg_progress_report_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_progress_report_updated_at BEFORE UPDATE ON core.progress_report FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: rendition trg_rendition_history; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: rendition trg_rendition_history; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_rendition_history AFTER UPDATE ON core.rendition FOR EACH ROW EXECUTE FUNCTION public.fn_rendition_history();
 
 
 --
--- Name: rendition trg_rendition_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: rendition trg_rendition_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_rendition_state_transition BEFORE UPDATE ON core.rendition FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
 
 
 --
--- Name: rendition trg_rendition_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: rendition trg_rendition_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_rendition_updated_at BEFORE UPDATE ON core.rendition FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: dgi_service_request trg_request_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_service_request trg_request_state_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_request_state_transition BEFORE UPDATE ON core.dgi_service_request FOR EACH ROW EXECUTE FUNCTION core.trg_request_state_transition_fn();
 
 
 --
--- Name: dgi_service_request trg_request_timing; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: dgi_service_request trg_request_timing; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_request_timing BEFORE UPDATE ON core.dgi_service_request FOR EACH ROW EXECUTE FUNCTION core.trg_request_timing_fn();
 
 
 --
--- Name: resolution trg_resolution_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: resolution trg_resolution_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_resolution_updated_at BEFORE UPDATE ON core.resolution FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: risk trg_risk_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: risk trg_risk_status_transition; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_risk_status_transition BEFORE UPDATE ON core.risk FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
--- Name: risk trg_risk_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: risk trg_risk_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_risk_updated_at BEFORE UPDATE ON core.risk FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: territorial_indicator trg_territorial_indicator_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: territorial_indicator trg_territorial_indicator_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_territorial_indicator_updated_at BEFORE UPDATE ON core.territorial_indicator FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: territory trg_territory_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: territory trg_territory_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_territory_updated_at BEFORE UPDATE ON core.territory FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: user trg_user_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: user trg_user_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_user_updated_at BEFORE UPDATE ON core."user" FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: vehicle trg_vehicle_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
+-- Name: vehicle trg_vehicle_updated_at; Type: TRIGGER; Schema: core; Owner: -
 --
 
 CREATE TRIGGER trg_vehicle_updated_at BEFORE UPDATE ON core.vehicle FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: entity trg_entity_updated_at; Type: TRIGGER; Schema: meta; Owner: goreos
+-- Name: entity trg_entity_updated_at; Type: TRIGGER; Schema: meta; Owner: -
 --
 
 CREATE TRIGGER trg_entity_updated_at BEFORE UPDATE ON meta.entity FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: process trg_process_updated_at; Type: TRIGGER; Schema: meta; Owner: goreos
+-- Name: process trg_process_updated_at; Type: TRIGGER; Schema: meta; Owner: -
 --
 
 CREATE TRIGGER trg_process_updated_at BEFORE UPDATE ON meta.process FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: role trg_role_updated_at; Type: TRIGGER; Schema: meta; Owner: goreos
+-- Name: role trg_role_updated_at; Type: TRIGGER; Schema: meta; Owner: -
 --
 
 CREATE TRIGGER trg_role_updated_at BEFORE UPDATE ON meta.role FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: story_entity trg_story_entity_updated_at; Type: TRIGGER; Schema: meta; Owner: goreos
+-- Name: story_entity trg_story_entity_updated_at; Type: TRIGGER; Schema: meta; Owner: -
 --
 
 CREATE TRIGGER trg_story_entity_updated_at BEFORE UPDATE ON meta.story_entity FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: story trg_story_updated_at; Type: TRIGGER; Schema: meta; Owner: goreos
+-- Name: story trg_story_updated_at; Type: TRIGGER; Schema: meta; Owner: -
 --
 
 CREATE TRIGGER trg_story_updated_at BEFORE UPDATE ON meta.story FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: actor trg_actor_updated_at; Type: TRIGGER; Schema: ref; Owner: goreos
+-- Name: actor trg_actor_updated_at; Type: TRIGGER; Schema: ref; Owner: -
 --
 
 CREATE TRIGGER trg_actor_updated_at BEFORE UPDATE ON ref.actor FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: category trg_category_sync_parent; Type: TRIGGER; Schema: ref; Owner: goreos
+-- Name: category trg_category_sync_parent; Type: TRIGGER; Schema: ref; Owner: -
 --
 
 CREATE TRIGGER trg_category_sync_parent BEFORE INSERT OR UPDATE OF parent_code ON ref.category FOR EACH ROW EXECUTE FUNCTION public.fn_sync_category_parent();
 
 
 --
--- Name: category trg_category_updated_at; Type: TRIGGER; Schema: ref; Owner: goreos
+-- Name: category trg_category_updated_at; Type: TRIGGER; Schema: ref; Owner: -
 --
 
 CREATE TRIGGER trg_category_updated_at BEFORE UPDATE ON ref.category FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: operational_commitment_type trg_operational_commitment_type_updated_at; Type: TRIGGER; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type trg_operational_commitment_type_updated_at; Type: TRIGGER; Schema: ref; Owner: -
 --
 
 CREATE TRIGGER trg_operational_commitment_type_updated_at BEFORE UPDATE ON ref.operational_commitment_type FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
 
 --
--- Name: administrative_act administrative_act_act_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_act_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10109,7 +9916,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_cgr_outcome_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_cgr_outcome_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10117,7 +9924,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10125,7 +9932,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10133,7 +9940,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act_history administrative_act_history_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act_history administrative_act_history_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act_history
@@ -10141,7 +9948,7 @@ ALTER TABLE ONLY core.administrative_act_history
 
 
 --
--- Name: administrative_act_history administrative_act_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act_history administrative_act_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act_history
@@ -10149,7 +9956,7 @@ ALTER TABLE ONLY core.administrative_act_history
 
 
 --
--- Name: administrative_act_history administrative_act_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act_history administrative_act_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act_history
@@ -10157,7 +9964,7 @@ ALTER TABLE ONLY core.administrative_act_history
 
 
 --
--- Name: administrative_act_history administrative_act_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act_history administrative_act_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act_history
@@ -10165,7 +9972,7 @@ ALTER TABLE ONLY core.administrative_act_history
 
 
 --
--- Name: administrative_act administrative_act_issuer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_issuer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10173,7 +9980,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_parent_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_parent_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10181,7 +9988,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_signer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_signer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10189,7 +9996,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10197,7 +10004,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_act administrative_act_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_act administrative_act_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_act
@@ -10205,7 +10012,7 @@ ALTER TABLE ONLY core.administrative_act
 
 
 --
--- Name: administrative_procedure administrative_procedure_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10213,7 +10020,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10221,7 +10028,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_initiator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_initiator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10229,7 +10036,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_procedure_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_procedure_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10237,7 +10044,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_resolution_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_resolution_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10245,7 +10052,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10253,7 +10060,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10261,7 +10068,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: administrative_procedure administrative_procedure_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: administrative_procedure administrative_procedure_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.administrative_procedure
@@ -10269,7 +10076,7 @@ ALTER TABLE ONLY core.administrative_procedure
 
 
 --
--- Name: admissibility_check admissibility_check_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_check admissibility_check_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_check
@@ -10277,7 +10084,7 @@ ALTER TABLE ONLY core.admissibility_check
 
 
 --
--- Name: admissibility_check admissibility_check_item_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_check admissibility_check_item_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_check
@@ -10285,7 +10092,7 @@ ALTER TABLE ONLY core.admissibility_check
 
 
 --
--- Name: admissibility_check admissibility_check_verified_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_check admissibility_check_verified_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_check
@@ -10293,7 +10100,7 @@ ALTER TABLE ONLY core.admissibility_check
 
 
 --
--- Name: admissibility_item admissibility_item_financing_track_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: admissibility_item admissibility_item_financing_track_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.admissibility_item
@@ -10301,7 +10108,7 @@ ALTER TABLE ONLY core.admissibility_item
 
 
 --
--- Name: agenda_item_context agenda_item_context_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agenda_item_context agenda_item_context_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agenda_item_context
@@ -10309,7 +10116,7 @@ ALTER TABLE ONLY core.agenda_item_context
 
 
 --
--- Name: agenda_item_context agenda_item_context_session_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agenda_item_context agenda_item_context_session_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agenda_item_context
@@ -10317,7 +10124,7 @@ ALTER TABLE ONLY core.agenda_item_context
 
 
 --
--- Name: agreement agreement_agreement_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_agreement_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10325,7 +10132,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_cgr_outcome_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_cgr_outcome_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10333,7 +10140,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10341,7 +10148,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10349,7 +10156,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_giver_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_giver_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10357,7 +10164,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement_history agreement_history_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_history agreement_history_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_history
@@ -10365,7 +10172,7 @@ ALTER TABLE ONLY core.agreement_history
 
 
 --
--- Name: agreement_history agreement_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_history agreement_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_history
@@ -10373,7 +10180,7 @@ ALTER TABLE ONLY core.agreement_history
 
 
 --
--- Name: agreement_history agreement_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_history agreement_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_history
@@ -10381,7 +10188,7 @@ ALTER TABLE ONLY core.agreement_history
 
 
 --
--- Name: agreement_history agreement_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_history agreement_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_history
@@ -10389,7 +10196,7 @@ ALTER TABLE ONLY core.agreement_history
 
 
 --
--- Name: agreement_installment agreement_installment_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -10397,7 +10204,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement_installment agreement_installment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -10405,7 +10212,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement_installment agreement_installment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -10413,7 +10220,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement_installment agreement_installment_payment_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_payment_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -10421,7 +10228,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement_installment agreement_installment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement_installment agreement_installment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement_installment
@@ -10429,7 +10236,7 @@ ALTER TABLE ONLY core.agreement_installment
 
 
 --
--- Name: agreement agreement_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10437,7 +10244,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_receiver_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_receiver_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10445,7 +10252,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10453,7 +10260,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_technical_referent_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_technical_referent_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10461,7 +10268,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: agreement agreement_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: agreement agreement_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.agreement
@@ -10469,7 +10276,7 @@ ALTER TABLE ONLY core.agreement
 
 
 --
--- Name: alert alert_acknowledged_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_acknowledged_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10477,7 +10284,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: alert alert_alert_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_alert_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10485,7 +10292,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: alert alert_attended_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_attended_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10493,7 +10300,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: alert alert_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10501,7 +10308,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: alert alert_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10509,7 +10316,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: alert alert_severity_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_severity_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10517,7 +10324,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: alert alert_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: alert alert_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.alert
@@ -10525,7 +10332,7 @@ ALTER TABLE ONLY core.alert
 
 
 --
--- Name: budget_carryover budget_carryover_budget_program_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_carryover budget_carryover_budget_program_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_carryover
@@ -10533,7 +10340,7 @@ ALTER TABLE ONLY core.budget_carryover
 
 
 --
--- Name: budget_carryover budget_carryover_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_carryover budget_carryover_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_carryover
@@ -10541,7 +10348,7 @@ ALTER TABLE ONLY core.budget_carryover
 
 
 --
--- Name: budget_commitment budget_commitment_budget_program_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_budget_program_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -10549,7 +10356,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment budget_commitment_commitment_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_commitment_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -10557,7 +10364,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment budget_commitment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -10565,7 +10372,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment budget_commitment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -10573,7 +10380,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment budget_commitment_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -10581,7 +10388,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment budget_commitment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment budget_commitment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -10589,7 +10396,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_cycle_tracking budget_cycle_tracking_completed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_cycle_tracking budget_cycle_tracking_completed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_cycle_tracking
@@ -10597,7 +10404,7 @@ ALTER TABLE ONLY core.budget_cycle_tracking
 
 
 --
--- Name: budget_cycle_tracking budget_cycle_tracking_milestone_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_cycle_tracking budget_cycle_tracking_milestone_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_cycle_tracking
@@ -10605,7 +10412,7 @@ ALTER TABLE ONLY core.budget_cycle_tracking
 
 
 --
--- Name: budget_program budget_program_allocation_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_allocation_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10613,7 +10420,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10621,7 +10428,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10629,7 +10436,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_item_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_item_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10637,7 +10444,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_owner_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_owner_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10645,7 +10452,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_program_code_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_program_code_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10653,7 +10460,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_program_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_program_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10661,7 +10468,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_subtitle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_subtitle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10669,7 +10476,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: budget_program budget_program_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_program budget_program_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_program
@@ -10677,7 +10484,7 @@ ALTER TABLE ONLY core.budget_program
 
 
 --
--- Name: commitment_history commitment_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: commitment_history commitment_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.commitment_history
@@ -10685,7 +10492,7 @@ ALTER TABLE ONLY core.commitment_history
 
 
 --
--- Name: commitment_history commitment_history_commitment_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: commitment_history commitment_history_commitment_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.commitment_history
@@ -10693,7 +10500,7 @@ ALTER TABLE ONLY core.commitment_history
 
 
 --
--- Name: commitment_history commitment_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: commitment_history commitment_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.commitment_history
@@ -10701,7 +10508,7 @@ ALTER TABLE ONLY core.commitment_history
 
 
 --
--- Name: commitment_history commitment_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: commitment_history commitment_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.commitment_history
@@ -10709,7 +10516,7 @@ ALTER TABLE ONLY core.commitment_history
 
 
 --
--- Name: committee committee_committee_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_committee_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -10717,7 +10524,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: committee committee_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -10725,7 +10532,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: committee committee_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -10733,7 +10540,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: committee_member committee_member_committee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_committee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -10741,7 +10548,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee_member committee_member_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -10749,7 +10556,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee_member committee_member_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -10757,7 +10564,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee_member committee_member_person_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_person_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -10765,7 +10572,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee_member committee_member_role_in_committee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_role_in_committee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -10773,7 +10580,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee_member committee_member_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee_member committee_member_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee_member
@@ -10781,7 +10588,7 @@ ALTER TABLE ONLY core.committee_member
 
 
 --
--- Name: committee committee_parent_org_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_parent_org_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -10789,7 +10596,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: committee committee_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: committee committee_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.committee
@@ -10797,7 +10604,7 @@ ALTER TABLE ONLY core.committee
 
 
 --
--- Name: crisis_meeting crisis_meeting_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -10805,7 +10612,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: crisis_meeting crisis_meeting_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -10813,7 +10620,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: crisis_meeting crisis_meeting_organizer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_organizer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -10821,7 +10628,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: crisis_meeting crisis_meeting_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -10829,7 +10636,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: crisis_meeting crisis_meeting_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: crisis_meeting crisis_meeting_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.crisis_meeting
@@ -10837,7 +10644,7 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
--- Name: dgi_ar_decision dgi_ar_decision_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision dgi_ar_decision_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_ar_decision
@@ -10845,7 +10652,7 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
--- Name: dgi_ar_decision dgi_ar_decision_decision_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision dgi_ar_decision_decision_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_ar_decision
@@ -10853,7 +10660,7 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
--- Name: dgi_ar_decision dgi_ar_decision_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision dgi_ar_decision_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_ar_decision
@@ -10861,7 +10668,7 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
--- Name: dgi_ar_decision dgi_ar_decision_source_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision dgi_ar_decision_source_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_ar_decision
@@ -10869,7 +10676,7 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
--- Name: dgi_ar_decision dgi_ar_decision_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_ar_decision dgi_ar_decision_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_ar_decision
@@ -10877,7 +10684,7 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -10885,7 +10692,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -10893,7 +10700,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -10901,7 +10708,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -10909,7 +10716,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bottleneck_investigation
@@ -10917,7 +10724,7 @@ ALTER TABLE ONLY core.dgi_bottleneck_investigation
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -10925,7 +10732,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -10933,7 +10740,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -10941,7 +10748,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -10949,7 +10756,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
@@ -10957,7 +10764,7 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_committee_session dgi_committee_session_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_committee_session dgi_committee_session_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_committee_session
@@ -10965,7 +10772,7 @@ ALTER TABLE ONLY core.dgi_committee_session
 
 
 --
--- Name: dgi_committee_session dgi_committee_session_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_committee_session dgi_committee_session_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_committee_session
@@ -10973,7 +10780,7 @@ ALTER TABLE ONLY core.dgi_committee_session
 
 
 --
--- Name: dgi_committee_session dgi_committee_session_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_committee_session dgi_committee_session_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_committee_session
@@ -10981,7 +10788,7 @@ ALTER TABLE ONLY core.dgi_committee_session
 
 
 --
--- Name: dgi_committee_session dgi_committee_session_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_committee_session dgi_committee_session_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_committee_session
@@ -10989,7 +10796,7 @@ ALTER TABLE ONLY core.dgi_committee_session
 
 
 --
--- Name: dgi_data_source_status dgi_data_source_status_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status dgi_data_source_status_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_data_source_status
@@ -10997,7 +10804,7 @@ ALTER TABLE ONLY core.dgi_data_source_status
 
 
 --
--- Name: dgi_data_source_status dgi_data_source_status_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status dgi_data_source_status_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_data_source_status
@@ -11005,7 +10812,7 @@ ALTER TABLE ONLY core.dgi_data_source_status
 
 
 --
--- Name: dgi_data_source_status dgi_data_source_status_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status dgi_data_source_status_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_data_source_status
@@ -11013,7 +10820,7 @@ ALTER TABLE ONLY core.dgi_data_source_status
 
 
 --
--- Name: dgi_data_source_status dgi_data_source_status_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status dgi_data_source_status_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_data_source_status
@@ -11021,7 +10828,7 @@ ALTER TABLE ONLY core.dgi_data_source_status
 
 
 --
--- Name: dgi_data_source_status dgi_data_source_status_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_data_source_status dgi_data_source_status_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_data_source_status
@@ -11029,7 +10836,7 @@ ALTER TABLE ONLY core.dgi_data_source_status
 
 
 --
--- Name: dgi_decree dgi_decree_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_decree dgi_decree_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_decree
@@ -11037,7 +10844,7 @@ ALTER TABLE ONLY core.dgi_decree
 
 
 --
--- Name: dgi_division_interaction dgi_division_interaction_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_division_interaction dgi_division_interaction_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_division_interaction
@@ -11045,7 +10852,7 @@ ALTER TABLE ONLY core.dgi_division_interaction
 
 
 --
--- Name: dgi_division_interaction dgi_division_interaction_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_division_interaction dgi_division_interaction_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_division_interaction
@@ -11053,7 +10860,7 @@ ALTER TABLE ONLY core.dgi_division_interaction
 
 
 --
--- Name: dgi_division_interaction dgi_division_interaction_interaction_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_division_interaction dgi_division_interaction_interaction_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_division_interaction
@@ -11061,7 +10868,7 @@ ALTER TABLE ONLY core.dgi_division_interaction
 
 
 --
--- Name: dgi_escalation dgi_escalation_alert_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_escalation dgi_escalation_alert_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_escalation
@@ -11069,7 +10876,7 @@ ALTER TABLE ONLY core.dgi_escalation
 
 
 --
--- Name: dgi_escalation dgi_escalation_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_escalation dgi_escalation_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_escalation
@@ -11077,7 +10884,7 @@ ALTER TABLE ONLY core.dgi_escalation
 
 
 --
--- Name: dgi_escalation dgi_escalation_level_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_escalation dgi_escalation_level_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_escalation
@@ -11085,7 +10892,7 @@ ALTER TABLE ONLY core.dgi_escalation
 
 
 --
--- Name: dgi_escalation dgi_escalation_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_escalation dgi_escalation_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_escalation
@@ -11093,7 +10900,7 @@ ALTER TABLE ONLY core.dgi_escalation
 
 
 --
--- Name: dgi_improvement_opportunity dgi_improvement_opportunity_initiative_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_improvement_opportunity dgi_improvement_opportunity_initiative_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_improvement_opportunity
@@ -11101,7 +10908,7 @@ ALTER TABLE ONLY core.dgi_improvement_opportunity
 
 
 --
--- Name: dgi_improvement_opportunity dgi_improvement_opportunity_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_improvement_opportunity dgi_improvement_opportunity_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_improvement_opportunity
@@ -11109,7 +10916,7 @@ ALTER TABLE ONLY core.dgi_improvement_opportunity
 
 
 --
--- Name: dgi_indicator dgi_indicator_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11117,7 +10924,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator dgi_indicator_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11125,7 +10932,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator dgi_indicator_dimension_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_dimension_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11133,7 +10940,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator dgi_indicator_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11141,7 +10948,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
@@ -11149,7 +10956,7 @@ ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
 
 
 --
--- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
@@ -11157,7 +10964,7 @@ ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
 
 
 --
--- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_new_lifecycle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_new_lifecycle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
@@ -11165,7 +10972,7 @@ ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
 
 
 --
--- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_previous_lifecycle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_previous_lifecycle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
@@ -11173,7 +10980,7 @@ ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
 
 
 --
--- Name: dgi_indicator dgi_indicator_lifecycle_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_lifecycle_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11181,7 +10988,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator dgi_indicator_signal_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_signal_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11189,7 +10996,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_indicator_snapshot dgi_indicator_snapshot_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_snapshot dgi_indicator_snapshot_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_snapshot
@@ -11197,7 +11004,7 @@ ALTER TABLE ONLY core.dgi_indicator_snapshot
 
 
 --
--- Name: dgi_indicator_snapshot dgi_indicator_snapshot_signal_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator_snapshot dgi_indicator_snapshot_signal_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator_snapshot
@@ -11205,7 +11012,7 @@ ALTER TABLE ONLY core.dgi_indicator_snapshot
 
 
 --
--- Name: dgi_indicator dgi_indicator_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_indicator dgi_indicator_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_indicator
@@ -11213,7 +11020,7 @@ ALTER TABLE ONLY core.dgi_indicator
 
 
 --
--- Name: dgi_initiative dgi_initiative_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11221,7 +11028,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11229,7 +11036,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11237,7 +11044,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_dmaic_phase_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_dmaic_phase_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11245,7 +11052,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11253,7 +11060,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11261,7 +11068,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_initiative dgi_initiative_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_initiative dgi_initiative_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_initiative
@@ -11269,7 +11076,7 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
--- Name: dgi_process_actor dgi_process_actor_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_actor dgi_process_actor_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_actor
@@ -11277,7 +11084,7 @@ ALTER TABLE ONLY core.dgi_process_actor
 
 
 --
--- Name: dgi_process dgi_process_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process dgi_process_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process
@@ -11285,7 +11092,7 @@ ALTER TABLE ONLY core.dgi_process
 
 
 --
--- Name: dgi_process_metric dgi_process_metric_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_metric dgi_process_metric_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_metric
@@ -11293,7 +11100,7 @@ ALTER TABLE ONLY core.dgi_process_metric
 
 
 --
--- Name: dgi_process dgi_process_owner_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process dgi_process_owner_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process
@@ -11301,7 +11108,7 @@ ALTER TABLE ONLY core.dgi_process
 
 
 --
--- Name: dgi_process_pain_point dgi_process_pain_point_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_pain_point dgi_process_pain_point_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_pain_point
@@ -11309,7 +11116,7 @@ ALTER TABLE ONLY core.dgi_process_pain_point
 
 
 --
--- Name: dgi_process_pain_point dgi_process_pain_point_reported_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_pain_point dgi_process_pain_point_reported_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_pain_point
@@ -11317,7 +11124,7 @@ ALTER TABLE ONLY core.dgi_process_pain_point
 
 
 --
--- Name: dgi_process_rule dgi_process_rule_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_process_rule dgi_process_rule_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_process_rule
@@ -11325,7 +11132,7 @@ ALTER TABLE ONLY core.dgi_process_rule
 
 
 --
--- Name: dgi_report dgi_report_approved_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_approved_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11333,7 +11140,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11341,7 +11148,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11349,7 +11156,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_generated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_generated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11357,7 +11164,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_report_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_report_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11365,7 +11172,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11373,7 +11180,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_report dgi_report_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_report dgi_report_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_report
@@ -11381,7 +11188,7 @@ ALTER TABLE ONLY core.dgi_report
 
 
 --
--- Name: dgi_service dgi_service_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service dgi_service_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service
@@ -11389,7 +11196,7 @@ ALTER TABLE ONLY core.dgi_service
 
 
 --
--- Name: dgi_service_request dgi_service_request_assigned_to_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_assigned_to_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -11397,7 +11204,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service_request dgi_service_request_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -11405,7 +11212,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service_request dgi_service_request_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -11413,7 +11220,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service_request dgi_service_request_requester_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_requester_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -11421,7 +11228,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service_request dgi_service_request_service_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_service_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -11429,7 +11236,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service_request dgi_service_request_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service_request dgi_service_request_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service_request
@@ -11437,7 +11244,7 @@ ALTER TABLE ONLY core.dgi_service_request
 
 
 --
--- Name: dgi_service dgi_service_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_service dgi_service_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_service
@@ -11445,7 +11252,7 @@ ALTER TABLE ONLY core.dgi_service
 
 
 --
--- Name: dgi_sla dgi_sla_product_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_sla dgi_sla_product_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_sla
@@ -11453,7 +11260,7 @@ ALTER TABLE ONLY core.dgi_sla
 
 
 --
--- Name: dgi_sla dgi_sla_service_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_sla dgi_sla_service_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.dgi_sla
@@ -11461,7 +11268,7 @@ ALTER TABLE ONLY core.dgi_sla
 
 
 --
--- Name: digital_platform digital_platform_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -11469,7 +11276,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: digital_platform digital_platform_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -11477,7 +11284,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: digital_platform digital_platform_owner_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_owner_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -11485,7 +11292,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: digital_platform digital_platform_platform_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_platform_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -11493,7 +11300,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: digital_platform digital_platform_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: digital_platform digital_platform_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.digital_platform
@@ -11501,7 +11308,7 @@ ALTER TABLE ONLY core.digital_platform
 
 
 --
--- Name: document document_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11509,7 +11316,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11517,7 +11324,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11525,7 +11332,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_document_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_document_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11533,7 +11340,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_file_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_file_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11541,7 +11348,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11549,7 +11356,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: document document_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: document document_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.document
@@ -11557,7 +11364,7 @@ ALTER TABLE ONLY core.document
 
 
 --
--- Name: electronic_file electronic_file_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11565,7 +11372,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11573,7 +11380,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_procedure_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_procedure_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11581,7 +11388,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_requester_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_requester_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11589,7 +11396,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_resolution_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_resolution_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11597,7 +11404,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11605,7 +11412,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: electronic_file electronic_file_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: electronic_file electronic_file_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.electronic_file
@@ -11613,7 +11420,7 @@ ALTER TABLE ONLY core.electronic_file
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11621,7 +11428,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11629,7 +11436,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_evaluator_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_evaluator_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11637,7 +11444,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_evaluator_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_evaluator_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11645,7 +11452,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11653,7 +11460,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_result_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_result_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11661,7 +11468,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: evaluation_assignment evaluation_assignment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: evaluation_assignment evaluation_assignment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.evaluation_assignment
@@ -11669,7 +11476,7 @@ ALTER TABLE ONLY core.evaluation_assignment
 
 
 --
--- Name: budget_commitment fk_budget_commitment_agreement; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment fk_budget_commitment_agreement; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -11677,7 +11484,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment fk_budget_commitment_ipr; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment fk_budget_commitment_ipr; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -11685,7 +11492,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: budget_commitment fk_budget_commitment_resolution; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: budget_commitment fk_budget_commitment_resolution; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.budget_commitment
@@ -11693,7 +11500,7 @@ ALTER TABLE ONLY core.budget_commitment
 
 
 --
--- Name: fund_program fk_fund_program_resolution; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fk_fund_program_resolution; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11701,7 +11508,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: organization fk_org_created_by; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization fk_org_created_by; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -11709,7 +11516,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: organization fk_org_deleted_by; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization fk_org_deleted_by; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -11717,7 +11524,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: organization fk_org_updated_by; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization fk_org_updated_by; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -11725,7 +11532,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: person fk_person_created_by; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person fk_person_created_by; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -11733,7 +11540,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person fk_person_deleted_by; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person fk_person_deleted_by; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -11741,7 +11548,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person fk_person_updated_by; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person fk_person_updated_by; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -11749,7 +11556,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: resolution fk_resolution_agreement; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution fk_resolution_agreement; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -11757,7 +11564,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: fund_program fund_program_budget_program_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_budget_program_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11765,7 +11572,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: fund_program fund_program_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11773,7 +11580,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: fund_program fund_program_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11781,7 +11588,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: fund_program fund_program_fund_source_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_fund_source_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11789,7 +11596,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: fund_program fund_program_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11797,7 +11604,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: fund_program fund_program_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: fund_program fund_program_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.fund_program
@@ -11805,7 +11612,7 @@ ALTER TABLE ONLY core.fund_program
 
 
 --
--- Name: installment_milestone installment_milestone_installment_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: installment_milestone installment_milestone_installment_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.installment_milestone
@@ -11813,7 +11620,7 @@ ALTER TABLE ONLY core.installment_milestone
 
 
 --
--- Name: installment_milestone installment_milestone_milestone_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: installment_milestone installment_milestone_milestone_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.installment_milestone
@@ -11821,7 +11628,7 @@ ALTER TABLE ONLY core.installment_milestone
 
 
 --
--- Name: inventory_item inventory_item_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11829,7 +11636,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_current_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_current_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11837,7 +11644,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11845,7 +11652,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_ipr_origin_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_ipr_origin_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11853,7 +11660,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_item_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_item_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11861,7 +11668,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_location_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_location_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11869,7 +11676,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11877,7 +11684,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: inventory_item inventory_item_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: inventory_item inventory_item_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.inventory_item
@@ -11885,7 +11692,7 @@ ALTER TABLE ONLY core.inventory_item
 
 
 --
--- Name: ipr ipr_alert_level_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_alert_level_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11893,7 +11700,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_assignee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_assignee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11901,7 +11708,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_budget_subtitle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_budget_subtitle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11909,7 +11716,39 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_closure ipr_closure_closure_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_closure
+    ADD CONSTRAINT ipr_closure_closure_act_id_fkey FOREIGN KEY (closure_act_id) REFERENCES core.administrative_act(id);
+
+
+--
+-- Name: ipr_closure ipr_closure_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_closure
+    ADD CONSTRAINT ipr_closure_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: ipr_closure ipr_closure_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_closure
+    ADD CONSTRAINT ipr_closure_ipr_id_fkey FOREIGN KEY (ipr_id) REFERENCES core.ipr(id);
+
+
+--
+-- Name: ipr_closure ipr_closure_signed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_closure
+    ADD CONSTRAINT ipr_closure_signed_by_id_fkey FOREIGN KEY (signed_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: ipr ipr_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11917,7 +11756,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11925,7 +11764,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_executor_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_executor_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11933,7 +11772,39 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_formulator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_expost_evaluation ipr_expost_evaluation_evaluation_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_expost_evaluation
+    ADD CONSTRAINT ipr_expost_evaluation_evaluation_type_id_fkey FOREIGN KEY (evaluation_type_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: ipr_expost_evaluation ipr_expost_evaluation_evaluator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_expost_evaluation
+    ADD CONSTRAINT ipr_expost_evaluation_evaluator_id_fkey FOREIGN KEY (evaluator_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: ipr_expost_evaluation ipr_expost_evaluation_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_expost_evaluation
+    ADD CONSTRAINT ipr_expost_evaluation_ipr_id_fkey FOREIGN KEY (ipr_id) REFERENCES core.ipr(id);
+
+
+--
+-- Name: ipr_expost_evaluation ipr_expost_evaluation_overall_rating_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_expost_evaluation
+    ADD CONSTRAINT ipr_expost_evaluation_overall_rating_id_fkey FOREIGN KEY (overall_rating_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: ipr ipr_formulator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11941,7 +11812,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_fund_category_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_fund_category_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11949,7 +11820,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_funding_source_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_funding_source_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11957,7 +11828,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_investment_sector_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_investment_sector_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11965,7 +11836,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_ipr_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_ipr_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11973,7 +11844,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_mcd_phase_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_mcd_phase_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -11981,7 +11852,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr_mechanism ipr_mechanism_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_mechanism ipr_mechanism_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_mechanism
@@ -11989,7 +11860,7 @@ ALTER TABLE ONLY core.ipr_mechanism
 
 
 --
--- Name: ipr_mechanism ipr_mechanism_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_mechanism ipr_mechanism_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_mechanism
@@ -11997,7 +11868,7 @@ ALTER TABLE ONLY core.ipr_mechanism
 
 
 --
--- Name: ipr ipr_mechanism_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_mechanism_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -12005,7 +11876,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr_mechanism ipr_mechanism_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_mechanism ipr_mechanism_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_mechanism
@@ -12013,7 +11884,7 @@ ALTER TABLE ONLY core.ipr_mechanism
 
 
 --
--- Name: ipr_mechanism ipr_mechanism_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_mechanism ipr_mechanism_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_mechanism
@@ -12021,7 +11892,7 @@ ALTER TABLE ONLY core.ipr_mechanism
 
 
 --
--- Name: ipr_milestone ipr_milestone_completed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_completed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -12029,7 +11900,7 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_milestone ipr_milestone_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -12037,7 +11908,7 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_milestone ipr_milestone_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -12045,7 +11916,7 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_milestone ipr_milestone_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -12053,7 +11924,7 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_milestone ipr_milestone_milestone_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_milestone_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -12061,7 +11932,7 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_milestone ipr_milestone_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_milestone ipr_milestone_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_milestone
@@ -12069,7 +11940,47 @@ ALTER TABLE ONLY core.ipr_milestone
 
 
 --
--- Name: ipr_party ipr_party_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_modification ipr_modification_approved_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_modification
+    ADD CONSTRAINT ipr_modification_approved_by_id_fkey FOREIGN KEY (approved_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: ipr_modification ipr_modification_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_modification
+    ADD CONSTRAINT ipr_modification_ipr_id_fkey FOREIGN KEY (ipr_id) REFERENCES core.ipr(id);
+
+
+--
+-- Name: ipr_modification ipr_modification_modification_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_modification
+    ADD CONSTRAINT ipr_modification_modification_type_id_fkey FOREIGN KEY (modification_type_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: ipr_modification ipr_modification_requested_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_modification
+    ADD CONSTRAINT ipr_modification_requested_by_id_fkey FOREIGN KEY (requested_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: ipr_modification ipr_modification_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
+--
+
+ALTER TABLE ONLY core.ipr_modification
+    ADD CONSTRAINT ipr_modification_status_id_fkey FOREIGN KEY (status_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: ipr_party ipr_party_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12077,7 +11988,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12085,7 +11996,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12093,7 +12004,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12101,7 +12012,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12109,7 +12020,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_party_role_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_party_role_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12117,7 +12028,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_sponsor_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_sponsor_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12125,7 +12036,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_party ipr_party_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_party ipr_party_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_party
@@ -12133,7 +12044,7 @@ ALTER TABLE ONLY core.ipr_party
 
 
 --
--- Name: ipr_problem ipr_problem_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12141,7 +12052,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12149,7 +12060,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12157,7 +12068,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_detected_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_detected_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12165,7 +12076,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_impact_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_impact_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12173,7 +12084,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12181,7 +12092,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_problem_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_problem_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12189,7 +12100,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_resolved_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_resolved_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12197,7 +12108,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12205,7 +12116,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr_problem ipr_problem_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_problem ipr_problem_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_problem
@@ -12213,7 +12124,7 @@ ALTER TABLE ONLY core.ipr_problem
 
 
 --
--- Name: ipr ipr_resolution_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_resolution_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -12221,7 +12132,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_sponsor_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_sponsor_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -12229,7 +12140,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr ipr_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -12237,7 +12148,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: ipr_territory ipr_territory_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -12245,7 +12156,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: ipr_territory ipr_territory_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -12253,7 +12164,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: ipr_territory ipr_territory_impact_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_impact_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -12261,7 +12172,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: ipr_territory ipr_territory_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -12269,7 +12180,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: ipr_territory ipr_territory_territory_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_territory_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -12277,7 +12188,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: ipr_territory ipr_territory_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr_territory ipr_territory_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr_territory
@@ -12285,7 +12196,7 @@ ALTER TABLE ONLY core.ipr_territory
 
 
 --
--- Name: ipr ipr_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: ipr ipr_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.ipr
@@ -12293,7 +12204,7 @@ ALTER TABLE ONLY core.ipr
 
 
 --
--- Name: kinship_declaration kinship_declaration_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: kinship_declaration kinship_declaration_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.kinship_declaration
@@ -12301,7 +12212,7 @@ ALTER TABLE ONLY core.kinship_declaration
 
 
 --
--- Name: kinship_declaration kinship_declaration_person_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: kinship_declaration kinship_declaration_person_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.kinship_declaration
@@ -12309,7 +12220,7 @@ ALTER TABLE ONLY core.kinship_declaration
 
 
 --
--- Name: kinship_declaration kinship_declaration_related_authority_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: kinship_declaration kinship_declaration_related_authority_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.kinship_declaration
@@ -12317,7 +12228,7 @@ ALTER TABLE ONLY core.kinship_declaration
 
 
 --
--- Name: kinship_declaration kinship_declaration_validated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: kinship_declaration kinship_declaration_validated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.kinship_declaration
@@ -12325,7 +12236,7 @@ ALTER TABLE ONLY core.kinship_declaration
 
 
 --
--- Name: legal_document legal_document_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_document legal_document_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_document
@@ -12333,7 +12244,7 @@ ALTER TABLE ONLY core.legal_document
 
 
 --
--- Name: legal_document legal_document_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_document legal_document_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_document
@@ -12341,7 +12252,7 @@ ALTER TABLE ONLY core.legal_document
 
 
 --
--- Name: legal_document legal_document_doc_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_document legal_document_doc_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_document
@@ -12349,7 +12260,7 @@ ALTER TABLE ONLY core.legal_document
 
 
 --
--- Name: legal_document legal_document_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_document legal_document_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_document
@@ -12357,7 +12268,7 @@ ALTER TABLE ONLY core.legal_document
 
 
 --
--- Name: legal_mandate legal_mandate_applies_to_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_mandate legal_mandate_applies_to_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_mandate
@@ -12365,7 +12276,7 @@ ALTER TABLE ONLY core.legal_mandate
 
 
 --
--- Name: legal_mandate legal_mandate_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_mandate legal_mandate_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_mandate
@@ -12373,7 +12284,7 @@ ALTER TABLE ONLY core.legal_mandate
 
 
 --
--- Name: legal_mandate legal_mandate_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_mandate legal_mandate_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_mandate
@@ -12381,7 +12292,7 @@ ALTER TABLE ONLY core.legal_mandate
 
 
 --
--- Name: legal_mandate legal_mandate_legal_document_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_mandate legal_mandate_legal_document_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_mandate
@@ -12389,7 +12300,7 @@ ALTER TABLE ONLY core.legal_mandate
 
 
 --
--- Name: legal_mandate legal_mandate_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: legal_mandate legal_mandate_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.legal_mandate
@@ -12397,7 +12308,7 @@ ALTER TABLE ONLY core.legal_mandate
 
 
 --
--- Name: minute minute_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -12405,7 +12316,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: minute minute_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -12413,7 +12324,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: minute minute_resolution_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_resolution_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -12421,7 +12332,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: minute minute_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -12429,7 +12340,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: minute minute_signed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_signed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -12437,7 +12348,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: minute minute_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: minute minute_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.minute
@@ -12445,7 +12356,7 @@ ALTER TABLE ONLY core.minute
 
 
 --
--- Name: operational_commitment operational_commitment_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12453,7 +12364,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_budget_commitment_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_budget_commitment_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12461,7 +12372,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_commitment_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_commitment_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12469,7 +12380,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12477,7 +12388,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12485,7 +12396,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12493,7 +12404,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12501,7 +12412,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_priority_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_priority_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12509,7 +12420,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_problem_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_problem_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12517,7 +12428,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12525,7 +12436,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12533,7 +12444,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12541,7 +12452,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: operational_commitment operational_commitment_verified_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: operational_commitment operational_commitment_verified_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.operational_commitment
@@ -12549,7 +12460,7 @@ ALTER TABLE ONLY core.operational_commitment
 
 
 --
--- Name: organization organization_org_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization organization_org_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -12557,7 +12468,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: organization organization_parent_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: organization organization_parent_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.organization
@@ -12565,7 +12476,7 @@ ALTER TABLE ONLY core.organization
 
 
 --
--- Name: person person_estamento_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_estamento_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -12573,7 +12484,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person person_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -12581,7 +12492,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person person_person_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_person_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -12589,7 +12500,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person person_position_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_position_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -12597,7 +12508,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person person_qualification_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_qualification_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -12605,7 +12516,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: person person_role_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: person person_role_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.person
@@ -12613,7 +12524,7 @@ ALTER TABLE ONLY core.person
 
 
 --
--- Name: planning_instrument planning_instrument_approved_by_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_approved_by_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -12621,7 +12532,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: planning_instrument planning_instrument_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -12629,7 +12540,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: planning_instrument planning_instrument_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -12637,7 +12548,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: planning_instrument planning_instrument_instrument_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_instrument_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -12645,7 +12556,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: planning_instrument planning_instrument_parent_instrument_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_parent_instrument_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -12653,7 +12564,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: planning_instrument planning_instrument_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: planning_instrument planning_instrument_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.planning_instrument
@@ -12661,7 +12572,7 @@ ALTER TABLE ONLY core.planning_instrument
 
 
 --
--- Name: position position_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: position position_organization_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."position"
@@ -12669,7 +12580,7 @@ ALTER TABLE ONLY core."position"
 
 
 --
--- Name: procedure procedure_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -12677,7 +12588,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: procedure procedure_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -12685,7 +12596,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: procedure procedure_platform_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_platform_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -12693,7 +12604,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: procedure procedure_procedure_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_procedure_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -12701,7 +12612,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: procedure procedure_responsible_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_responsible_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -12709,7 +12620,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: procedure procedure_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: procedure procedure_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.procedure
@@ -12717,7 +12628,7 @@ ALTER TABLE ONLY core.procedure
 
 
 --
--- Name: progress_report progress_report_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -12725,7 +12636,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: progress_report progress_report_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -12733,7 +12644,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: progress_report progress_report_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -12741,7 +12652,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: progress_report progress_report_reported_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_reported_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -12749,7 +12660,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: progress_report progress_report_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: progress_report progress_report_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.progress_report
@@ -12757,7 +12668,7 @@ ALTER TABLE ONLY core.progress_report
 
 
 --
--- Name: rendition rendition_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12765,7 +12676,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition rendition_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12773,7 +12684,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition rendition_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12781,7 +12692,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition_escalation rendition_escalation_alert_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_escalation rendition_escalation_alert_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_escalation
@@ -12789,7 +12700,7 @@ ALTER TABLE ONLY core.rendition_escalation
 
 
 --
--- Name: rendition_escalation rendition_escalation_phase_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_escalation rendition_escalation_phase_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_escalation
@@ -12797,7 +12708,7 @@ ALTER TABLE ONLY core.rendition_escalation
 
 
 --
--- Name: rendition_escalation rendition_escalation_rendition_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_escalation rendition_escalation_rendition_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_escalation
@@ -12805,7 +12716,7 @@ ALTER TABLE ONLY core.rendition_escalation
 
 
 --
--- Name: rendition_history rendition_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_history rendition_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_history
@@ -12813,7 +12724,7 @@ ALTER TABLE ONLY core.rendition_history
 
 
 --
--- Name: rendition_history rendition_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_history rendition_history_new_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_history
@@ -12821,7 +12732,7 @@ ALTER TABLE ONLY core.rendition_history
 
 
 --
--- Name: rendition_history rendition_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_history rendition_history_previous_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_history
@@ -12829,7 +12740,7 @@ ALTER TABLE ONLY core.rendition_history
 
 
 --
--- Name: rendition_history rendition_history_rendition_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition_history rendition_history_rendition_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition_history
@@ -12837,7 +12748,7 @@ ALTER TABLE ONLY core.rendition_history
 
 
 --
--- Name: rendition rendition_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12845,7 +12756,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition rendition_renderer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_renderer_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12853,7 +12764,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition rendition_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12861,7 +12772,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition rendition_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_state_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12869,7 +12780,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: rendition rendition_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: rendition rendition_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.rendition
@@ -12877,7 +12788,7 @@ ALTER TABLE ONLY core.rendition
 
 
 --
--- Name: resolution resolution_administrative_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_administrative_act_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12885,7 +12796,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12893,7 +12804,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12901,7 +12812,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12909,7 +12820,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_resolution_subtype_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_resolution_subtype_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12917,7 +12828,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_resolution_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_resolution_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12925,7 +12836,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: resolution resolution_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: resolution resolution_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.resolution
@@ -12933,7 +12844,7 @@ ALTER TABLE ONLY core.resolution
 
 
 --
--- Name: risk risk_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12941,7 +12852,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12949,7 +12860,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_impact_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_impact_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12957,7 +12868,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_probability_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_probability_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12965,7 +12876,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_risk_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_risk_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12973,7 +12884,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12981,7 +12892,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: risk risk_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: risk risk_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.risk
@@ -12989,7 +12900,7 @@ ALTER TABLE ONLY core.risk
 
 
 --
--- Name: session_agreement session_agreement_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -12997,7 +12908,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session_agreement session_agreement_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -13005,7 +12916,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session_agreement session_agreement_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_ipr_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -13013,7 +12924,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session_agreement session_agreement_minute_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_minute_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -13021,7 +12932,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session_agreement session_agreement_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -13029,7 +12940,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session_agreement session_agreement_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -13037,7 +12948,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session_agreement session_agreement_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_agreement session_agreement_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_agreement
@@ -13045,7 +12956,7 @@ ALTER TABLE ONLY core.session_agreement
 
 
 --
--- Name: session session_committee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session session_committee_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session
@@ -13053,7 +12964,7 @@ ALTER TABLE ONLY core.session
 
 
 --
--- Name: session session_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session session_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session
@@ -13061,7 +12972,7 @@ ALTER TABLE ONLY core.session
 
 
 --
--- Name: session session_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session session_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session
@@ -13069,7 +12980,7 @@ ALTER TABLE ONLY core.session
 
 
 --
--- Name: session session_session_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session session_session_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session
@@ -13077,7 +12988,7 @@ ALTER TABLE ONLY core.session
 
 
 --
--- Name: session session_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session session_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session
@@ -13085,7 +12996,7 @@ ALTER TABLE ONLY core.session
 
 
 --
--- Name: session_vote session_vote_session_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_vote session_vote_session_agreement_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_vote
@@ -13093,7 +13004,7 @@ ALTER TABLE ONLY core.session_vote
 
 
 --
--- Name: session_vote session_vote_vote_option_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_vote session_vote_vote_option_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_vote
@@ -13101,7 +13012,7 @@ ALTER TABLE ONLY core.session_vote
 
 
 --
--- Name: session_vote session_vote_voter_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: session_vote session_vote_voter_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.session_vote
@@ -13109,7 +13020,7 @@ ALTER TABLE ONLY core.session_vote
 
 
 --
--- Name: subv8_fund_ceiling subv8_fund_ceiling_fund_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: subv8_fund_ceiling subv8_fund_ceiling_fund_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.subv8_fund_ceiling
@@ -13117,7 +13028,7 @@ ALTER TABLE ONLY core.subv8_fund_ceiling
 
 
 --
--- Name: territorial_indicator territorial_indicator_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -13125,7 +13036,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territorial_indicator territorial_indicator_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -13133,7 +13044,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territorial_indicator territorial_indicator_indicator_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_indicator_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -13141,7 +13052,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territorial_indicator territorial_indicator_territory_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_territory_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -13149,7 +13060,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territorial_indicator territorial_indicator_unit_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_unit_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -13157,7 +13068,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territorial_indicator territorial_indicator_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territorial_indicator territorial_indicator_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territorial_indicator
@@ -13165,7 +13076,7 @@ ALTER TABLE ONLY core.territorial_indicator
 
 
 --
--- Name: territory territory_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -13173,7 +13084,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: territory territory_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -13181,7 +13092,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: territory territory_parent_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_parent_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -13189,7 +13100,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: territory territory_territory_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_territory_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -13197,7 +13108,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: territory territory_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: territory territory_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.territory
@@ -13205,7 +13116,7 @@ ALTER TABLE ONLY core.territory
 
 
 --
--- Name: user user_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -13213,7 +13124,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -13221,7 +13132,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -13229,7 +13140,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_person_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_person_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -13237,7 +13148,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_system_role_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_system_role_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -13245,7 +13156,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: user user_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: user user_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core."user"
@@ -13253,7 +13164,7 @@ ALTER TABLE ONLY core."user"
 
 
 --
--- Name: vehicle vehicle_assigned_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_assigned_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13261,7 +13172,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13269,7 +13180,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_deleted_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13277,7 +13188,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_fuel_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_fuel_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13285,7 +13196,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_inventory_item_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_inventory_item_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13293,7 +13204,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_updated_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13301,7 +13212,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: vehicle vehicle_vehicle_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: vehicle vehicle_vehicle_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: -
 --
 
 ALTER TABLE ONLY core.vehicle
@@ -13309,7 +13220,7 @@ ALTER TABLE ONLY core.vehicle
 
 
 --
--- Name: entity fk_entity_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: entity fk_entity_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.entity
@@ -13317,7 +13228,7 @@ ALTER TABLE ONLY meta.entity
 
 
 --
--- Name: entity fk_entity_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: entity fk_entity_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.entity
@@ -13325,7 +13236,7 @@ ALTER TABLE ONLY meta.entity
 
 
 --
--- Name: entity fk_entity_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: entity fk_entity_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.entity
@@ -13333,7 +13244,7 @@ ALTER TABLE ONLY meta.entity
 
 
 --
--- Name: process fk_process_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: process fk_process_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.process
@@ -13341,7 +13252,7 @@ ALTER TABLE ONLY meta.process
 
 
 --
--- Name: process fk_process_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: process fk_process_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.process
@@ -13349,7 +13260,7 @@ ALTER TABLE ONLY meta.process
 
 
 --
--- Name: process fk_process_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: process fk_process_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.process
@@ -13357,7 +13268,7 @@ ALTER TABLE ONLY meta.process
 
 
 --
--- Name: role fk_role_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: role fk_role_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.role
@@ -13365,7 +13276,7 @@ ALTER TABLE ONLY meta.role
 
 
 --
--- Name: role fk_role_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: role fk_role_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.role
@@ -13373,7 +13284,7 @@ ALTER TABLE ONLY meta.role
 
 
 --
--- Name: role fk_role_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: role fk_role_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.role
@@ -13381,7 +13292,7 @@ ALTER TABLE ONLY meta.role
 
 
 --
--- Name: story fk_story_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story fk_story_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -13389,7 +13300,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: story fk_story_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story fk_story_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -13397,7 +13308,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: story_entity fk_story_entity_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity fk_story_entity_created_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -13405,7 +13316,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story_entity fk_story_entity_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity fk_story_entity_deleted_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -13413,7 +13324,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story_entity fk_story_entity_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity fk_story_entity_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -13421,7 +13332,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story fk_story_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story fk_story_updated_by; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -13429,7 +13340,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: role role_human_accountable_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: role role_human_accountable_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.role
@@ -13437,7 +13348,7 @@ ALTER TABLE ONLY meta.role
 
 
 --
--- Name: story_entity story_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity story_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -13445,7 +13356,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story_entity story_entity_story_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story_entity story_entity_story_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story_entity
@@ -13453,7 +13364,7 @@ ALTER TABLE ONLY meta.story_entity
 
 
 --
--- Name: story story_process_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story story_process_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -13461,7 +13372,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: story story_role_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: goreos
+-- Name: story story_role_id_fkey; Type: FK CONSTRAINT; Schema: meta; Owner: -
 --
 
 ALTER TABLE ONLY meta.story
@@ -13469,7 +13380,7 @@ ALTER TABLE ONLY meta.story
 
 
 --
--- Name: acceptance_criteria acceptance_criteria_us_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: acceptance_criteria acceptance_criteria_us_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.acceptance_criteria
@@ -13477,7 +13388,7 @@ ALTER TABLE ONLY public.acceptance_criteria
 
 
 --
--- Name: bridge_us_entity bridge_us_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: bridge_us_entity bridge_us_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bridge_us_entity
@@ -13485,7 +13396,7 @@ ALTER TABLE ONLY public.bridge_us_entity
 
 
 --
--- Name: bridge_us_entity bridge_us_entity_us_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: bridge_us_entity bridge_us_entity_us_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bridge_us_entity
@@ -13493,7 +13404,7 @@ ALTER TABLE ONLY public.bridge_us_entity
 
 
 --
--- Name: bridge_us_extra_tag bridge_us_extra_tag_tag_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: bridge_us_extra_tag bridge_us_extra_tag_tag_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bridge_us_extra_tag
@@ -13501,7 +13412,7 @@ ALTER TABLE ONLY public.bridge_us_extra_tag
 
 
 --
--- Name: bridge_us_extra_tag bridge_us_extra_tag_us_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: bridge_us_extra_tag bridge_us_extra_tag_us_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bridge_us_extra_tag
@@ -13509,7 +13420,7 @@ ALTER TABLE ONLY public.bridge_us_extra_tag
 
 
 --
--- Name: dim_role dim_role_canonical_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: dim_role dim_role_canonical_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_role
@@ -13517,7 +13428,7 @@ ALTER TABLE ONLY public.dim_role
 
 
 --
--- Name: fact_user_story fact_user_story_process_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: fact_user_story fact_user_story_process_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fact_user_story
@@ -13525,7 +13436,7 @@ ALTER TABLE ONLY public.fact_user_story
 
 
 --
--- Name: fact_user_story fact_user_story_role_canonical_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: fact_user_story fact_user_story_role_canonical_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fact_user_story
@@ -13533,7 +13444,7 @@ ALTER TABLE ONLY public.fact_user_story
 
 
 --
--- Name: fact_user_story fact_user_story_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: fact_user_story fact_user_story_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fact_user_story
@@ -13541,7 +13452,7 @@ ALTER TABLE ONLY public.fact_user_story
 
 
 --
--- Name: role_especialidad role_especialidad_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: role_especialidad role_especialidad_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_especialidad
@@ -13549,7 +13460,7 @@ ALTER TABLE ONLY public.role_especialidad
 
 
 --
--- Name: role_mapping role_mapping_canonical_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: goreos
+-- Name: role_mapping role_mapping_canonical_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_mapping
@@ -13557,7 +13468,7 @@ ALTER TABLE ONLY public.role_mapping
 
 
 --
--- Name: category category_parent_id_fkey; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category category_parent_id_fkey; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -13565,7 +13476,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: category category_phase_id_fkey; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category category_phase_id_fkey; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -13573,7 +13484,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: actor fk_actor_created_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: actor fk_actor_created_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.actor
@@ -13581,7 +13492,7 @@ ALTER TABLE ONLY ref.actor
 
 
 --
--- Name: actor fk_actor_deleted_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: actor fk_actor_deleted_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.actor
@@ -13589,7 +13500,7 @@ ALTER TABLE ONLY ref.actor
 
 
 --
--- Name: actor fk_actor_organization; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: actor fk_actor_organization; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.actor
@@ -13597,7 +13508,7 @@ ALTER TABLE ONLY ref.actor
 
 
 --
--- Name: actor fk_actor_updated_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: actor fk_actor_updated_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.actor
@@ -13605,7 +13516,7 @@ ALTER TABLE ONLY ref.actor
 
 
 --
--- Name: category fk_category_created_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category fk_category_created_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -13613,7 +13524,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: category fk_category_deleted_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category fk_category_deleted_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -13621,7 +13532,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: category fk_category_updated_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: category fk_category_updated_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.category
@@ -13629,7 +13540,7 @@ ALTER TABLE ONLY ref.category
 
 
 --
--- Name: operational_commitment_type fk_oct_created_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type fk_oct_created_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.operational_commitment_type
@@ -13637,7 +13548,7 @@ ALTER TABLE ONLY ref.operational_commitment_type
 
 
 --
--- Name: operational_commitment_type fk_oct_deleted_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type fk_oct_deleted_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.operational_commitment_type
@@ -13645,7 +13556,7 @@ ALTER TABLE ONLY ref.operational_commitment_type
 
 
 --
--- Name: operational_commitment_type fk_oct_updated_by; Type: FK CONSTRAINT; Schema: ref; Owner: goreos
+-- Name: operational_commitment_type fk_oct_updated_by; Type: FK CONSTRAINT; Schema: ref; Owner: -
 --
 
 ALTER TABLE ONLY ref.operational_commitment_type
@@ -13653,7 +13564,7 @@ ALTER TABLE ONLY ref.operational_commitment_type
 
 
 --
--- Name: event event_actor_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event event_actor_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.event
@@ -13661,7 +13572,7 @@ ALTER TABLE txn.event
 
 
 --
--- Name: event event_actor_ref_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event event_actor_ref_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.event
@@ -13669,7 +13580,7 @@ ALTER TABLE txn.event
 
 
 --
--- Name: event event_created_by_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event event_created_by_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.event
@@ -13677,7 +13588,7 @@ ALTER TABLE txn.event
 
 
 --
--- Name: event event_event_type_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: event event_event_type_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.event
@@ -13685,7 +13596,7 @@ ALTER TABLE txn.event
 
 
 --
--- Name: magnitude magnitude_aspect_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude magnitude_aspect_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.magnitude
@@ -13693,7 +13604,7 @@ ALTER TABLE txn.magnitude
 
 
 --
--- Name: magnitude magnitude_created_by_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude magnitude_created_by_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.magnitude
@@ -13701,7 +13612,7 @@ ALTER TABLE txn.magnitude
 
 
 --
--- Name: magnitude magnitude_unit_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: goreos
+-- Name: magnitude magnitude_unit_id_fkey; Type: FK CONSTRAINT; Schema: txn; Owner: -
 --
 
 ALTER TABLE txn.magnitude
@@ -13712,5 +13623,5 @@ ALTER TABLE txn.magnitude
 -- PostgreSQL database dump complete
 --
 
-\unrestrict OFrvKOIOIiuckJe77arhEFZwgdtCVDCWg5EhOFHYabvjYKEd8cErc1KLiIb4A2J
+\unrestrict AYIWhkWAIyeBxPyRMDdjNMTP0Ha6e8Mb1aH9sYl9zDaZSyR4Pbl6bvnft3lCf1V
 
