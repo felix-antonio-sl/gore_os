@@ -61,13 +61,19 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 - `lib/auth.tsx` — `AuthProvider`, `useAuth()` → `{user, loading, login, logout}`
 - `lib/format.ts` — `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency` (es-CL). **All 21 files import from here — never define local format functions.**
 - `types/index.ts` — all interfaces. `User.population` (`"operativa"|"dgi"`) drives routing.
-- `components/sidebar.tsx` — `operationalNav` (10) + role-specific (Mi División/Mis Compromisos) + `adminOnlyNav` (Usuarios, Divisiones, Umbrales, Niveles SNI) vs `dgiNav` (13) by population
+- `components/sidebar.tsx` — Semantic sections (5-7 per population) via `NavSection` (collapsible, localStorage-persisted). Operativa: Comando, Gestión IPR, Finanzas, Institucional, Mi Trabajo, Administración. DGI: Monitoreo, Mejora Continua, Coordinación, Análisis.
 - `components/combobox-async.tsx` — server-side searchable select (debounce 300ms, `shouldFilter={false}`). Use for 500+ option fields. Props: `value`, `onChange`, `searchFn`, `placeholder`.
-- `components/page-header.tsx` — shared header (`title`, `description?`, `actions?`). **All list pages must use this.**
+- `components/page-header.tsx` — shared header (`title`, `description?`, `actions?`, `breadcrumbs?`, `accentColor?`). **All list pages must use this.** Domain accents: indigo(IPR), amber(compromisos), emerald(finanzas), violet(institucional), rose(riesgos), cyan(DGI), teal(servicios).
 - `components/empty-state.tsx` — `compact` for tabs/inline, normal for full-page. **All empty states must use this.**
 - `components/confirm-dialog.tsx` — AlertDialog for destructive actions. **Always use for delete/revert.** Props: `open`, `onOpenChange`, `title`, `description`, `onConfirm`, `variant?`, `confirmLabel?`, `cancelLabel?`, `loading?`.
 - `app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
-- `app/(app)/dashboard/page.tsx` — detects population → operational dashboard or DGI cockpit
+- `app/(app)/dashboard/page.tsx` — unified entry → `<CommandCenter />` for ALL 16 roles
+- `components/breadcrumb.tsx` — navigable breadcrumbs, used in 18 detail/create pages
+- `components/page-guard.tsx` — wrapper: auth check + role gate + loading skeleton + error state
+- `components/progress-cell.tsx` — inline progress bar (green ≥70%, amber ≥40%, red <40%)
+- `components/deadline-cell.tsx` — date + semáforo color (red overdue, amber ≤7d)
+- `components/detail-page-layout.tsx` — opt-in wrapper: breadcrumbs + hero + stepper + transition panel
+- `hooks/use-tab-param.ts` — sync Radix Tabs value with `?tab=` URL search param
 
 ### Database
 
@@ -162,7 +168,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ### Cross-entity Navigation
 
-- **IPR → satellites**: 14 tabs (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones, Evaluación, Parentesco, Admisibilidad, Modificaciones) — self-contained components in `tab-*.tsx`.
+- **IPR → satellites**: 16 tabs (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones, Evaluación, Parentesco, Admisibilidad, Modificaciones, Cierre, Ex-Post) — self-contained components in `tab-*.tsx`.
 - **Satellites → IPR**: Drawers show clickable `ipr_codigo_bip` → `/ipr/{id}`. Pattern: include `ipr_id` in schema+SQL, use `text-blue-600 hover:underline`, close drawer before navigating.
 - **IPR list filters**: `?assignee_id=X` for all roles.
 
@@ -203,7 +209,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## Coverage
 
-~275 endpoints, 568 tests, 42 modules, 31 gate functions. 55 frontend pages. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 98 CHECKs + 19 state triggers + 6 history/timing triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 19 entities. 105 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. Audit trail: `txn.event` populated via `record_event()` in 5 routers (15 integration points). **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
+~276 endpoints, 577 tests, 43 modules, 31 gate functions. 55 frontend pages, ~35 shared components. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 98 CHECKs + 19 state triggers + 6 history/timing triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 19 entities. 105 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. Audit trail: `txn.event` populated via `record_event()` in 5 routers (15 integration points). UX: structural refactoring (6 phases) + visual refresh (3 layers) complete. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
 
 ## Critical Rules
 
@@ -245,7 +251,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 25. **Demo data**: `DEMO-` prefix in code/number fields. Never mix with real data.
 26. **Report section edits**: Atomic `jsonb_set` in `metadata` (not read-modify-write). Auto-populated content regenerated on each GET; only user edits persist.
 27. **Reuniones**: Uses existing DDL tables. Crisis committee `COMITE-CRISIS` auto-created on first use. `core_sessions.py` handles CORE sessions (committee `CONSEJO-REGIONAL`, auto-created).
-28. **Dashboard**: Role-specific: `GET /dashboard` (base), `/dashboard/ejecutivo` (ADMIN, division breakdown), `/dashboard/mi-division` (JEFE_DIVISION), `/dashboard/mis-compromisos` (ENCARGADO).
+28. **Dashboard**: Unified Centro de Comando Personal for ALL roles. `GET /dashboard/action-items` (computed coproduct: commitments, alerts, decisions, escalations, SLA breaches, risks — role-scoped). Existing endpoints: `/dashboard` (base), `/dashboard/ejecutivo` (ADMIN), `/dashboard/mi-division` (JEFE_DIVISION), `/dashboard/mis-compromisos` (ENCARGADO). Module selection by `role_code`: ENCARGADO→MyProgress, JEFE_DIVISION→MyTeam, JEFE_DGI→DgiTeam, PANORAMA→KPIs+semáforo. DGI cockpits still accessible via sidebar (Monitoreo section).
 29. **Admin module**: `usuarios` CRUD+toggle/reset, `divisiones`, `financing-tracks`, `thresholds`, `sni-levels`, `budget-program-codes`, `admissibility-items`. All ADMIN_SISTEMA only.
 30. **CDP endpoint**: `GET /api/presupuesto/cdps-por-ipr/{ipr_id}` → `list[BudgetCommitmentItem]`. Route BEFORE `/{presupuesto_id}` to avoid path conflicts.
 31. **Convenio installments**: `POST /cuotas` requires `installment_number`, `amount`, `due_date`, `payment_status_id`. `PATCH /cuotas/{id}` accepts `payment_status_id`, `paid_at`, `paid_amount`, `payment_reference`. Inline forms in drawer.
@@ -289,7 +295,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 51. **Shared components (Wave 2)**: All list pages → `PageHeader`. All empty states → `EmptyState`. All destructive actions → `ConfirmDialog`. 25 components in `web/src/components/`.
 52. **Identity (Wave 1)**: GORE Ñuble branding. OKLCH palette (GOREAZUL #031B5F, GORECELESTE #196AB0). 3 fonts: Plus Jakarta Sans (body), Roboto Slab (headings, auto h1/h2), JetBrains Mono (mono). Dark sidebar always. Theme toggle with FOUC-prevention in `layout.tsx`. `GoreMark` SVG.
 53. **Motion (Wave 3)**: CSS-only fade-ins via tw-animate-css 1.4.0. Classes: `animate-in fade-in duration-{200,300}`. Stagger: `delay-{75,150,200,300}` + `fill-mode-both`. `prefers-reduced-motion` in globals.css. Applied: PageHeader, Dashboard KPIs (stagger), DataTable, Login (sequential). NOT: sidebar, DrawerPanel/Sheet (Radix-animated), skeletons.
-54. **IPR detail**: 14 tabs in `tab-*.tsx` — self-contained (13 original + tab-modificaciones). Main page (~650 lines) retains hero, stepper, transitions, edit/assignee drawers.
+54. **IPR detail**: 16 tabs in `tab-*.tsx` — self-contained (13 original + tab-modificaciones + tab-cierre + tab-evaluacion-expost). Main page uses extracted components (IprHeroCard, IprPhaseStepper, IprTransitionPanel). Tab Cierre: single-record pattern (UNIQUE per IPR), create/sign flow, phase-gated to F5 states.
 55. **Process Catalog (DGI)**: `/procesos` list (FilterBar status/criticality/search, DataTable 7 cols, DrawerPanel create) + `/procesos/[id]` detail (hero, 6-state FSM `PROCESS_FSM`, edit drawer, 5 tabs: actors, rules, metrics, pain-points, opportunities). All tabs accept `canEdit` prop. `tab-opportunities.tsx` bridges Process→Opportunity→Initiative (MP-013). API: `GET/POST /api/dgi/processes`, `PATCH /api/dgi/processes/{id}`, 5 satellite CRUD endpoints per process.
 56. **Bottleneck Detection (DGI)**: `/cuellos-de-botella` (scan cards + DataTable investigations) + `[id]` detail (linear 6-state FSM, 6 phase-gated textarea fields). `isFieldEditable()` excludes CERRADO. API: `GET /api/dgi/data/bottlenecks/scan`, `GET/POST /api/dgi/data/bottlenecks`, `PATCH /api/dgi/data/bottlenecks/{id}`.
 57. **Indicator Enhancement (DGI)**: `indicadores.tsx` domain config. 5 DGI dimensions (PRESUPUESTO/CARTERA_IPR/CONVENIOS/TDE/RIESGOS). Lifecycle filter+columns. `NuevoIndicadorAction` (JEFE_DGI). Manual value entry (MANUAL/EXTERNAL + VIGENTE). Lifecycle transitions with ConfirmDialog for Deprecar.
@@ -306,9 +312,23 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 68. **Crisis→Decision Bridge (Wave E)**: `POST /api/reuniones/{id}/decisiones` creates AR decision linked via `source_session_id`. `GET /api/reuniones/{id}/decisiones` lists decisions from meeting.
 69. **Demo Data Wave E**: `goreos_seed_demo_wave_e.sql` (5 DEMO-RSK risks, mixed statuses/types). `goreos_unseed_demo_wave_e.sql` removes DEMO- records only.
 
+### Structural Refactoring + Visual Refresh (C38)
+
+70. **Sidebar Semántico**: 5-7 collapsible `NavSection` per population (replaces 17-item flat list). State persisted in `localStorage`. Cross-population: Servicios visible in operativa. `components/nav-section.tsx` + `components/ui/collapsible.tsx`.
+71. **Breadcrumbs**: `components/breadcrumb.tsx` + `lib/breadcrumbs.ts`. `buildBreadcrumbs(pathname, entityLabel?)`. 18 detail/create pages. Coexists with back arrow.
+72. **PageGuard**: `components/page-guard.tsx` — `allowedRoles?`, `allowedPopulations?`, `skeleton?`. 7 pages adopted (admin, centro-de-mando, comité-td, calendario). Opt-in for rest.
+73. **URL Tabs**: `hooks/use-tab-param.ts` — sync Radix Tabs with `?tab=` search param. IPR detail 15 tabs bookmarkable. `router.replace(pathname + "?" + params, { scroll: false })`.
+74. **Dashboard Decomposition**: `page.tsx` 479→13 lines. Extracted: `operational-dashboard.tsx` (~280 lines), `dgi-cockpit-router.tsx` (~40), `executive-breakdown.tsx` (~60). Now routes to unified `CommandCenter`.
+75. **Drawer Unification**: Sheet raw → DrawerPanel in 5 pages (escalamiento, riesgos, servicios, coordinación, comité-td). ADR: `docs/adr/008-create-pattern-drawer-vs-page.md`.
+76. **Centro de Comando Personal**: `GET /api/dashboard/action-items` — computed coproduct of 6 sources (commitments, alerts, AR decisions, escalations, SLA breaches, risks). Priority: `SEV*5 + TEMP` total order. Role scoping: 16 roles in 5 groups. Frontend: `command-center.tsx` orchestrator + `attention-strip.tsx` (urgent cards) + 4 conditional modules (MyProgress, MyTeam, DgiTeam, KPIs).
+77. **Table Enrichment**: `progress-cell.tsx` (inline bar, green/amber/red), `deadline-cell.tsx` (date + semáforo), `trend-indicator.tsx` (↑↓→). Integrated in presupuesto, compromisos, convenios, escalamiento.
+78. **Domain Color Accents**: `PageHeader.accentColor` prop → 3px left border. 7 domains: indigo(IPR), amber(compromisos), emerald(finanzas), violet(institucional), rose(riesgos), cyan(DGI), teal(servicios). Applied to 15 list pages. Tailwind static `ACCENT_BORDER` mapping (no dynamic classes).
+79. **DetailPageLayout**: `components/detail-page-layout.tsx` — opt-in wrapper: breadcrumbs, hero slot, display-only stepper (phase colors), transition panel slot.
+80. **IPR StatusBadge Colors**: `status-badge.tsx` expanded with 32 IPR states, phase-based color coding (F0=slate, F1=blue, F2=cyan, F3=purple, F4=green, F5=gray). Cierre tab added to IPR detail (16th tab).
+
 ### IPR Lifecycle (C37)
 
-70. **IPR states (32 total)**: 28 original + 4 new (TERMINADO_ANTICIPADAMENTE, CONTRATO_FIRMADO, RENDICION_APROBADA, EN_CIERRE_ADMINISTRATIVO). `STATUS_PHASE_FIBER` dict maps all 32 to phases. Nature-aware gates: PROYECTO bifurcates EN_FORMALIZACION→EN_LICITACION→ADJUDICADO→CONTRATO_FIRMADO→EN_OBRA; PROGRAMA goes EN_FORMALIZACION→FORMALIZADO→EN_EJECUCION. ANULADO+TERMINADO_ANTICIPADAMENTE cross-cutting from most non-terminal states.
-71. **IPR modifications**: `core.ipr_modification` table. Code: `MOD-{year}-{seq:04d}` (advisory lock). FSM: SOLICITADA→EN_REVISION→APROBADA/RECHAZADA (DB trigger enforced). 5 types: PRESUPUESTO, PLAZO, ALCANCE, EJECUTOR, TECNICO. Endpoints: `GET/POST /api/ipr/{id}/modificaciones`, `PATCH /api/ipr/{id}/modificaciones/{mod_id}`. WRITE_OPERATIONAL_ROLES create, ADMIN_REGIONAL+ approve/reject. Gate `_check_pending_modifications()` informational at F4→F5.
-72. **IPR closure**: `core.ipr_closure` (UNIQUE per IPR). Fields: closure_date, physical/financial_completion, final_amount, signed_by_id/signed_at. Gate `_check_closure_requirements()` blocks EN_CIERRE_ADMINISTRATIVO→CERRADO without signed closure. `core.ipr_expost_evaluation` (multiple per IPR, post-CERRADO). 4 dimension scores + overall_rating. 3 eval types: SIMPLIFICADA, PROFUNDIDAD, IMPACTO.
-73. **ITO gate + SLAs**: ITO (Inspector Técnico de Obra) via `ipr_party_role` scheme. Gate `_check_ito_assigned()` blocks EN_LICITACION→ADJUDICADO for PROYECTO without ITO party. `phase_entered_at` column + trigger `trg_ipr_phase_entered` auto-updates on status change. Evaluation SLA via `sla_days.evaluation_max_days` in `financing_track`. Batch endpoints: `POST /api/ipr/check-report-compliance`, `POST /api/ipr/check-evaluation-slas`.
+81. **IPR states (32 total)**: 28 original + 4 new (TERMINADO_ANTICIPADAMENTE, CONTRATO_FIRMADO, RENDICION_APROBADA, EN_CIERRE_ADMINISTRATIVO). `STATUS_PHASE_FIBER` dict maps all 32 to phases. Nature-aware gates: PROYECTO bifurcates EN_FORMALIZACION→EN_LICITACION→ADJUDICADO→CONTRATO_FIRMADO→EN_OBRA; PROGRAMA goes EN_FORMALIZACION→FORMALIZADO→EN_EJECUCION. ANULADO+TERMINADO_ANTICIPADAMENTE cross-cutting from most non-terminal states.
+82. **IPR modifications**: `core.ipr_modification` table. Code: `MOD-{year}-{seq:04d}` (advisory lock). FSM: SOLICITADA→EN_REVISION→APROBADA/RECHAZADA (DB trigger enforced). 5 types: PRESUPUESTO, PLAZO, ALCANCE, EJECUTOR, TECNICO. Endpoints: `GET/POST /api/ipr/{id}/modificaciones`, `PATCH /api/ipr/{id}/modificaciones/{mod_id}`. WRITE_OPERATIONAL_ROLES create, ADMIN_REGIONAL+ approve/reject. Gate `_check_pending_modifications()` informational at F4→F5.
+83. **IPR closure**: `core.ipr_closure` (UNIQUE per IPR). Fields: closure_date, physical/financial_completion, final_amount, signed_by_id/signed_at. Gate `_check_closure_requirements()` blocks EN_CIERRE_ADMINISTRATIVO→CERRADO without signed closure. `core.ipr_expost_evaluation` (multiple per IPR, post-CERRADO). 4 dimension scores + overall_rating. 3 eval types: SIMPLIFICADA, PROFUNDIDAD, IMPACTO.
+84. **ITO gate + SLAs**: ITO (Inspector Técnico de Obra) via `ipr_party_role` scheme. Gate `_check_ito_assigned()` blocks EN_LICITACION→ADJUDICADO for PROYECTO without ITO party. `phase_entered_at` column + trigger `trg_ipr_phase_entered` auto-updates on status change. Evaluation SLA via `sla_days.evaluation_max_days` in `financing_track`. Batch endpoints: `POST /api/ipr/check-report-compliance`, `POST /api/ipr/check-evaluation-slas`.
