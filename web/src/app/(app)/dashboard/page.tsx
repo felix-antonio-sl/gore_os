@@ -2,8 +2,7 @@
 
 import { useAuth } from "@/lib/auth";
 import { PageSkeleton } from "@/components/page-skeleton";
-import { OperationalDashboard } from "./components/operational-dashboard";
-import { DgiCockpitRouter } from "./components/dgi-cockpit-router";
+import { CommandCenter } from "./components/command-center";
 
 export default function DashboardPage() {
   const { user, loading } = useAuth();
@@ -11,6 +10,5 @@ export default function DashboardPage() {
   if (loading) return <PageSkeleton variant="dashboard" />;
   if (!user) return null;
 
-  if (user.population === "dgi") return <DgiCockpitRouter />;
-  return <OperationalDashboard />;
+  return <CommandCenter />;
 }
