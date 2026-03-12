@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import APIRouter, Depends
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -5,6 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.schemas.dashboard import (
+    ActionItem,
+    ActionItemsResponse,
     DashboardResponse,
     KPICard,
     DashboardCommitment,
@@ -43,6 +47,398 @@ def _worst_signal(signals: list[str | None]) -> str:
     return best
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
+
+# ---------------------------------------------------------------------------
+# Action-items helpers
+# ---------------------------------------------------------------------------
+_TEMPORAL_MAP = {
+    "VENCIDO": 0,
+    "HOY": 1,
+    "ESTA_SEMANA": 2,
+    "FUTURO": 3,
+}
+
+_SEVERITY_MAP = {
+    "CRITICO": 0,
+    "ALTO": 1,
+    "MEDIO": 2,
+    "BAJO": 3,
+}
+
+# Roles that scope to own items only (no DGI / global views)
+_PERSONAL_ROLES = ("ENCARGADO", "ANALISTA", "RTF", "ASESOR_JURIDICO")
+_DIVISION_ROLES = ("JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD")
+
+
+def _compute_temporal(days_remaining: int | None) -> str | None:
+    if days_remaining is None:
+        return None
+    if days_remaining < 0:
+        return "VENCIDO"
+    if days_remaining == 0:
+        return "HOY"
+    if days_remaining <= 7:
+        return "ESTA_SEMANA"
+    return "FUTURO"
+
+
+def _compute_priority(temporal: str | None, severity: str) -> int:
+    sev_val = _SEVERITY_MAP.get(severity, 3)
+    temp_val = _TEMPORAL_MAP.get(temporal, 3) if temporal else 3
+    return sev_val * 5 + temp_val
+
+
+def _severity_from_alert(alert_code: str) -> str:
+    return {
+        "CRITICO": "CRITICO",
+        "ALTO": "ALTO",
+        "ATENCION": "MEDIO",
+        "INFO": "BAJO",
+    }.get(alert_code, "BAJO")
+
+
+def _severity_from_escalation_level(level_code: str) -> str:
+    if level_code in ("NIVEL_3", "NIVEL_4"):
+        return "CRITICO"
+    if level_code == "NIVEL_2":
+        return "ALTO"
+    return "MEDIO"
+
+
+def _severity_from_risk_probability(prob_code: str) -> str:
+    return {
+        "MUY_ALTA": "CRITICO",
+        "ALTA": "ALTO",
+        "MEDIA": "MEDIO",
+        "BAJA": "BAJO",
+        "MUY_BAJA": "BAJO",
+    }.get(prob_code, "BAJO")
+
+
+# ---------------------------------------------------------------------------
+# Action-items: 6 source query functions
+# ---------------------------------------------------------------------------
+async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    uid = str(user["id"])
+    div_id = str(user["division_id"]) if user.get("division_id") else None
+
+    params: dict = {}
+    where_scope = ""
+
+    if role in _PERSONAL_ROLES:
+        where_scope = "AND oc.responsible_id = :uid"
+        params["uid"] = uid
+    elif role in _DIVISION_ROLES:
+        if not div_id:
+            return []
+        where_scope = (
+            "AND oc.ipr_id IN ("
+            "  SELECT i.id FROM core.ipr i"
+            "  WHERE i.sponsor_division_id = :div_id AND i.deleted_at IS NULL"
+            ")"
+        )
+        params["div_id"] = div_id
+    else:
+        # Global roles: only overdue
+        where_scope = "AND oc.due_date < CURRENT_DATE"
+
+    sql = text(f"""
+        SELECT
+            oc.id::text AS id,
+            oc.description,
+            ipr.codigo_bip AS ipr_codigo_bip,
+            oc.due_date,
+            (oc.due_date - CURRENT_DATE) AS days_remaining
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = oc.ipr_id AND ipr.deleted_at IS NULL
+        WHERE sc.code NOT IN ('COMPLETADO', 'VERIFICADO', 'CANCELADO')
+          AND oc.deleted_at IS NULL
+          {where_scope}
+        ORDER BY oc.due_date ASC NULLS LAST
+        LIMIT 20
+    """)
+    rows = (await db.execute(sql, params)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        dr = r["days_remaining"]
+        if dr is not None and dr < 0:
+            sev = "ALTO"
+        elif dr is not None and dr <= 7:
+            sev = "MEDIO"
+        else:
+            sev = "BAJO"
+        temporal = _compute_temporal(dr)
+        subtitle = r["ipr_codigo_bip"] if r["ipr_codigo_bip"] else None
+        items.append(ActionItem(
+            id=r["id"],
+            category="COMPROMISO",
+            title=r["description"] or "Compromiso sin descripción",
+            subtitle=subtitle,
+            deadline=r["due_date"],
+            days_remaining=dr,
+            temporal=temporal,
+            severity=sev,
+            priority=_compute_priority(temporal, sev),
+            action_label="Completar",
+            action_route="/compromisos",
+        ))
+    return items
+
+
+async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    uid = str(user["id"])
+    div_id = str(user["division_id"]) if user.get("division_id") else None
+
+    params: dict = {}
+    where_scope = ""
+
+    if role in _PERSONAL_ROLES:
+        where_scope = (
+            "AND a.subject_id IN ("
+            "  SELECT i.id FROM core.ipr i"
+            "  WHERE i.assignee_id = :uid AND i.deleted_at IS NULL"
+            ")"
+        )
+        params["uid"] = uid
+    elif role in _DIVISION_ROLES:
+        if not div_id:
+            return []
+        where_scope = (
+            "AND a.subject_id IN ("
+            "  SELECT i.id FROM core.ipr i"
+            "  WHERE i.sponsor_division_id = :div_id AND i.deleted_at IS NULL"
+            ")"
+        )
+        params["div_id"] = div_id
+    elif role == "JEFE_DGI":
+        where_scope = "AND al.code = 'CRITICO'"
+    else:
+        # Global roles: CRITICO + ALTO
+        where_scope = "AND al.code IN ('CRITICO', 'ALTO')"
+
+    sql = text(f"""
+        SELECT
+            a.id::text AS id,
+            al.code AS alert_code,
+            a.message,
+            a.subject_type,
+            a.subject_id::text AS subject_id
+        FROM core.alert a
+        JOIN ref.category al ON a.severity_id = al.id
+        WHERE a.deleted_at IS NULL
+          AND a.resolved_at IS NULL
+          {where_scope}
+        ORDER BY a.triggered_at DESC
+        LIMIT 10
+    """)
+    rows = (await db.execute(sql, params)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        sev = _severity_from_alert(r["alert_code"])
+        if r["subject_type"] == "core.ipr":
+            route = f"/ipr/{r['subject_id']}?tab=alertas"
+        else:
+            route = "/alertas"
+        items.append(ActionItem(
+            id=r["id"],
+            category="ALERTA",
+            title=r["message"] or "Alerta",
+            subtitle=r["alert_code"],
+            deadline=None,
+            days_remaining=None,
+            temporal=None,
+            severity=sev,
+            priority=_compute_priority(None, sev),
+            action_label="Ver",
+            action_route=route,
+        ))
+    return items
+
+
+async def _ai_decisions(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    if role in (*_PERSONAL_ROLES, *_DIVISION_ROLES):
+        return []
+
+    sql = text("""
+        SELECT
+            d.id::text AS id,
+            d.description,
+            d.due_date,
+            (d.due_date - CURRENT_DATE) AS days_remaining,
+            ts.code AS type_code
+        FROM core.dgi_ar_decision d
+        JOIN ref.category ss ON d.status_id = ss.id
+        JOIN ref.category ts ON d.decision_type_id = ts.id
+        WHERE ss.code = 'PENDIENTE'
+          AND d.deleted_at IS NULL
+        ORDER BY d.due_date ASC NULLS LAST
+        LIMIT 10
+    """)
+    rows = (await db.execute(sql)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        dr = r["days_remaining"]
+        if dr is not None and dr <= 3:
+            sev = "ALTO"
+        else:
+            sev = "MEDIO"
+        temporal = _compute_temporal(dr)
+        items.append(ActionItem(
+            id=r["id"],
+            category="DECISION",
+            title=r["description"] or "Decisión AR",
+            subtitle=r["type_code"],
+            deadline=r["due_date"],
+            days_remaining=dr,
+            temporal=temporal,
+            severity=sev,
+            priority=_compute_priority(temporal, sev),
+            action_label="Decidir",
+            action_route="/coordinacion",
+        ))
+    return items
+
+
+async def _ai_escalations(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    if role in _PERSONAL_ROLES:
+        return []
+
+    params: dict = {}
+    where_scope = ""
+
+    if role in _DIVISION_ROLES:
+        where_scope = "AND lc.code IN ('NIVEL_1', 'NIVEL_2')"
+
+    sql = text(f"""
+        SELECT
+            e.id::text AS id,
+            e.code AS ref_code,
+            e.situation,
+            e.deadline,
+            (e.deadline - CURRENT_DATE) AS days_remaining,
+            lc.code AS level_code
+        FROM core.dgi_escalation e
+        JOIN ref.category ss ON e.status_id = ss.id
+        JOIN ref.category lc ON e.level_id = lc.id
+        WHERE ss.code IN ('ABIERTO', 'EN_GESTION')
+          AND e.deleted_at IS NULL
+          {where_scope}
+        ORDER BY e.deadline ASC NULLS LAST
+        LIMIT 10
+    """)
+    rows = (await db.execute(sql, params)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        dr = r["days_remaining"]
+        sev = _severity_from_escalation_level(r["level_code"])
+        temporal = _compute_temporal(dr)
+        items.append(ActionItem(
+            id=r["id"],
+            category="ESCALAMIENTO",
+            title=r["situation"] or f"Escalamiento {r['ref_code']}",
+            subtitle=r["level_code"],
+            deadline=r["deadline"],
+            days_remaining=dr,
+            temporal=temporal,
+            severity=sev,
+            priority=_compute_priority(temporal, sev),
+            action_label="Gestionar",
+            action_route=f"/escalamiento/{r['id']}",
+        ))
+    return items
+
+
+async def _ai_sla_breaches(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    if role in (*_PERSONAL_ROLES, *_DIVISION_ROLES):
+        return []
+
+    sql = text("""
+        SELECT
+            sr.id::text AS id,
+            s.name AS service_name,
+            sr.service_id::text AS service_id,
+            EXTRACT(DAY FROM (NOW() - sr.created_at))::int AS elapsed_days,
+            sla.target_days
+        FROM core.dgi_service_request sr
+        JOIN core.dgi_service s ON sr.service_id = s.id
+        JOIN core.dgi_sla sla ON sla.service_id = s.id
+        JOIN ref.category rs ON sr.status_id = rs.id
+        WHERE rs.code NOT IN ('COMPLETADA', 'RECHAZADA')
+          AND EXTRACT(DAY FROM (NOW() - sr.created_at))::int > sla.target_days
+        ORDER BY (EXTRACT(DAY FROM (NOW() - sr.created_at))::int - sla.target_days) DESC
+        LIMIT 10
+    """)
+    rows = (await db.execute(sql)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        items.append(ActionItem(
+            id=r["id"],
+            category="SLA",
+            title=f"SLA excedido: {r['service_name']}",
+            subtitle=f"{r['elapsed_days']}d / {r['target_days']}d",
+            deadline=None,
+            days_remaining=None,
+            temporal=None,
+            severity="CRITICO",
+            priority=_compute_priority(None, "CRITICO"),
+            action_label="Ver",
+            action_route=f"/servicios/{r['service_id']}",
+        ))
+    return items
+
+
+async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    if role in (*_PERSONAL_ROLES, *_DIVISION_ROLES):
+        return []
+
+    sql = text("""
+        SELECT
+            r.id::text AS id,
+            r.code AS ref_code,
+            r.description,
+            pc.code AS prob_code
+        FROM core.risk r
+        JOIN ref.category ss ON r.status_id = ss.id
+        JOIN ref.category pc ON r.probability_id = pc.id
+        WHERE ss.code IN ('IDENTIFICADO', 'EN_EVALUACION', 'EN_MITIGACION')
+          AND pc.code IN ('ALTA', 'MUY_ALTA')
+          AND r.deleted_at IS NULL
+        ORDER BY
+            CASE pc.code WHEN 'MUY_ALTA' THEN 0 ELSE 1 END ASC
+        LIMIT 10
+    """)
+    rows = (await db.execute(sql)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        sev = _severity_from_risk_probability(r["prob_code"])
+        items.append(ActionItem(
+            id=r["id"],
+            category="RIESGO",
+            title=r["description"] or f"Riesgo {r['ref_code']}",
+            subtitle=r["ref_code"],
+            deadline=None,
+            days_remaining=None,
+            temporal=None,
+            severity=sev,
+            priority=_compute_priority(None, sev),
+            action_label="Gestionar",
+            action_route=f"/riesgos/{r['id']}",
+        ))
+    return items
+
 
 # ---------------------------------------------------------------------------
 # Helper: overdue predicate (state NOT IN verified/cancelled AND past due_date)
@@ -901,4 +1297,59 @@ async def get_chart_data(
         commitments_by_state=commitments_by_state,
         alerts_by_severity=alerts_by_severity,
         budget_by_division=budget_by_division,
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dashboard/action-items — 6-source coproduct with role scoping
+# ---------------------------------------------------------------------------
+@router.get("/action-items", response_model=ActionItemsResponse)
+async def get_action_items(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Unified action-items feed: commitments, alerts, decisions, escalations,
+    SLA breaches, and risks — scoped by the user's role and division.
+    Sorted by priority (lower = more urgent).
+    """
+    # Gather all 6 sources
+    commitments = await _ai_commitments(db, user)
+    alerts = await _ai_alerts(db, user)
+    decisions = await _ai_decisions(db, user)
+    escalations = await _ai_escalations(db, user)
+    sla_breaches = await _ai_sla_breaches(db, user)
+    risks = await _ai_risks(db, user)
+
+    all_items = commitments + alerts + decisions + escalations + sla_breaches + risks
+    all_items.sort(key=lambda x: x.priority)
+
+    # Count by severity
+    counts: dict[str, int] = {}
+    for item in all_items:
+        counts[item.severity] = counts.get(item.severity, 0) + 1
+
+    # Summary
+    vencidas = sum(1 for i in all_items if i.temporal == "VENCIDO")
+    hoy = sum(1 for i in all_items if i.temporal == "HOY")
+    if vencidas > 0 or hoy > 0:
+        parts = []
+        if vencidas > 0:
+            parts.append(f"{vencidas} tarea{'s' if vencidas != 1 else ''} vencida{'s' if vencidas != 1 else ''}")
+        if hoy > 0:
+            parts.append(f"{hoy} para hoy")
+        summary = "Tienes " + " y ".join(parts)
+    else:
+        summary = "Todo al día"
+
+    # Greeting
+    nombre = user.get("nombre", "") or ""
+    first_name = nombre.split()[0] if nombre.strip() else "Usuario"
+
+    return ActionItemsResponse(
+        greeting_name=first_name,
+        today=date.today(),
+        summary=summary,
+        items=all_items,
+        counts=counts,
     )

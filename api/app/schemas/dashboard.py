@@ -108,3 +108,25 @@ class ChartDataResponse(BaseModel):
     commitments_by_state: list[ChartDataPoint]
     alerts_by_severity: list[ChartDataPoint]
     budget_by_division: list[BudgetChartPoint]
+
+
+class ActionItem(BaseModel):
+    id: str
+    category: str
+    title: str
+    subtitle: str | None = None
+    deadline: date | None = None
+    days_remaining: int | None = None
+    temporal: str | None = None
+    severity: str
+    priority: int
+    action_label: str
+    action_route: str
+
+
+class ActionItemsResponse(BaseModel):
+    greeting_name: str
+    today: date
+    summary: str
+    items: list[ActionItem]
+    counts: dict[str, int]
