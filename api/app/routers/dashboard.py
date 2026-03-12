@@ -84,7 +84,7 @@ def _compute_temporal(days_remaining: int | None) -> str | None:
 
 def _compute_priority(temporal: str | None, severity: str) -> int:
     sev_val = _SEVERITY_MAP.get(severity, 3)
-    temp_val = _TEMPORAL_MAP.get(temporal, 3) if temporal else 3
+    temp_val = _TEMPORAL_MAP.get(temporal, 4) if temporal else 4
     return sev_val * 5 + temp_val
 
 
@@ -216,6 +216,9 @@ async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
         params["div_id"] = div_id
     elif role == "JEFE_DGI":
         where_scope = "AND al.code = 'CRITICO'"
+    elif role in ("ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD"):
+        # ESP_* roles see SLA items via _ai_sla_breaches, not general alerts
+        return []
     else:
         # Global roles: CRITICO + ALTO
         where_scope = "AND al.code IN ('CRITICO', 'ALTO')"
@@ -374,6 +377,8 @@ async def _ai_sla_breaches(db: AsyncSession, user: dict) -> list[ActionItem]:
         JOIN core.dgi_sla sla ON sla.service_id = s.id
         JOIN ref.category rs ON sr.status_id = rs.id
         WHERE rs.code NOT IN ('COMPLETADA', 'RECHAZADA')
+          AND sr.deleted_at IS NULL
+          AND s.deleted_at IS NULL
           AND EXTRACT(DAY FROM (NOW() - sr.created_at))::int > sla.target_days
         ORDER BY (EXTRACT(DAY FROM (NOW() - sr.created_at))::int - sla.target_days) DESC
         LIMIT 10
