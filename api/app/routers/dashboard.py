@@ -407,7 +407,7 @@ async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
         SELECT
             r.id::text AS id,
             r.code AS ref_code,
-            r.description,
+            r.name,
             pc.code AS prob_code
         FROM core.risk r
         JOIN ref.category ss ON r.status_id = ss.id
@@ -427,7 +427,7 @@ async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="RIESGO",
-            title=r["description"] or f"Riesgo {r['ref_code']}",
+            title=r["name"] or f"Riesgo {r['ref_code']}",
             subtitle=r["ref_code"],
             deadline=None,
             days_remaining=None,
@@ -1324,8 +1324,8 @@ async def get_action_items(
     all_items = commitments + alerts + decisions + escalations + sla_breaches + risks
     all_items.sort(key=lambda x: x.priority)
 
-    # Count by severity
-    counts: dict[str, int] = {}
+    # Count by severity (always include all 4 keys)
+    counts: dict[str, int] = {"CRITICO": 0, "ALTO": 0, "MEDIO": 0, "BAJO": 0}
     for item in all_items:
         counts[item.severity] = counts.get(item.severity, 0) + 1
 
