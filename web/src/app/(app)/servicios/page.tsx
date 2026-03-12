@@ -18,12 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { toast } from "sonner";
 import { Plus, Clock } from "lucide-react";
 import { useAuth } from "@/lib/auth";
@@ -180,12 +175,8 @@ export default function ServiciosPage() {
       )}
 
       {/* Create drawer */}
-      <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent className="sm:max-w-lg overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Nuevo Servicio</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6 space-y-4">
+      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Nuevo Servicio">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>Nombre *</Label>
               <Input
@@ -243,8 +234,7 @@ export default function ServiciosPage() {
               {creating ? "Creando..." : "Crear Servicio"}
             </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+      </DrawerPanel>
     </div>
   );
 }

@@ -19,9 +19,11 @@ import {
 } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
-import type { CommandCenterSummary, PaginatedResponse, TimelineEvent } from "@/types";
+import { PageGuard } from "@/components/page-guard";
+import { PageSkeleton } from "@/components/page-skeleton";
+import type { CommandCenterSummary, PaginatedResponse, TimelineEvent, RoleCode } from "@/types";
 
-const ALLOWED_ROLES = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA", "JEFE_DGI"];
+const ALLOWED_ROLES: RoleCode[] = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA", "JEFE_DGI"];
 
 const CATEGORY_CONFIG: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
   ESCALATION: { label: "Escalamiento", icon: <AlertTriangle className="size-4" />, color: "bg-orange-100 text-orange-700" },
@@ -32,6 +34,14 @@ const CATEGORY_CONFIG: Record<string, { label: string; icon: React.ReactNode; co
 };
 
 export default function CentroMandoPage() {
+  return (
+    <PageGuard allowedRoles={ALLOWED_ROLES} skeleton={<PageSkeleton variant="dashboard" />}>
+      <CentroMandoContent />
+    </PageGuard>
+  );
+}
+
+function CentroMandoContent() {
   const router = useRouter();
   const { user } = useAuth();
 
@@ -39,10 +49,7 @@ export default function CentroMandoPage() {
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const hasAccess = user && ALLOWED_ROLES.includes(user.role_code);
-
   useEffect(() => {
-    if (!hasAccess) return;
     setLoading(true);
     Promise.all([
       api.get<CommandCenterSummary>("/api/command-center/summary"),
@@ -54,15 +61,7 @@ export default function CentroMandoPage() {
       })
       .catch(() => toast.error("Error al cargar centro de mando"))
       .finally(() => setLoading(false));
-  }, [hasAccess]);
-
-  if (!hasAccess) {
-    return (
-      <div className="p-6">
-        <p className="text-muted-foreground">Sin permisos para acceder al Centro de Mando.</p>
-      </div>
-    );
-  }
+  }, []);
 
   if (loading || !summary) {
     return (

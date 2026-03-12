@@ -18,12 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Plus, AlertTriangle, Lightbulb, CheckCircle2 } from "lucide-react";
@@ -312,12 +307,8 @@ export default function CoordinacionPage() {
       </Tabs>
 
       {/* Create decision drawer */}
-      <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent className="sm:max-w-lg overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Nueva Decisión AR</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6 space-y-4">
+      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Nueva Decisión AR">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>Tipo</Label>
               <Select
@@ -365,8 +356,7 @@ export default function CoordinacionPage() {
               {creating ? "Creando..." : "Crear Decisión"}
             </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+      </DrawerPanel>
     </div>
   );
 }

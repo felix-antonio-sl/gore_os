@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { Plus, KeyRound } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
+import { PageGuard } from "@/components/page-guard";
 import type { PaginatedResponse, CategoryRef } from "@/types";
 
 interface UserListItem {
@@ -66,6 +67,14 @@ const ACTIVE_OPTIONS = [
 ];
 
 export default function UsuariosPage() {
+  return (
+    <PageGuard allowedRoles={["ADMIN_SISTEMA"]}>
+      <UsuariosContent />
+    </PageGuard>
+  );
+}
+
+function UsuariosContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -276,13 +285,6 @@ export default function UsuariosPage() {
       .catch(() => {});
   };
 
-  if (currentUser?.role_code !== "ADMIN_SISTEMA") {
-    return (
-      <div className="p-6">
-        <p className="text-muted-foreground">No tiene permisos para acceder a esta sección.</p>
-      </div>
-    );
-  }
 
   const columns = [
     {

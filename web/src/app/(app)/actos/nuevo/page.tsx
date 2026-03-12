@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -26,6 +28,7 @@ interface IprOption {
 
 export default function NuevoActoPage() {
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
 
   const [actTypes, setActTypes] = useState<CategoryRef[]>([]);
@@ -145,6 +148,7 @@ export default function NuevoActoPage() {
 
   return (
     <div className="p-6 max-w-2xl">
+      <Breadcrumb items={buildBreadcrumbs(pathname)} />
       <Button
         variant="ghost"
         size="sm"

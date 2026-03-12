@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +27,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { formatDateLong, formatDate } from "@/lib/format";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import type { ReunionDetail, TopicItem, AutoSuggestion } from "@/types";
 
 interface IprOption {
@@ -96,6 +98,7 @@ function suggestionTypeLabel(type: string): string {
 export default function ReunionDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
   const id = params.id as string;
 
@@ -285,6 +288,7 @@ export default function ReunionDetailPage() {
 
   return (
     <div className="p-6 space-y-4">
+      <Breadcrumb items={buildBreadcrumbs(pathname, "Reunión #" + reunion?.session_number)} />
       <Button variant="ghost" size="sm" onClick={() => router.push("/reuniones")}>
         <ArrowLeft className="size-4 mr-1" />
         Volver a Reuniones

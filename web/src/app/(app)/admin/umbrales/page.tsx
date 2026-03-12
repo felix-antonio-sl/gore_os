@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { formatCLP } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
+import { PageGuard } from "@/components/page-guard";
 
 interface ThresholdItem {
   id: string;
@@ -51,6 +52,14 @@ function formatValue(item: ThresholdItem) {
 }
 
 export default function UmbralesPage() {
+  return (
+    <PageGuard allowedRoles={["ADMIN_SISTEMA"]}>
+      <UmbralesContent />
+    </PageGuard>
+  );
+}
+
+function UmbralesContent() {
   const { user } = useAuth();
   const [thresholds, setThresholds] = useState<ThresholdItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -134,10 +143,6 @@ export default function UmbralesPage() {
       // ignore
     }
   };
-
-  if (!user || user.role_code !== "ADMIN_SISTEMA") {
-    return <p className="p-6 text-muted-foreground">Acceso restringido a ADMIN_SISTEMA.</p>;
-  }
 
   return (
     <div className="p-6 space-y-4">

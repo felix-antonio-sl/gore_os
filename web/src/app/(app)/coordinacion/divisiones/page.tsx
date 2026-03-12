@@ -18,12 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { formatDate } from "@/lib/format";
@@ -290,12 +285,8 @@ export default function DivisionesInteraccionPage() {
       </Card>
 
       {/* Create drawer */}
-      <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent className="sm:max-w-lg overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Registrar Interacción</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6 space-y-4">
+      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Registrar Interacción">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>División *</Label>
               <Select value={form.division_id} onValueChange={(v) => setForm({ ...form, division_id: v })}>
@@ -338,8 +329,7 @@ export default function DivisionesInteraccionPage() {
               {creating ? "Registrando..." : "Registrar Interacción"}
             </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+      </DrawerPanel>
     </div>
   );
 }

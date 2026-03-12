@@ -32,6 +32,7 @@ import {
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { GoreMark } from "@/components/gore-mark";
+import { NavSection } from "@/components/nav-section";
 
 interface NavItem {
   label: string;
@@ -39,46 +40,94 @@ interface NavItem {
   icon: React.ReactNode;
 }
 
-const operationalNav: NavItem[] = [
-  { label: "Inicio", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
-  { label: "IPR", href: "/ipr", icon: <Building2 className="size-4" /> },
-  { label: "Compromisos", href: "/compromisos", icon: <CheckSquare className="size-4" /> },
-  { label: "Problemas", href: "/problemas", icon: <AlertTriangle className="size-4" /> },
-  { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
-  { label: "Presupuesto", href: "/presupuesto", icon: <Wallet className="size-4" /> },
-  { label: "Ciclo Ppto.", href: "/presupuesto/ciclo", icon: <CalendarDays className="size-4" /> },
-  { label: "Convenios", href: "/convenios", icon: <Handshake className="size-4" /> },
-  { label: "Reuniones", href: "/reuniones", icon: <CalendarClock className="size-4" /> },
-  { label: "Actos", href: "/actos", icon: <FileText className="size-4" /> },
-  { label: "Sesiones CORE", href: "/core-sessions", icon: <Vote className="size-4" /> },
-];
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const adminOnlyNav: NavItem[] = [
-  { label: "Usuarios", href: "/admin/usuarios", icon: <Users className="size-4" /> },
-  { label: "Divisiones", href: "/admin/divisiones", icon: <Building2 className="size-4" /> },
-  { label: "Umbrales", href: "/admin/umbrales", icon: <ShieldCheck className="size-4" /> },
-  { label: "Niveles SNI", href: "/admin/niveles-sni", icon: <Layers className="size-4" /> },
-];
+function NavLink({
+  item,
+  isActive,
+  onClick,
+}: {
+  item: NavItem;
+  isActive: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <Link
+      href={item.href}
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+        isActive
+          ? "bg-sidebar-primary text-sidebar-primary-foreground"
+          : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+      )}
+      onClick={onClick}
+    >
+      {item.icon}
+      {item.label}
+    </Link>
+  );
+}
 
-const dgiNav: NavItem[] = [
-  { label: "Home", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
-  { label: "Centro de Mando", href: "/centro-de-mando", icon: <Shield className="size-4" /> },
-  { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
-  { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
-  { label: "Rendiciones", href: "/datos?dominio=rendiciones", icon: <Receipt className="size-4" /> },
-  { label: "Tablero", href: "/tablero", icon: <KanbanSquare className="size-4" /> },
-  { label: "Procesos", href: "/procesos", icon: <GitBranch className="size-4" /> },
-  { label: "Progreso", href: "/procesos/progreso", icon: <BarChart3 className="size-4" /> },
-  { label: "Cuellos Botella", href: "/cuellos-de-botella", icon: <SearchX className="size-4" /> },
-  { label: "Coordinación", href: "/coordinacion", icon: <Users className="size-4" /> },
-  { label: "Escalamiento", href: "/escalamiento", icon: <AlertTriangle className="size-4" /> },
-  { label: "Servicios", href: "/servicios", icon: <BookOpen className="size-4" /> },
-  { label: "Comité TD", href: "/comite-td", icon: <Vote className="size-4" /> },
-  { label: "Calendario", href: "/calendario", icon: <CalendarDays className="size-4" /> },
-  { label: "Riesgos", href: "/riesgos", icon: <ShieldAlert className="size-4" /> },
-  { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },
-  { label: "Informes", href: "/informes", icon: <FileText className="size-4" /> },
-];
+// ─── Nav Data ─────────────────────────────────────────────────────────────────
+
+const NAV = {
+  inicio: { label: "Inicio", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
+  home: { label: "Home", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
+
+  // Comando
+  centroMando: { label: "Centro de Mando", href: "/centro-de-mando", icon: <Shield className="size-4" /> },
+  riesgos: { label: "Riesgos", href: "/riesgos", icon: <ShieldAlert className="size-4" /> },
+
+  // Gestión IPR
+  ipr: { label: "IPR", href: "/ipr", icon: <Building2 className="size-4" /> },
+  compromisos: { label: "Compromisos", href: "/compromisos", icon: <CheckSquare className="size-4" /> },
+  problemas: { label: "Problemas", href: "/problemas", icon: <AlertTriangle className="size-4" /> },
+  alertas: { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
+
+  // Finanzas
+  presupuesto: { label: "Presupuesto", href: "/presupuesto", icon: <Wallet className="size-4" /> },
+  cicloPpto: { label: "Ciclo Ppto.", href: "/presupuesto/ciclo", icon: <CalendarDays className="size-4" /> },
+  convenios: { label: "Convenios", href: "/convenios", icon: <Handshake className="size-4" /> },
+
+  // Institucional
+  actos: { label: "Actos", href: "/actos", icon: <FileText className="size-4" /> },
+  reuniones: { label: "Reuniones", href: "/reuniones", icon: <CalendarClock className="size-4" /> },
+  sesionesCore: { label: "Sesiones CORE", href: "/core-sessions", icon: <Vote className="size-4" /> },
+  servicios: { label: "Servicios", href: "/servicios", icon: <BookOpen className="size-4" /> },
+
+  // Mi Trabajo
+  miDivision: { label: "Mi División", href: "/mi-division", icon: <FolderKanban className="size-4" /> },
+  misCompromisos: { label: "Mis Compromisos", href: "/mis-compromisos", icon: <UserCheck className="size-4" /> },
+
+  // Admin
+  usuarios: { label: "Usuarios", href: "/admin/usuarios", icon: <Users className="size-4" /> },
+  divisiones: { label: "Divisiones", href: "/admin/divisiones", icon: <Building2 className="size-4" /> },
+  umbrales: { label: "Umbrales", href: "/admin/umbrales", icon: <ShieldCheck className="size-4" /> },
+  nivelesSni: { label: "Niveles SNI", href: "/admin/niveles-sni", icon: <Layers className="size-4" /> },
+
+  // DGI — Monitoreo
+  cartera: { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
+  rendiciones: { label: "Rendiciones", href: "/datos?dominio=rendiciones", icon: <Receipt className="size-4" /> },
+
+  // DGI — Mejora Continua
+  tablero: { label: "Tablero", href: "/tablero", icon: <KanbanSquare className="size-4" /> },
+  procesos: { label: "Procesos", href: "/procesos", icon: <GitBranch className="size-4" /> },
+  progreso: { label: "Progreso", href: "/procesos/progreso", icon: <BarChart3 className="size-4" /> },
+  cuellosBotella: { label: "Cuellos Botella", href: "/cuellos-de-botella", icon: <SearchX className="size-4" /> },
+
+  // DGI — Coordinación
+  coordinacion: { label: "Coordinación", href: "/coordinacion", icon: <Users className="size-4" /> },
+  escalamiento: { label: "Escalamiento", href: "/escalamiento", icon: <AlertTriangle className="size-4" /> },
+  comiteTD: { label: "Comité TD", href: "/comite-td", icon: <Vote className="size-4" /> },
+  calendario: { label: "Calendario", href: "/calendario", icon: <CalendarDays className="size-4" /> },
+
+  // DGI — Análisis
+  datos: { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },
+  informes: { label: "Informes", href: "/informes", icon: <FileText className="size-4" /> },
+} as const;
+
+// ─── Sidebar Component ────────────────────────────────────────────────────────
 
 interface SidebarProps {
   onNavClick?: () => void;
@@ -91,39 +140,23 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
   if (!user) return null;
 
   const isDgi = user.population === "dgi";
-  let navItems: NavItem[];
-
-  if (isDgi) {
-    navItems = dgiNav;
-  } else {
-    navItems = [...operationalNav];
-    if (["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code)) {
-      navItems = [
-        ...navItems,
-        { label: "Mi División", href: "/mi-division", icon: <FolderKanban className="size-4" /> },
-      ];
-    }
-    if (["ENCARGADO", "JEFE_UNIDAD"].includes(user.role_code)) {
-      navItems = [
-        ...navItems,
-        { label: "Mis Compromisos", href: "/mis-compromisos", icon: <UserCheck className="size-4" /> },
-      ];
-    }
-    if (["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"].includes(user.role_code)) {
-      navItems = [
-        navItems[0],  // Inicio
-        { label: "Centro de Mando", href: "/centro-de-mando", icon: <Shield className="size-4" /> },
-        { label: "Riesgos", href: "/riesgos", icon: <ShieldAlert className="size-4" /> },
-        ...navItems.slice(1),
-      ];
-    }
-    if (user.role_code === "ADMIN_SISTEMA") {
-      navItems = [...navItems, ...adminOnlyNav];
-    }
-  }
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
+
+  const link = (item: NavItem) => (
+    <NavLink
+      key={item.href}
+      item={item}
+      isActive={isActive(item.href)}
+      onClick={onNavClick}
+    />
+  );
+
+  const showComando = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"].includes(user.role_code);
+  const showMiDivision = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code);
+  const showMisCompromisos = ["ENCARGADO", "JEFE_UNIDAD"].includes(user.role_code);
+  const showAdmin = user.role_code === "ADMIN_SISTEMA";
 
   return (
     <nav className="w-56 h-full flex flex-col bg-sidebar pt-3 pb-4">
@@ -143,26 +176,90 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
       </div>
 
       {/* Navigation */}
-      <div className="flex flex-col gap-0.5 px-2 pt-1 flex-1 overflow-y-auto">
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            aria-current={isActive(item.href) ? "page" : undefined}
-            className={cn(
-              "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-              isActive(item.href)
-                ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+      <div className="flex flex-col gap-1 px-2 pt-1 flex-1 overflow-y-auto">
+        {isDgi ? (
+          <>
+            {/* Pinned */}
+            {link(NAV.home)}
+
+            <NavSection id="dgi-monitoreo" label="Monitoreo" defaultOpen>
+              {link(NAV.centroMando)}
+              {link(NAV.cartera)}
+              {link(NAV.alertas)}
+              {link(NAV.rendiciones)}
+              {link(NAV.riesgos)}
+            </NavSection>
+
+            <NavSection id="dgi-mejora" label="Mejora Continua" defaultOpen>
+              {link(NAV.tablero)}
+              {link(NAV.procesos)}
+              {link(NAV.progreso)}
+              {link(NAV.cuellosBotella)}
+            </NavSection>
+
+            <NavSection id="dgi-coord" label="Coordinación" defaultOpen={false}>
+              {link(NAV.coordinacion)}
+              {link(NAV.escalamiento)}
+              {link(NAV.servicios)}
+              {link(NAV.comiteTD)}
+              {link(NAV.calendario)}
+            </NavSection>
+
+            <NavSection id="dgi-analisis" label="Análisis" defaultOpen={false}>
+              {link(NAV.datos)}
+              {link(NAV.informes)}
+            </NavSection>
+          </>
+        ) : (
+          <>
+            {/* Pinned */}
+            {link(NAV.inicio)}
+
+            {showComando && (
+              <NavSection id="op-comando" label="Comando" defaultOpen>
+                {link(NAV.centroMando)}
+                {link(NAV.riesgos)}
+              </NavSection>
             )}
-            onClick={onNavClick}
-          >
-            {item.icon}
-            {item.label}
-          </Link>
-        ))}
+
+            <NavSection id="op-gestion" label="Gestión IPR" defaultOpen>
+              {link(NAV.ipr)}
+              {link(NAV.compromisos)}
+              {link(NAV.problemas)}
+              {link(NAV.alertas)}
+            </NavSection>
+
+            <NavSection id="op-finanzas" label="Finanzas" defaultOpen={false}>
+              {link(NAV.presupuesto)}
+              {link(NAV.cicloPpto)}
+              {link(NAV.convenios)}
+            </NavSection>
+
+            <NavSection id="op-institucional" label="Institucional" defaultOpen={false}>
+              {link(NAV.actos)}
+              {link(NAV.reuniones)}
+              {link(NAV.sesionesCore)}
+              {link(NAV.servicios)}
+            </NavSection>
+
+            {(showMiDivision || showMisCompromisos) && (
+              <NavSection id="op-mi-trabajo" label="Mi Trabajo" defaultOpen>
+                {showMiDivision && link(NAV.miDivision)}
+                {showMisCompromisos && link(NAV.misCompromisos)}
+              </NavSection>
+            )}
+
+            {showAdmin && (
+              <NavSection id="op-admin" label="Administración" defaultOpen={false}>
+                {link(NAV.usuarios)}
+                {link(NAV.divisiones)}
+                {link(NAV.umbrales)}
+                {link(NAV.nivelesSni)}
+              </NavSection>
+            )}
+          </>
+        )}
       </div>
     </nav>
   );
 }
-

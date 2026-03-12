@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { DrawerPanel } from "@/components/drawer-panel";
@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/select";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { toast } from "sonner";
 import { formatDate } from "@/lib/format";
 import { DGI_ROLES } from "@/types";
@@ -67,6 +69,7 @@ const CRITICALITY_COLORS: Record<string, string> = {
 export default function ProcesoDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
   const id = params.id as string;
 
@@ -195,6 +198,7 @@ export default function ProcesoDetailPage() {
 
   return (
     <div className="p-6 space-y-4">
+      <Breadcrumb items={buildBreadcrumbs(pathname, process?.code ?? process?.name)} />
       <Button variant="ghost" size="sm" onClick={() => router.back()}>
         <ArrowLeft className="size-4 mr-2" />
         Volver a Procesos

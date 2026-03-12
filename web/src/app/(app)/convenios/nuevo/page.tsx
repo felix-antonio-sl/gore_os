@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -20,6 +22,7 @@ import type { CategoryRef } from "@/types";
 
 export default function NuevoConvenioPage() {
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
 
   const [agreementTypes, setAgreementTypes] = useState<CategoryRef[]>([]);
@@ -87,6 +90,7 @@ export default function NuevoConvenioPage() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-4">
+      <Breadcrumb items={buildBreadcrumbs(pathname)} />
       <Button variant="ghost" size="sm" onClick={() => router.push("/convenios")}>
         <ArrowLeft className="size-4 mr-1" />
         Volver

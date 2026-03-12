@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { toast } from "sonner";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, Clock, Shield } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
@@ -52,6 +54,7 @@ const TRANSITIONS: Record<string, { target: string; label: string }[]> = {
 export default function EscalamientoDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
 
   const canEdit =
@@ -175,6 +178,7 @@ export default function EscalamientoDetailPage() {
 
   return (
     <div className="p-6 space-y-6">
+      <Breadcrumb items={buildBreadcrumbs(pathname, esc?.code)} />
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="sm" onClick={() => router.push("/escalamiento")}>
           <ArrowLeft className="size-4 mr-1" /> Volver

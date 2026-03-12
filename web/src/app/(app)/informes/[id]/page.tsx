@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, Edit2, CheckCircle, Send, RotateCcw, ShieldCheck } from "lucide-react";
 import { formatDate } from "@/lib/format";
 
@@ -51,6 +53,7 @@ const TYPE_LABELS: Record<string, string> = {
 export default function InformeDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const id = params.id as string;
 
   const { user } = useAuth();
@@ -104,6 +107,7 @@ export default function InformeDetailPage() {
 
   return (
     <div className="p-6 space-y-5 max-w-4xl">
+      <Breadcrumb items={buildBreadcrumbs(pathname, report?.code ?? report?.title)} />
       <Button variant="ghost" size="sm" onClick={() => router.push("/informes")}>
         <ArrowLeft className="size-4 mr-1" /> Volver a Informes
       </Button>

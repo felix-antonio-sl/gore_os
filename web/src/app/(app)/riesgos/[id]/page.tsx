@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { toast } from "sonner";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, ShieldAlert } from "lucide-react";
 import { formatDate, formatDateTime } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
@@ -74,6 +76,7 @@ const WRITE_ROLES = [...DGI_ROLES, "ADMIN_REGIONAL", "ADMIN_SISTEMA"];
 export default function RiesgoDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
 
   const canEdit = user && WRITE_ROLES.includes(user.role_code);
@@ -167,6 +170,7 @@ export default function RiesgoDetailPage() {
 
   return (
     <div className="p-6 space-y-6 animate-in fade-in duration-300">
+      <Breadcrumb items={buildBreadcrumbs(pathname, risk?.code)} />
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="sm" onClick={() => router.push("/riesgos")}>
           <ArrowLeft className="size-4 mr-1" /> Volver

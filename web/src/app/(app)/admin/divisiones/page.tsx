@@ -18,6 +18,7 @@ import {
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
+import { PageGuard } from "@/components/page-guard";
 
 interface DivisionItem {
   id: string;
@@ -29,6 +30,14 @@ interface DivisionItem {
 }
 
 export default function DivisionesPage() {
+  return (
+    <PageGuard allowedRoles={["ADMIN_SISTEMA"]}>
+      <DivisionesContent />
+    </PageGuard>
+  );
+}
+
+function DivisionesContent() {
   const { user } = useAuth();
 
   const [divisions, setDivisions] = useState<DivisionItem[]>([]);
@@ -61,14 +70,6 @@ export default function DivisionesPage() {
   useEffect(() => {
     loadDivisions();
   }, []);
-
-  if (user?.role_code !== "ADMIN_SISTEMA") {
-    return (
-      <div className="p-6">
-        <p className="text-muted-foreground">No tiene permisos para acceder a esta sección.</p>
-      </div>
-    );
-  }
 
   const openDetail = (item: DivisionItem) => {
     setSelectedId(item.id);

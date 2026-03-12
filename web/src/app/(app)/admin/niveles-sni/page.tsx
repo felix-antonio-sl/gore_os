@@ -18,6 +18,7 @@ import {
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
+import { PageGuard } from "@/components/page-guard";
 
 interface SniLevel {
   id: string;
@@ -38,6 +39,14 @@ function formatUtm(value: number | null) {
 }
 
 export default function NivelesSniPage() {
+  return (
+    <PageGuard allowedRoles={["ADMIN_SISTEMA"]}>
+      <NivelesSniContent />
+    </PageGuard>
+  );
+}
+
+function NivelesSniContent() {
   const { user } = useAuth();
   const [levels, setLevels] = useState<SniLevel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -164,10 +173,6 @@ export default function NivelesSniPage() {
       // ignore
     }
   };
-
-  if (!user || user.role_code !== "ADMIN_SISTEMA") {
-    return <p className="p-6 text-muted-foreground">Acceso restringido a ADMIN_SISTEMA.</p>;
-  }
 
   return (
     <div className="p-6 space-y-4">

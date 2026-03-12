@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { PageHeader } from "@/components/page-header";
 import { DataTable } from "@/components/data-table";
@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, Plus, Clock, CheckCircle2, Star } from "lucide-react";
 import { formatDate, formatDateTime } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
@@ -49,6 +51,7 @@ interface ServiceDetailData extends DGIService {
 export default function ServiceDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
   const isJefeDGI = user?.role_code === "JEFE_DGI";
   const isDGI = user && DGI_ROLES.includes(user.role_code);
@@ -155,6 +158,7 @@ export default function ServiceDetailPage() {
 
   return (
     <div className="p-6 space-y-6">
+      <Breadcrumb items={buildBreadcrumbs(pathname, service?.name)} />
       <Button variant="ghost" size="sm" onClick={() => router.push("/servicios")}>
         <ArrowLeft className="size-4 mr-1" /> Volver
       </Button>

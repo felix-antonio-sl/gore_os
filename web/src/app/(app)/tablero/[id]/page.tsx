@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, Check, Circle } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
@@ -96,6 +98,7 @@ function isPhaseEditable(phaseCode: string, currentPhase: string | null): boolea
 export default function InitiativeDMAICPage() {
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
   const id = params.id as string;
 
@@ -223,6 +226,7 @@ export default function InitiativeDMAICPage() {
 
   return (
     <div className="p-6 space-y-4 max-w-4xl animate-in fade-in duration-300">
+      <Breadcrumb items={buildBreadcrumbs(pathname, initiative?.code ?? initiative?.name)} />
       {/* Back button */}
       <Button variant="ghost" size="sm" onClick={() => router.push("/tablero")}>
         <ArrowLeft className="size-4 mr-2" />

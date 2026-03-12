@@ -18,12 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
@@ -243,12 +238,8 @@ export default function EscalamientoPage() {
       />
 
       {/* Create drawer */}
-      <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent className="sm:max-w-lg overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Nuevo Escalamiento</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6 space-y-4">
+      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Nuevo Escalamiento">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>Nivel</Label>
               <Select value={form.level} onValueChange={(v) => setForm({ ...form, level: v })}>
@@ -294,8 +285,7 @@ export default function EscalamientoPage() {
               {creating ? "Creando..." : "Crear Escalamiento"}
             </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+      </DrawerPanel>
     </div>
   );
 }

@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +26,7 @@ interface IprOption {
 
 export default function NuevoProblemaPage() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [problemTypes, setProblemTypes] = useState<CategoryRef[]>([]);
   const [impacts, setImpacts] = useState<CategoryRef[]>([]);
@@ -79,6 +82,7 @@ export default function NuevoProblemaPage() {
 
   return (
     <div className="p-6 max-w-2xl">
+      <Breadcrumb items={buildBreadcrumbs(pathname)} />
       <Button
         variant="ghost"
         size="sm"

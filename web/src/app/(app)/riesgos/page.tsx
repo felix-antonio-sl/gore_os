@@ -17,12 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { ComboboxAsync } from "@/components/combobox-async";
 import { toast } from "sonner";
@@ -330,12 +325,8 @@ export default function RiesgosPage() {
       />
 
       {/* Create drawer */}
-      <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent className="sm:max-w-lg overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Nuevo Riesgo</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6 space-y-4">
+      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Nuevo Riesgo">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>Nombre *</Label>
               <Input
@@ -428,8 +419,7 @@ export default function RiesgosPage() {
               {creating ? "Creando..." : "Crear Riesgo"}
             </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+      </DrawerPanel>
     </div>
   );
 }

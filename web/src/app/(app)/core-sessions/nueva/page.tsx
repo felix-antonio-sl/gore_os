@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -20,6 +22,7 @@ const MANAGER_ROLES = ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "SECRETA
 
 export default function NuevaSesionCorePage() {
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuth();
 
   const [scheduledAt, setScheduledAt] = useState("");
@@ -66,6 +69,7 @@ export default function NuevaSesionCorePage() {
 
   return (
     <div className="p-6 max-w-2xl">
+      <Breadcrumb items={buildBreadcrumbs(pathname)} />
       <Button
         variant="ghost"
         size="sm"
