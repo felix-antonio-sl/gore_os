@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { Plus, Download, UserCheck } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
+import { DeadlineCell } from "@/components/deadline-cell";
 import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, CompromisoListItem, HistoryEntry } from "@/types";
 
@@ -250,9 +251,10 @@ export default function CompromisosPage() {
     {
       key: "due_date",
       label: "Vence",
-      render: (v: unknown) => (
-        <span className="text-xs">{v ? formatDate(String(v)) : "-"}</span>
-      ),
+      render: (v: unknown, row: unknown) => {
+        const r = row as CompromisoListItem;
+        return <DeadlineCell date={v ? String(v) : null} daysRemaining={r.days_remaining} />;
+      },
     },
     {
       key: "state",

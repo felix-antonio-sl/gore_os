@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ProgressCell } from "@/components/progress-cell";
 
 const CSV_COLUMNS = [
   { key: "division_name", label: "División" },
@@ -309,7 +310,7 @@ export default function PresupuestoPage() {
     {
       key: "execution_pct",
       label: "Ejecución",
-      render: (v: unknown) => <ExecutionBar pct={Number(v ?? 0)} />,
+      render: (v: unknown) => <ProgressCell value={Number(v ?? 0)} />,
     },
   ];
 

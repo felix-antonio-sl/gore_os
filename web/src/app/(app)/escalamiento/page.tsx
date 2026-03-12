@@ -22,6 +22,7 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
+import { DeadlineCell } from "@/components/deadline-cell";
 import { useAuth } from "@/lib/auth";
 import { DGI_ROLES } from "@/types";
 import type { PaginatedResponse, Escalation } from "@/types";
@@ -154,17 +155,7 @@ export default function EscalamientoPage() {
     {
       key: "deadline",
       label: "Plazo",
-      render: (v: unknown) => {
-        if (!v) return <span className="text-xs text-muted-foreground">-</span>;
-        const dl = new Date(v as string);
-        const now = new Date();
-        const hoursLeft = (dl.getTime() - now.getTime()) / (1000 * 60 * 60);
-        let color = "text-green-600";
-        if (hoursLeft < 0) color = "text-red-600 font-semibold";
-        else if (hoursLeft < 4) color = "text-red-600";
-        else if (hoursLeft < 24) color = "text-amber-600";
-        return <span className={`text-xs ${color}`}>{formatDateTime(v as string)}</span>;
-      },
+      render: (v: unknown) => <DeadlineCell date={v ? String(v) : null} />,
     },
     {
       key: "status",

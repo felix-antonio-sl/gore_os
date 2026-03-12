@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { AlertTriangle, Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCLP, formatDate } from "@/lib/format";
+import { DeadlineCell } from "@/components/deadline-cell";
 import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef, InstallmentItem } from "@/types";
 
@@ -375,7 +376,7 @@ export default function ConveniosPage() {
           return <StatusBadge status="VENCIDO" size="sm" />;
         if (r.days_to_expiry !== null)
           return <TemporalIndicator daysRemaining={r.days_to_expiry} state={r.state} />;
-        return <span className="text-xs text-muted-foreground">{formatDate(r.valid_to)}</span>;
+        return <DeadlineCell date={r.valid_to ?? null} />;
       },
     },
     {
