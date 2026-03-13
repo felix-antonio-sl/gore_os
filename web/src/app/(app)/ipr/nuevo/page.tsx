@@ -66,7 +66,7 @@ export default function NuevaIprPage() {
 
   const canCreate =
     user &&
-    ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+    ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"].includes(user.role_code);
 
   if (!canCreate) {
     return (
@@ -86,7 +86,7 @@ export default function NuevaIprPage() {
     setSubmitting(true);
     setError(null);
     try {
-      await api.post("/api/ipr", {
+      const res = await api.post<{ id: string }>("/api/ipr", {
         codigo_bip: codigoBip || "",
         name,
         ipr_type_id: iprTypeId || null,
@@ -97,7 +97,7 @@ export default function NuevaIprPage() {
         mcd_phase_id: mcdPhaseId || null,
         description: description || null,
       });
-      router.push("/ipr");
+      router.push(`/ipr/${res.id}?tab=partes`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al crear IPR");
     } finally {

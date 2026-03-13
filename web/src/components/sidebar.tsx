@@ -81,6 +81,7 @@ const NAV = {
 
   // Gestión IPR
   ipr: { label: "IPR", href: "/ipr", icon: <Building2 className="size-4" /> },
+  carteraDiv: { label: "Cartera Divisional", href: "/ipr/cartera", icon: <BarChart3 className="size-4" /> },
   compromisos: { label: "Compromisos", href: "/compromisos", icon: <CheckSquare className="size-4" /> },
   problemas: { label: "Problemas", href: "/problemas", icon: <AlertTriangle className="size-4" /> },
   alertas: { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
@@ -154,6 +155,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
   );
 
   const showComando = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"].includes(user.role_code);
+  const showCarteraDiv = ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DGI"].includes(user.role_code);
   const showMiDivision = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code);
   const showMisCompromisos = ["ENCARGADO", "JEFE_UNIDAD"].includes(user.role_code);
   const showAdmin = user.role_code === "ADMIN_SISTEMA";
@@ -185,6 +187,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
             <NavSection id="dgi-monitoreo" label="Monitoreo" defaultOpen>
               {link(NAV.centroMando)}
               {link(NAV.cartera)}
+              {link(NAV.carteraDiv)}
               {link(NAV.alertas)}
               {link(NAV.rendiciones)}
               {link(NAV.riesgos)}
@@ -224,6 +227,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
 
             <NavSection id="op-gestion" label="Gestión IPR" defaultOpen>
               {link(NAV.ipr)}
+              {showCarteraDiv && link(NAV.carteraDiv)}
               {link(NAV.compromisos)}
               {link(NAV.problemas)}
               {link(NAV.alertas)}

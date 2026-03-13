@@ -47,6 +47,7 @@ class IPRDetail(BaseModel):
     problem_count: int
     alert_count: int
     agreement_count: int = 0
+    phase_entered_at: datetime | None = None
     created_at: datetime
 
 
@@ -92,3 +93,37 @@ class TrackInfo(BaseModel):
     required_attrs: list[str] = []
     mechanism_attrs: dict = {}
     evaluations: list = []
+
+
+class SatelliteStatus(BaseModel):
+    name: str
+    label: str
+    count: int
+    detail: dict | None = None
+
+
+class TransitionReadiness(BaseModel):
+    code: str
+    label: str
+    target_phase: str | None = None
+    gates_met: int
+    gates_total: int
+    blocking_gates: list[str] = []
+
+
+class IprReadiness(BaseModel):
+    satellites: list[SatelliteStatus]
+    next_transitions: list[TransitionReadiness]
+
+
+class DivisionCarteraItem(BaseModel):
+    division_id: str
+    division_name: str
+    abbreviation: str | None = None
+    total_iprs: int
+    by_phase: dict[str, int]
+    critical_alerts: int
+    open_problems: int
+    overdue_commitments: int
+    health_signal: str  # VERDE, AMARILLO, ROJO
+    health_reasons: list[str]

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, Fragment } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { useTabParam } from "@/hooks/use-tab-param";
 import { api } from "@/lib/api";
@@ -19,13 +19,17 @@ import {
 import { ArrowLeft } from "lucide-react";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
-import type { IprTransition, TrackInfo } from "@/types";
-import { WRITE_OPERATIONAL_ROLES } from "@/types";
+import type { IprTransition, TrackInfo, IprReadiness, HistoryEntry } from "@/types";
+import { WRITE_OPERATIONAL_ROLES, TRANSITION_ROLES } from "@/types";
 import { TrackCard } from "../components/track-card";
 import { IprHeroCard } from "../components/ipr-hero-card";
 import { IprPhaseStepper } from "../components/ipr-phase-stepper";
 import { IprTransitionPanel } from "../components/ipr-transition-panel";
+import { IprReadinessCard } from "../components/ipr-readiness-card";
+import { IprHistorySection } from "../components/ipr-history-section";
 import type { IprDetail } from "../components/ipr-constants";
+import { TAB_GROUPS, TAB_LABELS } from "../components/ipr-constants";
+import { Separator } from "@/components/ui/separator";
 import { TabCompromisos } from "../components/tab-compromisos";
 import { TabProblemas } from "../components/tab-problemas";
 import { TabAlertas } from "../components/tab-alertas";
@@ -84,16 +88,22 @@ function IprDetailPageInner() {
   // Track info state (Poly-Switch)
   const [trackInfo, setTrackInfo] = useState<TrackInfo | null>(null);
 
+  // Readiness state (H3)
+  const [readiness, setReadiness] = useState<IprReadiness | null>(null);
+
+  // Transition history (H20)
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+
   // Refresh key — increment to remount tab components after drawer saves
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
-  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
-  const canTransition = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
-  const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
+  const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "GOBERNADOR"].includes(user.role_code);
+  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"].includes(user.role_code);
+  const canTransition = user && TRANSITION_ROLES.includes(user.role_code);
+  const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA", "ENCARGADO"].includes(user.role_code);
   const canCreateProblema = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
   const canCreateConvenio = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
-  const canManageChildren = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+  const canManageChildren = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA"].includes(user.role_code);
 
   useEffect(() => {
     api
@@ -105,6 +115,14 @@ function IprDetailPageInner() {
       .get<TrackInfo>(`/api/ipr/${id}/track-info`)
       .then(setTrackInfo)
       .catch(() => setTrackInfo(null));
+    api
+      .get<IprReadiness>(`/api/ipr/${id}/readiness`)
+      .then(setReadiness)
+      .catch(() => setReadiness(null));
+    api
+      .get<HistoryEntry[]>(`/api/ipr/${id}/historial`)
+      .then(setHistory)
+      .catch(() => setHistory([]));
   }, [id]);
 
   const loadTransitions = () => {
@@ -133,6 +151,7 @@ function IprDetailPageInner() {
       setTransitions(null);
       setSelectedTransition("");
       loadTransitions();
+      api.get<HistoryEntry[]>(`/api/ipr/${id}/historial`).then(setHistory).catch(() => setHistory([]));
       setRefreshKey((k) => k + 1);
     } catch (err) {
       setTransError(err instanceof Error ? err.message : "Error al transicionar");
@@ -234,7 +253,14 @@ function IprDetailPageInner() {
         <IprPhaseStepper
           currentPhase={ipr.mcd_phase}
           currentPhaseLabel={ipr.mcd_phase_label}
+          phaseEnteredAt={ipr.phase_entered_at}
         />
+      )}
+
+      {history.length > 0 && <IprHistorySection history={history} />}
+
+      {readiness && (
+        <IprReadinessCard readiness={readiness} currentPhase={ipr.mcd_phase} />
       )}
 
       {canTransition && (
@@ -252,28 +278,22 @@ function IprDetailPageInner() {
 
       {/* Track Card (Poly-Switch) */}
       {trackInfo && trackInfo.mechanism && (
-        <TrackCard track={trackInfo} />
+        <TrackCard track={trackInfo} gateResults={readiness?.next_transitions} />
       )}
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="flex-wrap">
-          <TabsTrigger value="compromisos">Compromisos</TabsTrigger>
-          <TabsTrigger value="problemas">Problemas</TabsTrigger>
-          <TabsTrigger value="alertas">Alertas</TabsTrigger>
-          <TabsTrigger value="convenios">Convenios</TabsTrigger>
-          <TabsTrigger value="cdps">CDPs</TabsTrigger>
-          <TabsTrigger value="avances">Avances</TabsTrigger>
-          <TabsTrigger value="partes">Partes</TabsTrigger>
-          <TabsTrigger value="territorio">Territorio</TabsTrigger>
-          <TabsTrigger value="hitos">Hitos</TabsTrigger>
-          <TabsTrigger value="resoluciones">Resoluciones</TabsTrigger>
-          <TabsTrigger value="evaluaciones">Evaluación</TabsTrigger>
-          <TabsTrigger value="parentesco">Parentesco</TabsTrigger>
-          <TabsTrigger value="admisibilidad">Admisibilidad</TabsTrigger>
-          <TabsTrigger value="modificaciones">Modificaciones</TabsTrigger>
-          <TabsTrigger value="cierre">Cierre</TabsTrigger>
-          <TabsTrigger value="evaluacion-expost">Ex-Post</TabsTrigger>
+          {TAB_GROUPS.map((group, gi) => (
+            <Fragment key={group.label}>
+              {gi > 0 && <Separator orientation="vertical" className="h-5 mx-1" />}
+              {group.tabs.map((tab) => (
+                <TabsTrigger key={tab} value={tab}>
+                  {TAB_LABELS[tab] ?? tab}
+                </TabsTrigger>
+              ))}
+            </Fragment>
+          ))}
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">

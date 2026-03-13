@@ -581,7 +581,15 @@ export interface IprTransition {
   phase_change: boolean;
   gates: GateStatus[];
   blocked: boolean;
+  allowed: boolean;
+  effects?: string[];
 }
+
+// Roles with IPR transition authority (matches backend _ASSIGN_ROLES)
+export const TRANSITION_ROLES: RoleCode[] = [
+  "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION",
+  "GOBERNADOR", "JEFE_DEPARTAMENTO", "ANALISTA",
+];
 
 // ---------------------------------------------------------------------------
 // Actos Administrativos Types
@@ -1306,4 +1314,44 @@ export interface ActionItemsResponse {
   summary: string;
   items: ActionItem[];
   counts: Record<string, number>;
+}
+
+// ---------------------------------------------------------------------------
+// IPR Readiness (H3)
+// ---------------------------------------------------------------------------
+export interface SatelliteStatus {
+  name: string;
+  label: string;
+  count: number;
+  detail?: Record<string, unknown>;
+}
+
+export interface TransitionReadiness {
+  code: string;
+  label: string;
+  target_phase?: string;
+  gates_met: number;
+  gates_total: number;
+  blocking_gates: string[];
+}
+
+export interface IprReadiness {
+  satellites: SatelliteStatus[];
+  next_transitions: TransitionReadiness[];
+}
+
+// ---------------------------------------------------------------------------
+// IPR Cartera por Division (H14)
+// ---------------------------------------------------------------------------
+export interface DivisionCarteraItem {
+  division_id: string;
+  division_name: string;
+  abbreviation: string | null;
+  total_iprs: number;
+  by_phase: Record<string, number>;
+  critical_alerts: number;
+  open_problems: number;
+  overdue_commitments: number;
+  health_signal: "VERDE" | "AMARILLO" | "ROJO";
+  health_reasons: string[];
 }

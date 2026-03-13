@@ -142,10 +142,11 @@ export default function IprPage() {
   const searchParams = useSearchParams();
   const { user } = useAuth();
 
-  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"].includes(user.role_code);
 
   const [data, setData] = useState<PaginatedResponse<IPRListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [divisionOptions, setDivisionOptions] = useState<{value: string; label: string}[]>([]);
 
   const page = Number(searchParams.get("page") ?? "1");
   const tipo = searchParams.get("tipo") ?? "";
@@ -154,6 +155,7 @@ export default function IprPage() {
   const alertLevel = searchParams.get("alert_level") ?? "";
   const mechanism = searchParams.get("mechanism") ?? "";
   const mcdPhase = searchParams.get("mcd_phase") ?? "";
+  const division = searchParams.get("division") ?? "";
   const search = searchParams.get("search") ?? "";
 
   const filterValues: Record<string, string> = {
@@ -163,6 +165,7 @@ export default function IprPage() {
     alert_level: alertLevel,
     mechanism,
     mcd_phase: mcdPhase,
+    division,
   };
 
   const buildUrl = useCallback(
@@ -197,6 +200,15 @@ export default function IprPage() {
   };
 
   useEffect(() => {
+    api
+      .get<{id: string; code: string; name: string}[]>("/api/catalogs/divisions")
+      .then((items) => {
+        setDivisionOptions(items.map((d) => ({ value: d.id, label: d.name })));
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     let active = true;
     const params = new URLSearchParams();
     params.set("page", String(page));
@@ -207,6 +219,7 @@ export default function IprPage() {
     if (alertLevel) params.set("alert_level", alertLevel);
     if (mechanism) params.set("mechanism", mechanism);
     if (mcdPhase) params.set("mcd_phase", mcdPhase);
+    if (division) params.set("sponsor_division_id", division);
     if (search) params.set("search", search);
 
     queueMicrotask(() => {
@@ -228,7 +241,7 @@ export default function IprPage() {
     return () => {
       active = false;
     };
-  }, [page, tipo, estado, sector, alertLevel, mechanism, mcdPhase, search]);
+  }, [page, tipo, estado, sector, alertLevel, mechanism, mcdPhase, division, search]);
 
   const columns = [
     {
@@ -339,6 +352,7 @@ export default function IprPage() {
           { key: "alert_level", label: "Alerta", options: ALERT_LEVEL_OPTIONS },
           { key: "mechanism", label: "Mecanismo", options: MECHANISM_OPTIONS },
           { key: "mcd_phase", label: "Fase MCD", options: MCD_PHASE_OPTIONS },
+          { key: "division", label: "División", options: divisionOptions },
         ]}
         values={filterValues}
         onChange={handleFilterChange}

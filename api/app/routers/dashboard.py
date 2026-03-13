@@ -1,6 +1,6 @@
 from datetime import date
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -146,6 +146,7 @@ async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
     sql = text(f"""
         SELECT
             oc.id::text AS id,
+            oc.ipr_id::text AS ipr_id,
             oc.description,
             ipr.codigo_bip AS ipr_codigo_bip,
             oc.due_date,
@@ -183,7 +184,7 @@ async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
             severity=sev,
             priority=_compute_priority(temporal, sev),
             action_label="Completar",
-            action_route="/compromisos",
+            action_route=f"/ipr/{r['ipr_id']}?tab=compromisos" if r.get("ipr_id") else "/compromisos",
         ))
     return items
 
@@ -1358,3 +1359,83 @@ async def get_action_items(
         items=all_items,
         counts=counts,
     )
+
+
+# ---------------------------------------------------------------------------
+# Pending V.B. for Asesor Jurídico
+# ---------------------------------------------------------------------------
+def _require_roles(user: dict, *roles: str) -> None:
+    if user["role_code"] not in roles:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Sin permisos suficientes",
+        )
+
+
+@router.get("/pending-vb")
+async def get_pending_vb(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Pending Visto Bueno items for Asesor Jurídico."""
+    _require_roles(user, "ASESOR_JURIDICO", "ADMIN_SISTEMA")
+
+    # Actos administrativos en revisión legal
+    actos_sql = text("""
+        SELECT
+            aa.id::text AS id,
+            aa.act_number,
+            aa.subject,
+            'acto' AS item_type,
+            st.code AS state,
+            st.label AS state_label,
+            aa.ipr_id::text AS ipr_id,
+            ipr.codigo_bip AS ipr_codigo_bip,
+            aa.created_at
+        FROM core.administrative_act aa
+        JOIN ref.category st ON st.id = aa.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = aa.ipr_id
+        WHERE st.code = 'EN_REVISION'
+            AND aa.deleted_at IS NULL
+        ORDER BY aa.created_at ASC
+        LIMIT 20
+    """)
+    actos = (await db.execute(actos_sql)).mappings().all()
+
+    # Convenios en revisión jurídica
+    convenios_sql = text("""
+        SELECT
+            ag.id::text AS id,
+            ag.agreement_number AS act_number,
+            COALESCE(ag.agreement_number, 'Convenio sin número') AS subject,
+            'convenio' AS item_type,
+            st.code AS state,
+            st.label AS state_label,
+            ag.ipr_id::text AS ipr_id,
+            ipr.codigo_bip AS ipr_codigo_bip,
+            ag.created_at
+        FROM core.agreement ag
+        JOIN ref.category st ON st.id = ag.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = ag.ipr_id
+        WHERE st.code = 'EN_REVISION_JURIDICA'
+            AND ag.deleted_at IS NULL
+        ORDER BY ag.created_at ASC
+        LIMIT 20
+    """)
+    convenios = (await db.execute(convenios_sql)).mappings().all()
+
+    items = []
+    for r in [*actos, *convenios]:
+        items.append({
+            "id": r["id"],
+            "act_number": r["act_number"],
+            "subject": r["subject"],
+            "item_type": r["item_type"],
+            "state": r["state"],
+            "state_label": r["state_label"],
+            "ipr_id": r["ipr_id"],
+            "ipr_codigo_bip": r["ipr_codigo_bip"],
+            "created_at": r["created_at"].isoformat() if r["created_at"] else None,
+        })
+
+    return {"items": items, "total": len(items)}

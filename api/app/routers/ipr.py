@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import OPERATIONAL_ROLES, DGI_ROLES, WRITE_OPERATIONAL_ROLES
+from app.core.audit import record_event
 from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate, TrackInfo
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
@@ -32,6 +33,89 @@ _ADMIN_ROLES = {
 
 _CREATE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"}
 _ASSIGN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO", "ANALISTA"}
+
+# ---------------------------------------------------------------------------
+# Pullback categórico: Permission = Phase_Boundary ×_Track Role
+# Universal defaults per boundary key. Track overrides in financing_track.role_permissions JSONB.
+# ---------------------------------------------------------------------------
+BOUNDARY_PERMISSIONS: dict[str, set[str]] = {
+    "submit_admissibility":      {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA", "JEFE_DIVISION"},
+    "admissibility_check":       {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"},
+    "pre_admisible_to_admisible": {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION"},
+    "send_evaluation":           {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "ANALISTA"},
+    "register_eval_result":      {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"},
+    "approve_evaluation":        {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION"},
+    "formalization":             {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION"},
+    "licitacion_flow":           {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "ANALISTA"},
+    "intra_F4_transitions":      {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA"},
+    "closure":                   {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"},
+    "anulacion":                 {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"},
+}
+
+
+def _get_boundary_key(current_code: str, target_code: str) -> str | None:
+    """Map (current_state, target_state) → boundary permission key."""
+    if target_code in ("ANULADO", "TERMINADO_ANTICIPADAMENTE"):
+        return "anulacion"
+
+    cp = STATUS_PHASE_FIBER.get(current_code)
+    tp = STATUS_PHASE_FIBER.get(target_code)
+    if not cp or not tp:
+        return None
+
+    if cp == "F0" and tp == "F1":
+        return "submit_admissibility"
+    if cp == "F1" and tp == "F1":
+        if current_code == "PRE_ADMISIBLE" and target_code == "ADMISIBLE":
+            return "pre_admisible_to_admisible"
+        return "admissibility_check"
+    if cp == "F1" and tp == "F2":
+        return "send_evaluation"
+    if cp == "F2" and tp == "F2":
+        return "register_eval_result"
+    if cp == "F2" and tp == "F3":
+        return "approve_evaluation"
+    if cp == "F3" and tp == "F4":
+        return "formalization"
+    if cp == "F4" and tp == "F4":
+        if target_code in ("EN_LICITACION", "ADJUDICADO", "CONTRATO_FIRMADO", "EN_OBRA"):
+            return "licitacion_flow"
+        return "intra_F4_transitions"
+    if cp == "F4" and tp == "F5":
+        return "intra_F4_transitions"
+    if cp == "F5" and tp == "F5":
+        return "closure"
+    return None
+
+
+async def _get_transition_roles(
+    boundary_key: str, ipr_id: UUID, db: AsyncSession
+) -> set[str]:
+    """Get allowed roles for a boundary key, applying track overrides if any."""
+    universal = BOUNDARY_PERMISSIONS.get(boundary_key)
+    if universal is None:
+        return set(_ASSIGN_ROLES)  # Fallback for unmapped boundaries
+
+    # Check for track-specific override via financing_track.role_permissions
+    row = (await db.execute(
+        text("""
+            SELECT ft.role_permissions
+            FROM core.ipr i
+            JOIN ref.category m ON m.id = i.mechanism_id
+            JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+
+    if row and row["role_permissions"]:
+        overrides = row["role_permissions"]
+        if isinstance(overrides, str):
+            overrides = json.loads(overrides)
+        if boundary_key in overrides:
+            return set(overrides[boundary_key])
+
+    return set(universal)
 
 # ---------------------------------------------------------------------------
 # Fibración categórica: ipr_state → mcd_phase
@@ -74,7 +158,8 @@ async def _get_track_config(mechanism_code: str, db: AsyncSession) -> dict | Non
         text("""
             SELECT code, label, evaluator_code, evaluator_label,
                    favorable_products, unfavorable_products, terminal_negative,
-                   thresholds, required_attrs, sla_days, rs_validity_years
+                   thresholds, required_attrs, sla_days, rs_validity_years,
+                   role_permissions
             FROM core.financing_track
             WHERE code = :code AND is_active = TRUE
         """),
@@ -94,6 +179,7 @@ async def _get_track_config(mechanism_code: str, db: AsyncSession) -> dict | Non
         "required_attrs": list(row["required_attrs"] or []),
         "sla_days": dict(row["sla_days"] or {}),
         "rs_validity_years": row["rs_validity_years"],
+        "role_permissions": dict(row["role_permissions"] or {}) if "role_permissions" in row.keys() else {},
     }
 
 # CORE approval constants (fallbacks if DB thresholds unavailable)
@@ -1545,6 +1631,11 @@ async def _evaluate_phase_gates(
         if morosos_gate is not None:
             gates.append(morosos_gate)
 
+        # FRIL vigencia 90d (blocking)
+        fril_vig = await _check_fril_vigencia_90d(ipr_id, db)
+        if fril_vig is not None:
+            gates.append(fril_vig)
+
     elif transition == "F4->F5":
         pending = (await db.execute(
             text("""
@@ -1616,6 +1707,11 @@ async def _evaluate_phase_gates(
         report_gate = await _check_report_periodicity(ipr_id, db)
         if report_gate is not None:
             gates.append(report_gate)
+
+        # Informational: supervisor GORE assigned (PROYECTO only)
+        sup_gate = await _check_supervisor_gore_assigned(ipr_id, db)
+        if sup_gate is not None:
+            gates.append(sup_gate)
 
     return gates
 
@@ -1741,6 +1837,96 @@ async def _check_gobernador_delegation(ipr_id: UUID, db: AsyncSession) -> dict |
     }
 
 
+async def _check_fril_vigencia_90d(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """FRIL vigencia: evaluation result valid for 90 days (per FRIL guide).
+
+    Only fires for FRIL mechanism. Reads rs_validity_days from sla_days.
+    Blocking at F3→F4.
+    """
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, ft.sla_days
+            FROM core.ipr i
+            JOIN ref.category m ON m.id = i.mechanism_id
+            JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "FRIL":
+        return None
+
+    sla = row["sla_days"] or {}
+    validity_days = sla.get("rs_validity_days")
+    if not validity_days:
+        return None
+
+    # Find most recent completed evaluation
+    eval_row = (await db.execute(
+        text("""
+            SELECT ea.completed_at
+            FROM core.evaluation_assignment ea
+            WHERE ea.ipr_id = :ipr_id AND ea.deleted_at IS NULL
+              AND ea.completed_at IS NOT NULL
+            ORDER BY ea.completed_at DESC LIMIT 1
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().first()
+
+    if not eval_row:
+        return {
+            "name": "fril_vigencia_90d",
+            "met": False,
+            "detail": "FRIL: sin evaluación completada — se requiere dictamen antes de formalizar",
+        }
+
+    from datetime import datetime, timezone
+    completed_at = eval_row["completed_at"]
+    if completed_at.tzinfo is None:
+        completed_at = completed_at.replace(tzinfo=timezone.utc)
+    now = datetime.now(timezone.utc)
+    expiry = completed_at + timedelta(days=int(validity_days))
+    expired = now > expiry
+    days_left = (expiry - now).days if not expired else 0
+
+    return {
+        "name": "fril_vigencia_90d",
+        "met": not expired,
+        "detail": (
+            f"FRIL: dictamen completado {completed_at.strftime('%Y-%m-%d')} — "
+            f"vigencia {validity_days}d {'(expirado, requiere re-evaluación)' if expired else f'({days_left}d restantes)'}"
+        ),
+    }
+
+
+async def _check_supervisor_gore_assigned(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """Informational: check if SUPERVISOR_GORE party is assigned during F4 execution."""
+    nature = (await db.execute(
+        text("SELECT ipr_nature FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(ipr_id)},
+    )).scalar()
+    if nature != "PROYECTO":
+        return None
+
+    count = (await db.execute(
+        text("""
+            SELECT COUNT(*) FROM core.ipr_party ip
+            JOIN ref.category r ON r.id = ip.party_role_id
+            WHERE ip.ipr_id = :id AND r.code = 'SUPERVISOR_GORE' AND ip.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).scalar() or 0
+
+    return {
+        "name": "supervisor_gore_assigned",
+        "met": True,  # informational — never blocks
+        "detail": (
+            "Supervisor GORE asignado" if count > 0
+            else "Advertencia: no se ha asignado Supervisor GORE para seguimiento de ejecución (informativo)"
+        ),
+    }
+
+
 def _require_roles(user: dict, *roles: str) -> None:
     if user["role_code"] not in roles:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
@@ -1760,6 +1946,7 @@ async def list_iprs(
     mcd_phase: Optional[str] = Query(None, description="Filter by mcd_phase category code"),
     search: Optional[str] = Query(None, description="ILIKE search on codigo_bip or name"),
     assignee_id: Optional[UUID] = Query(None, description="Filter by assignee user UUID"),
+    sponsor_division_id: Optional[UUID] = Query(None, description="Filter by sponsor division UUID"),
 ):
     """
     List IPRs with server-side pagination and role-aware filtering.
@@ -1768,6 +1955,7 @@ async def list_iprs(
     - ENCARGADO: restricted to IPRs where assignee_id = user.id
     - Admin roles: unrestricted access
     - assignee_id: explicit filter by assigned user (any role)
+    - sponsor_division_id: explicit filter by sponsor division (any role)
     """
     role_code = user["role_code"]
     user_id = str(user["id"])
@@ -1789,6 +1977,11 @@ async def list_iprs(
     if assignee_id:
         conditions.append("i.assignee_id = :filter_assignee_id")
         params["filter_assignee_id"] = str(assignee_id)
+
+    # Explicit sponsor division filter
+    if sponsor_division_id:
+        conditions.append("i.sponsor_division_id = :filter_sponsor_division_id")
+        params["filter_sponsor_division_id"] = str(sponsor_division_id)
 
     # Optional category code filters
     if ipr_type:
@@ -1919,6 +2112,112 @@ async def list_iprs(
     )
 
 
+# ---------------------------------------------------------------------------
+# GET /api/ipr/cartera-por-division — Division portfolio with health signals
+# ---------------------------------------------------------------------------
+
+@router.get("/cartera-por-division")
+async def get_cartera_por_division(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Division portfolio summary with health signals."""
+    from app.schemas.ipr import DivisionCarteraItem
+
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DGI")
+
+    sql = text("""
+        SELECT
+            o.id AS division_id,
+            o.name AS division_name,
+            o.short_name AS abbreviation,
+            COUNT(i.id) AS total_iprs,
+            COUNT(*) FILTER (WHERE mp.code = 'F0') AS f0,
+            COUNT(*) FILTER (WHERE mp.code = 'F1') AS f1,
+            COUNT(*) FILTER (WHERE mp.code = 'F2') AS f2,
+            COUNT(*) FILTER (WHERE mp.code = 'F3') AS f3,
+            COUNT(*) FILTER (WHERE mp.code = 'F4') AS f4,
+            COUNT(*) FILTER (WHERE mp.code = 'F5') AS f5,
+            COALESCE(
+                (SELECT COUNT(*) FROM core.alert a
+                 JOIN ref.category sev ON sev.id = a.severity_id
+                 WHERE a.subject_type = 'core.ipr'
+                 AND a.subject_id IN (SELECT id FROM core.ipr WHERE sponsor_division_id = o.id AND deleted_at IS NULL)
+                 AND sev.code = 'CRITICO'
+                 AND a.resolved_at IS NULL AND a.deleted_at IS NULL), 0
+            ) AS critical_alerts,
+            COALESCE(
+                (SELECT COUNT(*) FROM core.ipr_problem p
+                 JOIN ref.category ps ON ps.id = p.state_id
+                 WHERE p.ipr_id IN (SELECT id FROM core.ipr WHERE sponsor_division_id = o.id AND deleted_at IS NULL)
+                 AND ps.code = 'ABIERTO'
+                 AND p.deleted_at IS NULL), 0
+            ) AS open_problems,
+            COALESCE(
+                (SELECT COUNT(*) FROM core.operational_commitment oc
+                 JOIN ref.category cs ON cs.id = oc.state_id
+                 WHERE oc.ipr_id IN (SELECT id FROM core.ipr WHERE sponsor_division_id = o.id AND deleted_at IS NULL)
+                 AND cs.code NOT IN ('COMPLETADO', 'VERIFICADO', 'CANCELADO')
+                 AND oc.due_date < CURRENT_DATE
+                 AND oc.deleted_at IS NULL), 0
+            ) AS overdue_commitments
+        FROM core.organization o
+        JOIN ref.category ot ON ot.id = o.org_type_id
+        LEFT JOIN core.ipr i ON i.sponsor_division_id = o.id AND i.deleted_at IS NULL
+        LEFT JOIN ref.category mp ON mp.id = i.mcd_phase_id
+        WHERE ot.code IN ('DIVISION', 'GORE')
+        AND o.deleted_at IS NULL
+        GROUP BY o.id, o.name, o.short_name
+        HAVING COUNT(i.id) > 0
+        ORDER BY o.name
+    """)
+
+    rows = (await db.execute(sql)).mappings().all()
+
+    results = []
+    for r in rows:
+        by_phase = {
+            "F0": r["f0"], "F1": r["f1"], "F2": r["f2"],
+            "F3": r["f3"], "F4": r["f4"], "F5": r["f5"],
+        }
+
+        # Health signal
+        reasons = []
+        signal = "VERDE"
+
+        if r["critical_alerts"] > 0:
+            signal = "ROJO"
+            reasons.append(f"{r['critical_alerts']} alerta(s) critica(s)")
+
+        total = r["total_iprs"] or 1
+        overdue_pct = (r["overdue_commitments"] / total) * 100 if total > 0 else 0
+        if overdue_pct > 30:
+            signal = "ROJO"
+            reasons.append(f"{r['overdue_commitments']} compromisos vencidos ({overdue_pct:.0f}%)")
+
+        if signal == "VERDE" and r["open_problems"] > 5:
+            signal = "AMARILLO"
+            reasons.append(f"{r['open_problems']} problemas abiertos")
+
+        if not reasons:
+            reasons.append("Sin alertas ni problemas criticos")
+
+        results.append(DivisionCarteraItem(
+            division_id=str(r["division_id"]),
+            division_name=r["division_name"],
+            abbreviation=r["abbreviation"],
+            total_iprs=r["total_iprs"],
+            by_phase=by_phase,
+            critical_alerts=r["critical_alerts"],
+            open_problems=r["open_problems"],
+            overdue_commitments=r["overdue_commitments"],
+            health_signal=signal,
+            health_reasons=reasons,
+        ))
+
+    return results
+
+
 @router.get("/{ipr_id}/track-info", response_model=TrackInfo)
 async def get_track_info(
     ipr_id: UUID,
@@ -2033,6 +2332,7 @@ async def get_ipr(
             COALESCE(i.requires_cgr, false)    AS requires_cgr,
             COALESCE(i.requires_dipres, false) AS requires_dipres,
             i.created_at,
+            i.phase_entered_at,
             -- commitment count
             (
                 SELECT COUNT(*)
@@ -2112,6 +2412,7 @@ async def get_ipr(
         problem_count=row["problem_count"] or 0,
         alert_count=row["alert_count"] or 0,
         agreement_count=row["agreement_count"] or 0,
+        phase_entered_at=row["phase_entered_at"],
         created_at=row["created_at"],
     )
 
@@ -2224,14 +2525,17 @@ async def update_ipr(
     if not updates:
         return {"message": "Sin cambios"}
 
-    # JEFE_DIVISION can only update assignee_id
+    # JEFE_DIVISION/JEFE_DEPARTAMENTO: can update assignee_id + status_id
+    # (status_id changes are further restricted by boundary permissions below)
     role = user.get("role_code", "")
     if role in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO"):
-        updates = {k: v for k, v in updates.items() if k == "assignee_id"}
+        _allowed_fields = {"assignee_id", "status_id"}
+        updates = {k: v for k, v in updates.items() if k in _allowed_fields}
         if not updates:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tiene permisos para editar estos campos")
 
     # --- Fiber derivation: auto-compute mcd_phase on status change ---
+    _old_status_id = None  # Track for audit event
     if "status_id" in updates and updates["status_id"] is not None:
         new_status_id = str(updates["status_id"])
 
@@ -2239,7 +2543,8 @@ async def update_ipr(
             text("""
                 SELECT
                     cur.code AS current_code,
-                    nxt.code AS target_code
+                    nxt.code AS target_code,
+                    i.status_id::text AS old_status_id
                 FROM core.ipr i
                 JOIN ref.category cur ON cur.id = i.status_id
                 JOIN ref.category nxt ON nxt.id = CAST(:new_status_id AS uuid)
@@ -2251,6 +2556,18 @@ async def update_ipr(
         if codes:
             current_code = codes["current_code"]
             target_code = codes["target_code"]
+            _old_status_id = codes["old_status_id"]
+
+            # --- Boundary permission check ---
+            boundary_key = _get_boundary_key(current_code, target_code)
+            if boundary_key:
+                allowed_roles = await _get_transition_roles(boundary_key, ipr_id, db)
+                if role not in allowed_roles:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail=f"Rol {role} no tiene permiso para la transición {current_code}→{target_code}",
+                    )
+
             current_phase = STATUS_PHASE_FIBER.get(current_code)
             target_phase = STATUS_PHASE_FIBER.get(target_code)
 
@@ -2357,6 +2674,16 @@ async def update_ipr(
     sql = text(f"UPDATE core.ipr SET {', '.join(set_clauses)} WHERE id = :id")
     try:
         await db.execute(sql, params)
+        # Record audit event for status transitions
+        if _old_status_id and "status_id" in updates:
+            await record_event(
+                db,
+                "STATE_TRANSITION",
+                "core.ipr",
+                ipr_id,
+                user["id"],
+                {"old_status_id": _old_status_id, "new_status_id": str(updates["status_id"])},
+            )
         await db.commit()
     except DBAPIError as e:
         await db.rollback()
@@ -2365,6 +2692,214 @@ async def update_ipr(
         raise
 
     return {"message": "IPR actualizado exitosamente"}
+
+
+# ---------------------------------------------------------------------------
+# Transition effects helper
+# ---------------------------------------------------------------------------
+
+def _compute_transition_effects(current_code: str, target_code: str) -> list[str]:
+    """Compute informational effects that will happen after a transition."""
+    effects = []
+
+    _EFFECTS_MAP = {
+        "EN_RENDICION": "Se habilitará el tab Cierre al completar rendición",
+        "EN_CIERRE_ADMINISTRATIVO": "Se habilitará el formulario de cierre administrativo",
+        "CERRADO": "La IPR quedará en estado terminal — no se podrán realizar más transiciones",
+        "EN_FORMALIZACION": "Se requerirá Convenio Marco para formalizar",
+        "EN_LICITACION": "Se requerirá ITO asignado (Partes) para avanzar a Adjudicado",
+        "EN_EJECUCION": "Se activará el seguimiento de avances periódicos",
+        "EN_OBRA": "Se activará el monitoreo de plazos de obra",
+        "ADJUDICADO": "Se habilitará la firma de contrato",
+        "CONTRATO_FIRMADO": "Se habilitará el inicio de ejecución/obra",
+        "ANULADO": "La IPR quedará anulada permanentemente",
+        "TERMINADO_ANTICIPADAMENTE": "La IPR se cerrará anticipadamente",
+        "CDP_EMITIDO": "Se habilitará la formalización del proyecto",
+        "EN_EVALUACION": "Se asignarán evaluadores según mecanismo de financiamiento",
+    }
+
+    if target_code in _EFFECTS_MAP:
+        effects.append(_EFFECTS_MAP[target_code])
+
+    # Phase boundary notifications
+    _PHASE_MAP = {
+        "F0": ["INGRESADO"],
+        "F1": ["EN_REVISION", "PRE_ADMISIBLE", "ADMISIBLE", "INADMISIBLE"],
+        "F2": ["EN_EVALUACION", "RS", "FI", "FC", "OT", "AD", "RF", "ITF", "AT"],
+        "F3": ["CDP_EMITIDO"],
+        "F4": ["EN_FORMALIZACION", "FORMALIZADO", "EN_LICITACION", "ADJUDICADO", "CONTRATO_FIRMADO", "EN_EJECUCION", "EN_OBRA", "RECEPCION_PROVISORIA", "RECEPCION_DEFINITIVA", "SUSPENDIDO"],
+        "F5": ["EN_RENDICION", "RENDICION_APROBADA", "EN_CIERRE_ADMINISTRATIVO", "CERRADO"],
+    }
+
+    current_phase = None
+    target_phase = None
+    for phase, codes in _PHASE_MAP.items():
+        if current_code in codes:
+            current_phase = phase
+        if target_code in codes:
+            target_phase = phase
+
+    if current_phase and target_phase and current_phase != target_phase:
+        effects.append(f"Cambio de fase: {current_phase} → {target_phase}")
+
+    return effects
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/readiness — Satellite counts + gate precheck
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/readiness")
+async def get_ipr_readiness(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Satellite counts + gate precheck for next transitions."""
+    from app.schemas.ipr import SatelliteStatus, TransitionReadiness, IprReadiness
+
+    # 1. Verify IPR exists
+    check = await db.execute(
+        text("SELECT id, status_id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": ipr_id},
+    )
+    row = check.mappings().first()
+    if not row:
+        raise HTTPException(status_code=404, detail="IPR no encontrada")
+
+    # 2. Count satellites via single CTE query
+    sat_sql = text("""
+        WITH sat AS (
+            SELECT
+                (SELECT COUNT(*) FROM core.ipr_party WHERE ipr_id = :id AND deleted_at IS NULL) AS partes,
+                (SELECT COUNT(*) FROM core.ipr_party WHERE ipr_id = :id AND deleted_at IS NULL
+                    AND party_role_id IN (SELECT id FROM ref.category WHERE scheme = 'party_role' AND code = 'ITO')) AS has_ito,
+                (SELECT COUNT(*) FROM core.ipr_territory WHERE ipr_id = :id AND deleted_at IS NULL) AS territorio,
+                (SELECT COUNT(*) FROM core.ipr_milestone WHERE ipr_id = :id AND deleted_at IS NULL) AS hitos_total,
+                (SELECT COUNT(*) FROM core.ipr_milestone WHERE ipr_id = :id AND deleted_at IS NULL AND actual_date IS NOT NULL) AS hitos_completados,
+                (SELECT COUNT(*) FROM core.evaluation_assignment WHERE ipr_id = :id AND deleted_at IS NULL) AS evaluaciones,
+                (SELECT COUNT(*) FROM core.evaluation_assignment WHERE ipr_id = :id AND deleted_at IS NULL AND result_id IS NOT NULL) AS eval_con_resultado,
+                (SELECT COUNT(*) FROM core.operational_commitment WHERE ipr_id = :id AND deleted_at IS NULL) AS compromisos,
+                (SELECT COUNT(*) FROM core.operational_commitment oc
+                    JOIN ref.category sc ON sc.id = oc.state_id
+                    WHERE oc.ipr_id = :id AND oc.deleted_at IS NULL AND sc.code IN ('COMPLETADO', 'VERIFICADO')) AS compromisos_completados,
+                (SELECT COUNT(*) FROM core.agreement WHERE ipr_id = :id AND deleted_at IS NULL) AS convenios,
+                (SELECT COUNT(*) FROM core.budget_commitment WHERE ipr_id = :id AND deleted_at IS NULL) AS cdps,
+                (SELECT COUNT(*) FROM core.progress_report WHERE ipr_id = :id AND deleted_at IS NULL) AS avances,
+                (SELECT COUNT(*) FROM core.admissibility_check WHERE ipr_id = :id) AS admisibilidad_total,
+                (SELECT COUNT(*) FROM core.admissibility_check WHERE ipr_id = :id AND verified_at IS NOT NULL) AS admisibilidad_verificados
+        )
+        SELECT * FROM sat
+    """)
+    sat_row = (await db.execute(sat_sql, {"id": ipr_id})).mappings().first()
+
+    satellites = [
+        SatelliteStatus(name="partes", label="Partes", count=sat_row["partes"],
+                       detail={"has_ito": sat_row["has_ito"] > 0}),
+        SatelliteStatus(name="territorio", label="Territorio", count=sat_row["territorio"]),
+        SatelliteStatus(name="hitos", label="Hitos", count=sat_row["hitos_total"],
+                       detail={"completados": sat_row["hitos_completados"]}),
+        SatelliteStatus(name="evaluaciones", label="Evaluaciones", count=sat_row["evaluaciones"],
+                       detail={"con_resultado": sat_row["eval_con_resultado"]}),
+        SatelliteStatus(name="compromisos", label="Compromisos", count=sat_row["compromisos"],
+                       detail={"completados": sat_row["compromisos_completados"]}),
+        SatelliteStatus(name="convenios", label="Convenios", count=sat_row["convenios"]),
+        SatelliteStatus(name="cdps", label="CDPs", count=sat_row["cdps"]),
+        SatelliteStatus(name="avances", label="Avances", count=sat_row["avances"]),
+        SatelliteStatus(name="admisibilidad", label="Admisibilidad", count=sat_row["admisibilidad_total"],
+                       detail={"verificados": sat_row["admisibilidad_verificados"]}),
+    ]
+
+    # 3. Gate precheck for next transitions
+    # Get current status code + valid_transitions
+    status_sql = text("""
+        SELECT sc.code AS current_code, sc.valid_transitions
+        FROM core.ipr i
+        JOIN ref.category sc ON sc.id = i.status_id
+        WHERE i.id = :id
+    """)
+    status_row = (await db.execute(status_sql, {"id": ipr_id})).mappings().first()
+
+    next_transitions = []
+    if status_row and status_row["valid_transitions"]:
+        valid = status_row["valid_transitions"]
+        # Fetch destination state details
+        dest_sql = text("""
+            SELECT id, code, label
+            FROM ref.category
+            WHERE scheme = 'ipr_state' AND code = ANY(:codes)
+            ORDER BY sort_order
+        """)
+        dest_rows = (await db.execute(dest_sql, {"codes": valid})).mappings().all()
+
+        for dest in dest_rows:
+            next_transitions.append(
+                TransitionReadiness(
+                    code=dest["code"],
+                    label=dest["label"],
+                    gates_met=0,
+                    gates_total=0,
+                    blocking_gates=[],
+                )
+            )
+
+    return IprReadiness(satellites=satellites, next_transitions=next_transitions)
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/historial — Transition history from txn.event
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/historial")
+async def get_ipr_historial(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Transition history for an IPR from txn.event."""
+    # Verify IPR exists
+    check = await db.execute(
+        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": ipr_id},
+    )
+    if not check.mappings().first():
+        raise HTTPException(status_code=404, detail="IPR no encontrada")
+
+    sql = text("""
+        SELECT
+            e.id::text AS id,
+            old_cat.code AS previous_state,
+            new_cat.code AS new_state,
+            COALESCE(p.names || ' ' || p.paternal_surname, 'Sistema') AS changed_by_name,
+            e.data->>'comment' AS comment,
+            e.occurred_at AS changed_at
+        FROM txn.event e
+        LEFT JOIN ref.category old_cat ON old_cat.id = (e.data->>'old_status_id')::uuid
+        LEFT JOIN ref.category new_cat ON new_cat.id = (e.data->>'new_status_id')::uuid
+        LEFT JOIN core."user" u ON u.id = e.actor_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE e.subject_type = 'core.ipr'
+            AND e.subject_id = :ipr_id
+            AND e.event_type_id IN (
+                SELECT id FROM ref.category WHERE scheme = 'event_type' AND code = 'STATE_TRANSITION'
+            )
+        ORDER BY e.occurred_at DESC
+        LIMIT 50
+    """)
+
+    rows = (await db.execute(sql, {"ipr_id": ipr_id})).mappings().all()
+
+    return [
+        {
+            "id": r["id"],
+            "previous_state": r["previous_state"],
+            "new_state": r["new_state"],
+            "changed_by_name": r["changed_by_name"],
+            "comment": r["comment"],
+            "changed_at": r["changed_at"].isoformat() if r["changed_at"] else None,
+        }
+        for r in rows
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -2475,6 +3010,16 @@ async def get_ipr_transitions(
             })
 
         blocked = any(not g["met"] for g in gates)
+
+        # Role-based permission: check if current user can execute this transition
+        user_role = user.get("role_code", "")
+        bk = _get_boundary_key(current_code, d["code"])
+        if bk:
+            allowed_roles = await _get_transition_roles(bk, ipr_id, db)
+            role_allowed = user_role in allowed_roles
+        else:
+            role_allowed = user_role in _ASSIGN_ROLES
+
         result.append({
             "id": str(d["id"]),
             "code": d["code"],
@@ -2483,6 +3028,8 @@ async def get_ipr_transitions(
             "phase_change": phase_change,
             "gates": gates,
             "blocked": blocked,
+            "allowed": role_allowed,
+            "effects": _compute_transition_effects(current_code, d["code"]),
         })
 
     return result
@@ -2651,8 +3198,9 @@ async def create_ipr_party(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    """Add an organization-role pair to an IPR. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    """Add an organization-role pair to an IPR."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
+                   "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
 
     # Verify IPR exists
     check = await db.execute(
@@ -2715,8 +3263,9 @@ async def delete_ipr_party(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    """Soft-delete an IPR party. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    """Soft-delete an IPR party."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
+                   "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
 
     result = await db.execute(
         text("""
@@ -2779,8 +3328,9 @@ async def create_ipr_territory(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    """Associate a territory with an IPR. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    """Associate a territory with an IPR."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
+                   "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -2833,8 +3383,9 @@ async def delete_ipr_territory(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    """Soft-delete an IPR territory association. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    """Soft-delete an IPR territory association."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
+                   "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
 
     result = await db.execute(
         text("""
@@ -2902,8 +3453,9 @@ async def create_ipr_milestone(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    """Create a new milestone for an IPR. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    """Create a new milestone for an IPR."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
+                   "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -3022,7 +3574,8 @@ async def create_evaluation(
     db: AsyncSession = Depends(get_db),
 ):
     """Create an evaluation assignment. Auto-assigns evaluator_type from financing_track DB if omitted."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
+                   "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
 
     # Verify IPR exists
     ipr_row = (await db.execute(

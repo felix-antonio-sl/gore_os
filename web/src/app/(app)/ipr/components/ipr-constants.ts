@@ -15,6 +15,7 @@ export interface IprDetail {
   mechanism_label?: string;
   mcd_phase?: string;
   mcd_phase_label?: string;
+  phase_entered_at?: string;
   alert_level?: string;
   executor_name?: string;
   formulator_name?: string;
@@ -57,3 +58,29 @@ export const MCD_PHASES = [
   { code: "F4", label: "Ejecución" },
   { code: "F5", label: "Cierre" },
 ];
+
+export const TAB_GROUPS = [
+  { label: "Ejecución", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
+  { label: "Financiero", tabs: ["cdps", "convenios", "resoluciones"] },
+  { label: "Compliance", tabs: ["partes", "territorio", "evaluaciones", "parentesco"] },
+  { label: "Lifecycle", tabs: ["admisibilidad", "modificaciones", "cierre", "evaluacion-expost"] },
+] as const;
+
+export const TAB_LABELS: Record<string, string> = {
+  compromisos: "Compromisos",
+  problemas: "Problemas",
+  hitos: "Hitos",
+  avances: "Avances",
+  alertas: "Alertas",
+  cdps: "CDPs",
+  convenios: "Convenios",
+  resoluciones: "Resoluciones",
+  partes: "Partes",
+  territorio: "Territorio",
+  evaluaciones: "Evaluación",
+  parentesco: "Parentesco",
+  admisibilidad: "Admisibilidad",
+  modificaciones: "Modificaciones",
+  cierre: "Cierre",
+  "evaluacion-expost": "Ex-Post",
+};

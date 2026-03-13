@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, FileEdit } from "lucide-react";
+import { Plus, FileEdit, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate, formatCLP } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
@@ -56,6 +56,69 @@ const STATUS_BADGE: Record<string, string> = {
   APROBADA: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
   RECHAZADA: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
+
+const STEPPER_NODES = [
+  { key: "SOLICITADA", label: "Solicitada" },
+  { key: "EN_REVISION", label: "En Revisión" },
+  { key: "RESULTADO", label: "Resultado" },
+] as const;
+
+function ModificationStepper({ status }: { status: string }) {
+  const activeIndex =
+    status === "SOLICITADA" ? 0
+    : status === "EN_REVISION" ? 1
+    : 2; // APROBADA or RECHAZADA
+
+  const isRejected = status === "RECHAZADA";
+
+  return (
+    <div className="flex items-start gap-0 mt-2 mb-1">
+      {STEPPER_NODES.map((node, i) => {
+        const isPast = i < activeIndex;
+        const isActive = i === activeIndex;
+        const isFuture = i > activeIndex;
+
+        const circleClass = cn(
+          "size-5 rounded-full flex items-center justify-center text-[10px] font-semibold shrink-0",
+          isPast && "bg-primary/20 text-primary",
+          isActive && !isRejected && "bg-primary text-primary-foreground",
+          isActive && isRejected && "bg-red-500 text-white",
+          isFuture && "bg-muted text-muted-foreground",
+        );
+
+        const lineClass = cn(
+          "h-px flex-1 mt-2.5",
+          i < activeIndex ? "bg-primary/30" : "bg-muted",
+        );
+
+        const resultLabel =
+          i === 2 && isActive
+            ? isRejected
+              ? "Rechazada"
+              : "Aprobada"
+            : node.label;
+
+        return (
+          <div key={node.key} className="flex items-start flex-1 min-w-0">
+            <div className="flex flex-col items-center">
+              <div className={circleClass}>
+                {isPast ? (
+                  <CheckCircle2 className="size-3" />
+                ) : (
+                  <span>{i + 1}</span>
+                )}
+              </div>
+              <span className="text-[10px] text-muted-foreground mt-0.5 text-center leading-tight">
+                {resultLabel}
+              </span>
+            </div>
+            {i < STEPPER_NODES.length - 1 && <div className={lineClass} />}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export function TabModificaciones({ iprId, canManage }: TabModificacionesProps) {
   const [mods, setMods] = useState<ModificationItem[] | null>(null);
@@ -212,6 +275,7 @@ export function TabModificaciones({ iprId, canManage }: TabModificacionesProps) 
                   )}
                 </div>
               </div>
+              <ModificationStepper status={m.status_code} />
               <p className="mt-1.5 text-sm">{m.description}</p>
               {m.justification && <p className="mt-1 text-xs text-muted-foreground">Justificación: {m.justification}</p>}
               <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">

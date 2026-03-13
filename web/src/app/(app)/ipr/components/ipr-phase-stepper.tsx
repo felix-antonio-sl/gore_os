@@ -6,9 +6,11 @@ import { MCD_PHASES, mcdPhaseColors } from "./ipr-constants";
 interface IprPhaseStepperProps {
   currentPhase: string;
   currentPhaseLabel?: string;
+  phaseEnteredAt?: string;
 }
 
-export function IprPhaseStepper({ currentPhase, currentPhaseLabel }: IprPhaseStepperProps) {
+export function IprPhaseStepper({ currentPhase, currentPhaseLabel, phaseEnteredAt }: IprPhaseStepperProps) {
+  const daysInPhase = phaseEnteredAt ? Math.floor((Date.now() - new Date(phaseEnteredAt).getTime()) / 86400000) : null;
   const currentIdx = MCD_PHASES.findIndex(p => p.code === currentPhase);
 
   return (
@@ -42,6 +44,14 @@ export function IprPhaseStepper({ currentPhase, currentPhaseLabel }: IprPhaseSte
                 )}>
                   {phase.label}
                 </span>
+                {isActive && daysInPhase !== null && (
+                  <span className={cn(
+                    "text-[9px] tabular-nums font-medium mt-0.5",
+                    daysInPhase <= 30 ? "text-green-600" : daysInPhase <= 90 ? "text-amber-600" : "text-red-600"
+                  )}>
+                    {daysInPhase}d
+                  </span>
+                )}
               </div>
               {idx < MCD_PHASES.length - 1 && (
                 <div className={cn(

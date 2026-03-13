@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { DrawerPanel } from "@/components/drawer-panel";
@@ -45,8 +46,19 @@ export default function DatosPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const { user } = useAuth();
+
   const domainParam = (searchParams.get("dominio") as DomainId) ?? "ipr";
   const activeDomain: DomainId = DOMAINS.find((d) => d.id === domainParam)?.id ?? "ipr";
+
+  // H12: Auto pre-filter rendiciones for RTF role
+  useEffect(() => {
+    if (user?.role_code === "RTF" && activeDomain === "rendiciones" && !searchParams.has("state")) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("state", "EN_REVISION_RTF");
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [user, activeDomain, searchParams, pathname, router]);
 
   const page = Number(searchParams.get("page") ?? "1");
 

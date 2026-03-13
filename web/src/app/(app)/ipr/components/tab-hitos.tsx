@@ -17,6 +17,7 @@ import { Plus, Flag, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import type { IprMilestoneItem, CategoryRef } from "@/types";
 
 interface TabHitosProps {
@@ -34,6 +35,7 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
   const [hitoTypes, setHitoTypes] = useState<CategoryRef[]>([]);
   const [hitoSubmitting, setHitoSubmitting] = useState(false);
   const [hitoError, setHitoError] = useState<string | null>(null);
+  const [confirmHitoId, setConfirmHitoId] = useState<string | null>(null);
 
   const loadHitos = () => {
     setLoading(true);
@@ -171,7 +173,7 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
                         size="sm"
                         variant="outline"
                         className="text-xs h-7"
-                        onClick={() => handleCompleteHito(h.id)}
+                        onClick={() => setConfirmHitoId(h.id)}
                       >
                         <CheckCircle2 className="size-3.5 mr-1" />
                         Completar
@@ -247,6 +249,21 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
           </div>
         </form>
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={!!confirmHitoId}
+        onOpenChange={(open) => { if (!open) setConfirmHitoId(null); }}
+        title="¿Marcar hito como completado?"
+        description="Se registrará la fecha actual como fecha de cumplimiento. Esta acción no se puede deshacer."
+        variant="default"
+        confirmLabel="Completar"
+        onConfirm={() => {
+          if (confirmHitoId) {
+            handleCompleteHito(confirmHitoId);
+            setConfirmHitoId(null);
+          }
+        }}
+      />
     </div>
   );
 }
