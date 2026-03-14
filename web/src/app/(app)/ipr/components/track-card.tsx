@@ -181,33 +181,27 @@ export function TrackCard({ track, gateResults }: TrackCardProps) {
         </div>
       )}
 
-      {/* Gate indicators from readiness */}
-      {gateResults && gateResults.length > 0 && (
+      {/* Gate indicators from readiness — only show transitions with actual gates */}
+      {gateResults && gateResults.filter(g => g.gates_total > 0).length > 0 && (
         <div className="mt-3 pt-3 border-t">
           <div className="flex items-center gap-1 text-xs text-muted-foreground mb-1.5">
             <Shield className="size-3" />
             <span>Gates próxima transición</span>
           </div>
           <div className="space-y-1">
-            {gateResults.map((g) => (
+            {gateResults.filter(g => g.gates_total > 0).map((g) => (
               <div key={g.code} className="flex items-center gap-2 text-xs">
-                {g.gates_total > 0 ? (
-                  g.gates_met === g.gates_total ? (
-                    <CheckCircle2 className="size-3.5 text-green-600 shrink-0" />
-                  ) : (
-                    <XCircle className="size-3.5 text-red-500 shrink-0" />
-                  )
+                {g.gates_met === g.gates_total ? (
+                  <CheckCircle2 className="size-3.5 text-green-600 shrink-0" />
                 ) : (
-                  <CheckCircle2 className="size-3.5 text-muted-foreground shrink-0" />
+                  <XCircle className="size-3.5 text-red-500 shrink-0" />
                 )}
                 <span className="font-medium">{g.label}</span>
-                {g.gates_total > 0 && (
-                  <span className="text-[10px] text-muted-foreground tabular-nums">
-                    {g.gates_met}/{g.gates_total}
-                  </span>
-                )}
+                <span className="text-[10px] text-muted-foreground tabular-nums">
+                  {g.gates_met}/{g.gates_total}
+                </span>
                 {g.blocking_gates.length > 0 && (
-                  <span className="text-[10px] text-red-600 truncate">
+                  <span className="text-[10px] text-red-600 truncate max-w-48">
                     {g.blocking_gates[0]}
                   </span>
                 )}

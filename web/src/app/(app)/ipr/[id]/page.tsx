@@ -29,7 +29,6 @@ import { IprReadinessCard } from "../components/ipr-readiness-card";
 import { IprHistorySection } from "../components/ipr-history-section";
 import type { IprDetail } from "../components/ipr-constants";
 import { TAB_GROUPS, TAB_LABELS } from "../components/ipr-constants";
-import { Separator } from "@/components/ui/separator";
 import { TabCompromisos } from "../components/tab-compromisos";
 import { TabProblemas } from "../components/tab-problemas";
 import { TabAlertas } from "../components/tab-alertas";
@@ -286,7 +285,7 @@ function IprDetailPageInner() {
         <TabsList className="flex-wrap">
           {TAB_GROUPS.map((group, gi) => (
             <Fragment key={group.label}>
-              {gi > 0 && <Separator orientation="vertical" className="h-5 mx-1" />}
+              {gi > 0 && <div className="w-px h-5 bg-muted-foreground/30 mx-1.5 shrink-0 self-center" />}
               {group.tabs.map((tab) => (
                 <TabsTrigger key={tab} value={tab}>
                   {TAB_LABELS[tab] ?? tab}

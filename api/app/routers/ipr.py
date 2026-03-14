@@ -147,6 +147,15 @@ STATUS_PHASE_FIBER: dict[str, str] = {
 
 _PHASE_ORDER = {"F0": 0, "F1": 1, "F2": 2, "F3": 3, "F4": 4, "F5": 5}
 
+# Friendly labels for evaluation-result codes used as ipr_state
+_EVAL_LABELS: dict[str, str] = {
+    "RS": "Rec. Satisfactoria", "FI": "Favorable c/ Indicaciones",
+    "FC": "Favorable Condicionado", "OT": "Observado Técnicamente",
+    "AD": "Aprobado Directo", "RF": "Rec. Favorable",
+    "ITF": "Informe Técnico Favorable", "AT": "Aprobado Técnicamente",
+    "NV": "No Viable", "IN": "Inadmisible",
+}
+
 # ---------------------------------------------------------------------------
 # Universal fallback for IPRs without mechanism (backward compat)
 _UNIVERSAL_FAVORABLE = {"RS", "FI", "RF", "ITF", "AT", "AD"}
@@ -2811,11 +2820,12 @@ async def get_ipr_readiness(
     ]
 
     # 3. Gate precheck for next transitions
-    # Get current status code + valid_transitions
     status_sql = text("""
-        SELECT sc.code AS current_code, sc.valid_transitions
+        SELECT sc.code AS current_code, sc.valid_transitions,
+               mcd.code AS current_phase, i.ipr_nature
         FROM core.ipr i
         JOIN ref.category sc ON sc.id = i.status_id
+        LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
         WHERE i.id = :id
     """)
     status_row = (await db.execute(status_sql, {"id": ipr_id})).mappings().first()
@@ -2823,7 +2833,10 @@ async def get_ipr_readiness(
     next_transitions = []
     if status_row and status_row["valid_transitions"]:
         valid = status_row["valid_transitions"]
-        # Fetch destination state details
+        current_code = status_row["current_code"]
+        current_phase = status_row["current_phase"]
+        ipr_nature = status_row["ipr_nature"]
+
         dest_sql = text("""
             SELECT id, code, label
             FROM ref.category
@@ -2833,13 +2846,54 @@ async def get_ipr_readiness(
         dest_rows = (await db.execute(dest_sql, {"codes": valid})).mappings().all()
 
         for dest in dest_rows:
+            target_phase = STATUS_PHASE_FIBER.get(dest["code"])
+            phase_change = (
+                dest["code"] not in ("ANULADO", "TERMINADO_ANTICIPADAMENTE")
+                and current_phase is not None
+                and target_phase is not None
+                and target_phase != current_phase
+            )
+
+            gates: list[dict] = []
+            if phase_change:
+                gates = await _evaluate_phase_gates(ipr_id, current_phase, target_phase, db)
+
+            # Same-phase custom gates
+            if current_code == "PRE_ADMISIBLE" and dest["code"] == "ADMISIBLE":
+                gates.append(await _check_admissibility_checklist(str(ipr_id), db))
+
+            if current_code == "EN_LICITACION" and dest["code"] == "ADJUDICADO" and ipr_nature == "PROYECTO":
+                ito_count = (await db.execute(
+                    text("""
+                        SELECT COUNT(*) FROM core.ipr_party ip
+                        JOIN ref.category r ON r.id = ip.party_role_id
+                        WHERE ip.ipr_id = :id AND r.code = 'ITO' AND ip.deleted_at IS NULL
+                    """),
+                    {"id": str(ipr_id)},
+                )).scalar() or 0
+                gates.append({"name": "ito_assigned", "met": ito_count > 0,
+                              "detail": "Proyecto requiere ITO asignado" if ito_count == 0 else "ITO asignado"})
+
+            if current_code == "EN_CIERRE_ADMINISTRATIVO" and dest["code"] == "CERRADO":
+                closure = (await db.execute(
+                    text("SELECT signed_by_id, signed_at FROM core.ipr_closure WHERE ipr_id = :id"),
+                    {"id": str(ipr_id)},
+                )).mappings().first()
+                signed = bool(closure and closure["signed_by_id"] and closure["signed_at"])
+                gates.append({"name": "closure_signed", "met": signed,
+                              "detail": "Acta de cierre debe estar firmada" if not signed else "Acta de cierre firmada"})
+
+            gates_met = sum(1 for g in gates if g["met"])
+            label = _EVAL_LABELS.get(dest["code"], dest["label"])
+
             next_transitions.append(
                 TransitionReadiness(
                     code=dest["code"],
-                    label=dest["label"],
-                    gates_met=0,
-                    gates_total=0,
-                    blocking_gates=[],
+                    label=label,
+                    target_phase=target_phase,
+                    gates_met=gates_met,
+                    gates_total=len(gates),
+                    blocking_gates=[g["detail"] for g in gates if not g["met"]],
                 )
             )
 
@@ -3023,7 +3077,7 @@ async def get_ipr_transitions(
         result.append({
             "id": str(d["id"]),
             "code": d["code"],
-            "label": d["label"],
+            "label": _EVAL_LABELS.get(d["code"], d["label"]),
             "target_phase": target_phase,
             "phase_change": phase_change,
             "gates": gates,
