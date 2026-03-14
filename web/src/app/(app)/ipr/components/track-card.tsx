@@ -2,8 +2,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Building2, Clock, Shield, Target, FileCheck, CheckCircle2, XCircle } from "lucide-react";
-import type { TrackInfo, TransitionReadiness } from "@/types";
+import { Building2, Clock, Shield, Target, FileCheck } from "lucide-react";
+import type { TrackInfo } from "@/types";
 
 const mechanismBorderColors: Record<string, string> = {
   SNI: "border-l-indigo-500",
@@ -63,10 +63,9 @@ const slaLabels: Record<string, string> = {
 
 interface TrackCardProps {
   track: TrackInfo;
-  gateResults?: TransitionReadiness[];
 }
 
-export function TrackCard({ track, gateResults }: TrackCardProps) {
+export function TrackCard({ track }: TrackCardProps) {
   if (!track.mechanism) return null;
 
   const borderColor = mechanismBorderColors[track.mechanism] || "border-l-gray-400";
@@ -181,35 +180,6 @@ export function TrackCard({ track, gateResults }: TrackCardProps) {
         </div>
       )}
 
-      {/* Gate indicators from readiness — only show transitions with actual gates */}
-      {gateResults && gateResults.filter(g => g.gates_total > 0).length > 0 && (
-        <div className="mt-3 pt-3 border-t">
-          <div className="flex items-center gap-1 text-xs text-muted-foreground mb-1.5">
-            <Shield className="size-3" />
-            <span>Gates próxima transición</span>
-          </div>
-          <div className="space-y-1">
-            {gateResults.filter(g => g.gates_total > 0).map((g) => (
-              <div key={g.code} className="flex items-center gap-2 text-xs">
-                {g.gates_met === g.gates_total ? (
-                  <CheckCircle2 className="size-3.5 text-green-600 shrink-0" />
-                ) : (
-                  <XCircle className="size-3.5 text-red-500 shrink-0" />
-                )}
-                <span className="font-medium">{g.label}</span>
-                <span className="text-[10px] text-muted-foreground tabular-nums">
-                  {g.gates_met}/{g.gates_total}
-                </span>
-                {g.blocking_gates.length > 0 && (
-                  <span className="text-[10px] text-red-600 truncate max-w-48">
-                    {g.blocking_gates[0]}
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

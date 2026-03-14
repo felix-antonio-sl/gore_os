@@ -19,13 +19,12 @@ import {
 import { ArrowLeft } from "lucide-react";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
-import type { IprTransition, TrackInfo, IprReadiness, HistoryEntry } from "@/types";
+import type { IprTransition, TrackInfo, HistoryEntry } from "@/types";
 import { WRITE_OPERATIONAL_ROLES, TRANSITION_ROLES } from "@/types";
 import { TrackCard } from "../components/track-card";
 import { IprHeroCard } from "../components/ipr-hero-card";
 import { IprPhaseStepper } from "../components/ipr-phase-stepper";
 import { IprTransitionPanel } from "../components/ipr-transition-panel";
-import { IprReadinessCard } from "../components/ipr-readiness-card";
 import { IprHistorySection } from "../components/ipr-history-section";
 import type { IprDetail } from "../components/ipr-constants";
 import { TAB_GROUPS, TAB_LABELS } from "../components/ipr-constants";
@@ -87,9 +86,6 @@ function IprDetailPageInner() {
   // Track info state (Poly-Switch)
   const [trackInfo, setTrackInfo] = useState<TrackInfo | null>(null);
 
-  // Readiness state (H3)
-  const [readiness, setReadiness] = useState<IprReadiness | null>(null);
-
   // Transition history (H20)
   const [history, setHistory] = useState<HistoryEntry[]>([]);
 
@@ -114,10 +110,6 @@ function IprDetailPageInner() {
       .get<TrackInfo>(`/api/ipr/${id}/track-info`)
       .then(setTrackInfo)
       .catch(() => setTrackInfo(null));
-    api
-      .get<IprReadiness>(`/api/ipr/${id}/readiness`)
-      .then(setReadiness)
-      .catch(() => setReadiness(null));
     api
       .get<HistoryEntry[]>(`/api/ipr/${id}/historial`)
       .then(setHistory)
@@ -258,10 +250,6 @@ function IprDetailPageInner() {
 
       {history.length > 0 && <IprHistorySection history={history} />}
 
-      {readiness && (
-        <IprReadinessCard readiness={readiness} currentPhase={ipr.mcd_phase} />
-      )}
-
       {canTransition && (
         <IprTransitionPanel
           transitions={transitions ?? []}
@@ -277,7 +265,7 @@ function IprDetailPageInner() {
 
       {/* Track Card (Poly-Switch) */}
       {trackInfo && trackInfo.mechanism && (
-        <TrackCard track={trackInfo} gateResults={readiness?.next_transitions} />
+        <TrackCard track={trackInfo} />
       )}
 
       {/* Tabs */}

@@ -43,16 +43,54 @@ export function IprTransitionPanel({
 
   if (transitions.length === 0) return null;
 
-  // Separate allowed and not-allowed transitions
   const allowedTransitions = transitions.filter(t => t.allowed);
   const deniedTransitions = transitions.filter(t => !t.allowed);
-
   const selectedTrans = transitions.find(t => t.id === selectedTransition);
   const isSelectedDenied = selectedTrans && !selectedTrans.allowed;
+
+  // Transitions with gates (phase-crossing) — for quick overview
+  const gatedTransitions = allowedTransitions.filter(t => t.gates.length > 0);
+  const hasBlockedGates = gatedTransitions.some(t => t.blocked);
 
   return (
     <div className="rounded-xl border bg-card p-4">
       <h3 className="text-sm font-medium mb-3">Avanzar Estado</h3>
+
+      {/* Quick gate overview — only when there are phase-crossing transitions */}
+      {gatedTransitions.length > 0 && (
+        <div className={cn(
+          "mb-3 p-2.5 rounded-lg border text-xs",
+          hasBlockedGates
+            ? "bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800"
+            : "bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800"
+        )}>
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            {gatedTransitions.map((t) => {
+              const met = t.gates.filter(g => g.met).length;
+              const total = t.gates.length;
+              const allMet = met === total;
+              return (
+                <span key={t.id} className="inline-flex items-center gap-1.5">
+                  {allMet ? (
+                    <ShieldCheck className="size-3.5 text-green-600 shrink-0" />
+                  ) : (
+                    <ShieldX className="size-3.5 text-red-500 shrink-0" />
+                  )}
+                  <span className={allMet ? "text-green-700 dark:text-green-300" : "text-red-700 dark:text-red-300"}>
+                    {t.label}
+                  </span>
+                  <span className={cn(
+                    "tabular-nums font-medium",
+                    allMet ? "text-green-600" : "text-amber-600"
+                  )}>
+                    {met}/{total}
+                  </span>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {allowedTransitions.length === 0 ? (
         <p className="text-xs text-muted-foreground">
