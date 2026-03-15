@@ -1127,4 +1127,5 @@ Journeys que el sistema actual NO resuelve bien:
 |---------|-------|---------|
 | v1.0 | 2026-03-14 | Creacion inicial: 5 arquetipos, 10 journeys, matriz, principios, 8 gaps |
 | v2.0 | 2026-03-15 | +3 arquetipos, +6 journeys (J11-J16), +6 gaps (G9-G14), stories P0 todos los roles |
-| v2.1 | 2026-03-15 | +Journey transversal IPR 360° (cadena de handoffs F0-F5), mapa 17 roles x 6 fases, principio P8, +6 gaps lifecycle (G15-G20), 8 stories participantes externos |
+| v2.1 | 2026-03-15 | +Journey transversal IPR 360°, mapa 17 roles x 6 fases, principio P8, +6 gaps lifecycle |
+| v2.2 | 2026-03-15 | Gap closure: G7 (trend filter), G9+G11+G12+G15 (action-items 9 sources). G2 resolved by design (gates=guidance). G5 acceptable (tab proximity). G10/G13/G16/G17/G18/G19/G20 deferred (require DDL/external). **10 de 20 gaps cerrados.** |
