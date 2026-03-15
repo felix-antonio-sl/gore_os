@@ -2509,7 +2509,7 @@ async def get_ipr(
         fund_category_label=row["fund_category_label"],
         mechanism=row["mechanism"],
         mechanism_label=row["mechanism_label"],
-        mcd_phase=row["mcd_phase"],
+        mcd_phase=STATUS_PHASE_FIBER.get(row["status"], row["mcd_phase"]),
         mcd_phase_label=row["mcd_phase_label"],
         alert_level=row["alert_level"],
         has_open_problems=row["has_open_problems"] or False,

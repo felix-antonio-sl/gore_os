@@ -27,7 +27,7 @@ import { IprPhaseStepper } from "../components/ipr-phase-stepper";
 import { IprTransitionPanel } from "../components/ipr-transition-panel";
 import { IprHistorySection } from "../components/ipr-history-section";
 import type { IprDetail } from "../components/ipr-constants";
-import { TAB_GROUPS, TAB_LABELS, STATUS_TO_PHASE, MCD_PHASES } from "../components/ipr-constants";
+import { TAB_GROUPS, TAB_LABELS } from "../components/ipr-constants";
 import { TabCompromisos } from "../components/tab-compromisos";
 import { TabProblemas } from "../components/tab-problemas";
 import { TabAlertas } from "../components/tab-alertas";
@@ -240,10 +240,10 @@ function IprDetailPageInner() {
         onAssign={openAssigneeDrawer}
       />
 
-      {(ipr.status || ipr.mcd_phase) && (
+      {ipr.mcd_phase && (
         <IprPhaseStepper
-          currentPhase={ipr.status ? (STATUS_TO_PHASE[ipr.status] ?? ipr.mcd_phase ?? "F0") : (ipr.mcd_phase ?? "F0")}
-          currentPhaseLabel={MCD_PHASES.find(p => p.code === (ipr.status ? STATUS_TO_PHASE[ipr.status] : ipr.mcd_phase))?.label}
+          currentPhase={ipr.mcd_phase}
+          currentPhaseLabel={ipr.mcd_phase_label}
           phaseEnteredAt={ipr.phase_entered_at}
         />
       )}
@@ -259,7 +259,7 @@ function IprDetailPageInner() {
           submitting={transSubmitting}
           onTransition={handleTransition}
           error={transError}
-          currentPhase={STATUS_TO_PHASE[ipr.status ?? ""] ?? ipr.mcd_phase}
+          currentPhase={ipr.mcd_phase}
         />
       )}
 

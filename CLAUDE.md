@@ -248,11 +248,11 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 34. **Mandatory components**: All list pages → `PageHeader` (with `accentColor`). All empty states → `EmptyState`. All destructive actions → `ConfirmDialog`. All 500+ option selects → `ComboboxAsync`.
 35. **Identity**: OKLCH palette (GOREAZUL #031B5F, GORECELESTE #196AB0). 3 fonts: Plus Jakarta Sans, Roboto Slab, JetBrains Mono. Dark sidebar. CSS-only fade-ins via tw-animate-css. `prefers-reduced-motion` in globals.css.
-36. **IPR detail**: 16 tabs in `tab-*.tsx` (self-contained, grouped in 4 categories via TAB_GROUPS). Main: IprHeroCard, IprPhaseStepper, IprReadinessCard (9 satellites + gate precheck), IprHistorySection, IprTransitionPanel (feedforward effects). `StatusBadge` 32 states, phase-based colors.
+36. **IPR detail**: 16 tabs in `tab-*.tsx` (self-contained, grouped in 4 categories via TAB_GROUPS). Main: IprHeroCard, IprPhaseStepper, IprHistorySection, IprTransitionPanel (inline gate overview + feedforward effects). No ReadinessCard — gates live in TransitionPanel. `StatusBadge` 32 states, phase-based colors.
 37. **Component API**: `DrawerPanel` uses `onClose` (not `onOpenChange`). `EmptyState` uses `title` (not `message`). `api.patch` requires 2 args. `PageGuard`: `allowedRoles?`, `allowedPopulations?`. `use-tab-param.ts` syncs tabs with `?tab=` URL param.
 
 ### IPR Lifecycle
 
-38. **32 states**: `STATUS_PHASE_FIBER` maps all to phases. Nature-aware: PROYECTO bifurcates EN_FORMALIZACION→licitación→obra; PROGRAMA→formalizado→ejecución. ANULADO+TERMINADO_ANTICIPADAMENTE cross-cutting. `_EVAL_LABELS` enriches F2 eval-result codes (RS, FI, FC, OT, AD, RF, ITF, AT) for display.
+38. **32 states + derived phase**: `STATUS_PHASE_FIBER` maps all states to phases. The `GET /api/ipr/{id}` endpoint returns `mcd_phase` **derived from status** (not from stored `mcd_phase_id`) to prevent data inconsistencies. Frontend MUST use `ipr.mcd_phase` as-is — never re-derive or read stored phase. Nature-aware: PROYECTO bifurcates EN_FORMALIZACION→licitación→obra; PROGRAMA→formalizado→ejecución. `_EVAL_LABELS` enriches F2 eval-result codes for display. **Labels must be human-readable Spanish — no raw codes or acronyms in UI.**
 39. **IPR modifications + closure**: `ipr_modification` (MOD-YYYY-NNNN, trigger-enforced FSM). `ipr_closure` (UNIQUE per IPR, signed closure gate). `ipr_expost_evaluation` (post-CERRADO, 4 dimensions).
 40. **ITO gate + SLAs**: Blocks EN_LICITACION→ADJUDICADO for PROYECTO without ITO. `phase_entered_at` auto-updates via trigger. Readiness endpoint (`/readiness`) evaluates all gates + same-phase custom gates. Batch: `check-report-compliance`, `check-evaluation-slas`.
