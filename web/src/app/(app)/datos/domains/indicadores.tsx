@@ -478,9 +478,15 @@ export const indicadoresConfig: DomainConfig = {
     },
   ],
   columns: [
-    { key: "code", label: "Codigo", render: (v) => <span className="text-[11px] font-mono text-muted-foreground">{String(v ?? "-")}</span> },
+    {
+      key: "signal", label: "",
+      render: (_, row) => {
+        const ind = row as DGIIndicator;
+        return <div className="flex items-center gap-1.5"><SignalDot signal={ind.signal} /><TrendIcon trend={ind.trend} /></div>;
+      },
+    },
     { key: "name", label: "Nombre", render: (v) => <span className="text-xs font-medium leading-snug">{String(v ?? "")}</span> },
-    { key: "dimension", label: "Dimension", render: (v) => <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{String(v ?? "-")}</Badge> },
+    { key: "dimension", label: "Dimensión", render: (v) => <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{String(v ?? "-")}</Badge> },
     {
       key: "current_value", label: "Valor",
       render: (value, row) => {
@@ -488,19 +494,10 @@ export const indicadoresConfig: DomainConfig = {
         return <span className="text-xs font-mono tabular-nums">{value !== null ? String(value) : "-"}{ind.unit ? <span className="text-muted-foreground ml-0.5">{ind.unit}</span> : null}</span>;
       },
     },
-    { key: "formula", label: "Formula", render: (v) => <span className="text-[11px] text-muted-foreground line-clamp-1 max-w-[120px]">{String(v ?? "-")}</span> },
-    { key: "frequency", label: "Frecuencia", render: (v) => <Badge variant="outline" className="text-[10px] px-1.5 py-0">{String(v ?? "-")}</Badge> },
-    { key: "source_type", label: "Fuente", render: (v) => <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{String(v ?? "-")}</Badge> },
     { key: "lifecycle_status", label: "Ciclo", render: (v) => {
       return <Badge className={cn("text-[10px] px-1.5 py-0 border-0", lifecycleColors[String(v)] ?? "")}>{String(v ?? "-")}</Badge>;
     }},
-    {
-      key: "signal", label: "Senal",
-      render: (_, row) => {
-        const ind = row as DGIIndicator;
-        return <div className="flex items-center gap-1.5"><SignalDot signal={ind.signal} /><TrendIcon trend={ind.trend} /></div>;
-      },
-    },
+    { key: "frequency", label: "Frecuencia", render: (v) => <Badge variant="outline" className="text-[10px] px-1.5 py-0">{String(v ?? "-")}</Badge> },
   ],
   fetchData: async (params) => {
     const apiParams = new URLSearchParams();

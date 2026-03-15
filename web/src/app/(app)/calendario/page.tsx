@@ -174,21 +174,27 @@ export default function CalendarioPage() {
                   {dayEvents.map((event, idx) => {
                     const config = EVENT_TYPE_CONFIG[event.event_type] ?? EVENT_TYPE_CONFIG.SESSION;
                     const severityClass = SEVERITY_CLASSES[event.severity ?? "verde"] ?? SEVERITY_CLASSES.verde;
+                    const drillRoute: Record<string, string> = {
+                      ESCALATION: "/escalamiento",
+                      DECISION: "/coordinacion",
+                      SESSION: "/reuniones",
+                      INTERACTION: "/coordinacion/divisiones",
+                      SLA: "/servicios",
+                    };
+                    const href = event.entity_id
+                      ? `${drillRoute[event.event_type] ?? "/calendario"}/${event.entity_id}`
+                      : drillRoute[event.event_type] ?? "/calendario";
                     return (
                       <div
                         key={`${event.entity_id ?? idx}`}
-                        className={`flex items-start gap-3 p-3 rounded-lg border border-l-4 ${severityClass} bg-card hover:bg-accent/50 transition-colors`}
+                        onClick={() => router.push(href)}
+                        className={`flex items-start gap-3 p-3 rounded-lg border border-l-4 ${severityClass} bg-card hover:bg-accent/50 transition-colors cursor-pointer`}
                       >
                         <div className={`p-1.5 rounded ${config.color} shrink-0`}>
                           {config.icon}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium line-clamp-1">{event.title}</span>
-                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 shrink-0">
-                              {config.label}
-                            </Badge>
-                          </div>
+                          <span className="text-sm font-medium line-clamp-1">{event.title}</span>
                           {event.description && (
                             <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
                               {event.description}
