@@ -814,6 +814,112 @@ Login
 
 ---
 
+## 2c. Journey Transversal: Ciclo de Vida IPR 360°
+
+El IPR no pertenece a un rol — es una **carrera de postas** donde cada fase tiene un actor principal, actores de soporte, gate keepers, y participantes externos. El journey mas importante del sistema NO es de un usuario — es del IPR.
+
+### Cadena de handoffs por fase
+
+```
+F0 Formulacion
+  Actor: ANALISTA
+  Accion: Crear IPR, completar satelites (partes, territorio, hitos)
+  Soporte: MUNICIPIO (propuesta inicial, externo)
+  Gate F0→F1: mecanismo asignado, FRIL max/comuna
+  Pasa a: JEFE_DIVISION (aprueba transicion)
+
+F1 Admisibilidad
+  Actor: ANALISTA (verifica items admisibilidad)
+  Gate keeper: JEFE_DIVISION (PRE_ADMISIBLE→ADMISIBLE)
+  Gate F1→F2: kinship (SUBV8), C33 cert, SNI, glosa06
+  Pasa a: EVALUADOR EXTERNO (segun track)
+
+F2 Evaluacion Tecnica
+  Actor externo: MDSF (SNI), GORE/DIPIR (FRIL), DIPRES/SES (Glosa06),
+                 Comite (Transfer), Comision (Subv8), ANID/CORFO (FRPD)
+  Actor interno: ANALISTA (registra resultado evaluacion)
+  Gate F2→F3: resultado favorable, puntaje minimo
+  Pasa a: JEFE_DIVISION + JEFE_FINANZAS
+
+F3 Priorizacion
+  Actor: JEFE_FINANZAS (emite CDP)
+  Gate keeper: GOBERNADOR + CORE (si >7K UTM)
+  Participante: CONSEJERO_REGIONAL (vota en CORE)
+  Facilitador: SECRETARIO_EJECUTIVO (prepara sesion)
+  Gate F3→F4: aprobacion CORE, CGR Res30, glosa rules
+  Pasa a: ASESOR_JURIDICO + GOBERNADOR
+
+F4 Formalizacion & Ejecucion
+  Firmantes: ASESOR_JURIDICO (V.B.), GOBERNADOR (firma FEA)
+  Ejecutores: ENCARGADO (avances mensuales), contratista (externo)
+  Supervisores: ITO (obras/PROYECTO), ITP (programas)
+  Financiero: JEFE_DEPARTAMENTO (autoriza cuotas, Art.18)
+  CGR: Toma de Razon (si >2.5K UTM)
+  Gate F4→F5: SISREC mandatory
+  Pasa a: RTF + JEFE_DAF
+
+F5 Cierre
+  Actor: RTF (revisa rendicion, SLA 7d)
+  Firma: JEFE_DAF (Informe Aprobacion FEA)
+  Contabilizacion: UCR (registra en SIGFE)
+  Cierre admin: ADMIN_REGIONAL/GOBERNADOR (firma acta cierre)
+  Ex-post: JEFE_DGI + ESP_CONTROL_GESTION (evaluacion ex-post)
+```
+
+### Mapa de participacion por rol y fase
+
+| Rol | F0 | F1 | F2 | F3 | F4 | F5 |
+|-----|:--:|:--:|:--:|:--:|:--:|:--:|
+| ANALISTA | **CREA** | Verifica | Registra eval | — | — | — |
+| JEFE_DIVISION | — | **APRUEBA** | — | Gate | V.B. | — |
+| JEFE_DEPARTAMENTO | — | — | — | — | Cuotas, F4 int. | — |
+| ENCARGADO | — | — | — | — | **EJECUTA** | — |
+| GOBERNADOR | — | — | — | CORE | **FIRMA** | Cierre |
+| ADMIN_REGIONAL | Backup | Backup | Backup | — | V.B. | Cierre |
+| CONSEJERO_REGIONAL | — | — | — | **VOTA** | — | — |
+| SECRETARIO_EJECUTIVO | — | — | — | Prepara CORE | — | — |
+| ASESOR_JURIDICO | — | — | — | — | **V.B. legal** | — |
+| RTF | — | — | — | — | — | **REVISA** |
+| JEFE_DGI | — | — | — | — | — | Ex-post |
+| ESP_CONTROL_GESTION | — | — | — | — | — | Ex-post |
+| ITO (externo) | — | — | — | — | Supervisa obra | — |
+| ITP (externo) | — | — | — | — | Supervisa prog. | — |
+| MDSF (externo) | — | — | **EVALUA** | — | — | — |
+| CGR (externo) | — | — | — | — | Toma de Razon | Fiscaliza |
+| MUNICIPIO (externo) | Postula | Docs | — | — | Co-ejecuta | — |
+
+### Principio P8: El IPR es el Protagonista, No el Rol
+
+El sistema debe poder responder: **"Esta IPR, en que fase esta, y QUIEN deberia estar actuando ahora?"**
+
+Hoy el sistema responde la primera parte (PhaseStepper) pero NO la segunda. No hay indicador de "turno" — la IPR se queda en un estado y nadie sabe si esta esperando al evaluador externo, al JEFE_DIVISION, o al GOBERNADOR.
+
+### Gaps del Ciclo de Vida 360°
+
+| Gap | Fase | Problema | Impacto |
+|-----|------|----------|---------|
+| G15 | Todas | No hay indicador de "a quien le toca" — la IPR no muestra quien es el actor actual | **CRITICO** — IPRs se estancan sin que nadie sepa que es su turno |
+| G16 | F2 | Evaluacion externa no tiene tracking de "enviado a MDSF, esperando respuesta" | Alto — Evaluaciones externas son black box |
+| G17 | F3 | No hay link directo IPR → sesion CORE donde fue votada | Medio — Trazabilidad de gobernanza |
+| G18 | F4 | ITO/ITP supervision no modelada en UI (solo como ipr_party) | Medio — Supervision sin herramientas |
+| G19 | F4 | Cadena convenio→cuota→rendicion→siguiente cuota no tiene vista unificada | Alto — Flujo financiero fragmentado |
+| G20 | F5 | Ex-post evaluation solo accesible como tab, no como workflow guiado | Bajo — Baja frecuencia |
+
+### Stories de participantes externos P0
+
+| ID | Como... | Quiero... | Para... | Fase |
+|----|---------|-----------|---------|------|
+| US-ITO-001-01 | ITO | Bitacora de obra digital offline | Registrar avance en terreno | F4 |
+| US-ITO-001-02 | ITO | Verificacion rigurosa de hitos contractuales | Certificar cumplimiento | F4 |
+| US-ITO-002-01 | ITO | Certificacion de avances via cubicaciones | Aprobar pagos parciales | F4 |
+| US-EJEC-MUNI-001 | MUNICIPIO | Guias por mecanismo de financiamiento | Saber como postular | F0 |
+| US-EJEC-MUNI-002 | MUNICIPIO | Wizard de seleccion de via de financiamiento | Elegir track correcto | F0 |
+| US-EJEC-MUNI-004 | MUNICIPIO | Reporte de avance periodico municipal | Informar al GORE | F4 |
+| US-CGR-001-01 | CGR | Expedientes electronicos completos via interop | Toma de Razon digital | F4 |
+| US-EJEC-SUP-003 | SUPERVISOR | Revisar informes de unidad tecnica | Aprobar/observar | F4 |
+
+---
+
 ## 3. Matriz Arquetipo-Pagina
 
 Paginas del sistema y su relevancia por arquetipo:
@@ -1006,6 +1112,12 @@ Journeys que el sistema actual NO resuelve bien:
 | G12 | J11 Dashboard firma | **NUEVO** | — |
 | G13 | J14 Notificacion CORE | **NUEVO** (externo) | — |
 | G14 | J16 Admin audit trail | **NUEVO** | — |
+| G15 | IPR 360° todas | **NUEVO CRITICO** — sin indicador "a quien le toca" | — |
+| G16 | IPR 360° F2 | **NUEVO** — evaluacion externa sin tracking | — |
+| G17 | IPR 360° F3 | **NUEVO** — sin link IPR→sesion CORE | — |
+| G18 | IPR 360° F4 | **NUEVO** — ITO/ITP sin herramientas UI | — |
+| G19 | IPR 360° F4 | **NUEVO** — cadena financiera fragmentada | — |
+| G20 | IPR 360° F5 | **NUEVO** — ex-post sin workflow guiado | — |
 
 ---
 
@@ -1014,4 +1126,5 @@ Journeys que el sistema actual NO resuelve bien:
 | Version | Fecha | Cambios |
 |---------|-------|---------|
 | v1.0 | 2026-03-14 | Creacion inicial: 5 arquetipos, 10 journeys, matriz, principios, 8 gaps |
-| v2.0 | 2026-03-15 | +3 arquetipos (Firmante, Gobernanza CORE, Configurador), +6 journeys (J11-J16), +6 gaps (G9-G14), stories P0 para todos los roles, estado de gaps |
+| v2.0 | 2026-03-15 | +3 arquetipos, +6 journeys (J11-J16), +6 gaps (G9-G14), stories P0 todos los roles |
+| v2.1 | 2026-03-15 | +Journey transversal IPR 360° (cadena de handoffs F0-F5), mapa 17 roles x 6 fases, principio P8, +6 gaps lifecycle (G15-G20), 8 stories participantes externos |
