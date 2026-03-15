@@ -59,6 +59,22 @@ export const MCD_PHASES = [
   { code: "F5", label: "Cierre" },
 ];
 
+/** Derive phase from status code — mirrors backend STATUS_PHASE_FIBER */
+export const STATUS_TO_PHASE: Record<string, string> = {
+  INGRESADO: "F0",
+  EN_REVISION: "F1", PRE_ADMISIBLE: "F1", ADMISIBLE: "F1", INADMISIBLE: "F1",
+  EN_EVALUACION: "F2",
+  RS: "F2", FI: "F2", FC: "F2", OT: "F2", AD: "F2", RF: "F2", ITF: "F2", AT: "F2",
+  CDP_EMITIDO: "F3",
+  EN_FORMALIZACION: "F4", FORMALIZADO: "F4",
+  EN_EJECUCION: "F4", EN_LICITACION: "F4",
+  ADJUDICADO: "F4", CONTRATO_FIRMADO: "F4", EN_OBRA: "F4",
+  RECEPCION_PROVISORIA: "F4", RECEPCION_DEFINITIVA: "F4", SUSPENDIDO: "F4",
+  EN_RENDICION: "F5", RENDICION_APROBADA: "F5",
+  EN_CIERRE_ADMINISTRATIVO: "F5", CERRADO: "F5",
+  TERMINADO_ANTICIPADAMENTE: "F5",
+};
+
 export const TAB_GROUPS = [
   { label: "Ejecución", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
   { label: "Financiero", tabs: ["cdps", "convenios", "resoluciones"] },

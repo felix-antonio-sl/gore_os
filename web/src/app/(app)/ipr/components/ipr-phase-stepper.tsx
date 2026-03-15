@@ -16,7 +16,7 @@ export function IprPhaseStepper({ currentPhase, currentPhaseLabel, phaseEnteredA
   return (
     <div className="rounded-xl border bg-card p-4">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-muted-foreground">Ciclo de Vida MCD</h3>
+        <h3 className="text-sm font-medium text-muted-foreground">Ciclo de Vida</h3>
         <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[currentPhase])}>
           {currentPhase} — {currentPhaseLabel}
         </Badge>
