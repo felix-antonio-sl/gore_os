@@ -90,6 +90,7 @@ export const TAB_LABELS: Record<string, string> = {
   alertas: "Alertas",
   cdps: "Presupuesto",
   convenios: "Convenios",
+  resumen: "Resumen",
   rendiciones: "Rendiciones",
   resoluciones: "Resoluciones",
   partes: "Partes",
