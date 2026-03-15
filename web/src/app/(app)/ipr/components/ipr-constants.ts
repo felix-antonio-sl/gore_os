@@ -76,10 +76,10 @@ export const STATUS_TO_PHASE: Record<string, string> = {
 };
 
 export const TAB_GROUPS = [
-  { label: "Ejecución", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
-  { label: "Financiero", tabs: ["cdps", "convenios", "resoluciones"] },
-  { label: "Compliance", tabs: ["partes", "territorio", "evaluaciones", "parentesco"] },
-  { label: "Lifecycle", tabs: ["admisibilidad", "modificaciones", "cierre", "evaluacion-expost"] },
+  { label: "Operación", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
+  { label: "Finanzas", tabs: ["cdps", "convenios", "resoluciones"] },
+  { label: "Requisitos", tabs: ["partes", "territorio", "evaluaciones", "parentesco"] },
+  { label: "Ciclo", tabs: ["admisibilidad", "modificaciones", "cierre", "evaluacion-expost"] },
 ] as const;
 
 export const TAB_LABELS: Record<string, string> = {
@@ -88,7 +88,7 @@ export const TAB_LABELS: Record<string, string> = {
   hitos: "Hitos",
   avances: "Avances",
   alertas: "Alertas",
-  cdps: "CDPs",
+  cdps: "Presupuesto",
   convenios: "Convenios",
   resoluciones: "Resoluciones",
   partes: "Partes",
@@ -98,5 +98,5 @@ export const TAB_LABELS: Record<string, string> = {
   admisibilidad: "Admisibilidad",
   modificaciones: "Modificaciones",
   cierre: "Cierre",
-  "evaluacion-expost": "Ex-Post",
+  "evaluacion-expost": "Eval. Posterior",
 };
