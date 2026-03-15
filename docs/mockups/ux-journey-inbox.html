@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es" class="bg-gray-50">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GORE_OS — Mockup Enfoque B: Inbox + Supervisor</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  .mockup-section { scroll-margin-top: 80px; }
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .before-after { grid-template-columns: 1fr; } }
+  .label-before { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+  .label-after { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+  .nav-fixed { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+</style>
+</head>
+<body class="text-gray-900">
+
+<!-- Navigation -->
+<nav class="nav-fixed bg-white border-b shadow-sm">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-6 text-sm overflow-x-auto">
+    <span class="font-bold text-indigo-700 shrink-0">Enfoque B: 6 cambios</span>
+    <a href="#g1" class="text-gray-600 hover:text-indigo-600 shrink-0">G1 Inbox</a>
+    <a href="#g8" class="text-gray-600 hover:text-indigo-600 shrink-0">G8 Done</a>
+    <a href="#g3" class="text-gray-600 hover:text-indigo-600 shrink-0">G3 SLA RTF</a>
+    <a href="#a1" class="text-gray-600 hover:text-indigo-600 shrink-0">A1 Compromisos</a>
+    <a href="#g4" class="text-gray-600 hover:text-indigo-600 shrink-0">G4 MyTeam</a>
+    <a href="#g6" class="text-gray-600 hover:text-indigo-600 shrink-0">G6 Divisiones</a>
+  </div>
+</nav>
+
+<div class="max-w-6xl mx-auto px-6 pt-20 pb-16 space-y-16">
+
+  <header class="text-center py-8">
+    <h1 class="text-3xl font-bold text-gray-900">UX Journey Inbox — Enfoque B</h1>
+    <p class="text-gray-500 mt-2">6 cambios de alto impacto para Ejecutor + Supervisor</p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- G1: Action Items con deadline -->
+  <!-- ============================================================ -->
+  <section id="g1" class="mockup-section space-y-4">
+    <div class="flex items-center gap-3">
+      <span class="px-2 py-0.5 rounded text-xs font-bold bg-red-100 text-red-700">G1 CRITICO</span>
+      <h2 class="text-xl font-bold">ModuleMyProgress: de KPIs a Inbox</h2>
+    </div>
+    <p class="text-sm text-gray-600">Journey J1 (Ejecutor). El ENCARGADO necesita ver SUS items pendientes con deadline, no solo conteos agregados.</p>
+
+    <div class="before-after">
+      <!-- ANTES -->
+      <div>
+        <div class="label-before inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">ANTES</div>
+        <div class="bg-white rounded-xl border p-4 space-y-3">
+          <h3 class="text-sm font-medium">Mi Progreso</h3>
+          <div class="h-2 rounded-full bg-gray-100 overflow-hidden">
+            <div class="h-full rounded-full bg-gradient-to-r from-green-500 to-amber-400" style="width:40%"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="flex justify-between"><span class="text-gray-500">Completados</span><span class="font-bold">4</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Pendientes</span><span class="font-bold text-amber-600">6</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Vencidos</span><span class="font-bold text-red-600">2</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Total</span><span class="font-bold">10</span></div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-2 italic">Problema: Solo conteos. No se cual compromiso esta vencido ni cual vence primero.</p>
+      </div>
+
+      <!-- DESPUES -->
+      <div>
+        <div class="label-after inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">DESPUES</div>
+        <div class="bg-white rounded-xl border p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-medium">Mi Trabajo</h3>
+            <span class="text-xs text-gray-400">4/10 completados</span>
+          </div>
+          <div class="h-1.5 rounded-full bg-gray-100 overflow-hidden">
+            <div class="h-full rounded-full bg-green-500" style="width:40%"></div>
+          </div>
+
+          <!-- Items list -->
+          <div class="space-y-1.5">
+            <!-- Vencido -->
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-red-50 border border-red-100 text-xs cursor-pointer hover:bg-red-100 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              <span class="flex-1 font-medium text-gray-900 truncate">Subsanar observaciones evaluacion MDSF</span>
+              <span class="text-red-600 font-bold tabular-nums shrink-0">-3d</span>
+              <span class="text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded font-medium">VENCIDO</span>
+            </div>
+            <!-- Vencido -->
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-red-50 border border-red-100 text-xs cursor-pointer hover:bg-red-100 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              <span class="flex-1 font-medium text-gray-900 truncate">Entregar informe avance Q1 programa DIDESO</span>
+              <span class="text-red-600 font-bold tabular-nums shrink-0">-1d</span>
+              <span class="text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded font-medium">VENCIDO</span>
+            </div>
+            <!-- Hoy -->
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-amber-50 border border-amber-100 text-xs cursor-pointer hover:bg-amber-100 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+              <span class="flex-1 font-medium text-gray-900 truncate">Coordinar reunion con municipio Chillan Viejo</span>
+              <span class="text-amber-600 font-bold tabular-nums shrink-0">hoy</span>
+            </div>
+            <!-- Proximos -->
+            <div class="flex items-center gap-2 p-2 rounded-lg text-xs cursor-pointer hover:bg-gray-50 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
+              <span class="flex-1 text-gray-700 truncate">Revisar documentos licitacion puente Coihueco</span>
+              <span class="text-gray-400 tabular-nums shrink-0">3d</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg text-xs cursor-pointer hover:bg-gray-50 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
+              <span class="flex-1 text-gray-700 truncate">Completar satelites IPR 20240089 (partes, territorio)</span>
+              <span class="text-gray-400 tabular-nums shrink-0">5d</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg text-xs cursor-pointer hover:bg-gray-50 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-gray-300 shrink-0"></span>
+              <span class="flex-1 text-gray-500 truncate">+ 1 item mas</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-green-700 mt-2">Mejora: Items ordenados por urgencia, deadline visible, colores temporales, 1-click para navegar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- G8: Done State -->
+  <!-- ============================================================ -->
+  <section id="g8" class="mockup-section space-y-4">
+    <div class="flex items-center gap-3">
+      <span class="px-2 py-0.5 rounded text-xs font-bold bg-orange-100 text-orange-700">G8 ALTO</span>
+      <h2 class="text-xl font-bold">Done State: "Al dia"</h2>
+    </div>
+    <p class="text-sm text-gray-600">Journeys J1-J4 (todos). Cuando el inbox esta vacio, el usuario necesita confirmacion positiva.</p>
+
+    <div class="before-after">
+      <div>
+        <div class="label-before inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">ANTES</div>
+        <div class="bg-white rounded-xl border p-6 text-center text-gray-400 text-sm">
+          <p class="italic">(nada — el componente retorna null cuando items.length === 0)</p>
+          <p class="mt-2">El usuario no sabe si esta al dia o si el sistema fallo.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="label-after inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">DESPUES</div>
+        <div class="bg-white rounded-xl border p-4">
+          <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-200">
+            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-green-800">Al dia</p>
+              <p class="text-xs text-green-600">No tienes tareas pendientes. Buen trabajo.</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-green-700 mt-2">Mejora: Feedback positivo. El usuario sabe que termino su trabajo del dia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- G3: SLA Clock Rendiciones -->
+  <!-- ============================================================ -->
+  <section id="g3" class="mockup-section space-y-4">
+    <div class="flex items-center gap-3">
+      <span class="px-2 py-0.5 rounded text-xs font-bold bg-orange-100 text-orange-700">G3 ALTO</span>
+      <h2 class="text-xl font-bold">Rendiciones: SLA Clock para RTF</h2>
+    </div>
+    <p class="text-sm text-gray-600">Journey J3 (RTF). El RTF tiene SLA de 7 dias y necesita ver cuales estan por vencer.</p>
+
+    <div class="before-after">
+      <div>
+        <div class="label-before inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">ANTES</div>
+        <div class="bg-white rounded-xl border overflow-hidden">
+          <table class="w-full text-xs">
+            <thead class="bg-gray-50"><tr>
+              <th class="text-left p-2 font-medium text-gray-500">Codigo</th>
+              <th class="text-left p-2 font-medium text-gray-500">Convenio</th>
+              <th class="text-left p-2 font-medium text-gray-500">Monto</th>
+              <th class="text-left p-2 font-medium text-gray-500">Estado</th>
+            </tr></thead>
+            <tbody>
+              <tr class="border-t"><td class="p-2 font-mono">a3f8c2d1</td><td class="p-2">Conv. Muni Chillan</td><td class="p-2">$12.500.000</td><td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] bg-blue-100 text-blue-700">EN_REVISION_RTF</span></td></tr>
+              <tr class="border-t"><td class="p-2 font-mono">b7e4f9a2</td><td class="p-2">Conv. ONG Esperanza</td><td class="p-2">$8.200.000</td><td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] bg-blue-100 text-blue-700">EN_REVISION_RTF</span></td></tr>
+              <tr class="border-t"><td class="p-2 font-mono">c1d3e5f7</td><td class="p-2">Conv. Muni San Carlos</td><td class="p-2">$22.000.000</td><td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] bg-blue-100 text-blue-700">EN_REVISION_RTF</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-gray-400 mt-2 italic">Problema: Todas se ven igual. No se cual lleva 6 dias (urgente) y cual lleva 1 dia.</p>
+      </div>
+
+      <div>
+        <div class="label-after inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">DESPUES</div>
+        <div class="bg-white rounded-xl border overflow-hidden">
+          <table class="w-full text-xs">
+            <thead class="bg-gray-50"><tr>
+              <th class="text-left p-2 font-medium text-gray-500">SLA</th>
+              <th class="text-left p-2 font-medium text-gray-500">Codigo</th>
+              <th class="text-left p-2 font-medium text-gray-500">Convenio</th>
+              <th class="text-left p-2 font-medium text-gray-500">Monto</th>
+              <th class="text-left p-2 font-medium text-gray-500">Estado</th>
+            </tr></thead>
+            <tbody>
+              <tr class="border-t bg-red-50">
+                <td class="p-2">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-full max-w-[48px] h-1.5 rounded-full bg-gray-200 overflow-hidden"><div class="h-full rounded-full bg-red-500" style="width:86%"></div></div>
+                    <span class="text-red-600 font-bold tabular-nums">6/7d</span>
+                  </div>
+                </td>
+                <td class="p-2 font-mono">a3f8c2d1</td><td class="p-2 font-medium">Conv. Muni Chillan</td><td class="p-2">$12.500.000</td><td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] bg-blue-100 text-blue-700">EN_REVISION_RTF</span></td>
+              </tr>
+              <tr class="border-t">
+                <td class="p-2">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-full max-w-[48px] h-1.5 rounded-full bg-gray-200 overflow-hidden"><div class="h-full rounded-full bg-amber-500" style="width:57%"></div></div>
+                    <span class="text-amber-600 font-medium tabular-nums">4/7d</span>
+                  </div>
+                </td>
+                <td class="p-2 font-mono">b7e4f9a2</td><td class="p-2">Conv. ONG Esperanza</td><td class="p-2">$8.200.000</td><td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] bg-blue-100 text-blue-700">EN_REVISION_RTF</span></td>
+              </tr>
+              <tr class="border-t">
+                <td class="p-2">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-full max-w-[48px] h-1.5 rounded-full bg-gray-200 overflow-hidden"><div class="h-full rounded-full bg-green-500" style="width:14%"></div></div>
+                    <span class="text-green-600 tabular-nums">1/7d</span>
+                  </div>
+                </td>
+                <td class="p-2 font-mono">c1d3e5f7</td><td class="p-2">Conv. Muni San Carlos</td><td class="p-2">$22.000.000</td><td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] bg-blue-100 text-blue-700">EN_REVISION_RTF</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-green-700 mt-2">Mejora: Columna SLA con barra de progreso + dias/7. Rojo >5d, amber 3-5d, verde <3d. Fila roja para urgentes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- A1: Compromisos dias restantes -->
+  <!-- ============================================================ -->
+  <section id="a1" class="mockup-section space-y-4">
+    <div class="flex items-center gap-3">
+      <span class="px-2 py-0.5 rounded text-xs font-bold bg-orange-100 text-orange-700">A1 ALTO</span>
+      <h2 class="text-xl font-bold">Compromisos: dias restantes en lista</h2>
+    </div>
+    <p class="text-sm text-gray-600">Journey J1 (Ejecutor). La lista actual muestra fecha cruda — necesita "en cuantos dias vence".</p>
+
+    <div class="before-after">
+      <div>
+        <div class="label-before inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">ANTES (columna Vence)</div>
+        <div class="bg-white rounded-xl border p-3 space-y-2 text-xs">
+          <div class="flex items-center gap-3 p-2 rounded bg-gray-50">
+            <span class="text-gray-500 w-20">15/03/2026</span>
+            <span>Subsanar observaciones MDSF</span>
+          </div>
+          <div class="flex items-center gap-3 p-2 rounded bg-gray-50">
+            <span class="text-gray-500 w-20">18/03/2026</span>
+            <span>Coordinar reunion municipio</span>
+          </div>
+          <div class="flex items-center gap-3 p-2 rounded bg-gray-50">
+            <span class="text-gray-500 w-20">25/03/2026</span>
+            <span>Completar satelites IPR</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-2 italic">Problema: Hay que calcular mentalmente cuantos dias faltan.</p>
+      </div>
+
+      <div>
+        <div class="label-after inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">DESPUES (DeadlineCell mejorado)</div>
+        <div class="bg-white rounded-xl border p-3 space-y-2 text-xs">
+          <div class="flex items-center gap-3 p-2 rounded bg-red-50">
+            <div class="w-24 shrink-0">
+              <div class="text-red-600 font-bold">hace 1 dia</div>
+              <div class="text-[10px] text-gray-400">15/03/2026</div>
+            </div>
+            <span class="font-medium">Subsanar observaciones MDSF</span>
+            <span class="ml-auto px-1.5 py-0.5 rounded text-[10px] bg-red-600 text-white font-medium">VENCIDO</span>
+          </div>
+          <div class="flex items-center gap-3 p-2 rounded bg-amber-50">
+            <div class="w-24 shrink-0">
+              <div class="text-amber-600 font-bold">en 4 dias</div>
+              <div class="text-[10px] text-gray-400">18/03/2026</div>
+            </div>
+            <span>Coordinar reunion municipio</span>
+          </div>
+          <div class="flex items-center gap-3 p-2 rounded">
+            <div class="w-24 shrink-0">
+              <div class="text-gray-600">en 11 dias</div>
+              <div class="text-[10px] text-gray-400">25/03/2026</div>
+            </div>
+            <span>Completar satelites IPR</span>
+          </div>
+        </div>
+        <p class="text-xs text-green-700 mt-2">Mejora: "hace X dias" / "en X dias" + fecha original abajo. Colores: rojo vencido, amber <=7d, neutro >7d.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- G4: MyTeam per-person -->
+  <!-- ============================================================ -->
+  <section id="g4" class="mockup-section space-y-4">
+    <div class="flex items-center gap-3">
+      <span class="px-2 py-0.5 rounded text-xs font-bold bg-orange-100 text-orange-700">G4 ALTO</span>
+      <h2 class="text-xl font-bold">MyTeam: carga por persona + drill-down</h2>
+    </div>
+    <p class="text-sm text-gray-600">Journey J5 (Supervisor). MyTeam ya muestra per-person data pero sin visual de carga relativa ni click para ver detalle.</p>
+
+    <div class="before-after">
+      <div>
+        <div class="label-before inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">ANTES</div>
+        <div class="bg-white rounded-xl border p-4 space-y-2">
+          <h3 class="text-sm font-medium">Mi Equipo</h3>
+          <div class="space-y-1.5 text-xs">
+            <div class="flex justify-between"><span>Juan Perez</span><span><span class="text-red-600 font-bold">3</span> vencidos, <span class="text-amber-600">5</span> activos</span></div>
+            <div class="flex justify-between"><span>Maria Lopez</span><span><span class="text-red-600 font-bold">0</span> vencidos, <span class="text-amber-600">2</span> activos</span></div>
+            <div class="flex justify-between"><span>Carlos Soto</span><span><span class="text-red-600 font-bold">1</span> vencidos, <span class="text-amber-600">4</span> activos</span></div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-2 italic">Problema: Numeros sin contexto visual. No hay click para ver QUE tiene cada persona.</p>
+      </div>
+
+      <div>
+        <div class="label-after inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">DESPUES</div>
+        <div class="bg-white rounded-xl border p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-medium">Mi Equipo</h3>
+            <a href="#" class="text-xs text-indigo-600 hover:underline">Ver todos</a>
+          </div>
+          <div class="space-y-2">
+            <!-- Persona con sobrecarga -->
+            <div class="flex items-center gap-3 p-2 rounded-lg bg-red-50 border border-red-100 cursor-pointer hover:bg-red-100 transition-colors text-xs">
+              <div class="w-7 h-7 rounded-full bg-red-200 flex items-center justify-center text-red-700 font-bold text-[10px]">JP</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-medium">Juan Perez</div>
+                <div class="text-[10px] text-gray-500">ENCARGADO</div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="px-1.5 py-0.5 rounded bg-red-600 text-white text-[10px] font-bold">3 vencidos</span>
+                <span class="text-gray-400">5 activos</span>
+              </div>
+              <div class="w-16 h-1.5 rounded-full bg-gray-200 overflow-hidden shrink-0">
+                <div class="h-full rounded-full bg-red-500" style="width:100%"></div>
+              </div>
+            </div>
+            <!-- Persona ok -->
+            <div class="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors text-xs">
+              <div class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-[10px]">CS</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-medium">Carlos Soto</div>
+                <div class="text-[10px] text-gray-500">ANALISTA</div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="px-1.5 py-0.5 rounded bg-red-100 text-red-700 text-[10px] font-medium">1 vencido</span>
+                <span class="text-gray-400">4 activos</span>
+              </div>
+              <div class="w-16 h-1.5 rounded-full bg-gray-200 overflow-hidden shrink-0">
+                <div class="h-full rounded-full bg-amber-400" style="width:63%"></div>
+              </div>
+            </div>
+            <!-- Persona al dia -->
+            <div class="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors text-xs">
+              <div class="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-[10px]">ML</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-medium">Maria Lopez</div>
+                <div class="text-[10px] text-gray-500">ENCARGADO</div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="text-green-600 text-[10px]">al dia</span>
+                <span class="text-gray-400">2 activos</span>
+              </div>
+              <div class="w-16 h-1.5 rounded-full bg-gray-200 overflow-hidden shrink-0">
+                <div class="h-full rounded-full bg-green-400" style="width:25%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-green-700 mt-2">Mejora: Avatar iniciales + rol, barra de carga relativa, fondo rojo para sobrecargados, click para drill-down a compromisos de esa persona.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- G6: Division drill-down desde Centro de Mando -->
+  <!-- ============================================================ -->
+  <section id="g6" class="mockup-section space-y-4">
+    <div class="flex items-center gap-3">
+      <span class="px-2 py-0.5 rounded text-xs font-bold bg-yellow-100 text-yellow-700">G6 MEDIO</span>
+      <h2 class="text-xl font-bold">Centro de Mando: drill-down a divisiones</h2>
+    </div>
+    <p class="text-sm text-gray-600">Journey J7 (Estratega). KPIs actuales no tienen contexto divisional. AR tiene que ir a /ipr/cartera separado.</p>
+
+    <div class="before-after">
+      <div>
+        <div class="label-before inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">ANTES</div>
+        <div class="bg-white rounded-xl border p-4 space-y-3">
+          <h3 class="text-sm font-medium">KPIs Institucionales</h3>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="border-l-4 border-red-500 bg-red-50 rounded p-2">
+              <div class="text-lg font-bold">7</div><div class="text-[10px] text-gray-500">Escalamientos</div>
+            </div>
+            <div class="border-l-4 border-orange-500 bg-orange-50 rounded p-2">
+              <div class="text-lg font-bold">23</div><div class="text-[10px] text-gray-500">Alertas Activas</div>
+            </div>
+            <div class="border-l-4 border-amber-500 bg-amber-50 rounded p-2">
+              <div class="text-lg font-bold">12</div><div class="text-[10px] text-gray-500">Riesgos</div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 italic">No hay forma de saber: cuantos de esos 23 alertas son de DAF vs DIPIR?</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="label-after inline-block px-3 py-1 rounded-full text-xs font-medium mb-3">DESPUES</div>
+        <div class="bg-white rounded-xl border p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-medium">KPIs Institucionales</h3>
+            <a href="#" class="text-xs text-indigo-600 hover:underline">Cartera Divisional</a>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="border-l-4 border-red-500 bg-red-50 rounded p-2">
+              <div class="text-lg font-bold">7</div><div class="text-[10px] text-gray-500">Escalamientos</div>
+            </div>
+            <div class="border-l-4 border-orange-500 bg-orange-50 rounded p-2">
+              <div class="text-lg font-bold">23</div><div class="text-[10px] text-gray-500">Alertas Activas</div>
+            </div>
+            <div class="border-l-4 border-amber-500 bg-amber-50 rounded p-2">
+              <div class="text-lg font-bold">12</div><div class="text-[10px] text-gray-500">Riesgos</div>
+            </div>
+          </div>
+          <!-- Mini division breakdown -->
+          <div class="border-t pt-2">
+            <div class="text-[10px] font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Por division</div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2 text-xs cursor-pointer hover:bg-gray-50 rounded p-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                <span class="flex-1">DAF</span>
+                <span class="text-red-600 font-medium tabular-nums">5 alertas</span>
+                <span class="text-gray-400 tabular-nums">2 vencidos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs cursor-pointer hover:bg-gray-50 rounded p-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                <span class="flex-1">DIPIR</span>
+                <span class="text-amber-600 font-medium tabular-nums">8 alertas</span>
+                <span class="text-gray-400 tabular-nums">0 vencidos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs cursor-pointer hover:bg-gray-50 rounded p-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                <span class="flex-1">DIDESO</span>
+                <span class="text-green-600 font-medium tabular-nums">3 alertas</span>
+                <span class="text-gray-400 tabular-nums">0 vencidos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs cursor-pointer hover:bg-gray-50 rounded p-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                <span class="flex-1">DIT</span>
+                <span class="text-green-600 font-medium tabular-nums">4 alertas</span>
+                <span class="text-gray-400 tabular-nums">0 vencidos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-green-700 mt-2">Mejora: Mini breakdown por division debajo de KPIs. Click en division navega a /ipr?division=X. Link a Cartera Divisional arriba.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- Summary -->
+  <!-- ============================================================ -->
+  <section class="mockup-section bg-indigo-50 rounded-xl p-6 space-y-3">
+    <h2 class="text-lg font-bold text-indigo-900">Resumen Enfoque B</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+      <div class="bg-white rounded-lg p-3 border">
+        <div class="font-bold text-indigo-700">G1</div>
+        <div class="text-xs text-gray-600">ModuleMyProgress: KPIs a inbox con deadlines</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 border">
+        <div class="font-bold text-indigo-700">G8</div>
+        <div class="text-xs text-gray-600">Done state: "Al dia" cuando inbox vacio</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 border">
+        <div class="font-bold text-indigo-700">G3</div>
+        <div class="text-xs text-gray-600">Rendiciones: columna SLA con barra + dias/7</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 border">
+        <div class="font-bold text-indigo-700">A1</div>
+        <div class="text-xs text-gray-600">Compromisos: "en X dias" + colores temporales</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 border">
+        <div class="font-bold text-indigo-700">G4</div>
+        <div class="text-xs text-gray-600">MyTeam: avatares, barra carga, drill-down</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 border">
+        <div class="font-bold text-indigo-700">G6</div>
+        <div class="text-xs text-gray-600">Centro Mando: mini breakdown divisional</div>
+      </div>
+    </div>
+    <p class="text-xs text-indigo-700">Arquetipos cubiertos: Ejecutor (80% uso) + Supervisor (15% uso) = 95% del uso diario.</p>
+  </section>
+
+</div>
+</body>
+</html>
