@@ -77,7 +77,7 @@ export const STATUS_TO_PHASE: Record<string, string> = {
 
 export const TAB_GROUPS = [
   { label: "Operación", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
-  { label: "Finanzas", tabs: ["cdps", "convenios", "resoluciones"] },
+  { label: "Finanzas", tabs: ["cdps", "convenios", "rendiciones", "resoluciones"] },
   { label: "Requisitos", tabs: ["partes", "territorio", "evaluaciones", "parentesco"] },
   { label: "Ciclo", tabs: ["admisibilidad", "modificaciones", "cierre", "evaluacion-expost"] },
 ] as const;
@@ -90,6 +90,7 @@ export const TAB_LABELS: Record<string, string> = {
   alertas: "Alertas",
   cdps: "Presupuesto",
   convenios: "Convenios",
+  rendiciones: "Rendiciones",
   resoluciones: "Resoluciones",
   partes: "Partes",
   territorio: "Territorio",

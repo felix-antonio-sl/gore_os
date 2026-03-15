@@ -1141,9 +1141,14 @@ async def list_rendiciones(
     page_size: int = Query(25, ge=1, le=100),
     state: str | None = None,
     search: str | None = None,
+    ipr_id: str | None = None,
 ):
     conditions = ["r.deleted_at IS NULL"]
     params: dict = {}
+
+    if ipr_id:
+        conditions.append("r.ipr_id = CAST(:ipr_id AS uuid)")
+        params["ipr_id"] = ipr_id
 
     if state:
         conditions.append("st.code = :state")

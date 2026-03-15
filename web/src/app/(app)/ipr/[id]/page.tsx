@@ -37,6 +37,7 @@ import { TabAvances } from "../components/tab-avances";
 import { TabPartes } from "../components/tab-partes";
 import { TabTerritorio } from "../components/tab-territorio";
 import { TabHitos } from "../components/tab-hitos";
+import { TabRendiciones } from "../components/tab-rendiciones";
 import { TabResoluciones } from "../components/tab-resoluciones";
 import { TabEvaluaciones } from "../components/tab-evaluaciones";
 import { TabParentesco } from "../components/tab-parentesco";
@@ -303,6 +304,10 @@ function IprDetailPageInner() {
 
         <TabsContent value="convenios" className="mt-4">
           <TabConvenios key={refreshKey} iprId={id} canCreate={!!canCreateConvenio} />
+        </TabsContent>
+
+        <TabsContent value="rendiciones" className="mt-4">
+          <TabRendiciones key={refreshKey} iprId={id} />
         </TabsContent>
 
         <TabsContent value="cdps" className="mt-4">
