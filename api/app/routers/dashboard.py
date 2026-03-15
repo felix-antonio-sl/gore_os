@@ -447,6 +447,165 @@ async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
 
 
 # ---------------------------------------------------------------------------
+# Source 7: Pending signatures — actos VISADO + convenios VISADO_INTERNAMENTE
+# For: GOBERNADOR, ADMIN_REGIONAL, ADMIN_SISTEMA (G9+G12)
+# ---------------------------------------------------------------------------
+
+_SIGNATURE_ROLES = ("GOBERNADOR", "ADMIN_REGIONAL", "ADMIN_SISTEMA")
+
+
+async def _ai_pending_signatures(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    if role not in _SIGNATURE_ROLES:
+        return []
+
+    sql = text("""
+        SELECT id::text, act_number AS ref_code, subject, 'acto' AS item_type
+        FROM core.administrative_act
+        WHERE state_id IN (SELECT id FROM ref.category WHERE scheme = 'administrative_act_step' AND code = 'VISADO')
+          AND deleted_at IS NULL
+        UNION ALL
+        SELECT a.id::text, a.agreement_number AS ref_code,
+               COALESCE(at.label, a.agreement_number) AS subject, 'convenio' AS item_type
+        FROM core.agreement a
+        LEFT JOIN ref.category at ON at.id = a.agreement_type_id
+        WHERE a.state_id IN (SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'VISADO_INTERNAMENTE')
+          AND a.deleted_at IS NULL
+        ORDER BY item_type
+        LIMIT 15
+    """)
+    rows = (await db.execute(sql)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        route = f"/actos/{r['id']}" if r["item_type"] == "acto" else f"/convenios/{r['id']}"
+        items.append(ActionItem(
+            id=r["id"],
+            category="FIRMA",
+            title=f"{r['ref_code'] or 'S/N'} — {r['subject'] or 'Sin materia'}",
+            subtitle=r["item_type"].capitalize(),
+            deadline=None,
+            days_remaining=None,
+            temporal=None,
+            severity="ALTO",
+            priority=_compute_priority(None, "ALTO"),
+            action_label="Firmar",
+            action_route=route,
+        ))
+    return items
+
+
+# ---------------------------------------------------------------------------
+# Source 8: Pending rendition approvals — VISADA_RTF waiting Jefe DAF
+# For: JEFE_DIVISION, JEFE_DEPARTAMENTO in DAF (G11)
+# ---------------------------------------------------------------------------
+
+async def _ai_pending_renditions(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    if role not in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO"):
+        return []
+
+    sql = text("""
+        SELECT r.id::text, LEFT(r.id::text, 8) AS ref_code,
+               a.agreement_number, r.amount,
+               COALESCE(r.phase_entered_at, r.updated_at) AS entered_at,
+               EXTRACT(DAY FROM NOW() - COALESCE(r.phase_entered_at, r.updated_at))::int AS days_waiting
+        FROM core.rendition r
+        JOIN ref.category rs ON rs.id = r.state_id
+        LEFT JOIN core.agreement a ON a.id = r.agreement_id
+        WHERE rs.code = 'VISADA_RTF'
+          AND r.deleted_at IS NULL
+        ORDER BY r.phase_entered_at ASC
+        LIMIT 10
+    """)
+    rows = (await db.execute(sql)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        days = r["days_waiting"] or 0
+        sev = "CRITICO" if days > 3 else "ALTO" if days > 1 else "MEDIO"
+        items.append(ActionItem(
+            id=r["id"],
+            category="RENDICION",
+            title=f"Rendición {r['ref_code']} — {r['agreement_number'] or 'S/N'}",
+            subtitle=f"{days}d esperando aprobación",
+            deadline=None,
+            days_remaining=None,
+            temporal="VENCIDO" if days > 3 else "HOY" if days > 1 else None,
+            severity=sev,
+            priority=_compute_priority("VENCIDO" if days > 3 else None, sev),
+            action_label="Aprobar",
+            action_route="/datos?dominio=rendiciones&state=VISADA_RTF",
+        ))
+    return items
+
+
+# ---------------------------------------------------------------------------
+# Source 9: IPRs stale — in user's scope, user can transition, >7d in state
+# For: TRANSITION_ROLES (G15)
+# ---------------------------------------------------------------------------
+
+async def _ai_ipr_stale(db: AsyncSession, user: dict) -> list[ActionItem]:
+    role = user["role_code"]
+    user_id = str(user["id"])
+    division_id = user.get("division_id")
+
+    # Scope filter by role
+    if role == "ENCARGADO":
+        scope = "AND i.assignee_id = :uid"
+    elif role == "ANALISTA":
+        scope = "AND i.assignee_id = :uid"
+    elif role in _DIVISION_ROLES:
+        if not division_id:
+            return []
+        scope = "AND i.sponsor_division_id = :div_id"
+    elif role in ("ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"):
+        scope = ""  # global
+    else:
+        return []
+
+    sql = text(f"""
+        SELECT i.id::text, i.codigo_bip, i.name,
+               sc.code AS status_code, sc.label AS status_label,
+               mcd.code AS phase,
+               EXTRACT(DAY FROM NOW() - i.phase_entered_at)::int AS days_in_phase
+        FROM core.ipr i
+        JOIN ref.category sc ON sc.id = i.status_id
+        LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+        WHERE i.deleted_at IS NULL
+          AND i.phase_entered_at IS NOT NULL
+          AND EXTRACT(DAY FROM NOW() - i.phase_entered_at) > 7
+          AND sc.code NOT IN ('CERRADO', 'ANULADO', 'TERMINADO_ANTICIPADAMENTE')
+          {scope}
+        ORDER BY i.phase_entered_at ASC
+        LIMIT 5
+    """)
+    params: dict = {"uid": user_id}
+    if division_id:
+        params["div_id"] = str(division_id)
+    rows = (await db.execute(sql, params)).mappings().all()
+
+    items: list[ActionItem] = []
+    for r in rows:
+        days = r["days_in_phase"] or 0
+        sev = "ALTO" if days > 30 else "MEDIO"
+        items.append(ActionItem(
+            id=r["id"],
+            category="IPR",
+            title=f"{r['codigo_bip']} — {r['status_label'] or r['status_code']}",
+            subtitle=f"{days}d en {r['phase'] or '?'}",
+            deadline=None,
+            days_remaining=None,
+            temporal=None,
+            severity=sev,
+            priority=_compute_priority(None, sev),
+            action_label="Ver",
+            action_route=f"/ipr/{r['id']}",
+        ))
+    return items
+
+
+# ---------------------------------------------------------------------------
 # Helper: overdue predicate (state NOT IN verified/cancelled AND past due_date)
 # ---------------------------------------------------------------------------
 _OVERDUE_STATES_EXCLUDED = ("'VERIFICADO'", "'CANCELADO'")
@@ -1319,15 +1478,18 @@ async def get_action_items(
     SLA breaches, and risks — scoped by the user's role and division.
     Sorted by priority (lower = more urgent).
     """
-    # Gather all 6 sources
+    # Gather all 9 sources
     commitments = await _ai_commitments(db, user)
     alerts = await _ai_alerts(db, user)
     decisions = await _ai_decisions(db, user)
     escalations = await _ai_escalations(db, user)
     sla_breaches = await _ai_sla_breaches(db, user)
     risks = await _ai_risks(db, user)
+    signatures = await _ai_pending_signatures(db, user)
+    renditions = await _ai_pending_renditions(db, user)
+    stale_iprs = await _ai_ipr_stale(db, user)
 
-    all_items = commitments + alerts + decisions + escalations + sla_breaches + risks
+    all_items = commitments + alerts + decisions + escalations + sla_breaches + risks + signatures + renditions + stale_iprs
     all_items.sort(key=lambda x: x.priority)
 
     # Count by severity (always include all 4 keys)

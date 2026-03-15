@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, Clock, CheckCircle2, AlertTriangle } from "lucide-react";
+import { AlertCircle, Clock, CheckCircle2, AlertTriangle, PenLine, FileCheck, MapPin } from "lucide-react";
 import type { ActionItem } from "@/types";
 
 const SEVERITY_DOT: Record<string, string> = {
@@ -26,6 +26,9 @@ const CATEGORY_ICON: Record<string, React.ReactNode> = {
   ESCALAMIENTO: <AlertTriangle className="size-4" />,
   SLA: <Clock className="size-4" />,
   RIESGO: <AlertCircle className="size-4" />,
+  FIRMA: <PenLine className="size-4" />,
+  RENDICION: <FileCheck className="size-4" />,
+  IPR: <MapPin className="size-4" />,
 };
 
 interface AttentionStripProps {
