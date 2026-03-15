@@ -1296,7 +1296,7 @@ export interface DashboardExecutivoResponse extends DashboardData {
 
 export interface ActionItem {
   id: string;
-  category: "COMPROMISO" | "ALERTA" | "DECISION" | "ESCALAMIENTO" | "SLA" | "RIESGO";
+  category: "COMPROMISO" | "ALERTA" | "DECISION" | "ESCALAMIENTO" | "SLA" | "RIESGO" | "FIRMA" | "RENDICION" | "IPR";
   title: string;
   subtitle: string | null;
   deadline: string | null;
