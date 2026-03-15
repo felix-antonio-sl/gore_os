@@ -10,7 +10,7 @@ import { ModuleMyTeam } from "./module-my-team";
 import { ModuleDgiTeam } from "./module-dgi-team";
 import { ModuleKpis } from "./module-kpis";
 import { ModuleJuridico } from "./module-juridico";
-import type { ActionItemsResponse, RoleCode, KPICardData, DashboardExecutivoResponse } from "@/types";
+import type { ActionItemsResponse, RoleCode, KPICardData, DashboardExecutivoResponse, DivisionBreakdown } from "@/types";
 
 // Role → module mapping
 const PROGRESS_ROLES: RoleCode[] = ["ENCARGADO", "ANALISTA", "RTF", "ASESOR_JURIDICO"];
@@ -26,6 +26,7 @@ export function CommandCenter() {
   const [actionData, setActionData] = useState<ActionItemsResponse | null>(null);
   const [kpis, setKpis] = useState<KPICardData[]>([]);
   const [semaforo, setSemaforo] = useState<Array<{ dimension: string; label: string; signal: string }>>([]);
+  const [divisions, setDivisions] = useState<DivisionBreakdown[]>([]);
   const [loading, setLoading] = useState(true);
 
   const role = user?.role_code;
@@ -46,6 +47,7 @@ export function CommandCenter() {
         .then((d) => {
           setKpis(d.kpis);
           setSemaforo(d.semaforo ?? []);
+          setDivisions(d.divisions ?? []);
         })
         .catch(() => {});
     } else if (TEAM_ROLES.includes(role)) {
@@ -97,7 +99,7 @@ export function CommandCenter() {
       {/* INDICATOR_ROLES and PANORAMA_ROLES get KPIs below — no separate module */}
 
       {/* 4. Compact KPIs + semáforo */}
-      <ModuleKpis kpis={kpis} semaforo={semaforo} />
+      <ModuleKpis kpis={kpis} semaforo={semaforo} divisions={divisions} />
     </div>
   );
 }
