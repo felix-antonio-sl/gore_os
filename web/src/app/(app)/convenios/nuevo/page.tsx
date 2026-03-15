@@ -38,7 +38,7 @@ export default function NuevoConvenioPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA", "ASESOR_JURIDICO"].includes(user.role_code);
 
   useEffect(() => {
     api.get<CategoryRef[]>("/api/catalogs/categories/agreement_type").then(setAgreementTypes).catch(() => {});

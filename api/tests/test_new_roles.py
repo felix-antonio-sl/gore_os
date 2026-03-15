@@ -44,15 +44,17 @@ async def test_analista_can_list_compromisos(client: AsyncClient, analista_token
 
 
 @pytest.mark.asyncio
-async def test_analista_cannot_create_compromiso(client: AsyncClient, analista_token: str, catalog: dict):
-    """ANALISTA should NOT create commitments (requires JEFE_DIVISION+)."""
+async def test_analista_can_create_compromiso(client: AsyncClient, analista_token: str, catalog: dict):
+    """ANALISTA can create commitments (expanded permissions)."""
     resp = await client.post("/api/compromisos", json={
         "description": "Test commitment from ANALISTA",
         "commitment_type_id": catalog["commitment_type_id"],
         "responsible_id": catalog["users"]["admin@goreos.cl"]["id"],
         "due_date": "2026-12-31",
     }, headers=auth(analista_token))
-    assert resp.status_code == 403
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["code"].startswith("OC-")
 
 
 @pytest.mark.asyncio

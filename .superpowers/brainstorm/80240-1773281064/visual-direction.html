@@ -1,0 +1,190 @@
+<h2>Dirección Visual para GORE_OS</h2>
+<p class="subtitle">¿Cuál de estas direcciones captura mejor la naturaleza del sistema?</p>
+
+<div class="cards">
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+      <!-- Mockup: Institutional Dashboard -->
+      <div style="font-family: system-ui; font-size: 11px;">
+        <div style="background: #031B5F; color: white; padding: 8px 12px; border-radius: 8px 8px 0 0; font-weight: 600;">
+          GORE Ñuble — Panel de Control
+        </div>
+        <div style="background: white; padding: 12px; border: 1px solid #e2e8f0; border-radius: 0 0 8px 8px;">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px;">
+            <div style="background: #f1f5f9; padding: 8px; border-radius: 6px; border-left: 3px solid #196AB0;">
+              <div style="font-size: 18px; font-weight: 700; color: #031B5F;">24</div>
+              <div style="color: #64748b; font-size: 9px;">IPR Activos</div>
+            </div>
+            <div style="background: #f1f5f9; padding: 8px; border-radius: 6px; border-left: 3px solid #16a34a;">
+              <div style="font-size: 18px; font-weight: 700; color: #031B5F;">87%</div>
+              <div style="color: #64748b; font-size: 9px;">Ejecución Ppto.</div>
+            </div>
+            <div style="background: #f1f5f9; padding: 8px; border-radius: 6px; border-left: 3px solid #dc2626;">
+              <div style="font-size: 18px; font-weight: 700; color: #031B5F;">3</div>
+              <div style="color: #64748b; font-size: 9px;">Alertas Críticas</div>
+            </div>
+          </div>
+          <div style="background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">
+            <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 4px;">TABLA DE COMPROMISOS</div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px; font-size: 8px; color: #64748b;">
+              <div style="font-weight: 600;">Descripción</div><div style="font-weight: 600;">Vence</div><div style="font-weight: 600;">Estado</div>
+              <div>Licitación puente Ñuble</div><div>15-mar</div><div style="color: #dc2626;">Vencido</div>
+              <div>Informe FRIL Q1</div><div>20-mar</div><div style="color: #f59e0b;">Próximo</div>
+              <div>Convenio U. del Bío-Bío</div><div>30-mar</div><div style="color: #16a34a;">Al día</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Institucional Formal</h3>
+      <p>Estética de <strong>panel de gobierno</strong>. Tabla-céntrica, data-dense, mínimo color. Prioriza la información sobre la estética. Similar a sistemas SAP/SIGFE — lo que los funcionarios públicos conocen.</p>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Familiar para funcionarios</li><li>Alta densidad de datos</li><li>Menos riesgo de rechazo</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Visualmente plano</li><li>Difícil distinguir dominios</li><li>No motiva el uso</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #fafbff 0%, #eef2ff 100%);">
+      <!-- Mockup: Modern Command Center -->
+      <div style="font-family: system-ui; font-size: 11px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+          <div style="background: #031B5F; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700;">GO</div>
+          <div>
+            <div style="font-weight: 700; font-size: 13px; color: #0f172a;">Buenos días, Claudio</div>
+            <div style="color: #64748b; font-size: 9px;">Martes 11 marzo — 3 items requieren atención</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+              <div style="width: 8px; height: 8px; border-radius: 50%; background: #dc2626;"></div>
+              <span style="font-size: 9px; font-weight: 600; color: #475569;">URGENTE</span>
+            </div>
+            <div style="font-size: 10px; font-weight: 600; color: #0f172a;">Convenio U. Bío-Bío vencido</div>
+            <div style="font-size: 8px; color: #94a3b8; margin-top: 2px;">Hace 3 días — Acción: renovar o cerrar</div>
+            <div style="margin-top: 6px; display: flex; gap: 4px;">
+              <div style="background: #196AB0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 8px; cursor: pointer;">Ver convenio</div>
+              <div style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-size: 8px;">Posponer</div>
+            </div>
+          </div>
+          <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+              <div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div>
+              <span style="font-size: 9px; font-weight: 600; color: #475569;">HOY</span>
+            </div>
+            <div style="font-size: 10px; font-weight: 600; color: #0f172a;">Reunión crisis FRIL</div>
+            <div style="font-size: 8px; color: #94a3b8; margin-top: 2px;">14:30 — Sala 3, piso 2</div>
+            <div style="margin-top: 6px;">
+              <div style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-size: 8px; display: inline-block;">Preparar agenda</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 8px; background: white; padding: 8px; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 9px; font-weight: 600; color: #475569;">Mis compromisos esta semana</span>
+            <span style="font-size: 9px; color: #196AB0;">Ver todos →</span>
+          </div>
+          <div style="margin-top: 4px; height: 4px; background: #e2e8f0; border-radius: 2px;">
+            <div style="height: 100%; width: 65%; background: linear-gradient(90deg, #16a34a, #f59e0b); border-radius: 2px;"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 8px; color: #94a3b8; margin-top: 2px;">
+            <span>5 de 8 completados</span>
+            <span>65%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Centro de Comando Personal</h3>
+      <p>Estética de <strong>asistente inteligente</strong>. Personalizado por usuario, orientado a acción, contextual al día. Cards con acciones directas. Más "app moderna" que "sistema gobierno".</p>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Orientado a acción</li><li>Personalizado por rol</li><li>Motiva el uso diario</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Más complejo de construir</li><li>Puede sentirse "ajeno" a GORE</li><li>Requiere backend de notificaciones</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #fafafa 0%, #f0fdf4 100%);">
+      <!-- Mockup: Hybrid -->
+      <div style="font-family: system-ui; font-size: 11px;">
+        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+          <!-- Left: action strip -->
+          <div style="flex: 1;">
+            <div style="font-weight: 700; font-size: 12px; color: #0f172a; margin-bottom: 8px;">Panel de Control</div>
+            <!-- Attention strip -->
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 8px; margin-bottom: 6px;">
+              <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+                <div style="width: 6px; height: 6px; border-radius: 50%; background: #dc2626;"></div>
+                <span style="font-size: 9px; font-weight: 600; color: #991b1b;">3 items requieren atención</span>
+              </div>
+              <div style="font-size: 8px; color: #7f1d1d;">
+                • Convenio AGR-001 vencido<br>
+                • CDP-005 sin ejecutar (>30d)<br>
+                • Escalamiento ESC-0012 nivel 3
+              </div>
+            </div>
+            <!-- KPIs -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+              <div style="background: white; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                <div style="font-size: 16px; font-weight: 700; color: #031B5F;">24</div>
+                <div style="font-size: 8px; color: #64748b;">IPR Activos</div>
+              </div>
+              <div style="background: white; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                <div style="font-size: 16px; font-weight: 700; color: #16a34a;">87%</div>
+                <div style="font-size: 8px; color: #64748b;">Ejecución</div>
+              </div>
+            </div>
+          </div>
+          <!-- Right: semáforo compact -->
+          <div style="width: 120px;">
+            <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 6px;">Semáforo</div>
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <div style="display: flex; align-items: center; gap: 4px; background: white; padding: 4px 6px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></div>
+                <span style="font-size: 8px; flex: 1;">Presupuesto</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px; background: white; padding: 4px 6px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div>
+                <span style="font-size: 8px; flex: 1;">Cartera IPR</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px; background: white; padding: 4px 6px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #dc2626;"></div>
+                <span style="font-size: 8px; flex: 1;">Convenios</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px; background: white; padding: 4px 6px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></div>
+                <span style="font-size: 8px; flex: 1;">Riesgos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Table below -->
+        <div style="background: white; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0;">
+          <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 4px;">Compromisos próximos a vencer</div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px; font-size: 8px; color: #475569;">
+            <div style="padding: 2px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Compromiso</div>
+            <div style="padding: 2px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Vence</div>
+            <div style="padding: 2px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Estado</div>
+            <div style="padding: 2px 0;">Licitación puente</div><div style="padding: 2px 0; color: #dc2626;">15-mar</div><div style="padding: 2px 0;"><span style="background: #fef2f2; color: #991b1b; padding: 1px 4px; border-radius: 3px; font-size: 7px;">Vencido</span></div>
+            <div style="padding: 2px 0;">Informe FRIL Q1</div><div style="padding: 2px 0; color: #f59e0b;">20-mar</div><div style="padding: 2px 0;"><span style="background: #fefce8; color: #854d0e; padding: 1px 4px; border-radius: 3px; font-size: 7px;">Próximo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Híbrido: Datos + Acción</h3>
+      <p>Combina la <strong>densidad institucional</strong> de A con la <strong>orientación a acción</strong> de B. Strip de atención arriba (lo urgente primero), KPIs + semáforo en el medio, tablas abajo. Mantiene seriedad pero agrega urgencia visual.</p>
+      <div class="pros-cons" style="margin-top: 8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Lo mejor de ambos mundos</li><li>Urgencia visible sin perder datos</li><li>Institucional pero moderno</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Más denso que B</li><li>Requiere diseño cuidadoso</li><li>Balance difícil de mantener</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -186,7 +186,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 - **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md`, `model/GLOSARIO.yml` (244 terms)
 - **Spec**: `architecture/Omega_GORE_OS_Definition_v3.0.0.md`, `docs/GORE_OS_Audit_v2.0.md` (472 CQs, 15 HΩ)
 - **Migrations**: `goreos_migration_*.sql` + `goreos_rollback_*.sql`. Tracked in `core.schema_migration`. Runner: `scripts/run_migrations.sh`.
-- **Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (8 ADRs)
+- **Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (8 ADRs), `docs/GORE_OS_User_Journeys_v3.0.md` (8 arquetipos, 17 journeys, 8 principios UX)
 
 ## Critical Rules
 

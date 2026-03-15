@@ -1,62 +1,55 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
-import { DataTable } from "@/components/data-table";
-import { FilterBar } from "@/components/filter-bar";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { TimelineHistory } from "@/components/timeline-history";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { toast } from "sonner";
-import { Plus, Download, UserCheck } from "lucide-react";
-import { exportCSV } from "@/lib/csv-export";
+import { Plus, UserCheck } from "lucide-react";
 import { formatDate } from "@/lib/format";
-import { DeadlineCell } from "@/components/deadline-cell";
 import { PageHeader } from "@/components/page-header";
-import type { PaginatedResponse, CompromisoListItem, HistoryEntry } from "@/types";
-
-const CSV_COLUMNS = [
-  { key: "code", label: "Código" },
-  { key: "description", label: "Descripción" },
-  { key: "responsible_name", label: "Responsable" },
-  { key: "state", label: "Estado" },
-  { key: "due_date", label: "Fecha Límite" },
-  { key: "days_remaining", label: "Días Restantes" },
-];
-
-const ESTADO_OPTIONS = [
-  { value: "PENDIENTE", label: "Pendiente" },
-  { value: "EN_PROGRESO", label: "En Progreso" },
-  { value: "COMPLETADO", label: "Completado" },
-  { value: "VERIFICADO", label: "Verificado" },
-  { value: "VENCIDO", label: "Vencido" },
-  { value: "CANCELADO", label: "Cancelado" },
-];
-
-const DIVISION_OPTIONS: { value: string; label: string }[] = [];
+import { CompromisosWorkView } from "./compromisos-work-view";
+import { CompromisosTeamView } from "./compromisos-team-view";
+import { CompromisosListView } from "./compromisos-list-view";
+import type { CompromisoListItem, HistoryEntry } from "@/types";
 
 interface CompromisoDetail extends CompromisoListItem {
   observations?: string | null;
   history?: HistoryEntry[];
-  notes?: string;
+  commitment_type_label?: string;
+  verified_by_name?: string | null;
+  created_at?: string;
 }
+
+type ViewMode = "work" | "team" | "list";
 
 export default function CompromisosPage() {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user } = useAuth();
 
-  const [data, setData] = useState<PaginatedResponse<CompromisoListItem> | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [refreshKey, setRefreshKey] = useState(0);
+  // --- View mode ---
+  const role = user?.role_code;
+  const responsibleIdParam = searchParams.get("responsible_id");
+  const isJefe = role && ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(role);
+  const viewMode: ViewMode =
+    role === "ENCARGADO"
+      ? "work"
+      : isJefe && !responsibleIdParam
+        ? "team"
+        : "list";
 
+  // --- Shared state ---
+  const [refreshKey, setRefreshKey] = useState(0);
+  const onRefresh = () => setRefreshKey((k) => k + 1);
+
+  // --- Drawer state ---
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<CompromisoDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -68,80 +61,20 @@ export default function CompromisosPage() {
   const [reassignUser, setReassignUser] = useState("");
   const [reassignLoading, setReassignLoading] = useState(false);
 
-  const page = Number(searchParams.get("page") ?? "1");
-  const estado = searchParams.get("estado") ?? "";
-  const division = searchParams.get("division") ?? "";
-  const soloMios = searchParams.get("solo_mios") === "1";
-  const overdue = searchParams.get("overdue") === "true";
-  const dateFrom = searchParams.get("date_from") ?? "";
-  const dateTo = searchParams.get("date_to") ?? "";
-
-  const filterValues: Record<string, string> = {
-    estado,
-    division,
-  };
-
-  const buildUrl = useCallback(
-    (overrides: Record<string, string | number>) => {
-      const params = new URLSearchParams(searchParams.toString());
-      Object.entries(overrides).forEach(([k, v]) => {
-        if (v === "" || v === undefined) {
-          params.delete(k);
-        } else {
-          params.set(k, String(v));
-        }
-      });
-      return `${pathname}?${params.toString()}`;
-    },
-    [pathname, searchParams]
-  );
-
-  const handleFilterChange = (key: string, value: string) => {
-    router.push(buildUrl({ [key]: value, page: 1 }));
-  };
-
-  const handleClear = () => {
-    router.push(pathname);
-  };
-
-  const handlePageChange = (newPage: number) => {
-    router.push(buildUrl({ page: newPage }));
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    const params = new URLSearchParams();
-    params.set("page", String(page));
-    params.set("page_size", "20");
-    if (estado) params.set("state", estado);
-    if (division) params.set("division_id", division);
-    if (soloMios && user?.id) params.set("responsible_id", user.id);
-    if (overdue) params.set("overdue", "true");
-    if (dateFrom) params.set("date_from", dateFrom);
-    if (dateTo) params.set("date_to", dateTo);
-
-    api
-      .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
-      .finally(() => setIsLoading(false));
-  }, [page, estado, division, soloMios, overdue, dateFrom, dateTo, user?.id, refreshKey]);
-
-  const openDetail = (row: unknown) => {
-    const compromiso = row as CompromisoListItem;
-    setSelectedId(compromiso.id);
+  const openDetail = (item: CompromisoListItem) => {
+    setSelectedId(item.id);
     setDetail(null);
     setDetailLoading(true);
-
-    api.get<CompromisoDetail>(`/api/compromisos/${compromiso.id}`)
+    setReassigning(false);
+    setReassignUser("");
+    api
+      .get<CompromisoDetail>(`/api/compromisos/${item.id}`)
       .then((det) => {
         setDetail(det);
         setEditObs(det.observations ?? "");
         setObsEditing(false);
       })
-      .catch(() => {
-        setDetail(compromiso as CompromisoDetail);
-      })
+      .catch(() => setDetail(item as CompromisoDetail))
       .finally(() => setDetailLoading(false));
   };
 
@@ -151,7 +84,7 @@ export default function CompromisosPage() {
     try {
       await api.post(`/api/compromisos/${selectedId}/${action}`, {});
       setSelectedId(null);
-      setRefreshKey((k) => k + 1);
+      onRefresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al actualizar estado");
     } finally {
@@ -160,9 +93,9 @@ export default function CompromisosPage() {
   };
 
   const searchUsers = async (query: string): Promise<ComboboxOption[]> => {
-    const users = await api.get<{ id: string; nombre: string; apellido_paterno: string; division_name: string | null }[]>(
-      `/api/catalogs/users?search=${encodeURIComponent(query)}`
-    );
+    const users = await api.get<
+      { id: string; nombre: string; apellido_paterno: string; division_name: string | null }[]
+    >(`/api/catalogs/users?search=${encodeURIComponent(query)}`);
     return users.map((u) => ({
       value: u.id,
       label: `${u.nombre} ${u.apellido_paterno}${u.division_name ? ` (${u.division_name})` : ""}`,
@@ -177,7 +110,7 @@ export default function CompromisosPage() {
       setReassigning(false);
       setReassignUser("");
       setSelectedId(null);
-      setRefreshKey((k) => k + 1);
+      onRefresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al reasignar");
     } finally {
@@ -190,7 +123,7 @@ export default function CompromisosPage() {
     setObsSaving(true);
     try {
       await api.patch(`/api/compromisos/${selectedId}`, { observations: editObs });
-      setDetail((prev) => prev ? { ...prev, observations: editObs } : prev);
+      setDetail((prev) => (prev ? { ...prev, observations: editObs } : prev));
       setObsEditing(false);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al guardar observaciones");
@@ -199,124 +132,78 @@ export default function CompromisosPage() {
     }
   };
 
+  // Permission checks
   const canComplete =
     detail &&
     detail.state === "PENDIENTE" &&
     user &&
     (user.role_code === "ENCARGADO" || detail.responsible_id === user.id);
-
   const canVerify =
     detail &&
     detail.state === "COMPLETADO" &&
     user &&
     ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(user.role_code);
-
   const canReturn =
     detail &&
     (detail.state === "COMPLETADO" || detail.state === "EN_PROGRESO") &&
     user &&
     ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(user.role_code);
-
   const canReassign =
     detail &&
     detail.state !== "VERIFICADO" &&
     detail.state !== "CANCELADO" &&
     user &&
-    ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA", "GOBERNADOR", "JEFE_DEPARTAMENTO"].includes(user.role_code);
-
-  const columns = [
-    {
-      key: "days_remaining",
-      label: "Urgencia",
-      render: (_: unknown, row: unknown) => {
-        const r = row as CompromisoListItem;
-        return <TemporalIndicator daysRemaining={r.days_remaining} state={r.state} />;
-      },
-    },
-    {
-      key: "description",
-      label: "Descripción",
-      render: (v: unknown) => (
-        <span className="font-medium line-clamp-1 max-w-xs">{String(v ?? "")}</span>
-      ),
-    },
-    {
-      key: "ipr_codigo_bip",
-      label: "BIP",
-      render: (v: unknown) => (
-        <span className="text-xs font-mono text-muted-foreground">{String(v ?? "-")}</span>
-      ),
-    },
-    { key: "responsible_name", label: "Responsable" },
-    {
-      key: "due_date",
-      label: "Vence",
-      render: (v: unknown, row: unknown) => {
-        const r = row as CompromisoListItem;
-        return <DeadlineCell date={v ? String(v) : null} daysRemaining={r.days_remaining} />;
-      },
-    },
-    {
-      key: "state",
-      label: "Estado",
-      render: (v: unknown) => <StatusBadge status={String(v ?? "")} size="sm" />,
-    },
-  ];
-
+    ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA", "GOBERNADOR", "JEFE_DEPARTAMENTO"].includes(
+      user.role_code
+    );
   const canCreate =
-    user &&
-    ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
+    user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
 
   return (
     <div className="p-6 space-y-4">
       <PageHeader
         title="Compromisos"
-        description="Gestión de compromisos operativos"
+        description={
+          viewMode === "work"
+            ? "Mis compromisos operativos"
+            : viewMode === "team"
+              ? "Compromisos de mi equipo"
+              : "Gestión de compromisos operativos"
+        }
         accentColor="amber"
         actions={
-          <>
-            <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "compromisos")}>
-              <Download className="size-4 mr-1" />CSV
+          canCreate ? (
+            <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
+              <Plus className="size-4 mr-1" />
+              Nuevo Compromiso
             </Button>
-            {canCreate && (
-              <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
-                <Plus className="size-4 mr-1" />
-                Nuevo Compromiso
-              </Button>
-            )}
-          </>
+          ) : undefined
         }
       />
 
-      <FilterBar
-        filters={[
-          { key: "estado", label: "Estado", options: ESTADO_OPTIONS },
-          { key: "division", label: "División", options: DIVISION_OPTIONS },
-        ]}
-        values={filterValues}
-        onChange={handleFilterChange}
-        onClear={handleClear}
-        searchPlaceholder="Buscar compromiso..."
-      />
+      {viewMode === "work" && (
+        <CompromisosWorkView
+          onItemClick={openDetail}
+          refreshKey={refreshKey}
+          onRefresh={onRefresh}
+        />
+      )}
+      {viewMode === "team" && (
+        <CompromisosTeamView
+          onItemClick={openDetail}
+          refreshKey={refreshKey}
+          onRefresh={onRefresh}
+        />
+      )}
+      {viewMode === "list" && (
+        <CompromisosListView
+          onItemClick={openDetail}
+          refreshKey={refreshKey}
+          onRefresh={onRefresh}
+        />
+      )}
 
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-muted-foreground whitespace-nowrap">Vencimiento:</span>
-        <Input type="date" className="h-8 w-36 text-xs" value={dateFrom} onChange={(e) => router.push(buildUrl({ date_from: e.target.value, page: 1 }))} />
-        <span className="text-xs text-muted-foreground">—</span>
-        <Input type="date" className="h-8 w-36 text-xs" value={dateTo} onChange={(e) => router.push(buildUrl({ date_to: e.target.value, page: 1 }))} />
-      </div>
-
-      <DataTable
-        columns={columns}
-        data={data?.items ?? []}
-        page={page}
-        totalPages={data?.total_pages ?? 1}
-        total={data?.total ?? 0}
-        onPageChange={handlePageChange}
-        onRowClick={openDetail}
-        isLoading={isLoading}
-      />
-
+      {/* Shared Detail Drawer */}
       <DrawerPanel
         open={!!selectedId}
         onClose={() => setSelectedId(null)}
@@ -324,7 +211,7 @@ export default function CompromisosPage() {
       >
         {detailLoading ? (
           <div className="space-y-3">
-            {Array.from({ length: 4 }).map((_, i) => (
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className="h-8 rounded bg-muted animate-pulse" />
             ))}
           </div>
@@ -344,7 +231,10 @@ export default function CompromisosPage() {
                     <button
                       type="button"
                       className="font-mono text-blue-600 hover:underline cursor-pointer"
-                      onClick={() => { setSelectedId(null); router.push(`/ipr/${detail.ipr_id}`); }}
+                      onClick={() => {
+                        setSelectedId(null);
+                        router.push(`/ipr/${detail.ipr_id}`);
+                      }}
                     >
                       {detail.ipr_codigo_bip}
                     </button>
@@ -385,7 +275,8 @@ export default function CompromisosPage() {
               <div className="pt-2 border-t">
                 {!reassigning ? (
                   <Button variant="outline" size="sm" onClick={() => setReassigning(true)}>
-                    <UserCheck className="size-4 mr-1" />Reasignar
+                    <UserCheck className="size-4 mr-1" />
+                    Reasignar
                   </Button>
                 ) : (
                   <div className="space-y-2">
@@ -397,10 +288,21 @@ export default function CompromisosPage() {
                       placeholder="Buscar usuario..."
                     />
                     <div className="flex gap-2">
-                      <Button size="sm" onClick={handleReassign} disabled={!reassignUser || reassignLoading}>
+                      <Button
+                        size="sm"
+                        onClick={handleReassign}
+                        disabled={!reassignUser || reassignLoading}
+                      >
                         {reassignLoading ? "Reasignando..." : "Confirmar"}
                       </Button>
-                      <Button size="sm" variant="ghost" onClick={() => { setReassigning(false); setReassignUser(""); }}>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setReassigning(false);
+                          setReassignUser("");
+                        }}
+                      >
                         Cancelar
                       </Button>
                     </div>
@@ -414,15 +316,33 @@ export default function CompromisosPage() {
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold">Observaciones</h3>
                 {!obsEditing ? (
-                  <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={() => setObsEditing(true)}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 text-xs"
+                    onClick={() => setObsEditing(true)}
+                  >
                     Editar
                   </Button>
                 ) : (
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={() => { setObsEditing(false); setEditObs(detail.observations ?? ""); }}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 text-xs"
+                      onClick={() => {
+                        setObsEditing(false);
+                        setEditObs(detail.observations ?? "");
+                      }}
+                    >
                       Cancelar
                     </Button>
-                    <Button size="sm" className="h-6 text-xs" onClick={saveObservations} disabled={obsSaving}>
+                    <Button
+                      size="sm"
+                      className="h-6 text-xs"
+                      onClick={saveObservations}
+                      disabled={obsSaving}
+                    >
                       {obsSaving ? "Guardando..." : "Guardar"}
                     </Button>
                   </div>

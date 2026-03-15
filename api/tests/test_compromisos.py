@@ -32,19 +32,21 @@ async def test_create_commitment(client, regional_token, catalog):
     assert "id" in data
 
 
-async def test_create_encargado_forbidden(client, encargado_token, catalog):
-    """ENCARGADO cannot create commitments."""
+async def test_create_encargado_allowed(client, encargado_token, catalog):
+    """ENCARGADO can create commitments (expanded permissions)."""
     resp = await client.post(
         "/api/compromisos",
         json={
-            "description": "Should fail",
+            "description": "Created by encargado",
             "commitment_type_id": catalog["commitment_type_id"],
             "responsible_id": catalog["users"]["encargado.daf@goreos.cl"]["id"],
             "due_date": str(date.today() + timedelta(days=30)),
         },
         headers=auth(encargado_token),
     )
-    assert resp.status_code == 403
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["code"].startswith("OC-")
 
 
 # ---------------------------------------------------------------------------

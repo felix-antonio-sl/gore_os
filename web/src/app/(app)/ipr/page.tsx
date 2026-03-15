@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -144,6 +144,12 @@ export default function IprPage() {
 
   const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"].includes(user.role_code);
 
+  // Role awareness
+  const role = user?.role_code;
+  const isJefe = role && ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(role);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const didAutoScope = useRef(false);
+
   const [data, setData] = useState<PaginatedResponse<IPRListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [divisionOptions, setDivisionOptions] = useState<{value: string; label: string}[]>([]);
@@ -207,6 +213,17 @@ export default function IprPage() {
       })
       .catch(() => {});
   }, []);
+
+  // Auto-scope: JEFE gets division pre-selected
+  useEffect(() => {
+    if (didAutoScope.current) return;
+    if (isJefe && !searchParams.has("division") && user?.division_id) {
+      didAutoScope.current = true;
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("division", user.division_id);
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [isJefe, user?.division_id, searchParams, pathname, router]);
 
   useEffect(() => {
     let active = true;
@@ -327,7 +344,13 @@ export default function IprPage() {
     <div className="p-6 space-y-4">
       <PageHeader
         title="IPR"
-        description="Intervenciones Públicas Regionales"
+        description={
+          isJefe
+            ? "IPRs de tu división"
+            : role === "ANALISTA"
+              ? "IPRs en formulación"
+              : "Intervenciones Públicas Regionales"
+        }
         accentColor="indigo"
         actions={
           <>
@@ -344,15 +367,29 @@ export default function IprPage() {
         }
       />
 
+      {/* Context strip */}
+      {data && !isLoading && (
+        <div className="flex items-center gap-2 text-sm">
+          <span className="tabular-nums font-medium">{data.total}</span>
+          <span className="text-muted-foreground">
+            {isJefe ? "IPRs en tu división" : "IPRs en portafolio"}
+          </span>
+        </div>
+      )}
+
       <FilterBar
         filters={[
           { key: "tipo", label: "Tipo", options: IPR_TYPE_OPTIONS },
           { key: "estado", label: "Estado", options: STATUS_OPTIONS },
-          { key: "sector", label: "Sector", options: SECTOR_OPTIONS },
-          { key: "alert_level", label: "Alerta", options: ALERT_LEVEL_OPTIONS },
-          { key: "mechanism", label: "Mecanismo", options: MECHANISM_OPTIONS },
-          { key: "mcd_phase", label: "Fase MCD", options: MCD_PHASE_OPTIONS },
+          { key: "mcd_phase", label: "Fase", options: MCD_PHASE_OPTIONS },
           { key: "division", label: "División", options: divisionOptions },
+          ...(showAdvanced || !!(sector || mechanism || alertLevel)
+            ? [
+                { key: "sector", label: "Sector", options: SECTOR_OPTIONS },
+                { key: "mechanism", label: "Mecanismo", options: MECHANISM_OPTIONS },
+                { key: "alert_level", label: "Alerta", options: ALERT_LEVEL_OPTIONS },
+              ]
+            : []),
         ]}
         values={filterValues}
         onChange={handleFilterChange}
@@ -361,6 +398,14 @@ export default function IprPage() {
         searchValue={search}
         onSearchChange={handleSearchChange}
       />
+      <button
+        onClick={() => setShowAdvanced(!showAdvanced)}
+        className="text-xs text-muted-foreground hover:text-foreground transition-colors -mt-2"
+      >
+        {showAdvanced || !!(sector || mechanism || alertLevel)
+          ? "Menos filtros"
+          : "Más filtros"}
+      </button>
 
       <DataTable
         columns={columns}

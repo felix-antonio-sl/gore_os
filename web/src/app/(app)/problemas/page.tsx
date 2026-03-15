@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { DrawerPanel } from "@/components/drawer-panel";
@@ -55,6 +56,8 @@ export default function ProblemasPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
+  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ENCARGADO", "ANALISTA"].includes(user.role_code);
   const [data, setData] = useState<PaginatedResponse<ProblemaListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -278,10 +281,12 @@ export default function ProblemasPage() {
             <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "problemas")}>
               <Download className="size-4 mr-1" />CSV
             </Button>
-            <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
-              <Plus className="size-4 mr-1" />
-              Nuevo Problema
-            </Button>
+            {canCreate && (
+              <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
+                <Plus className="size-4 mr-1" />
+                Nuevo Problema
+              </Button>
+            )}
           </>
         }
       />

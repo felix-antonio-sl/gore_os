@@ -1,0 +1,232 @@
+<h2>Centro de Comando: ¿Un layout o tres?</h2>
+<p class="subtitle">¿Cuánta personalización visual necesita cada arquetipo? Misma estructura base, contenido diferente.</p>
+
+<div class="options">
+  <div class="option" data-choice="unified" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Layout Unificado</h3>
+      <p>Un solo layout para todos: <strong>Atención → KPIs → Trabajo pendiente</strong>. Solo cambia el contenido según rol. Más simple, menos código, menos deuda.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="archetyped" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>3 Arquetipos Visuales</h3>
+      <p>Supervisor (ADMIN_REGIONAL, JEFE_DIV), Ejecutor (ENCARGADO), Analista (DGI). Cada uno con <strong>layout distinto</strong> que refleja su modo de trabajo.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Layout Unificado + Módulos Opcionales</h3>
+      <p>Misma estructura base pero con <strong>bloques condicionales</strong>: el supervisor ve "Mi Equipo", el ejecutor ve "Mi Progreso", el DGI ve "Indicadores".</p>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top: 40px;">Vista previa por arquetipo</h2>
+<p class="subtitle">Así se vería el Centro de Comando para cada rol (layout unificado con módulos condicionales — opción C)</p>
+
+<div class="split" style="gap: 16px; margin-top: 20px;">
+  <!-- ENCARGADO -->
+  <div class="mockup">
+    <div class="mockup-header">ENCARGADO — María González (DAF)</div>
+    <div class="mockup-body" style="font-size: 11px; font-family: system-ui;">
+      <!-- Greeting -->
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 700; font-size: 14px; color: #0f172a;">Buenos días, María</div>
+        <div style="color: #64748b; font-size: 10px;">Martes 11 marzo — Tienes 2 tareas vencidas</div>
+      </div>
+      <!-- Attention strip -->
+      <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #991b1b; margin-bottom: 4px;">⚠ REQUIERE TU ACCIÓN</div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 6px 8px; border-radius: 6px; border: 1px solid #fecaca;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #dc2626; flex-shrink: 0;"></div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 10px; font-weight: 600; color: #0f172a;">Informe ejecución Q1</div>
+              <div style="font-size: 8px; color: #991b1b;">Vencido hace 3 días</div>
+            </div>
+            <div style="background: #196AB0; color: white; padding: 2px 6px; border-radius: 4px; font-size: 8px; white-space: nowrap;">Completar</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 6px 8px; border-radius: 6px; border: 1px solid #fecaca;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #dc2626; flex-shrink: 0;"></div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 10px; font-weight: 600; color: #0f172a;">Rendición FRIL-042</div>
+              <div style="font-size: 8px; color: #991b1b;">Vencido hace 1 día</div>
+            </div>
+            <div style="background: #196AB0; color: white; padding: 2px 6px; border-radius: 4px; font-size: 8px; white-space: nowrap;">Reportar</div>
+          </div>
+        </div>
+      </div>
+      <!-- My progress module -->
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 6px;">MI PROGRESO ESTA SEMANA</div>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+          <div style="flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+            <div style="height: 100%; width: 60%; background: linear-gradient(90deg, #16a34a, #f59e0b); border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 11px; font-weight: 700; color: #0f172a;">3/5</span>
+        </div>
+        <div style="font-size: 8px; color: #64748b;">3 completados · 1 en progreso · 1 vencido</div>
+      </div>
+      <!-- Upcoming -->
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 4px;">PRÓXIMOS VENCIMIENTOS</div>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="display: flex; justify-content: space-between; font-size: 9px;">
+            <span style="color: #0f172a;">CDP liquidación marzo</span>
+            <span style="color: #f59e0b; font-weight: 600;">en 2 días</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 9px;">
+            <span style="color: #0f172a;">Acta reunión DIDESO</span>
+            <span style="color: #64748b;">en 5 días</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JEFE_DIVISION -->
+  <div class="mockup">
+    <div class="mockup-header">JEFE_DIVISION — Carlos Muñoz (DAF)</div>
+    <div class="mockup-body" style="font-size: 11px; font-family: system-ui;">
+      <!-- Greeting -->
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 700; font-size: 14px; color: #0f172a;">Buenos días, Carlos</div>
+        <div style="color: #64748b; font-size: 10px;">Martes 11 marzo — 1 escalamiento activo en tu división</div>
+      </div>
+      <!-- Attention strip -->
+      <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #991b1b; margin-bottom: 4px;">⚠ REQUIERE TU DECISIÓN</div>
+        <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 6px 8px; border-radius: 6px; border: 1px solid #fecaca;">
+          <div style="width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; flex-shrink: 0;"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 10px; font-weight: 600; color: #0f172a;">ESC-0012 Nivel 2 — Convenio U. Bío-Bío</div>
+            <div style="font-size: 8px; color: #b45309;">Deadline: 4 días restantes</div>
+          </div>
+          <div style="background: #196AB0; color: white; padding: 2px 6px; border-radius: 4px; font-size: 8px;">Gestionar</div>
+        </div>
+      </div>
+      <!-- Team module (conditional) -->
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 6px;">MI EQUIPO — DAF</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 6px;">
+          <div style="text-align: center; padding: 4px; background: #f0fdf4; border-radius: 6px;">
+            <div style="font-size: 14px; font-weight: 700; color: #16a34a;">12</div>
+            <div style="font-size: 7px; color: #64748b;">Al día</div>
+          </div>
+          <div style="text-align: center; padding: 4px; background: #fefce8; border-radius: 6px;">
+            <div style="font-size: 14px; font-weight: 700; color: #f59e0b;">3</div>
+            <div style="font-size: 7px; color: #64748b;">Próximos</div>
+          </div>
+          <div style="text-align: center; padding: 4px; background: #fef2f2; border-radius: 6px;">
+            <div style="font-size: 14px; font-weight: 700; color: #dc2626;">2</div>
+            <div style="font-size: 7px; color: #64748b;">Vencidos</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 9px; padding: 3px 0; border-bottom: 1px solid #f1f5f9;">
+            <span style="color: #0f172a;">María González</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span style="font-size: 8px; color: #dc2626;">1 vencido</span>
+              <div style="width: 40px; height: 4px; background: #e2e8f0; border-radius: 2px;"><div style="width: 60%; height: 100%; background: #f59e0b; border-radius: 2px;"></div></div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 9px; padding: 3px 0;">
+            <span style="color: #0f172a;">Pedro Soto</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span style="font-size: 8px; color: #16a34a;">al día</span>
+              <div style="width: 40px; height: 4px; background: #e2e8f0; border-radius: 2px;"><div style="width: 100%; height: 100%; background: #16a34a; border-radius: 2px;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Division KPIs -->
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 4px;">EJECUCIÓN DAF</div>
+        <div style="display: flex; align-items: baseline; gap: 4px;">
+          <span style="font-size: 20px; font-weight: 700; color: #16a34a;">87%</span>
+          <span style="font-size: 9px; color: #64748b;">presupuesto ejecutado</span>
+          <span style="font-size: 8px; color: #16a34a; margin-left: auto;">↑ 4% vs mes anterior</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Second row -->
+<div style="max-width: 50%; margin-top: 16px;">
+  <!-- JEFE_DGI -->
+  <div class="mockup">
+    <div class="mockup-header">JEFE_DGI — Ana Pérez (DGI)</div>
+    <div class="mockup-body" style="font-size: 11px; font-family: system-ui;">
+      <!-- Greeting -->
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 700; font-size: 14px; color: #0f172a;">Buenos días, Ana</div>
+        <div style="color: #64748b; font-size: 10px;">Martes 11 marzo — 2 decisiones AR pendientes, 1 SLA breach</div>
+      </div>
+      <!-- Attention strip -->
+      <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #991b1b; margin-bottom: 4px;">⚠ REQUIERE TU DECISIÓN</div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 6px 8px; border-radius: 6px; border: 1px solid #fecaca;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #dc2626; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 10px; font-weight: 600;">SLA breach: REQ-2026-0045</div>
+              <div style="font-size: 8px; color: #991b1b;">Informe Flash — 2 días sobre plazo</div>
+            </div>
+            <div style="background: #196AB0; color: white; padding: 2px 6px; border-radius: 4px; font-size: 8px;">Ver</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; background: white; padding: 6px 8px; border-radius: 6px; border: 1px solid #fecaca;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 10px; font-weight: 600;">Decisión AR: Priorización FRIL Q2</div>
+              <div style="font-size: 8px; color: #b45309;">Plazo: 5 días</div>
+            </div>
+            <div style="background: #196AB0; color: white; padding: 2px 6px; border-radius: 4px; font-size: 8px;">Decidir</div>
+          </div>
+        </div>
+      </div>
+      <!-- Team status module (DGI variant) -->
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 6px;">EQUIPO DGI</div>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="display: flex; justify-content: space-between; font-size: 9px; padding: 2px 0;">
+            <span>Control Gestión</span>
+            <span style="font-size: 8px;"><span style="color: #16a34a;">●</span> 3 indicadores · <span style="color: #f59e0b;">●</span> 1 alerta</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 9px; padding: 2px 0;">
+            <span>Procesos</span>
+            <span style="font-size: 8px;"><span style="color: #16a34a;">●</span> 2 procesos · <span style="color: #16a34a;">●</span> ok</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 9px; padding: 2px 0;">
+            <span>Trans. Digital</span>
+            <span style="font-size: 8px;"><span style="color: #dc2626;">●</span> DS-09 vencido · <span style="color: #f59e0b;">●</span> 1 alerta</span>
+          </div>
+        </div>
+      </div>
+      <!-- Semáforo compact -->
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px;">
+        <div style="font-size: 9px; font-weight: 600; color: #475569; margin-bottom: 4px;">SEMÁFORO INSTITUCIONAL</div>
+        <div style="display: flex; gap: 6px;">
+          <div style="flex: 1; display: flex; align-items: center; gap: 4px; font-size: 9px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></div>Ppto</div>
+          <div style="flex: 1; display: flex; align-items: center; gap: 4px; font-size: 9px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div>IPR</div>
+          <div style="flex: 1; display: flex; align-items: center; gap: 4px; font-size: 9px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #dc2626;"></div>Conv</div>
+          <div style="flex: 1; display: flex; align-items: center; gap: 4px; font-size: 9px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></div>Riesgo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 24px; padding: 16px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px;">
+  <h3 style="margin: 0 0 8px; font-size: 14px;">Estructura común (las 3 vistas)</h3>
+  <div style="font-size: 12px; color: #475569; line-height: 1.6;">
+    <strong>1. Saludo contextual</strong> — nombre + fecha + resumen del día<br>
+    <strong>2. Strip de atención</strong> — items que requieren acción (del endpoint action-items)<br>
+    <strong>3. Módulo condicional</strong> — "Mi Progreso" (ejecutor) / "Mi Equipo" (supervisor) / "Equipo DGI" (DGI)<br>
+    <strong>4. KPIs/Semáforo compacto</strong> — métricas relevantes al rol
+  </div>
+</div>

@@ -17,11 +17,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuth } from "@/lib/auth";
-import { Download, Plus } from "lucide-react";
+import { Download, Plus, FileSignature, Scale } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate, formatCLP } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
 import { TimelineHistory } from "@/components/timeline-history";
+import { cn } from "@/lib/utils";
 import type {
   PaginatedResponse,
   ActoListItem,
@@ -110,14 +111,72 @@ function StateStepper({ currentState }: { currentState: string }) {
   );
 }
 
+// --- Pending Queue Component ---
+function PendingQueue({
+  items,
+  title,
+  icon: Icon,
+  onItemClick,
+}: {
+  items: ActoListItem[];
+  title: string;
+  icon: React.ElementType;
+  onItemClick: (item: ActoListItem) => void;
+}) {
+  if (items.length === 0) return null;
+
+  return (
+    <div className="rounded-lg border bg-card overflow-hidden border-l-4 border-l-amber-400">
+      <div className="px-4 py-3 bg-amber-50/50 dark:bg-amber-950/20 flex items-center gap-2">
+        <Icon className="size-4 text-amber-600" />
+        <h3 className="text-sm font-semibold">{title}</h3>
+        <span className="text-xs text-muted-foreground tabular-nums ml-auto">
+          {items.length}
+        </span>
+      </div>
+      <div className="divide-y">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            onClick={() => onItemClick(item)}
+            className="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-muted/50 transition-colors"
+          >
+            <span className="font-mono text-xs text-muted-foreground shrink-0 w-28">
+              {item.act_number ?? "-"}
+            </span>
+            <Badge variant="outline" className="text-[10px] shrink-0">
+              {item.act_type_label}
+            </Badge>
+            <span className="flex-1 text-sm truncate">{item.subject}</span>
+            <StateStepper currentState={item.state} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ActosPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user } = useAuth();
 
+  // --- Role awareness ---
+  const role = user?.role_code;
+  const isFirmante = role && ["GOBERNADOR", "ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(role);
+  const isJuridico = role === "ASESOR_JURIDICO";
+  const pendingState = isFirmante ? "VISADO" : isJuridico ? "EN_REVISION" : null;
+
   const [data, setData] = useState<PaginatedResponse<ActoListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Pending queue
+  const [pendingItems, setPendingItems] = useState<ActoListItem[]>([]);
+  const [pendingLoading, setPendingLoading] = useState(false);
+
+  // Drawer state
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<ActoDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -130,7 +189,7 @@ export default function ActosPage() {
   const [validTransitions, setValidTransitions] = useState<ActoTransition[]>([]);
 
   const canEdit =
-    user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+    user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "ANALISTA", "ASESOR_JURIDICO"].includes(user.role_code);
   const canCreate = canEdit;
 
   const page = Number(searchParams.get("page") ?? "1");
@@ -159,6 +218,18 @@ export default function ActosPage() {
   const handlePageChange = (newPage: number) =>
     router.push(buildUrl({ page: newPage }));
 
+  // Fetch pending queue
+  useEffect(() => {
+    if (!pendingState) return;
+    setPendingLoading(true);
+    api
+      .get<PaginatedResponse<ActoListItem>>(`/api/actos?state=${pendingState}&page_size=20`)
+      .then((r) => setPendingItems(r.items))
+      .catch(() => setPendingItems([]))
+      .finally(() => setPendingLoading(false));
+  }, [pendingState, refreshKey]);
+
+  // Fetch main list
   useEffect(() => {
     const params = new URLSearchParams();
     params.set("page", String(page));
@@ -174,7 +245,7 @@ export default function ActosPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, state, act_type]);
+  }, [page, state, act_type, refreshKey]);
 
   const openDetail = (row: unknown) => {
     const item = row as ActoListItem;
@@ -218,6 +289,7 @@ export default function ActosPage() {
         .then(setDetail)
         .catch(() => {})
         .finally(() => setDetailLoading(false));
+      setRefreshKey((k) => k + 1);
     } catch (err) {
       setEditError(err instanceof Error ? err.message : "Error al guardar");
     } finally {
@@ -288,7 +360,13 @@ export default function ActosPage() {
     <div className="p-6 space-y-4">
       <PageHeader
         title="Actos Administrativos"
-        description="Resoluciones, decretos, oficios y otros actos institucionales"
+        description={
+          isFirmante
+            ? "Actos pendientes de firma y tramitación"
+            : isJuridico
+              ? "Revisión y visación de actos"
+              : "Resoluciones, decretos, oficios y otros actos institucionales"
+        }
         accentColor="violet"
         actions={
           <>
@@ -311,6 +389,27 @@ export default function ActosPage() {
           </>
         }
       />
+
+      {/* Pending Queue — role-aware */}
+      {isFirmante && !pendingLoading && (
+        <PendingQueue
+          items={pendingItems}
+          title="Pendientes de firma"
+          icon={FileSignature}
+          onItemClick={openDetail}
+        />
+      )}
+      {isJuridico && !pendingLoading && (
+        <PendingQueue
+          items={pendingItems}
+          title="Pendientes de V.B."
+          icon={Scale}
+          onItemClick={openDetail}
+        />
+      )}
+      {pendingLoading && pendingState && (
+        <div className="h-20 rounded-lg bg-muted animate-pulse" />
+      )}
 
       <FilterBar
         filters={[

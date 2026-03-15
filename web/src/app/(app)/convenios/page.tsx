@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { DataTable } from "@/components/data-table";
@@ -29,8 +29,9 @@ import {
 } from "@/components/ui/dialog";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
-import { AlertTriangle, Download, Plus } from "lucide-react";
+import { AlertTriangle, Clock, Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
+import { cn } from "@/lib/utils";
 import { formatCLP, formatDate } from "@/lib/format";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { PageHeader } from "@/components/page-header";
@@ -124,7 +125,14 @@ export default function ConveniosPage() {
   const [paySubmitting, setPaySubmitting] = useState(false);
   const [confirmPayOpen, setConfirmPayOpen] = useState(false);
 
-  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA", "ASESOR_JURIDICO"].includes(user.role_code);
+
+  // Role awareness
+  const role = user?.role_code;
+  const isJuridico = role === "ASESOR_JURIDICO";
+  const didAutoScope = useRef(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [expiringItems, setExpiringItems] = useState<ConvenioListItem[]>([]);
 
   const page = Number(searchParams.get("page") ?? "1");
   const state = searchParams.get("state") ?? "";
@@ -168,7 +176,32 @@ export default function ConveniosPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, state, agreement_type, dateFrom, dateTo]);
+  }, [page, state, agreement_type, dateFrom, dateTo, refreshKey]);
+
+  // Auto-scope: ASESOR_JURIDICO gets EN_REVISION_JURIDICA pre-selected
+  useEffect(() => {
+    if (didAutoScope.current) return;
+    if (isJuridico && !searchParams.has("state")) {
+      didAutoScope.current = true;
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("state", "EN_REVISION_JURIDICA");
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [isJuridico, searchParams, pathname, router]);
+
+  // Fetch expiring convenios
+  useEffect(() => {
+    api
+      .get<PaginatedResponse<ConvenioListItem>>("/api/convenios?state=VIGENTE&page_size=50")
+      .then((r) =>
+        setExpiringItems(
+          r.items
+            .filter((i) => i.days_to_expiry !== null && i.days_to_expiry >= 0 && i.days_to_expiry <= 90)
+            .sort((a, b) => (a.days_to_expiry ?? 999) - (b.days_to_expiry ?? 999))
+        )
+      )
+      .catch(() => setExpiringItems([]));
+  }, [refreshKey]);
 
   const openDetail = (row: unknown) => {
     const item = row as ConvenioListItem;
@@ -222,6 +255,7 @@ export default function ConveniosPage() {
         .then(setDetail)
         .catch(() => {})
         .finally(() => setDetailLoading(false));
+      setRefreshKey((k) => k + 1);
     } catch (err) {
       setEditError(err instanceof Error ? err.message : "Error al guardar");
     } finally {
@@ -390,7 +424,11 @@ export default function ConveniosPage() {
     <div className="p-6 space-y-4">
       <PageHeader
         title="Convenios"
-        description="Gestión de convenios y cuotas de pago"
+        description={
+          isJuridico
+            ? "Revisión jurídica de convenios"
+            : "Gestión de convenios y cuotas de pago"
+        }
         accentColor="emerald"
         actions={
           <>
@@ -406,6 +444,58 @@ export default function ConveniosPage() {
           </>
         }
       />
+
+      {/* Próximos a vencer */}
+      {expiringItems.length > 0 && (
+        <div className="rounded-lg border bg-card overflow-hidden border-l-4 border-l-amber-400">
+          <div className="px-4 py-3 bg-amber-50/50 dark:bg-amber-950/20 flex items-center gap-2">
+            <Clock className="size-4 text-amber-600" />
+            <h3 className="text-sm font-semibold">Próximos a vencer</h3>
+            <span className="text-xs text-muted-foreground tabular-nums ml-auto">
+              {expiringItems.length}
+            </span>
+          </div>
+          <div className="divide-y">
+            {expiringItems.slice(0, 5).map((item) => (
+              <div
+                key={item.id}
+                onClick={() => openDetail(item)}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-muted/50 transition-colors",
+                  item.days_to_expiry !== null && item.days_to_expiry < 30
+                    ? "bg-red-50/30 dark:bg-red-950/10"
+                    : ""
+                )}
+              >
+                <span className="font-mono text-xs text-muted-foreground shrink-0 w-28">
+                  {item.agreement_number ?? "-"}
+                </span>
+                <span className="flex-1 text-sm truncate">{item.receiver_name ?? "-"}</span>
+                <span className="text-xs font-mono tabular-nums text-muted-foreground shrink-0">
+                  {formatCLP(item.total_amount)}
+                </span>
+                <span
+                  className={cn(
+                    "text-xs tabular-nums font-medium shrink-0 w-10 text-right",
+                    item.days_to_expiry !== null && item.days_to_expiry < 30
+                      ? "text-red-600"
+                      : item.days_to_expiry !== null && item.days_to_expiry < 60
+                        ? "text-amber-600"
+                        : "text-muted-foreground"
+                  )}
+                >
+                  {item.days_to_expiry}d
+                </span>
+              </div>
+            ))}
+            {expiringItems.length > 5 && (
+              <p className="px-4 py-2 text-xs text-muted-foreground text-center">
+                +{expiringItems.length - 5} más
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       <FilterBar
         filters={[

@@ -293,7 +293,8 @@ async def create_compromiso(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION",
+                   "JEFE_DEPARTAMENTO", "ANALISTA", "ENCARGADO")
 
     code = await _next_oc_code(db)
 

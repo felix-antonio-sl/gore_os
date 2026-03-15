@@ -54,7 +54,7 @@ export default function NuevoActoPage() {
 
   const canCreate =
     user &&
-    ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+    ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "ANALISTA", "ASESOR_JURIDICO"].includes(user.role_code);
 
   useEffect(() => {
     api

@@ -7,8 +7,9 @@ import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Calendar, Users, FileText } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
+import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, CoreSessionListItem } from "@/types";
 
@@ -54,6 +55,14 @@ export default function CoreSessionsPage() {
 
   const [data, setData] = useState<PaginatedResponse<CoreSessionListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [nextSession, setNextSession] = useState<CoreSessionListItem | null>(null);
+
+  // Role awareness
+  const role = user?.role_code;
+  const isConsejero = role === "CONSEJERO_REGIONAL";
+  const isSecretario = role === "SECRETARIO_EJECUTIVO";
+  const isGobernador = role === "GOBERNADOR";
+  const hasContextCard = isConsejero || isSecretario || isGobernador;
 
   const page = Number(searchParams.get("page") ?? "1");
   const statusFilter = searchParams.get("status") ?? "";
@@ -101,6 +110,25 @@ export default function CoreSessionsPage() {
       active = false;
     };
   }, [page, statusFilter, typeFilter]);
+
+  // Fetch next upcoming session (PROGRAMADA or EN_CURSO)
+  useEffect(() => {
+    if (!hasContextCard) return;
+    // Try EN_CURSO first (active session takes priority)
+    api
+      .get<PaginatedResponse<CoreSessionListItem>>("/api/core-sessions?status=EN_CURSO&page_size=1")
+      .then((r) => {
+        if (r.items.length > 0) {
+          setNextSession(r.items[0]);
+        } else {
+          // Fall back to next PROGRAMADA
+          return api
+            .get<PaginatedResponse<CoreSessionListItem>>("/api/core-sessions?status=PROGRAMADA&page_size=1")
+            .then((r2) => setNextSession(r2.items[0] ?? null));
+        }
+      })
+      .catch(() => setNextSession(null));
+  }, [hasContextCard]);
 
   const canCreate = user && MANAGER_ROLES.includes(user.role_code);
 
@@ -151,17 +179,84 @@ export default function CoreSessionsPage() {
     <div className="p-6 space-y-4">
       <PageHeader
         title="Sesiones CORE"
-        description="Sesiones del Consejo Regional de Nuble"
+        description={
+          isConsejero
+            ? "Sesiones del Consejo Regional"
+            : isSecretario
+              ? "Preparación y gestión de sesiones"
+              : "Sesiones del Consejo Regional de Ñuble"
+        }
         accentColor="violet"
         actions={
           canCreate ? (
             <Button onClick={() => router.push("/core-sessions/nueva")}>
               <Plus className="size-4 mr-1" />
-              Nueva Sesion
+              Nueva Sesión
             </Button>
           ) : undefined
         }
       />
+
+      {/* Context card — next session */}
+      {nextSession && hasContextCard && (
+        <div
+          className={cn(
+            "rounded-lg border bg-card overflow-hidden cursor-pointer hover:bg-muted/50 transition-colors",
+            nextSession.status === "EN_CURSO" && "border-l-4 border-l-amber-400"
+          )}
+          onClick={() => router.push(`/core-sessions/${nextSession.id}`)}
+        >
+          <div className="px-4 py-4">
+            <div className="flex items-center gap-2 mb-3">
+              <StatusBadge status={nextSession.status} />
+              <SessionTypeBadge type={nextSession.session_type} />
+              <span className="text-sm font-medium ml-auto">
+                Sesión #{nextSession.session_number}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="size-4 text-muted-foreground shrink-0" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Fecha</p>
+                  <p className="text-sm font-medium">{formatDateTime(nextSession.scheduled_at)}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <FileText className="size-4 text-muted-foreground shrink-0" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Temas</p>
+                  <p className="text-sm font-medium">
+                    {nextSession.topic_count > 0
+                      ? `${nextSession.topic_count} en agenda`
+                      : "Sin agenda"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="size-4 text-muted-foreground shrink-0" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Quorum</p>
+                  <p className="text-sm font-medium">
+                    {nextSession.quorum_reached === true
+                      ? "Alcanzado"
+                      : nextSession.quorum_reached === false
+                        ? "No alcanzado"
+                        : "9/16 requerido"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {isSecretario && nextSession.status === "PROGRAMADA" && nextSession.topic_count === 0 && (
+              <p className="text-xs text-amber-600 mt-3 font-medium">
+                Preparar agenda — agregar temas de votación
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="flex gap-2">
         {["", "PROGRAMADA", "EN_CURSO", "FINALIZADA"].map((s) => (
