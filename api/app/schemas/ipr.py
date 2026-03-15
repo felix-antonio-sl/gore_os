@@ -127,3 +127,27 @@ class DivisionCarteraItem(BaseModel):
     overdue_commitments: int
     health_signal: str  # VERDE, AMARILLO, ROJO
     health_reasons: list[str]
+
+
+class FormulacionIPR(BaseModel):
+    id: str
+    codigo_bip: str
+    name: str
+    phase: str
+    days_in_phase: int
+    has_mechanism: bool
+    partes_count: int
+    territorio_count: int
+    hitos_count: int
+    evaluaciones_count: int
+    admisibilidad_total: int
+    admisibilidad_verified: int
+    eval_assigned: bool
+    eval_result: str | None = None
+    suggested_action: str
+    suggested_tab: str
+
+
+class MisFormulacionesResponse(BaseModel):
+    total: int
+    by_phase: dict[str, list[FormulacionIPR]]
