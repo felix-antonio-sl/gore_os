@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate, formatCurrency } from "@/lib/format";
-import { alertBorderMap, mechanismColors, mcdPhaseColors } from "./ipr-constants";
+import { alertBorderMap, mechanismColors, mcdPhaseColors, STATUS_TO_PHASE, MCD_PHASES } from "./ipr-constants";
 import type { IprDetail } from "./ipr-constants";
 
 interface IprHeroCardProps {
@@ -78,17 +78,21 @@ export function IprHeroCard({ ipr, canEdit, canAssign, onEdit, onAssign }: IprHe
             <span className="font-medium">{ipr.fund_category_label || ipr.funding_source}</span>
           </div>
         )}
-        {ipr.mcd_phase && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-muted-foreground">Fase:</span>
-            <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[ipr.mcd_phase])}>
-              {ipr.mcd_phase}
-            </Badge>
-            {ipr.mcd_phase_label && (
-              <span className="text-xs text-muted-foreground">{ipr.mcd_phase_label}</span>
-            )}
-          </div>
-        )}
+        {(ipr.status || ipr.mcd_phase) && (() => {
+          const derivedPhase = ipr.status ? (STATUS_TO_PHASE[ipr.status] ?? ipr.mcd_phase) : ipr.mcd_phase;
+          const phaseLabel = MCD_PHASES.find(p => p.code === derivedPhase)?.label ?? ipr.mcd_phase_label;
+          return derivedPhase ? (
+            <div className="flex items-center gap-1.5">
+              <span className="text-muted-foreground">Fase:</span>
+              <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[derivedPhase])}>
+                {derivedPhase}
+              </Badge>
+              {phaseLabel && (
+                <span className="text-xs text-muted-foreground">{phaseLabel}</span>
+              )}
+            </div>
+          ) : null;
+        })()}
         {ipr.executor_name && (
           <div>
             <span className="text-muted-foreground">Ejecutor: </span>

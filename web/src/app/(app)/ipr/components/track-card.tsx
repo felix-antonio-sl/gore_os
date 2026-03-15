@@ -130,7 +130,7 @@ export function TrackCard({ track }: TrackCardProps) {
         <div className="space-y-1">
           <div className="flex items-center gap-1 text-muted-foreground">
             <Target className="size-3" />
-            <span>Resultado favorable</span>
+            <span>Dictamen requerido</span>
           </div>
           <div className="flex gap-1 flex-wrap">
             {track.favorable_products.map((p) => (
