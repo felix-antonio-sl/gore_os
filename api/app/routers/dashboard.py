@@ -185,6 +185,8 @@ async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
             priority=_compute_priority(temporal, sev),
             action_label="Completar",
             action_route=f"/ipr/{r['ipr_id']}?tab=compromisos" if r.get("ipr_id") else "/compromisos",
+            ipr_id=r.get("ipr_id"),
+            ipr_codigo_bip=r.get("ipr_codigo_bip"),
         ))
     return items
 
@@ -248,6 +250,7 @@ async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
             route = f"/ipr/{r['subject_id']}?tab=alertas"
         else:
             route = "/alertas"
+        ipr_id = str(r["subject_id"]) if r["subject_type"] == "core.ipr" else None
         items.append(ActionItem(
             id=r["id"],
             category="ALERTA",
@@ -260,6 +263,7 @@ async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
             priority=_compute_priority(None, sev),
             action_label="Ver",
             action_route=route,
+            ipr_id=ipr_id,
         ))
     return items
 
@@ -601,6 +605,8 @@ async def _ai_ipr_stale(db: AsyncSession, user: dict) -> list[ActionItem]:
             priority=_compute_priority(None, sev),
             action_label="Ver",
             action_route=f"/ipr/{r['id']}",
+            ipr_id=r["id"],
+            ipr_codigo_bip=r["codigo_bip"],
         ))
     return items
 

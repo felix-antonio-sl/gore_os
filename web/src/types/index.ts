@@ -1306,6 +1306,8 @@ export interface ActionItem {
   priority: number;
   action_label: string;
   action_route: string;
+  ipr_id?: string | null;
+  ipr_codigo_bip?: string | null;
 }
 
 export interface ActionItemsResponse {
