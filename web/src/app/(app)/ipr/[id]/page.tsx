@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState, Suspense, Fragment } from "react";
-import { useParams, useRouter, usePathname } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { useTabParam } from "@/hooks/use-tab-param";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { DrawerPanel } from "@/components/drawer-panel";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,17 +16,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowLeft } from "lucide-react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import type { IprTransition, TrackInfo, HistoryEntry } from "@/types";
 import { WRITE_OPERATIONAL_ROLES, TRANSITION_ROLES } from "@/types";
-import { TrackCard } from "../components/track-card";
-import { IprHeroCard } from "../components/ipr-hero-card";
-import { IprPhaseStepper } from "../components/ipr-phase-stepper";
-import { IprTransitionPanel } from "../components/ipr-transition-panel";
-import { IprHistorySection } from "../components/ipr-history-section";
+import { IprStickyHeader } from "../components/ipr-sticky-header";
+import { IprSidebarNav } from "../components/ipr-sidebar-nav";
+import { TabResumen } from "../components/tab-resumen";
 import type { IprDetail } from "../components/ipr-constants";
-import { TAB_GROUPS, TAB_LABELS } from "../components/ipr-constants";
+import { TAB_LABELS } from "../components/ipr-constants";
 import { TabCompromisos } from "../components/tab-compromisos";
 import { TabProblemas } from "../components/tab-problemas";
 import { TabAlertas } from "../components/tab-alertas";
@@ -56,41 +51,32 @@ interface UserOption {
 function IprDetailPageInner() {
   const params = useParams();
   const router = useRouter();
-  const pathname = usePathname();
   const { user } = useAuth();
   const id = params.id as string;
-  const [activeTab, setActiveTab] = useTabParam("tab", "compromisos");
+  const [activeTab, setActiveTab] = useTabParam("tab", "resumen");
 
   const [ipr, setIpr] = useState<IprDetail | null>(null);
   const [iprLoading, setIprLoading] = useState(true);
 
-  // Assignee drawer
   const [showAssignee, setShowAssignee] = useState(false);
   const [usersList, setUsersList] = useState<UserOption[]>([]);
   const [selectedAssignee, setSelectedAssignee] = useState("");
   const [assigneeSubmitting, setAssigneeSubmitting] = useState(false);
   const [assigneeError, setAssigneeError] = useState<string | null>(null);
 
-  // Edit IPR drawer
   const [showEdit, setShowEdit] = useState(false);
   const [editName, setEditName] = useState("");
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
-  // Transitions state
   const [transitions, setTransitions] = useState<IprTransition[] | null>(null);
   const [transLoading, setTransLoading] = useState(false);
   const [selectedTransition, setSelectedTransition] = useState("");
   const [transSubmitting, setTransSubmitting] = useState(false);
   const [transError, setTransError] = useState<string | null>(null);
 
-  // Track info state (Poly-Switch)
   const [trackInfo, setTrackInfo] = useState<TrackInfo | null>(null);
-
-  // Transition history (H20)
   const [history, setHistory] = useState<HistoryEntry[]>([]);
-
-  // Refresh key — increment to remount tab components after drawer saves
   const [refreshKey, setRefreshKey] = useState(0);
 
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "GOBERNADOR"].includes(user.role_code);
@@ -102,29 +88,15 @@ function IprDetailPageInner() {
   const canManageChildren = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA"].includes(user.role_code);
 
   useEffect(() => {
-    api
-      .get<IprDetail>(`/api/ipr/${id}`)
-      .then(setIpr)
-      .catch(() => setIpr(null))
-      .finally(() => setIprLoading(false));
-    api
-      .get<TrackInfo>(`/api/ipr/${id}/track-info`)
-      .then(setTrackInfo)
-      .catch(() => setTrackInfo(null));
-    api
-      .get<HistoryEntry[]>(`/api/ipr/${id}/historial`)
-      .then(setHistory)
-      .catch(() => setHistory([]));
+    api.get<IprDetail>(`/api/ipr/${id}`).then(setIpr).catch(() => setIpr(null)).finally(() => setIprLoading(false));
+    api.get<TrackInfo>(`/api/ipr/${id}/track-info`).then(setTrackInfo).catch(() => setTrackInfo(null));
+    api.get<HistoryEntry[]>(`/api/ipr/${id}/historial`).then(setHistory).catch(() => setHistory([]));
   }, [id]);
 
   const loadTransitions = () => {
     if (!canTransition) return;
     setTransLoading(true);
-    api
-      .get<IprTransition[]>(`/api/ipr/${id}/transiciones`)
-      .then(setTransitions)
-      .catch(() => setTransitions(null))
-      .finally(() => setTransLoading(false));
+    api.get<IprTransition[]>(`/api/ipr/${id}/transiciones`).then(setTransitions).catch(() => setTransitions(null)).finally(() => setTransLoading(false));
   };
 
   useEffect(() => {
@@ -152,63 +124,36 @@ function IprDetailPageInner() {
     }
   };
 
-  const openEditDrawer = () => {
-    setEditName(ipr?.name ?? "");
-    setEditError(null);
-    setShowEdit(true);
-  };
-
+  const openEditDrawer = () => { setEditName(ipr?.name ?? ""); setEditError(null); setShowEdit(true); };
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editName.trim()) {
-      setEditError("El nombre es requerido.");
-      return;
-    }
-    setEditSubmitting(true);
-    setEditError(null);
+    if (!editName.trim()) { setEditError("El nombre es requerido."); return; }
+    setEditSubmitting(true); setEditError(null);
     try {
       await api.patch(`/api/ipr/${id}`, { name: editName.trim() });
-      setShowEdit(false);
-      setRefreshKey((k) => k + 1);
+      setShowEdit(false); setRefreshKey((k) => k + 1);
       api.get<IprDetail>(`/api/ipr/${id}`).then(setIpr).catch(() => {});
-    } catch (err) {
-      setEditError(err instanceof Error ? err.message : "Error al actualizar IPR");
-    } finally {
-      setEditSubmitting(false);
-    }
+    } catch (err) { setEditError(err instanceof Error ? err.message : "Error al actualizar IPR"); }
+    finally { setEditSubmitting(false); }
   };
 
-  const openAssigneeDrawer = () => {
-    setShowAssignee(true);
-    setAssigneeError(null);
-    setSelectedAssignee("");
-    api.get<UserOption[]>("/api/catalogs/users").then(setUsersList).catch(() => {});
-  };
-
+  const openAssigneeDrawer = () => { setShowAssignee(true); setAssigneeError(null); setSelectedAssignee(""); api.get<UserOption[]>("/api/catalogs/users").then(setUsersList).catch(() => {}); };
   const handleAssigneeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedAssignee) {
-      setAssigneeError("Seleccione un usuario.");
-      return;
-    }
-    setAssigneeSubmitting(true);
-    setAssigneeError(null);
+    if (!selectedAssignee) { setAssigneeError("Seleccione un usuario."); return; }
+    setAssigneeSubmitting(true); setAssigneeError(null);
     try {
       await api.patch(`/api/ipr/${id}`, { assignee_id: selectedAssignee });
-      setShowAssignee(false);
-      setRefreshKey((k) => k + 1);
-    } catch (err) {
-      setAssigneeError(err instanceof Error ? err.message : "Error al asignar responsable");
-    } finally {
-      setAssigneeSubmitting(false);
-    }
+      setShowAssignee(false); setRefreshKey((k) => k + 1);
+    } catch (err) { setAssigneeError(err instanceof Error ? err.message : "Error al asignar responsable"); }
+    finally { setAssigneeSubmitting(false); }
   };
 
   if (iprLoading) {
     return (
       <div className="p-6 space-y-4">
-        <div className="h-8 w-40 rounded bg-muted animate-pulse" />
-        <div className="h-32 rounded-xl bg-muted animate-pulse" />
+        <div className="h-12 w-full rounded bg-muted animate-pulse" />
+        <div className="h-64 rounded-xl bg-muted animate-pulse" />
       </div>
     );
   }
@@ -217,23 +162,53 @@ function IprDetailPageInner() {
     return (
       <div className="p-6">
         <Button variant="ghost" size="sm" onClick={() => router.back()}>
-          <ArrowLeft className="size-4 mr-2" />
-          Volver
+          <ArrowLeft className="size-4 mr-2" /> Volver
         </Button>
         <p className="mt-4 text-muted-foreground">IPR no encontrado.</p>
       </div>
     );
   }
 
-  return (
-    <div className="p-6 space-y-4">
-      <Breadcrumb items={buildBreadcrumbs(pathname, ipr?.codigo_bip)} />
-      <Button variant="ghost" size="sm" onClick={() => router.back()}>
-        <ArrowLeft className="size-4 mr-2" />
-        Volver a IPR
-      </Button>
+  const tabContent = (
+    <>
+      {activeTab === "resumen" && (
+        <TabResumen
+          ipr={ipr}
+          transitions={transitions}
+          transLoading={transLoading}
+          trackInfo={trackInfo}
+          history={history}
+          canTransition={!!canTransition}
+          selectedTransition={selectedTransition}
+          onSelectTransition={setSelectedTransition}
+          onTransition={handleTransition}
+          transSubmitting={transSubmitting}
+          transError={transError}
+        />
+      )}
+      {activeTab === "compromisos" && <TabCompromisos key={refreshKey} iprId={id} canCreate={!!canCreateCompromiso} />}
+      {activeTab === "problemas" && <TabProblemas key={refreshKey} iprId={id} canCreate={!!canCreateProblema} />}
+      {activeTab === "alertas" && <TabAlertas key={refreshKey} iprId={id} />}
+      {activeTab === "convenios" && <TabConvenios key={refreshKey} iprId={id} canCreate={!!canCreateConvenio} />}
+      {activeTab === "rendiciones" && <TabRendiciones key={refreshKey} iprId={id} />}
+      {activeTab === "cdps" && <TabCdps key={refreshKey} iprId={id} />}
+      {activeTab === "avances" && <TabAvances key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "partes" && <TabPartes key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "territorio" && <TabTerritorio key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "hitos" && <TabHitos key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "resoluciones" && <TabResoluciones key={refreshKey} iprId={id} />}
+      {activeTab === "evaluaciones" && <TabEvaluaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} mechanismCode={ipr?.mechanism} />}
+      {activeTab === "parentesco" && <TabParentesco key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "admisibilidad" && <TabAdmisibilidad key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "modificaciones" && <TabModificaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+      {activeTab === "cierre" && <TabCierre key={refreshKey} iprId={id} canManage={!!canManageChildren} iprStatus={ipr?.status} />}
+      {activeTab === "evaluacion-expost" && <TabEvaluacionExpost key={refreshKey} iprId={id} canManage={!!canManageChildren} />}
+    </>
+  );
 
-      <IprHeroCard
+  return (
+    <div className="flex flex-col h-[calc(100vh-3.5rem)]">
+      <IprStickyHeader
         ipr={ipr}
         canEdit={!!canEdit}
         canAssign={!!canAssign}
@@ -241,202 +216,84 @@ function IprDetailPageInner() {
         onAssign={openAssigneeDrawer}
       />
 
-      {ipr.mcd_phase && (
-        <IprPhaseStepper
-          currentPhase={ipr.mcd_phase}
-          currentPhaseLabel={ipr.mcd_phase_label}
-          phaseEnteredAt={ipr.phase_entered_at}
-        />
-      )}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar — hidden on mobile */}
+        <aside className="hidden md:block w-52 border-r overflow-y-auto shrink-0 bg-background">
+          <IprSidebarNav activeTab={activeTab} onTabChange={setActiveTab} />
+        </aside>
 
-      {history.length > 0 && <IprHistorySection history={history} />}
-
-      {canTransition && (
-        <IprTransitionPanel
-          transitions={transitions ?? []}
-          loading={transLoading}
-          selectedTransition={selectedTransition}
-          onSelectTransition={setSelectedTransition}
-          submitting={transSubmitting}
-          onTransition={handleTransition}
-          error={transError}
-          currentPhase={ipr.mcd_phase}
-        />
-      )}
-
-      {/* Track Card (Poly-Switch) */}
-      {trackInfo && trackInfo.mechanism && (
-        <TrackCard track={trackInfo} />
-      )}
-
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <div className="space-y-1">
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-            {TAB_GROUPS.map((group) => (
-              <div key={group.label} className="flex items-center gap-0.5">
-                <span className="text-[9px] text-muted-foreground/60 uppercase tracking-wider mr-1 hidden sm:inline">
-                  {group.label}
-                </span>
-                <TabsList className="h-auto p-0.5 bg-transparent gap-0">
-                  {group.tabs.map((tab) => (
-                    <TabsTrigger key={tab} value={tab} className="text-xs px-2 py-1 h-7">
-                      {TAB_LABELS[tab] ?? tab}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
-            ))}
+        {/* Content */}
+        <main className="flex-1 overflow-y-auto p-6">
+          {/* Mobile tab selector */}
+          <div className="md:hidden mb-4">
+            <Select value={activeTab} onValueChange={setActiveTab}>
+              <SelectTrigger className="w-full">
+                <SelectValue>{TAB_LABELS[activeTab] ?? activeTab}</SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="resumen">Resumen</SelectItem>
+                <SelectItem value="compromisos">Compromisos</SelectItem>
+                <SelectItem value="problemas">Problemas</SelectItem>
+                <SelectItem value="hitos">Hitos</SelectItem>
+                <SelectItem value="avances">Avances</SelectItem>
+                <SelectItem value="alertas">Alertas</SelectItem>
+                <SelectItem value="cdps">Presupuesto</SelectItem>
+                <SelectItem value="convenios">Convenios</SelectItem>
+                <SelectItem value="rendiciones">Rendiciones</SelectItem>
+                <SelectItem value="resoluciones">Resoluciones</SelectItem>
+                <SelectItem value="partes">Partes</SelectItem>
+                <SelectItem value="territorio">Territorio</SelectItem>
+                <SelectItem value="evaluaciones">Evaluación</SelectItem>
+                <SelectItem value="parentesco">Parentesco</SelectItem>
+                <SelectItem value="admisibilidad">Admisibilidad</SelectItem>
+                <SelectItem value="modificaciones">Modificaciones</SelectItem>
+                <SelectItem value="cierre">Cierre</SelectItem>
+                <SelectItem value="evaluacion-expost">Eval. Posterior</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        </div>
 
-        <TabsContent value="compromisos" className="mt-4">
-          <TabCompromisos key={refreshKey} iprId={id} canCreate={!!canCreateCompromiso} />
-        </TabsContent>
+          {tabContent}
+        </main>
+      </div>
 
-        <TabsContent value="problemas" className="mt-4">
-          <TabProblemas key={refreshKey} iprId={id} canCreate={!!canCreateProblema} />
-        </TabsContent>
-
-        <TabsContent value="alertas" className="mt-4">
-          <TabAlertas key={refreshKey} iprId={id} />
-        </TabsContent>
-
-        <TabsContent value="convenios" className="mt-4">
-          <TabConvenios key={refreshKey} iprId={id} canCreate={!!canCreateConvenio} />
-        </TabsContent>
-
-        <TabsContent value="rendiciones" className="mt-4">
-          <TabRendiciones key={refreshKey} iprId={id} />
-        </TabsContent>
-
-        <TabsContent value="cdps" className="mt-4">
-          <TabCdps key={refreshKey} iprId={id} />
-        </TabsContent>
-
-        <TabsContent value="avances" className="mt-4">
-          <TabAvances key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="partes" className="mt-4">
-          <TabPartes key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="territorio" className="mt-4">
-          <TabTerritorio key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="hitos" className="mt-4">
-          <TabHitos key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="resoluciones" className="mt-4">
-          <TabResoluciones key={refreshKey} iprId={id} />
-        </TabsContent>
-
-        <TabsContent value="evaluaciones" className="mt-4">
-          <TabEvaluaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} mechanismCode={ipr?.mechanism} />
-        </TabsContent>
-
-        <TabsContent value="parentesco" className="mt-4">
-          <TabParentesco key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="admisibilidad" className="mt-4">
-          <TabAdmisibilidad key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="modificaciones" className="mt-4">
-          <TabModificaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-
-        <TabsContent value="cierre" className="mt-4">
-          <TabCierre key={refreshKey} iprId={id} canManage={!!canManageChildren} iprStatus={ipr?.status} />
-        </TabsContent>
-
-        <TabsContent value="evaluacion-expost" className="mt-4">
-          <TabEvaluacionExpost key={refreshKey} iprId={id} canManage={!!canManageChildren} />
-        </TabsContent>
-      </Tabs>
-
-      {/* Assignee Drawer */}
-      <DrawerPanel
-        open={showAssignee}
-        onClose={() => setShowAssignee(false)}
-        title="Asignar Responsable"
-      >
+      {/* Drawers */}
+      <DrawerPanel open={showAssignee} onClose={() => setShowAssignee(false)} title="Asignar Responsable">
         <form onSubmit={handleAssigneeSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Responsable *</label>
             <Select value={selectedAssignee} onValueChange={setSelectedAssignee}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione usuario" />
-              </SelectTrigger>
+              <SelectTrigger><SelectValue placeholder="Seleccione usuario" /></SelectTrigger>
               <SelectContent>
                 {usersList.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
-                    {u.nombre} {u.apellido_paterno}
-                    {u.division_name ? ` (${u.division_name})` : ""}
+                    {u.nombre} {u.apellido_paterno}{u.division_name ? ` (${u.division_name})` : ""}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-
-          {assigneeError && (
-            <p className="text-sm text-red-600">{assigneeError}</p>
-          )}
-
+          {assigneeError && <p className="text-sm text-red-600">{assigneeError}</p>}
           <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={assigneeSubmitting}>
-              {assigneeSubmitting ? "Asignando..." : "Asignar"}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowAssignee(false)}
-            >
-              Cancelar
-            </Button>
+            <Button type="submit" disabled={assigneeSubmitting}>{assigneeSubmitting ? "Asignando..." : "Asignar"}</Button>
+            <Button type="button" variant="outline" onClick={() => setShowAssignee(false)}>Cancelar</Button>
           </div>
         </form>
       </DrawerPanel>
 
-      {/* Edit IPR Drawer */}
-      <DrawerPanel
-        open={showEdit}
-        onClose={() => setShowEdit(false)}
-        title="Editar IPR"
-      >
+      <DrawerPanel open={showEdit} onClose={() => setShowEdit(false)} title="Editar IPR">
         <form onSubmit={handleEditSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Nombre *</label>
-            <Input
-              value={editName}
-              onChange={(e) => setEditName(e.target.value)}
-              placeholder="Nombre del IPR"
-            />
+            <Input value={editName} onChange={(e) => setEditName(e.target.value)} placeholder="Nombre del IPR" />
           </div>
-
-          {editError && (
-            <p className="text-sm text-red-600">{editError}</p>
-          )}
-
+          {editError && <p className="text-sm text-red-600">{editError}</p>}
           <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={editSubmitting}>
-              {editSubmitting ? "Guardando..." : "Guardar"}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowEdit(false)}
-            >
-              Cancelar
-            </Button>
+            <Button type="submit" disabled={editSubmitting}>{editSubmitting ? "Guardando..." : "Guardar"}</Button>
+            <Button type="button" variant="outline" onClick={() => setShowEdit(false)}>Cancelar</Button>
           </div>
         </form>
       </DrawerPanel>
-
     </div>
   );
 }
