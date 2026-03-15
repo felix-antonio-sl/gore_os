@@ -61,6 +61,12 @@ const thresholdLabels: Record<string, string> = {
   core_direct_assign_pct: "Asignación directa máx.",
   puntaje_min: "Puntaje mínimo requerido",
   cgr_res30_utm: "Contraloría Res. 30 sobre",
+  directorio_max_days: "Vigencia directorio máx.",
+  pagare_coverage_pct: "Cobertura pagaré mín.",
+  pagare_min_months: "Pagaré vigencia mín. (meses)",
+  ranking_persistence: "Persistencia ranking",
+  fril_max_per_comuna: "Máximo FRIL por comuna",
+  fril_tender_days: "Plazo licitación FRIL",
 };
 
 const slaLabels: Record<string, string> = {

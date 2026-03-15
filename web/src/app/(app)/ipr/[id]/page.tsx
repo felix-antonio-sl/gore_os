@@ -270,18 +270,24 @@ function IprDetailPageInner() {
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="flex-wrap">
-          {TAB_GROUPS.map((group, gi) => (
-            <Fragment key={group.label}>
-              {gi > 0 && <div className="w-px h-5 bg-muted-foreground/30 mx-1.5 shrink-0 self-center" />}
-              {group.tabs.map((tab) => (
-                <TabsTrigger key={tab} value={tab}>
-                  {TAB_LABELS[tab] ?? tab}
-                </TabsTrigger>
-              ))}
-            </Fragment>
-          ))}
-        </TabsList>
+        <div className="space-y-1">
+          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+            {TAB_GROUPS.map((group) => (
+              <div key={group.label} className="flex items-center gap-0.5">
+                <span className="text-[9px] text-muted-foreground/60 uppercase tracking-wider mr-1 hidden sm:inline">
+                  {group.label}
+                </span>
+                <TabsList className="h-auto p-0.5 bg-transparent gap-0">
+                  {group.tabs.map((tab) => (
+                    <TabsTrigger key={tab} value={tab} className="text-xs px-2 py-1 h-7">
+                      {TAB_LABELS[tab] ?? tab}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <TabsContent value="compromisos" className="mt-4">
           <TabCompromisos key={refreshKey} iprId={id} canCreate={!!canCreateCompromiso} />
