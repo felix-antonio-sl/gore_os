@@ -112,16 +112,6 @@ function CentroMandoContent() {
         : "Sin decisiones pendientes",
     },
     {
-      title: "Reuniones (7 días)",
-      count: summary.meetings.upcoming,
-      icon: <CalendarClock className="size-5" />,
-      href: "/reuniones",
-      threshold: 0,
-      detail: summary.meetings.next.length > 0
-        ? `Próxima: ${formatDateTime(summary.meetings.next[0].scheduled_at)}`
-        : "Sin reuniones programadas",
-    },
-    {
       title: "SLA Vencidos",
       count: summary.sla_breaches.count,
       icon: <Clock className="size-5" />,
@@ -204,7 +194,18 @@ function CentroMandoContent() {
                 return (
                   <div
                     key={`${event.category}-${event.ref_code}-${idx}`}
-                    className="flex items-start gap-3 py-2 border-b last:border-0"
+                    className="flex items-start gap-3 py-2 border-b last:border-0 cursor-pointer hover:bg-accent/50 rounded-md px-1 -mx-1 transition-colors"
+                    onClick={() => {
+                      const routes: Record<string, string> = {
+                        ESCALATION: "/escalamiento",
+                        ALERT: "/alertas",
+                        RISK: "/riesgos",
+                        DECISION: "/coordinacion",
+                        MEETING: "/reuniones",
+                      };
+                      const base = routes[event.category] ?? "/";
+                      router.push(event.entity_id ? `${base}/${event.entity_id}` : base);
+                    }}
                   >
                     <Badge variant="outline" className={`${config.color} shrink-0`}>
                       {config.icon}
