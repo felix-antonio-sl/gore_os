@@ -2122,6 +2122,108 @@ async def list_iprs(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/ipr/mis-formulaciones — ANALISTA pipeline F0-F2
+# ---------------------------------------------------------------------------
+
+@router.get("/mis-formulaciones")
+async def get_mis_formulaciones(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """IPRs assigned to current user in F0-F2 with satellite completeness."""
+    from app.schemas.ipr import FormulacionIPR, MisFormulacionesResponse
+
+    user_id = str(user["id"])
+
+    sql = text("""
+        SELECT i.id, i.codigo_bip, i.name,
+               mcd.code AS phase,
+               COALESCE(EXTRACT(DAY FROM NOW() - i.phase_entered_at)::int, 0) AS days_in_phase,
+               i.mechanism_id IS NOT NULL AS has_mechanism,
+               (SELECT COUNT(*) FROM core.ipr_party WHERE ipr_id = i.id AND deleted_at IS NULL) AS partes_count,
+               (SELECT COUNT(*) FROM core.ipr_territory WHERE ipr_id = i.id AND deleted_at IS NULL) AS territorio_count,
+               (SELECT COUNT(*) FROM core.ipr_milestone WHERE ipr_id = i.id AND deleted_at IS NULL) AS hitos_count,
+               (SELECT COUNT(*) FROM core.evaluation_assignment WHERE ipr_id = i.id AND deleted_at IS NULL) AS evaluaciones_count,
+               (SELECT COUNT(*) FROM core.evaluation_assignment WHERE ipr_id = i.id AND deleted_at IS NULL AND result_id IS NOT NULL) AS eval_with_result,
+               (SELECT COUNT(*) FROM core.admissibility_check WHERE ipr_id = i.id) AS admisibilidad_total,
+               (SELECT COUNT(*) FROM core.admissibility_check WHERE ipr_id = i.id AND verified_at IS NOT NULL) AS admisibilidad_verified
+        FROM core.ipr i
+        JOIN ref.category sc ON sc.id = i.status_id
+        LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+        WHERE i.assignee_id = :uid
+          AND i.deleted_at IS NULL
+          AND mcd.code IN ('F0', 'F1', 'F2')
+          AND sc.code NOT IN ('ANULADO', 'TERMINADO_ANTICIPADAMENTE', 'INADMISIBLE')
+        ORDER BY mcd.code, i.phase_entered_at ASC
+    """)
+    rows = (await db.execute(sql, {"uid": user_id})).mappings().all()
+
+    by_phase: dict[str, list[FormulacionIPR]] = {"F0": [], "F1": [], "F2": []}
+    for r in rows:
+        phase = r["phase"] or "F0"
+        if phase == "F0":
+            missing = []
+            if not r["has_mechanism"]:
+                missing.append("mecanismo")
+            if r["partes_count"] == 0:
+                missing.append("partes")
+            if r["territorio_count"] == 0:
+                missing.append("territorio")
+            if r["hitos_count"] == 0:
+                missing.append("hitos")
+            if missing:
+                action = f"Completar {', '.join(missing)} para avanzar a F1"
+                tab = missing[0]
+            else:
+                action = "Lista para avanzar a F1"
+                tab = "compromisos"
+        elif phase == "F1":
+            total_adm = r["admisibilidad_total"]
+            verified = r["admisibilidad_verified"]
+            if total_adm > 0 and verified < total_adm:
+                action = f"Verificar {total_adm - verified} items de admisibilidad pendientes"
+                tab = "admisibilidad"
+            elif total_adm == 0:
+                action = "Sin items de admisibilidad configurados"
+                tab = "admisibilidad"
+            else:
+                action = "Admisibilidad completa — lista para avanzar a F2"
+                tab = "compromisos"
+        else:
+            if r["evaluaciones_count"] == 0:
+                action = "Asignar evaluador según mecanismo"
+                tab = "evaluaciones"
+            elif r["eval_with_result"] == 0:
+                action = "Esperando resultado de evaluación externa"
+                tab = "evaluaciones"
+            else:
+                action = "Evaluación registrada — lista para avanzar a F3"
+                tab = "evaluaciones"
+
+        by_phase[phase].append(FormulacionIPR(
+            id=str(r["id"]),
+            codigo_bip=r["codigo_bip"] or "",
+            name=r["name"] or "",
+            phase=phase,
+            days_in_phase=r["days_in_phase"],
+            has_mechanism=bool(r["has_mechanism"]),
+            partes_count=r["partes_count"],
+            territorio_count=r["territorio_count"],
+            hitos_count=r["hitos_count"],
+            evaluaciones_count=r["evaluaciones_count"],
+            admisibilidad_total=r["admisibilidad_total"],
+            admisibilidad_verified=r["admisibilidad_verified"],
+            eval_assigned=r["evaluaciones_count"] > 0,
+            eval_result=None,
+            suggested_action=action,
+            suggested_tab=tab,
+        ))
+
+    total = sum(len(v) for v in by_phase.values())
+    return MisFormulacionesResponse(total=total, by_phase=by_phase)
+
+
+# ---------------------------------------------------------------------------
 # GET /api/ipr/cartera-por-division — Division portfolio with health signals
 # ---------------------------------------------------------------------------
 

@@ -5,7 +5,8 @@ import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { formatDateLong } from "@/lib/format";
 import { AttentionStrip } from "./attention-strip";
-import { ModuleMyProgress } from "./module-my-progress";
+import { ModuleMyWork } from "./module-my-work";
+import { ModuleFormulacion } from "./module-formulacion";
 import { ModuleMyTeam } from "./module-my-team";
 import { ModuleDgiTeam } from "./module-dgi-team";
 import { ModuleKpis } from "./module-kpis";
@@ -13,7 +14,7 @@ import { ModuleJuridico } from "./module-juridico";
 import type { ActionItemsResponse, RoleCode, KPICardData, DashboardExecutivoResponse, DivisionBreakdown } from "@/types";
 
 // Role → module mapping
-const PROGRESS_ROLES: RoleCode[] = ["ENCARGADO", "ANALISTA", "RTF", "ASESOR_JURIDICO"];
+const KPI_ROLES: RoleCode[] = ["ENCARGADO", "ANALISTA", "RTF", "ASESOR_JURIDICO"];
 const TEAM_ROLES: RoleCode[] = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD"];
 const DGI_TEAM_ROLES: RoleCode[] = ["JEFE_DGI"];
 const INDICATOR_ROLES: RoleCode[] = ["ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD"];
@@ -54,7 +55,7 @@ export function CommandCenter() {
       api.get<{ kpis: KPICardData[] }>("/api/dashboard/mi-division")
         .then((d) => setKpis(d.kpis))
         .catch(() => {});
-    } else if (PROGRESS_ROLES.includes(role)) {
+    } else if (KPI_ROLES.includes(role)) {
       api.get<{ kpis: KPICardData[] }>("/api/dashboard/mis-compromisos")
         .then((d) => setKpis(d.kpis))
         .catch(() => {});
@@ -91,8 +92,9 @@ export function CommandCenter() {
       {/* 2. Attention strip */}
       {actionData && <AttentionStrip items={actionData.items} />}
 
-      {/* 3. Conditional module */}
-      {role && PROGRESS_ROLES.includes(role) && <ModuleMyProgress />}
+      {/* 3. Conditional module — journey-specific */}
+      {role === "ENCARGADO" && actionData && <ModuleMyWork items={actionData.items} />}
+      {role === "ANALISTA" && <ModuleFormulacion />}
       {role && TEAM_ROLES.includes(role) && <ModuleMyTeam />}
       {role && DGI_TEAM_ROLES.includes(role) && <ModuleDgiTeam />}
       {role === "ASESOR_JURIDICO" && <ModuleJuridico />}

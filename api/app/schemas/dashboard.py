@@ -122,6 +122,8 @@ class ActionItem(BaseModel):
     priority: int
     action_label: str
     action_route: str
+    ipr_id: str | None = None
+    ipr_codigo_bip: str | None = None
 
 
 class ActionItemsResponse(BaseModel):

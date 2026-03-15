@@ -1306,6 +1306,35 @@ export interface ActionItem {
   priority: number;
   action_label: string;
   action_route: string;
+  ipr_id?: string | null;
+  ipr_codigo_bip?: string | null;
+}
+
+// ---------------------------------------------------------------------------
+// ANALISTA Formulation Pipeline
+// ---------------------------------------------------------------------------
+export interface FormulacionIPR {
+  id: string;
+  codigo_bip: string;
+  name: string;
+  phase: string;
+  days_in_phase: number;
+  has_mechanism: boolean;
+  partes_count: number;
+  territorio_count: number;
+  hitos_count: number;
+  evaluaciones_count: number;
+  admisibilidad_total: number;
+  admisibilidad_verified: number;
+  eval_assigned: boolean;
+  eval_result: string | null;
+  suggested_action: string;
+  suggested_tab: string;
+}
+
+export interface MisFormulacionesResponse {
+  total: number;
+  by_phase: Record<string, FormulacionIPR[]>;
 }
 
 export interface ActionItemsResponse {
