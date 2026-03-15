@@ -80,7 +80,7 @@ export function IprHeroCard({ ipr, canEdit, canAssign, onEdit, onAssign }: IprHe
         )}
         {ipr.mcd_phase && (
           <div className="flex items-center gap-1.5">
-            <span className="text-muted-foreground">Fase MCD:</span>
+            <span className="text-muted-foreground">Fase:</span>
             <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[ipr.mcd_phase])}>
               {ipr.mcd_phase}
             </Badge>

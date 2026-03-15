@@ -36,29 +36,44 @@ const productColors: Record<string, string> = {
   IN: "bg-red-100 text-red-800",
 };
 
+const productLabels: Record<string, string> = {
+  RS: "Rec. Satisfactoria",
+  RF: "Rec. Favorable",
+  ITF: "Inf. Técnico Favorable",
+  FI: "Favorable c/ Indicaciones",
+  FC: "Favorable Condicionado",
+  OT: "Observado Técnicamente",
+  AD: "Aprobado Directo",
+  AT: "Aprobado Técnicamente",
+  NV: "No Viable",
+  IN: "Inadmisible",
+};
+
 const thresholdLabels: Record<string, string> = {
-  cgr_toma_razon: "Toma de razón CGR",
-  core_approval: "Aprobación CORE",
-  max_utm: "Tope UTM",
-  min_clp: "Monto mínimo CLP",
+  cgr_toma_razon: "Contraloría revisa sobre",
+  core_approval: "Aprobación Consejo Regional sobre",
+  max_utm: "Monto máximo",
+  min_clp: "Monto mínimo",
   licitacion_max_days: "Plazo licitación",
   conservation_exempt_pct: "Exención conservación",
-  gasto_admin_max_pct: "Gasto admin máx.",
-  sisrec_mandatory_utm: "SISREC obligatorio",
-  core_direct_assign_pct: "Asignación directa",
-  puntaje_min: "Puntaje mínimo",
-  cgr_res30_utm: "CGR Res. 30",
+  gasto_admin_max_pct: "Gasto administrativo máx.",
+  sisrec_mandatory_utm: "Rendición obligatoria sobre",
+  core_direct_assign_pct: "Asignación directa máx.",
+  puntaje_min: "Puntaje mínimo requerido",
+  cgr_res30_utm: "Contraloría Res. 30 sobre",
 };
 
 const slaLabels: Record<string, string> = {
   admisibilidad: "Admisibilidad",
-  ate_first_rate: "Primera calificación ATE",
-  fi_subsanacion: "Subsanación FI",
-  rate_max: "Calificación máx.",
+  ate_first_rate: "Evaluación técnica",
+  fi_subsanacion: "Subsanación observaciones",
+  rate_max: "Evaluación máxima",
   licitacion: "Licitación",
-  feedback_round: "Ronda feedback",
+  feedback_round: "Ronda observaciones",
   consultas: "Consultas",
-  ejecucion_max_months: "Ejecución máx. (meses)",
+  ejecucion_max_months: "Ejecución máxima (meses)",
+  evaluation_max_days: "Evaluación",
+  report_frequency_days: "Informe periódico",
 };
 
 interface TrackCardProps {
@@ -115,12 +130,12 @@ export function TrackCard({ track }: TrackCardProps) {
         <div className="space-y-1">
           <div className="flex items-center gap-1 text-muted-foreground">
             <Target className="size-3" />
-            <span>Producto F2</span>
+            <span>Resultado favorable</span>
           </div>
           <div className="flex gap-1 flex-wrap">
             {track.favorable_products.map((p) => (
               <Badge key={p} variant="secondary" className={cn("text-[10px] px-1.5 py-0", productColors[p])}>
-                {p}
+                {productLabels[p] ?? p}
               </Badge>
             ))}
           </div>
@@ -131,7 +146,7 @@ export function TrackCard({ track }: TrackCardProps) {
           <div className="space-y-1">
             <div className="flex items-center gap-1 text-muted-foreground">
               <Shield className="size-3" />
-              <span>Umbrales</span>
+              <span>Requisitos</span>
             </div>
             <div className="space-y-0.5">
               {Object.entries(track.thresholds).slice(0, 3).map(([key, val]) => (
