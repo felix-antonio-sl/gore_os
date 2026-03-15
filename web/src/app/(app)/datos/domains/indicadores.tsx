@@ -468,6 +468,14 @@ export const indicadoresConfig: DomainConfig = {
       ],
     },
     {
+      key: "trend", label: "Tendencia",
+      options: [
+        { value: "down", label: "Empeorando" },
+        { value: "up", label: "Mejorando" },
+        { value: "flat", label: "Estable" },
+      ],
+    },
+    {
       key: "lifecycle", label: "Ciclo de Vida",
       options: [
         { value: "BORRADOR", label: "Borrador" },
@@ -508,8 +516,10 @@ export const indicadoresConfig: DomainConfig = {
 
     const search = params.get("search") ?? "";
     const signal = params.get("signal") ?? "";
+    const trend = params.get("trend") ?? "";
     let filtered = data;
     if (signal) filtered = filtered.filter((i) => i.signal === signal);
+    if (trend) filtered = filtered.filter((i) => i.trend === trend);
     if (search) {
       const q = search.toLowerCase();
       filtered = filtered.filter((i) => i.name.toLowerCase().includes(q) || i.code.toLowerCase().includes(q));
