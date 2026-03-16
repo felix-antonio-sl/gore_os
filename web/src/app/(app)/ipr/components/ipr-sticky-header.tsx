@@ -80,6 +80,15 @@ export function IprStickyHeader({ ipr, canEdit, canAssign, onEdit, onAssign }: I
       <div className="hidden sm:flex items-center gap-4 ml-11 text-xs text-muted-foreground mt-0.5">
         {ipr.executor_name && <span>Ejecutor: <span className="text-foreground">{ipr.executor_name}</span></span>}
         {ipr.formulator_name && <span>Responsable: <span className="text-foreground">{ipr.formulator_name}</span></span>}
+        {ipr.current_actor && (
+          <span className="flex items-center gap-1.5">
+            <span>Le toca a:</span>
+            <Badge variant="outline" className="font-normal text-[10px] px-1.5 py-0">
+              {ipr.current_actor.role_label}
+            </Badge>
+            <span className="text-muted-foreground">— {ipr.current_actor.action}</span>
+          </span>
+        )}
       </div>
     </header>
   );

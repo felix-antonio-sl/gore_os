@@ -12,7 +12,7 @@ from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import OPERATIONAL_ROLES, DGI_ROLES, WRITE_OPERATIONAL_ROLES
 from app.core.audit import record_event
-from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate, TrackInfo
+from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate, TrackInfo, CurrentActor
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
 from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
@@ -155,6 +155,96 @@ _EVAL_LABELS: dict[str, str] = {
     "ITF": "Informe Técnico Favorable", "AT": "Aprobado Técnicamente",
     "NV": "No Viable", "IN": "Inadmisible",
 }
+
+# ---------------------------------------------------------------------------
+# G15: Actor Actual — (expected_role, user_source, action_label)
+# user_source: "assignee" | "division" | "global" | None
+# ---------------------------------------------------------------------------
+STATUS_ACTOR_MAP: dict[str, tuple[str | None, str | None, str]] = {
+    # F0
+    "INGRESADO":            ("ANALISTA",        "assignee",  "Completar formulación"),
+    # F1
+    "EN_REVISION":          ("ANALISTA",        "assignee",  "Completar admisibilidad"),
+    "PRE_ADMISIBLE":        ("JEFE_DIVISION",   "division",  "Aprobar admisibilidad"),
+    "ADMISIBLE":            ("ANALISTA",        "assignee",  "Enviar a evaluación"),
+    "INADMISIBLE":          (None,              None,        "Requiere corrección"),
+    # F2
+    "EN_EVALUACION":        (None,              None,        "En evaluación externa"),
+    "RS":                   ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    "FI":                   ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    "FC":                   ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    "OT":                   ("ANALISTA",        "assignee",  "Subsanar observaciones"),
+    "AD":                   ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    "RF":                   ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    "ITF":                  ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    "AT":                   ("JEFE_DIVISION",   "division",  "Aprobar resultado"),
+    # F3
+    "CDP_EMITIDO":          ("JEFE_DIVISION",   "division",  "Formalizar convenio"),
+    # F4
+    "EN_FORMALIZACION":     ("ASESOR_JURIDICO", "global",    "V.B. convenio/acto"),
+    "FORMALIZADO":          ("ANALISTA",        "assignee",  "Iniciar ejecución"),
+    "EN_LICITACION":        ("ANALISTA",        "assignee",  "Gestionar licitación"),
+    "ADJUDICADO":           ("ANALISTA",        "assignee",  "Firmar contrato"),
+    "CONTRATO_FIRMADO":     ("ANALISTA",        "assignee",  "Iniciar obra"),
+    "EN_OBRA":              ("ANALISTA",        "assignee",  "Supervisar ejecución"),
+    "EN_EJECUCION":         ("ANALISTA",        "assignee",  "Supervisar ejecución"),
+    "RECEPCION_PROVISORIA": ("ANALISTA",        "assignee",  "Recepción definitiva"),
+    "RECEPCION_DEFINITIVA": ("ANALISTA",        "assignee",  "Iniciar rendición"),
+    "SUSPENDIDO":           ("JEFE_DIVISION",   "division",  "Resolver suspensión"),
+    # F5
+    "EN_RENDICION":         ("RTF",             "global",    "Revisar rendición"),
+    "RENDICION_APROBADA":   ("JEFE_DIVISION",   "division",  "Cierre administrativo"),
+    "EN_CIERRE_ADMINISTRATIVO": ("ADMIN_REGIONAL", "global", "Firmar cierre"),
+    # Terminales
+    "CERRADO":              (None,              None,        "Cerrada"),
+    "TERMINADO_ANTICIPADAMENTE": (None,          None,        "Terminada"),
+    "ANULADO":              (None,              None,        "Anulada"),
+}
+
+_ROLE_LABELS = {
+    "ANALISTA": "Analista",
+    "JEFE_DIVISION": "Jefe de División",
+    "JEFE_DEPARTAMENTO": "Jefe de Departamento",
+    "ASESOR_JURIDICO": "Asesor Jurídico",
+    "RTF": "RTF",
+    "ADMIN_REGIONAL": "Admin. Regional",
+    "GOBERNADOR": "Gobernador",
+}
+
+
+async def _resolve_current_actor(
+    status_code: str,
+    assignee_id: str | None,
+    sponsor_division_id: str | None,
+    db: AsyncSession,
+) -> CurrentActor | None:
+    """Resolve the positional role that should act next (e.g. 'Analista DIPIR')."""
+    entry = STATUS_ACTOR_MAP.get(status_code)
+    if not entry or not entry[0]:
+        return None
+    role, source, action = entry
+    division_abbr = None
+    if source == "assignee" and assignee_id:
+        row = (await db.execute(text("""
+            SELECT o.short_name
+            FROM core."user" u
+            JOIN core.organization o ON o.id = u.division_id
+            WHERE u.id = :uid AND u.deleted_at IS NULL
+        """), {"uid": assignee_id})).mappings().first()
+        if row:
+            division_abbr = row["short_name"]
+    elif source == "division" and sponsor_division_id:
+        row = (await db.execute(text("""
+            SELECT o.short_name
+            FROM core.organization o
+            WHERE o.id = :div_id AND o.deleted_at IS NULL
+        """), {"div_id": sponsor_division_id})).mappings().first()
+        if row:
+            division_abbr = row["short_name"]
+    base_label = _ROLE_LABELS.get(role, role)
+    role_label = f"{base_label} {division_abbr}" if division_abbr else base_label
+    return CurrentActor(role=role, role_label=role_label, action=action)
+
 
 # ---------------------------------------------------------------------------
 # Universal fallback for IPRs without mechanism (backward compat)
@@ -2070,7 +2160,9 @@ async def list_iprs(
                      AND i.metadata->>'monto_total' != ''
                 THEN (i.metadata->>'monto_total')::float
                 ELSE NULL
-            END            AS total_budget
+            END            AS total_budget,
+            assignee_div.short_name AS assignee_division_abbr,
+            sponsor_div.short_name  AS sponsor_division_abbr
         FROM core.ipr i
         LEFT JOIN ref.category  ct   ON ct.id   = i.ipr_type_id
         LEFT JOIN ref.category  st   ON st.id   = i.status_id
@@ -2080,6 +2172,9 @@ async def list_iprs(
         LEFT JOIN ref.category  mcd  ON mcd.id  = i.mcd_phase_id
         LEFT JOIN ref.category  al   ON al.id   = i.alert_level_id
         LEFT JOIN core.organization exc ON exc.id = i.executor_id
+        LEFT JOIN core."user" assignee_u ON assignee_u.id = i.assignee_id
+        LEFT JOIN core.organization assignee_div ON assignee_div.id = assignee_u.division_id
+        LEFT JOIN core.organization sponsor_div ON sponsor_div.id = i.sponsor_division_id
         WHERE {where_clause}
         ORDER BY
             i.alert_level_id DESC NULLS LAST,
@@ -2093,8 +2188,22 @@ async def list_iprs(
     data_result = await db.execute(data_sql, params)
     rows = data_result.mappings().all()
 
-    items = [
-        IPRListItem(
+    items = []
+    for row in rows:
+        actor_entry = STATUS_ACTOR_MAP.get(row["status"] or "")
+        actor_role = None
+        actor_action = None
+        if actor_entry and actor_entry[0]:
+            role_code, source, action = actor_entry
+            base_label = _ROLE_LABELS.get(role_code, role_code)
+            div_abbr = row["assignee_division_abbr"] if source == "assignee" else (
+                row["sponsor_division_abbr"] if source == "division" else None
+            )
+            actor_role = f"{base_label} {div_abbr}" if div_abbr else base_label
+            actor_action = action
+        elif actor_entry:
+            actor_action = actor_entry[2]
+        items.append(IPRListItem(
             id=row["id"],
             codigo_bip=row["codigo_bip"],
             name=row["name"],
@@ -2108,9 +2217,9 @@ async def list_iprs(
             has_open_problems=row["has_open_problems"] or False,
             executor_name=row["executor_name"],
             total_budget=row["total_budget"],
-        )
-        for row in rows
-    ]
+            actor_role=actor_role,
+            actor_action=actor_action,
+        ))
 
     return PaginatedResponse(
         items=[item.model_dump() for item in items],
@@ -2444,6 +2553,8 @@ async def get_ipr(
             COALESCE(i.requires_dipres, false) AS requires_dipres,
             i.created_at,
             i.phase_entered_at,
+            i.assignee_id,
+            i.sponsor_division_id,
             -- commitment count
             (
                 SELECT COUNT(*)
@@ -2495,6 +2606,14 @@ async def get_ipr(
             detail=f"IPR {ipr_id} no encontrado",
         )
 
+    # G15: Resolve current actor
+    current_actor = await _resolve_current_actor(
+        row["status"] or "",
+        str(row["assignee_id"]) if row.get("assignee_id") else None,
+        str(row["sponsor_division_id"]) if row.get("sponsor_division_id") else None,
+        db,
+    )
+
     return IPRDetail(
         id=row["id"],
         codigo_bip=row["codigo_bip"],
@@ -2524,6 +2643,7 @@ async def get_ipr(
         alert_count=row["alert_count"] or 0,
         agreement_count=row["agreement_count"] or 0,
         phase_entered_at=row["phase_entered_at"],
+        current_actor=current_actor,
         created_at=row["created_at"],
     )
 

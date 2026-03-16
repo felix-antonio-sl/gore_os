@@ -1,5 +1,7 @@
 /** Shared constants and types for IPR detail components */
 
+import type { CurrentActor } from "@/types";
+
 export interface IprDetail {
   id: string;
   codigo_bip: string;
@@ -22,6 +24,7 @@ export interface IprDetail {
   total_budget?: number;
   start_date?: string;
   end_date?: string;
+  current_actor?: CurrentActor | null;
 }
 
 export const alertBorderMap: Record<string, string> = {

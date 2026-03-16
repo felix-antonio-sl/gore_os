@@ -330,6 +330,20 @@ export default function IprPage() {
       render: (value: unknown) => <StatusBadge status={String(value ?? "")} size="sm" />,
     },
     {
+      key: "actor_role",
+      label: "Actor",
+      render: (value: unknown, row: unknown) => {
+        const role = String(value ?? "");
+        if (!role) return <span className="text-muted-foreground text-xs">—</span>;
+        const action = (row as Record<string, unknown>).actor_action as string | null;
+        return (
+          <span className="text-xs" title={action ?? undefined}>
+            {role}
+          </span>
+        );
+      },
+    },
+    {
       key: "total_budget",
       label: "$",
       render: (value: unknown) => (

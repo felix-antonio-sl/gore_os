@@ -83,6 +83,12 @@ export interface CategoryRef {
   description?: string;
 }
 
+export interface CurrentActor {
+  role: string | null;
+  role_label: string;
+  action: string;
+}
+
 export interface IPRListItem {
   id: string;
   codigo_bip: string;
@@ -97,6 +103,8 @@ export interface IPRListItem {
   has_open_problems: boolean;
   executor_name: string | null;
   total_budget: number | null;
+  actor_role: string | null;
+  actor_action: string | null;
 }
 
 export interface CompromisoListItem {

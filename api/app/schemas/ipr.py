@@ -3,6 +3,12 @@ from uuid import UUID
 from datetime import datetime
 
 
+class CurrentActor(BaseModel):
+    role: str | None = None
+    role_label: str
+    action: str
+
+
 class IPRListItem(BaseModel):
     id: UUID
     codigo_bip: str
@@ -17,6 +23,8 @@ class IPRListItem(BaseModel):
     has_open_problems: bool
     executor_name: str | None
     total_budget: float | None
+    actor_role: str | None = None
+    actor_action: str | None = None
 
 
 class IPRDetail(BaseModel):
@@ -48,6 +56,7 @@ class IPRDetail(BaseModel):
     alert_count: int
     agreement_count: int = 0
     phase_entered_at: datetime | None = None
+    current_actor: CurrentActor | None = None
     created_at: datetime
 
 
