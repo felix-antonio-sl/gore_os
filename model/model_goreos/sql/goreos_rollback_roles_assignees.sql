@@ -19,7 +19,7 @@ WHERE assignee_id IN (
     SELECT id FROM core."user"
     WHERE email IN (
         'jefe.dideso@goreos.cl', 'jefe.difoi@goreos.cl',
-        'jefe.diiap@goreos.cl', 'jefe.dipir@goreos.cl',
+        'jefe.dipir@goreos.cl',
         'jefe.diplade@goreos.cl', 'jefe.dit@goreos.cl'
     )
 );
@@ -44,7 +44,6 @@ WHERE email IN (
     'jefe.ucr@goreos.cl',
     'jefe.dideso@goreos.cl',
     'jefe.difoi@goreos.cl',
-    'jefe.diiap@goreos.cl',
     'jefe.dipir@goreos.cl',
     'jefe.diplade@goreos.cl',
     'jefe.dit@goreos.cl'

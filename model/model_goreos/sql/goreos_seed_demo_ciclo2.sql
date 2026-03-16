@@ -189,7 +189,7 @@ INSERT INTO core.budget_program (
     NOW(), NOW()
 ) ON CONFLICT DO NOTHING;
 
--- DIIAP — Subtítulo 31, FNDR, ejecución media (50%)
+-- DIT — Subtítulo 31, FNDR, ejecución media (50%)
 INSERT INTO core.budget_program (
     code, name, fiscal_year,
     program_type_id, subtitle_id, item_id, allocation_id, owner_division_id,
@@ -197,13 +197,13 @@ INSERT INTO core.budget_program (
     fndr_amount, created_at, updated_at
 ) VALUES (
     'DEMO-BP-006',
-    'Obras Públicas DIIAP — FNDR 2026',
+    'Obras Públicas DIT — FNDR 2026',
     2026,
     (SELECT id FROM ref.category WHERE scheme='program_type' AND code='PPR_INVERSION' LIMIT 1),
     (SELECT id FROM ref.category WHERE scheme='budget_subtitle' AND code='31' LIMIT 1),
     (SELECT id FROM ref.category WHERE scheme='budget_item' AND code='INV_REAL' LIMIT 1),
     (SELECT id FROM ref.category WHERE scheme='budget_allocation' AND code='FNDR_INFRAESTRUCTURA' LIMIT 1),
-    (SELECT id FROM core.organization WHERE code='DIIAP' LIMIT 1),
+    (SELECT id FROM core.organization WHERE code='DIT' LIMIT 1),
     3200000000.00, 3000000000.00, 1800000000.00, 1000000000.00, 1500000000.00,
     3000000000.00,
     NOW(), NOW()
@@ -391,7 +391,7 @@ INSERT INTO core.agreement (
     (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='COLABORACION' LIMIT 1),
     (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='EN_MODIFICACION' LIMIT 1),
     (SELECT id FROM core.ipr WHERE codigo_bip='2401D0003' LIMIT 1),
-    (SELECT id FROM core.organization WHERE code='DIIAP' LIMIT 1),
+    (SELECT id FROM core.organization WHERE code='DIT' LIMIT 1),
     (SELECT id FROM core.organization WHERE code='DIJ' LIMIT 1),
     200000000.00,
     '2025-01-10', '2025-01-10', '2026-06-30',

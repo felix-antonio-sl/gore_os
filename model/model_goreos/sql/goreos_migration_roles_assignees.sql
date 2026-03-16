@@ -138,16 +138,6 @@ SELECT gen_random_uuid(), p.id, 'jefe.difoi@goreos.cl',
 FROM core.person p WHERE p.rut = '22.222.222-K'
 ON CONFLICT (email) DO NOTHING;
 
--- DIIAP
-INSERT INTO core."user" (id, person_id, email, password_hash, system_role_id, division_id, is_active)
-SELECT gen_random_uuid(), p.id, 'jefe.diiap@goreos.cl',
-       '$2b$12$i3hvqlxesIL8chg5P7rii.f1UuWsZfCDK4dkbSmHqAtCIJSm3cIQe',
-       (SELECT id FROM ref.category WHERE scheme = 'system_role' AND code = 'JEFE_DIVISION'),
-       (SELECT id FROM core.organization WHERE code = 'DIIAP'),
-       true
-FROM core.person p WHERE p.rut = '22.222.223-8'
-ON CONFLICT (email) DO NOTHING;
-
 -- DIPIR
 INSERT INTO core."user" (id, person_id, email, password_hash, system_role_id, division_id, is_active)
 SELECT gen_random_uuid(), p.id, 'jefe.dipir@goreos.cl',

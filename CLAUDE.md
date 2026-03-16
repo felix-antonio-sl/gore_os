@@ -108,7 +108,6 @@ All passwords: `admin123`. All `@goreos.cl`.
 | jefe.daf | JEFE_DIVISION | op | DAF |
 | jefe.dideso | JEFE_DIVISION | op | DIDESO |
 | jefe.difoi | JEFE_DIVISION | op | DIFOI |
-| jefe.diiap | JEFE_DIVISION | op | DIIAP |
 | jefe.dipir | JEFE_DIVISION | op | DIPIR |
 | jefe.diplade | JEFE_DIVISION | op | DIPLADE |
 | jefe.dit | JEFE_DIVISION | op | DIT |

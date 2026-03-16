@@ -56,8 +56,8 @@ UPDATE core.organization SET org_type_id = (
 ) WHERE code IN ('UCR','OFICINA-PARTES','INFORMATICA','SERVICIOS-GENERALES')
   AND deleted_at IS NULL;
 
--- Las 7 divisiones reales quedan como DIVISION: DAF, DIPIR, DIPLADE, DIDERSO, DIFOT, DIIAP, DIT
--- (+ DIDECO que ya tiene su clasificación)
+-- Las 6 divisiones reales quedan como DIVISION: DAF, DIPIR, DIPLADE, DIDESO, DIFOI, DIT
+-- (+ DIDECO/DGI que ya tiene su clasificación como StaffUnit)
 
 
 -- ────────────────────────────────────────────────────────────────────────────

@@ -235,12 +235,11 @@ BEGIN
         ('DAF', 'División de Administración y Finanzas', v_division_type_id, v_gore_id),
         ('DIFOT', 'División de Fomento e Industria', v_division_type_id, v_gore_id),
         ('DIDERSO', 'División de Desarrollo Social y Humano', v_division_type_id, v_gore_id),
-        ('DIIAP', 'División de Infraestructura y Arquitectura Pública', v_division_type_id, v_gore_id),
         ('DIJ', 'División Jurídica', v_division_type_id, v_gore_id),
         ('DIDECO', 'División de Control de Gestión', v_division_type_id, v_gore_id),
         ('GABINETE', 'Gabinete del Gobernador', v_division_type_id, v_gore_id);
 
-    RAISE NOTICE 'Organizaciones GORE Ñuble insertadas: 1 GORE, 8 divisiones';
+    RAISE NOTICE 'Organizaciones GORE Ñuble insertadas: 1 GORE, 7 divisiones';
 
 END $$;
 
