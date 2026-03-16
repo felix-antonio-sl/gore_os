@@ -1,6 +1,6 @@
-# GORE_OS — Especificación de Usuarios y Journeys v3.1
+# GORE_OS — Especificación de Usuarios y Journeys v3.2
 
-**Versión**: 3.1
+**Versión**: 3.2
 **Fecha**: 2026-03-15
 **Estado**: Vigente
 **Fuentes**: SSOT Bundle v1.5.0, Omega v3.0.0, DGI User Stories v1.0, User Stories (818), Procesos (81), GORE_OS codebase
@@ -149,11 +149,12 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 **Dolores**: No saber qué está pendiente. Buscar información que debería ser visible. Pasos innecesarios.
 
 **Implementación GORE_OS**:
-- Dashboard: `ModuleMyWork` (ENCARGADO) — task list agrupada por IPR, urgentes auto-expandidos
-- Dashboard: `ModuleFormulacion` (ANALISTA) — pipeline F0→F2 con checklists por fase
-- Dashboard: `ModuleMyProgress` (RTF, ASESOR_JURIDICO) — barra de progreso + items
-- `/compromisos`: `CompromisosWorkView` — vista de trabajo sin filtros, items propios por diseño
-- `/actos`: `PendingQueue` EN_REVISION para ASESOR_JURIDICO
+- Dashboard: `ModuleMyWork` (ENCARGADO) — task list agrupada por IPR, urgentes auto-expandidos [IMPLEMENTADO]
+- Dashboard: `ModuleFormulacion` (ANALISTA) — pipeline F0→F2 con checklists por fase [IMPLEMENTADO]
+- Dashboard: `ModuleJuridico` (ASESOR_JURIDICO) — cola V.B. pendientes (actos/convenios) [IMPLEMENTADO]
+- Dashboard: KPIs + AttentionStrip (RTF) — sin módulo dedicado, items via action-items [IMPLEMENTADO]
+- `/compromisos`: `CompromisosWorkView` — vista de trabajo sin filtros, items propios por diseño [IMPLEMENTADO]
+- `/actos`: `PendingQueue` EN_REVISION para ASESOR_JURIDICO [IMPLEMENTADO]
 
 ### 4.2 Supervisor — "¿Cómo está mi equipo/división?"
 
@@ -164,6 +165,8 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 **Acciones clave**: Monitorear dashboard, delegar, aprobar actos, escalar.
 
 **Dolores**: Navegar a cada IPR para entender estado. Sin visibilidad de carga del equipo.
+
+**Nota sobre JEFE_UNIDAD**: Comparte journey con JEFE_DIVISION a menor escala (unidad vs división). El sistema los agrupa en `TEAM_ROLES` con el mismo `ModuleMyTeam` y auto-scope. No requiere journey diferenciado porque sus acciones son idénticas — solo cambia el alcance del filtro.
 
 **Implementación GORE_OS**:
 - Dashboard: `ModuleMyTeam` — avatares, barras de carga, drill-down por persona
@@ -255,7 +258,7 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 
 ### 5.1 Journeys del Ejecutor
 
-#### J1: "Mi día de trabajo" (ENCARGADO)
+#### J1: "Mi día de trabajo" (ENCARGADO) [IMPLEMENTADO]
 
 ```
 Login → Centro de Comando
@@ -276,7 +279,7 @@ Login → Centro de Comando
 
 **Stories**: D-EJEC | **Procesos**: PROC-EJEC-P2
 
-#### J2: "Formular IPR" (ANALISTA)
+#### J2: "Formular IPR" (ANALISTA) [IMPLEMENTADO]
 
 ```
 /ipr/nuevo → Tipo + Mecanismo
@@ -294,7 +297,7 @@ Login → Centro de Comando
 
 **Stories**: D-FIN-IPR_CORE | **Procesos**: PROC-FIN-IPR_CORE-P1 (ingreso), P2 (admisibilidad), P3 (evaluación)
 
-#### J3: "Revisar rendición" (RTF)
+#### J3: "Revisar rendición" (RTF) [IMPLEMENTADO]
 
 ```
 Login → /datos?tab=rendiciones (auto-filtrado EN_REVISION_RTF)
@@ -330,7 +333,7 @@ Ejecutor (EE)          RTF (GORE)           UCR (GORE)         Jefe DAF
 
 **Stories**: D-FIN-EJECUTORES, D-FIN-IPR_CORE | **Procesos**: PROC-FIN-REND-P1
 
-#### J4: "Visación jurídica" (ASESOR_JURIDICO)
+#### J4: "Visación jurídica" (ASESOR_JURIDICO) [IMPLEMENTADO]
 
 ```
 Centro de Mando → ModuleJuridico (pending V.B.)
@@ -345,7 +348,7 @@ Centro de Mando → ModuleJuridico (pending V.B.)
 
 ### 5.2 Journeys del Supervisor
 
-#### J5: "Estado de mi división" (JEFE_DIVISION)
+#### J5: "Estado de mi división" (JEFE_DIVISION) [IMPLEMENTADO]
 
 ```
 Centro de Comando → ModuleMyTeam (avatares, carga)
@@ -362,7 +365,7 @@ Centro de Comando → ModuleMyTeam (avatares, carga)
 
 **Stories**: D-EJEC, D-FIN-IPR_CORE | **Procesos**: PROC-EJEC-P3
 
-#### J6: "Crisis / Alerta" (JEFE_DIVISION)
+#### J6: "Crisis / Alerta" (JEFE_DIVISION) [IMPLEMENTADO — protocolo FÉNIX parcial]
 
 ```
 Centro de Mando → AttentionStrip alerta CRITICO
@@ -377,7 +380,7 @@ Centro de Mando → AttentionStrip alerta CRITICO
 
 ### 5.3 Journey del Estratega
 
-#### J7: "Panorama institucional" (ADMIN_REGIONAL)
+#### J7: "Panorama institucional" (ADMIN_REGIONAL) [IMPLEMENTADO]
 
 ```
 Centro de Mando → KPIs (5 dimensiones) + AttentionStrip escalamientos
@@ -401,6 +404,14 @@ Centro de Comando → /datos?tab=indicadores (solo VIGENTE)
   → /informes para documentar en reporte semanal
 ```
 
+**Implementación** [IMPLEMENTADO]:
+- Cockpit: `cockpit-control-gestion.tsx` — indicadores VIGENTE, filtros dimensión (5), cartera IPR health, bottleneck summary
+- `/datos?tab=indicadores`: Lifecycle filter + columns, manual value entry, dimension filters
+- `/datos?tab=rendiciones`: SLA progress, state filter, vencidas highlight
+- `/informes`: 4 report types, atomic JSONB edits, lifecycle
+
+**Stories**: D-GESTION | **Procesos**: PROC-GESTION-P1
+
 #### J9: "Mejora de procesos" (ESP_PROCESOS)
 
 ```
@@ -411,6 +422,14 @@ Centro de Comando → /datos?tab=indicadores (solo VIGENTE)
   → /tablero/{id} DMAIC stepper (DEFINE→MEASURE→ANALYZE→IMPROVE→VERIFY)
 ```
 
+**Implementación** [IMPLEMENTADO]:
+- Cockpit: `cockpit-procesos.tsx` — agenda procesos, guidance contextual
+- `/procesos`: FilterBar (status/criticality/search), DataTable 7 cols, DrawerPanel create
+- `/procesos/{id}`: Hero card, FSM 6-state transitions, 5 tabs (actores, reglas, métricas, dolores, oportunidades)
+- `/tablero`: Kanban @dnd-kit sortable, WIP limits con toast
+- `/tablero/{id}`: DMAIC 5-phase stepper, lean-metrics-panel, phase-gated editing
+- `/procesos/progreso`: Dashboard de progreso
+
 **Stories**: D-GESTION | **Procesos**: PROC-GESTION-P1, PROC-GESTION-P3
 
 ### 5.5 Journey Coordinador DGI
@@ -419,11 +438,20 @@ Centro de Comando → /datos?tab=indicadores (solo VIGENTE)
 
 Ritmo semanal descrito en sección 4.5. El Coordinador es el único rol que usa TODAS las páginas DGI en un ciclo regular.
 
+**Implementación** [IMPLEMENTADO]:
+- Cockpit: `cockpit-jefe-dgi.tsx` — escalamientos activos + SLA cumplimiento
+- Dashboard: `ModuleDgiTeam` — estado equipo DGI
+- `/coordinacion`: AR prep + decisions. `/coordinacion/divisiones`: interaction matrix
+- `/escalamiento` + `/escalamiento/{id}`: 4-level protocol, FSM stepper
+- `/servicios` + `/servicios/{id}`: Catálogo cross-population, requests FSM
+- `/comite-td`: Sesiones COMITE-TD, topics + agreements (sin votación)
+- `/calendario`: UNION ALL 5 sources, date range + type filters
+
 **Stories**: D-GESTION, D-GOB | **Procesos**: PROC-GOB-P4, PROC-GESTION-P2
 
 ### 5.6 Journeys del Firmante
 
-#### J11: "Cola de firma" (GOBERNADOR)
+#### J11: "Cola de firma" (GOBERNADOR) [IMPLEMENTADO]
 
 ```
 Centro de Mando → AttentionStrip "pendientes de firma"
@@ -435,7 +463,7 @@ Centro de Mando → AttentionStrip "pendientes de firma"
 
 **Stories**: D-NORM | **Procesos**: PROC-NORM-P1
 
-#### J12: "Presidir CORE" (GOBERNADOR)
+#### J12: "Presidir CORE" (GOBERNADOR) [IMPLEMENTADO]
 
 ```
 Pre-sesión: /core-sessions/{id} → Card con agenda + quorum
@@ -450,7 +478,7 @@ Sesión: "Iniciar Sesión" → EN_CURSO
 
 ### 5.7 Journeys de Gobernanza CORE
 
-#### J13: "Votar en CORE" (CONSEJERO_REGIONAL)
+#### J13: "Votar en CORE" (CONSEJERO_REGIONAL) [IMPLEMENTADO]
 
 ```
 /core-sessions → Card "Próxima sesión" (fecha, temas, quorum)
@@ -459,7 +487,7 @@ Sesión: "Iniciar Sesión" → EN_CURSO
   → Conteo en tiempo real → Ver resultado
 ```
 
-#### J14: "Preparar CORE" (SECRETARIO_EJECUTIVO)
+#### J14: "Preparar CORE" (SECRETARIO_EJECUTIVO) [IMPLEMENTADO]
 
 ```
 /core-sessions/nueva → Crear sesión + tabla de temas
@@ -474,7 +502,7 @@ Sesión: "Iniciar Sesión" → EN_CURSO
 
 ### 5.8 Journey Supervisor Financiero
 
-#### J15: "Aprobar CDPs y rendiciones" (JEFE_DEPARTAMENTO)
+#### J15: "Aprobar CDPs y rendiciones" (JEFE_DEPARTAMENTO) [IMPLEMENTADO]
 
 ```
 Centro de Mando → ModuleMyTeam
@@ -487,7 +515,7 @@ Centro de Mando → ModuleMyTeam
 
 ### 5.9 Journey del Configurador
 
-#### J16: "Día de mantenimiento" (ADMIN_SISTEMA)
+#### J16: "Día de mantenimiento" (ADMIN_SISTEMA) [IMPLEMENTADO]
 
 ```
 /admin/usuarios → Crear/editar usuario + rol + división
@@ -515,7 +543,7 @@ Centro de Mando → ModuleMyTeam
 
 *\*F0: SSOT canónico = "Postulación"; GORE_OS UI = "Formulación" (ver reconciliación en §2.1).*
 
-**Matriz de participación**: 17 roles × 6 fases con acciones definidas por fase.
+**Matriz de participación**: 16 roles × 6 fases con acciones definidas por fase. IPR detail: 18 tabs en 4 grupos (Operación, Finanzas, Requisitos, Ciclo) + Resumen.
 
 #### Track Routing (F2 Evaluación)
 
@@ -574,19 +602,20 @@ Requirente           Jurídico      Control     Jefatura    Admin Regional   Gob
 | Escalamiento nivel 1 | 1× SLA base | Responsable directo | PROC-GESTION-P2 |
 | Escalamiento nivel 2 | 1.5× SLA base | JEFE_DIVISION | PROC-GESTION-P2 |
 | Escalamiento nivel 3 | 2× SLA base | ADMIN_REGIONAL | PROC-GESTION-P2 |
+| Presentación rendición | 15 del mes siguiente | Entidad Ejecutora | PROC-FIN-REND-P1 |
 
 #### Handoffs Inter-dominio
 
 Las IPRs cruzan múltiples dominios durante su ciclo de vida. Los handoffs clave no documentados en journeys individuales:
 
-| Origen | Destino | Trigger | Journey afectado |
-|--------|---------|---------|-----------------|
-| D-GESTION → FENIX | Crisis por desviación >20% | Alerta CRITICO + umbral | J6 |
-| D-PLAN → D-FIN-IPR_CORE | Ciclo ARI/PROPIR prioriza cartera | Mayo cada año | J7 (Estratega) |
-| D-EJEC → D-NORM | Convenio requiere acto administrativo | Gate F4 | J2, J4, J11 |
-| D-FIN-IPR_CORE → D-FIN-EJECUTORES | Cuota pagada → rendición pendiente | Art. 18 | J3, J15 |
-| D-TDE → todos | Ley 21.180 digitalización → FEA obligatoria | Transversal | J11 |
-| D-TERR → D-PLAN | Datos territoriales informan ERD | Anual | — (sin sistema) |
+| Origen | Destino | Trigger | Journey | Soporte GORE_OS |
+|--------|---------|---------|---------|----------------|
+| D-GESTION → FENIX | Crisis por desviación >20% | Alerta CRITICO + umbral | J6 | Parcial — auto-alert + escalamiento, sin protocolo FÉNIX completo |
+| D-PLAN → D-FIN-IPR_CORE | Ciclo ARI/PROPIR prioriza cartera | Mayo cada año | J7 | No — proceso manual externo |
+| D-EJEC → D-NORM | Convenio requiere acto administrativo | Gate F4 | J2, J4, J11 | Sí — gate F4 + acto FSM 7-step |
+| D-FIN-IPR_CORE → D-FIN-EJECUTORES | Cuota pagada → rendición pendiente | Art. 18 | J3, J15 | Sí — convenios.py verifica rendiciones Art. 18 |
+| D-TDE → todos | Ley 21.180 digitalización → FEA obligatoria | Transversal | J11 | Parcial — solo plazos Ley 21.180 via ESP_TD cockpit |
+| D-TERR → D-PLAN | Datos territoriales informan ERD | Anual | — | No — sin módulo geoespacial |
 
 #### Trazabilidad Journeys ↔ Stories ↔ Procesos
 
@@ -671,60 +700,44 @@ El usuario no hace mal clic. Entiende mal **qué debería estar haciendo ahora**
 
 Cada fase muestra quién es el **actor actual** — el rol al que le toca. La visibilidad de "¿a quién le toca?" previene IPRs estancadas.
 
-**Gap G15 (CRITICO)**: Aún no implementado completamente. Las IPRs se estancan sin visibilidad de quién debe actuar.
+**Gap G15 (CRITICO)**: Aún no implementado completamente. Las IPRs se estancan sin visibilidad de quién debe actuar. (Ver también §8.2 — gap abierto con mayor severidad.)
 
 ---
 
-## 7. Implementación: Vistas Journey-First por Página
+## 7. Estado de Implementación por Página
 
-### 7.1 Dashboard — Centro de Comando
+Resumen consolidado. Los detalles de cada vista journey-first están documentados en los journeys correspondientes (§5).
 
-| Rol | Módulo | Contenido |
-|-----|--------|-----------|
-| ENCARGADO | ModuleMyWork | Task list agrupada por IPR, urgentes expandidos |
-| ANALISTA | ModuleFormulacion | Pipeline F0→F2 con checklists por fase |
-| RTF, ASESOR_JURIDICO | ModuleMyProgress | Barra de progreso + items pendientes |
-| JEFE_DIVISION | ModuleMyTeam | Avatares, barras de carga, drill-down |
-| JEFE_DGI | ModuleDgiTeam | Estado equipo DGI |
-| GOBERNADOR, AR | Módulos condicionales | KPIs, panorama, firma pendientes |
+**Leyenda**: [I] = Implementado | [P] = Planificado | [G] = Gap abierto
 
-### 7.2 `/compromisos` — 3 vistas por rol
-
-| Vista | Rol | Comportamiento |
-|-------|-----|---------------|
-| `CompromisosWorkView` | ENCARGADO | Task list agrupada por IPR. Sin filtros — ES solo míos por diseño. "Completar" inline. |
-| `CompromisosTeamView` | JEFE_DIVISION, JEFE_DEPARTAMENTO | KPIs + equipo expandible + "Verificar" inline. |
-| `CompromisosListView` | Otros roles | DataTable genérico con filtros. Fix: `?responsible_id=X` drill-down desde dashboard. |
-
-### 7.3 `/actos` — Cola de firma
-
-| Rol | Sección agregada |
-|-----|-----------------|
-| GOBERNADOR, ADMIN_REGIONAL, ADMIN_SISTEMA | `PendingQueue` VISADO — actos pendientes de firma con stepper visual |
-| ASESOR_JURIDICO | `PendingQueue` EN_REVISION — actos pendientes de V.B. |
-| Otros | Lista estándar sin cola |
-
-### 7.4 `/ipr` — Contexto por rol
-
-| Cambio | Detalle |
-|--------|---------|
-| Filtros colapsables | Sector, Mecanismo, Alerta tras "Más filtros". Tipo, Estado, Fase, División siempre visibles. |
-| Auto-scope | JEFE_DIVISION aterriza con su división pre-seleccionada (via `router.replace`). |
-| Strip contextual | "{N} IPRs en tu división" o "{N} IPRs en portafolio" según rol. |
-
-### 7.5 `/convenios` — Operaciones financieras
-
-| Cambio | Detalle |
-|--------|---------|
-| Próximos a vencer | Sección arriba del DataTable: convenios VIGENTE con ≤90 días, semáforo rojo/ámbar. |
-| Auto-scope | ASESOR_JURIDICO auto-aterriza en `?state=EN_REVISION_JURIDICA`. |
-
-### 7.6 `/core-sessions` — Gobernanza CORE
-
-| Cambio | Detalle |
-|--------|---------|
-| Card próxima sesión | CONSEJERO, SECRETARIO, GOBERNADOR ven card con fecha + temas + quorum. |
-| Guía de preparación | SECRETARIO ve "Preparar agenda" cuando sesión PROGRAMADA sin temas. |
+| Página | Vista Journey-First | Estado | Journey |
+|--------|--------------------|---------:|---------|
+| Dashboard | `ModuleMyWork` (ENCARGADO) | [I] | J1 |
+| Dashboard | `ModuleFormulacion` (ANALISTA) | [I] | J2 |
+| Dashboard | KPIs + AttentionStrip (RTF) | [I] | J3 |
+| Dashboard | `ModuleJuridico` (ASESOR_JURIDICO) | [I] | J4 |
+| Dashboard | `ModuleMyTeam` (JEFE_*) | [I] | J5 |
+| Dashboard | `ModuleDgiTeam` (JEFE_DGI) | [I] | J10 |
+| Dashboard | Módulos condicionales (GOB, AR, ADMIN) | [I] | J7, J11 |
+| `/compromisos` | 3 vistas: WorkView / TeamView / ListView | [I] | J1, J5 |
+| `/actos` | PendingQueue VISADO + EN_REVISION | [I] | J4, J11 |
+| `/ipr` | Auto-scope división + filtros colapsables + strip contextual | [I] | J5 |
+| `/ipr/{id}` | 18 tabs (4 grupos + Resumen) + sidebar nav + sticky header | [I] | IPR 360° |
+| `/ipr/cartera` | Portfolio salud ROJO/AMARILLO/VERDE | [I] | J5 |
+| `/convenios` | Próximos a vencer + auto-scope jurídico | [I] | J4 |
+| `/core-sessions` | Card próxima sesión + guía preparación | [I] | J12-J14 |
+| `/datos` | Indicadores VIGENTE + rendiciones SLA | [I] | J8 |
+| `/procesos` | Catálogo 6-state + DMAIC + oportunidades | [I] | J9 |
+| `/tablero` | Kanban @dnd-kit + lean metrics | [I] | J9 |
+| `/coordinacion` | AR prep + decisions + matrix | [I] | J10 |
+| `/escalamiento` | 4-level protocol FSM | [I] | J6, J10 |
+| `/centro-de-mando` | 6 KPIs + timeline | [I] | J7 |
+| `/riesgos` | RSK-NNNN 6-state + risk matrix | [I] | J6 |
+| `/admin/*` | CRUD usuarios, divisiones, umbrales | [I] | J16 |
+| Indicador "¿a quién le toca?" en IPR | — | [G] | G15 |
+| Tracking evaluación externa | — | [G] | G16 |
+| Herramientas ITO/ITP | — | [G] | G18 |
+| Cadena financiera unificada | — | [P] | G19 |
 
 ---
 
@@ -777,7 +790,7 @@ Cada fase muestra quién es el **actor actual** — el rol al que le toca. La vi
 | 3 | **Agregación Escalonada** | Dashboard: KPIs rápidos → Lista: filas detalladas → Detalle: contexto completo. |
 | 4 | **Estado Declarativo sobre Pasos** | Gates declaran qué falta. El usuario provee datos faltantes, no sigue un procedimiento. |
 | 5 | **Módulo Condicional por Rol** | Dashboard no muestra "un dashboard". Muestra módulo específico al rol. |
-| 6 | **Sidebar para Multi-Tab** | 17 tabs IPR usan sidebar vertical agrupado. Always visible. Mobile: `<Select>`. |
+| 6 | **Sidebar para Multi-Tab** | 18 tabs IPR usan sidebar vertical agrupado (4 grupos: Operación 5, Finanzas 4, Requisitos 4, Ciclo 4 + Resumen). Always visible. Mobile: `<Select>`. |
 | 7 | **Cola Contextual Pre-Tabla** | Roles firmantes/revisores ven cola de pendientes SOBRE el DataTable. |
 | 8 | **Auto-Scope con router.replace** | JEFE aterriza con filtro de su división. Ref guard previene re-aplicación tras clear. |
 | 9 | **Gate Jurídico Obligatorio** | Ningún documento con efectos jurídicos avanza sin V.B. de ASESOR_JURIDICO. Aplica a actos administrativos (BORRADOR→EN_REVISION), convenios (→EN_REVISION_JURIDICA), y resoluciones. Implementación: `PendingQueue` EN_REVISION en `/actos`, auto-filtro en `/convenios`. Procesos: PROC-NORM-P1, PROC-NORM-P2, PROC-EJEC-P1, PROC-FIN-IPR_CORE-P4. |
@@ -811,19 +824,33 @@ Todos con password `admin123`, dominio `@goreos.cl`.
 
 ## 11. Verificación por Rol
 
-Para validar el journey-first redesign:
+Para validar el journey-first redesign (todos los journeys):
 
-| Test | Usuario | Verificar |
-|------|---------|-----------|
-| ENCARGADO ve task list | encargado.daf | `/compromisos` → CompromisosWorkView, agrupado por IPR, sin toggle manual |
-| JEFE ve equipo | jefe.daf | `/compromisos` → CompromisosTeamView, KPIs + personas expandibles |
-| Admin ve lista completa | admin | `/compromisos` → DataTable genérico sin cambio |
-| GOBERNADOR ve cola firma | gobernador | `/actos` → PendingQueue VISADO arriba |
-| ASESOR_JURIDICO ve cola V.B. | juridico | `/actos` → PendingQueue EN_REVISION + `/convenios` auto-filtro EN_REVISION_JURIDICA |
-| JEFE auto-scope IPR | jefe.daf | `/ipr` → División pre-seleccionada, strip "{N} IPRs en tu división" |
-| Convenios próximos a vencer | admin | `/convenios` → Sección amarilla "Próximos a vencer" si hay VIGENTE ≤90d |
-| CONSEJERO ve próxima sesión | consejero1 | `/core-sessions` → Card con fecha + temas + quorum |
-| Deep links funcionan | jefe.daf | Dashboard MyTeam drill-down → `/compromisos?responsible_id=X` muestra filtrado |
+| Journey | Test | Usuario | Verificar |
+|---------|------|---------|-----------|
+| J1 | ENCARGADO ve task list | encargado.daf | `/compromisos` → CompromisosWorkView, agrupado por IPR, sin toggle manual |
+| J1 | Deep links funcionan | encargado.daf | Dashboard ModuleMyWork → click item → `/ipr/{id}?tab=compromisos` |
+| J2 | ANALISTA ve pipeline | analista.dipir | Dashboard → ModuleFormulacion con checklists F0/F1/F2 |
+| J2 | Post-create redirect | analista.dipir | `/ipr/nuevo` → crear → redirect a `/ipr/{id}?tab=partes` |
+| J3 | RTF ve rendiciones | rtf.daf | `/datos?tab=rendiciones` auto-filtrado EN_REVISION_RTF, columna SLA visible |
+| J4 | JURIDICO ve cola V.B. | juridico | `/actos` → PendingQueue EN_REVISION + `/convenios` auto-filtro EN_REVISION_JURIDICA |
+| J4 | ModuleJuridico dashboard | juridico | Dashboard → ModuleJuridico con items pendientes V.B. |
+| J5 | JEFE ve equipo | jefe.daf | `/compromisos` → CompromisosTeamView, KPIs + personas expandibles |
+| J5 | JEFE auto-scope IPR | jefe.daf | `/ipr` → División pre-seleccionada, strip "{N} IPRs en tu división" |
+| J5 | Deep links drill-down | jefe.daf | Dashboard MyTeam drill-down → `/compromisos?responsible_id=X` muestra filtrado |
+| J6 | Crisis escala | jefe.daf | AttentionStrip CRITICO → `/ipr/{id}?tab=alertas` → crear problema |
+| J7 | Panorama AR | regional | `/centro-de-mando` → 6 KPIs + timeline, escalamientos visibles |
+| J8 | CG monitoreo | control.gestion | `/datos?tab=indicadores` → solo VIGENTE, filtro dimensión, drill-down ROJO |
+| J9 | Procesos DMAIC | procesos | `/procesos` → catálogo → `/tablero` Kanban con WIP limits |
+| J10 | Coordinación DGI | jefe.dgi | `/coordinacion` → AR decisions + `/escalamiento` → FSM stepper |
+| J11 | GOBERNADOR cola firma | gobernador | `/actos` → PendingQueue VISADO arriba, stepper visual |
+| J12 | Presidir CORE | gobernador | `/core-sessions/{id}` → "Iniciar Sesión" → votación → "Finalizar" |
+| J13 | Votar CORE | consejero1 | `/core-sessions` → Card próxima sesión + botones votación |
+| J14 | Preparar CORE | secretario.core | `/core-sessions/nueva` → temas + quorum + guía preparación |
+| J15 | Supervisor financiero | jefe.finanzas | `/datos?tab=rendiciones&state=VISADA_RTF` → aprobar/rechazar |
+| J16 | Admin mantenimiento | admin | `/admin/usuarios` → CRUD + `/admin/umbrales` → ajustar |
+| — | Admin ve lista completa | admin | `/compromisos` → CompromisosListView DataTable genérico |
+| — | Convenios próximos a vencer | admin | `/convenios` → Sección "Próximos a vencer" si hay VIGENTE ≤90d |
 
 ---
 
