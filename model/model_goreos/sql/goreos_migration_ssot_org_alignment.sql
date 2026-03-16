@@ -68,7 +68,7 @@ BEGIN
             UPDATE core.agreement SET giver_id = v_difoi_id WHERE giver_id = v_difot_id;
             UPDATE core.agreement SET receiver_id = v_difoi_id WHERE receiver_id = v_difot_id;
             UPDATE core.ipr_party SET organization_id = v_difoi_id WHERE organization_id = v_difot_id;
-            UPDATE core.risk SET division_id = v_difoi_id WHERE division_id = v_difot_id;
+            -- core.risk has no division_id — scoped via subject_id→ipr
             UPDATE core.organization SET deleted_at = NOW() WHERE id = v_difot_id;
             RAISE NOTICE 'DIFOT merged into DIFOI, soft-deleted';
         ELSE
@@ -100,7 +100,7 @@ BEGIN
             UPDATE core.agreement SET giver_id = v_dideso_id WHERE giver_id = v_diderso_id;
             UPDATE core.agreement SET receiver_id = v_dideso_id WHERE receiver_id = v_diderso_id;
             UPDATE core.ipr_party SET organization_id = v_dideso_id WHERE organization_id = v_diderso_id;
-            UPDATE core.risk SET division_id = v_dideso_id WHERE division_id = v_diderso_id;
+            -- core.risk has no division_id — scoped via subject_id→ipr
             UPDATE core.organization SET deleted_at = NOW() WHERE id = v_diderso_id;
             RAISE NOTICE 'DIDERSO merged into DIDESO, soft-deleted';
         ELSE
@@ -128,7 +128,7 @@ BEGIN
         UPDATE core.agreement SET giver_id = v_dgi_id WHERE giver_id = v_dideco_id;
         UPDATE core.agreement SET receiver_id = v_dgi_id WHERE receiver_id = v_dideco_id;
         UPDATE core.ipr_party SET organization_id = v_dgi_id WHERE organization_id = v_dideco_id;
-        UPDATE core.risk SET division_id = v_dgi_id WHERE division_id = v_dideco_id;
+        -- core.risk has no division_id — scoped via subject_id→ipr
         UPDATE core.committee SET parent_org_id = v_dgi_id WHERE parent_org_id = v_dideco_id;
         UPDATE core.organization SET deleted_at = NOW() WHERE id = v_dideco_id;
         RAISE NOTICE 'DIDECO FKs reparented to DGI, DIDECO soft-deleted';
@@ -171,9 +171,11 @@ UPDATE core."user"
 SET system_role_id = (SELECT id FROM ref.category WHERE scheme = 'system_role' AND code = 'ANALISTA')
 WHERE system_role_id = (SELECT id FROM ref.category WHERE scheme = 'system_role' AND code = 'ENCARGADO');
 
--- Soft-delete ENCARGADO (preserve for referential integrity of historical data)
+-- Mark ENCARGADO as deprecated (ref.category has no is_active — use description + sort_order)
+-- Cannot DELETE due to referential integrity (historical user records may reference it)
 UPDATE ref.category
-SET is_active = false, description = 'DEPRECATED — collapsed into ANALISTA. Encargado is a dynamic assignment, not a system role.'
+SET description = 'DEPRECATED — collapsed into ANALISTA. Encargado is a dynamic assignment, not a system role.',
+    sort_order = 99
 WHERE scheme = 'system_role' AND code = 'ENCARGADO';
 
 -- ═══════════════════════════════════════════════════════════════════════════
