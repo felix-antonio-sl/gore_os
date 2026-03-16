@@ -54,7 +54,6 @@ const ROLE_OPTIONS = [
   { value: "ADMIN_SISTEMA", label: "Admin Sistema" },
   { value: "ADMIN_REGIONAL", label: "Admin Regional" },
   { value: "JEFE_DIVISION", label: "Jefe Division" },
-  { value: "ENCARGADO", label: "Encargado" },
   { value: "JEFE_DGI", label: "Jefe DGI" },
   { value: "ESP_CONTROL_GESTION", label: "Esp. Control Gestion" },
   { value: "ESP_PROCESOS", label: "Esp. Procesos" },

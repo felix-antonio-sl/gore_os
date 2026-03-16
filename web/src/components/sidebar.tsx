@@ -157,7 +157,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
   const showComando = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"].includes(user.role_code);
   const showCarteraDiv = ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DGI"].includes(user.role_code);
   const showMiDivision = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code);
-  const showMisCompromisos = ["ENCARGADO", "JEFE_UNIDAD"].includes(user.role_code);
+  const showMisCompromisos = ["ANALISTA", "RTF", "ASESOR_JURIDICO", "JEFE_UNIDAD"].includes(user.role_code);
   const showAdmin = user.role_code === "ADMIN_SISTEMA";
 
   return (

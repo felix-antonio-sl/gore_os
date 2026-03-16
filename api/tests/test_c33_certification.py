@@ -183,13 +183,13 @@ async def test_solicitar_no_categoria(client: AsyncClient, jefe_token: str, db: 
     assert resp.status_code == 409
 
 
-async def test_solicitar_wrong_role(client: AsyncClient, encargado_token: str, db: AsyncSession):
-    """ENCARGADO cannot request certification."""
+async def test_solicitar_wrong_role(client: AsyncClient, analista_token: str, db: AsyncSession):
+    """ANALISTA cannot request certification."""
     ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="EDIFICACION")
     resp = await client.post(
         f"/api/ipr/{ipr_id}/certificacion-tecnica/solicitar",
         json={},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 403
 

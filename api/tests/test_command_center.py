@@ -76,8 +76,8 @@ async def test_role_regional_can_access(client: AsyncClient, regional_token: str
 
 
 @pytest.mark.asyncio
-async def test_role_encargado_denied(client: AsyncClient, encargado_token: str):
-    resp = await client.get("/api/command-center/summary", headers=auth(encargado_token))
+async def test_role_encargado_denied(client: AsyncClient, analista_token: str):
+    resp = await client.get("/api/command-center/summary", headers=auth(analista_token))
     assert resp.status_code == 403
 
 

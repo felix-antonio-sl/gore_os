@@ -4,7 +4,7 @@
 
 GORE_OS: institutional OS for GORE Ñuble (Chile). Two populations on shared PostgreSQL:
 
-- **Operativa** (ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ENCARGADO): IPR crisis — commitments, problems, alerts, budgets, agreements.
+- **Operativa** (ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ANALISTA, RTF, ASESOR_JURIDICO): IPR crisis — commitments, problems, alerts, budgets, agreements.
 - **DGI** (JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD): Indicators, data analysis, auto-reports, improvement initiatives.
 
 Single login → role detection → routing to appropriate sidebar/dashboard.
@@ -88,7 +88,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 
 **Org types** (14): Internal: GORE(1), DIVISION(8), DEPARTAMENTO(6), UNIDAD(8), STAFF_UNIT(7), ADVISORY_BODY(3). External: MUNICIPALIDAD, SERVICIO, MINISTERIO, UNIVERSIDAD, ONG, EMPRESA, ORG_COMUNITARIA, COMUNITARIA. Hierarchy 3-level via `parent_id`.
 
-**System roles** (16): GOBERNADOR(0), ADMIN_SISTEMA(1), ADMIN_REGIONAL(2), JEFE_DIVISION(3), ENCARGADO(4), JEFE_DGI(5), ESP_CONTROL_GESTION(6), ESP_PROCESOS(7), ESP_TD(8), CONSEJERO_REGIONAL(9), SECRETARIO_EJECUTIVO(10), JEFE_DEPARTAMENTO(11), JEFE_UNIDAD(12), ANALISTA(13), RTF(14), ASESOR_JURIDICO(15).
+**System roles** (15): GOBERNADOR(0), ADMIN_SISTEMA(1), ADMIN_REGIONAL(2), JEFE_DIVISION(3), JEFE_DGI(5), ESP_CONTROL_GESTION(6), ESP_PROCESOS(7), ESP_TD(8), CONSEJERO_REGIONAL(9), SECRETARIO_EJECUTIVO(10), JEFE_DEPARTAMENTO(11), JEFE_UNIDAD(12), ANALISTA(13), RTF(14), ASESOR_JURIDICO(15). ENCARGADO(4) collapsed — "encargado" is a dynamic assignment (responsible_id), not a system role.
 
 ## Test Users
 
@@ -113,11 +113,12 @@ All passwords: `admin123`. All `@goreos.cl`.
 | jefe.dit | JEFE_DIVISION | op | DIT |
 | jefe.finanzas | JEFE_DEPARTAMENTO | op | DAF |
 | jefe.ucr | JEFE_UNIDAD | op | DAF |
-| encargado.daf | ENCARGADO | op | DAF |
-| jefe.dgi | JEFE_DGI | dgi | DIDECO |
-| control.gestion | ESP_CONTROL_GESTION | dgi | DIDECO |
-| procesos | ESP_PROCESOS | dgi | DIDECO |
-| td | ESP_TD | dgi | DIDECO |
+| profesional.dit | ANALISTA | op | DIT |
+| profesional.dideso | ANALISTA | op | DIDESO |
+| jefe.dgi | JEFE_DGI | dgi | DGI |
+| control.gestion | ESP_CONTROL_GESTION | dgi | DGI |
+| procesos | ESP_PROCESOS | dgi | DGI |
+| td | ESP_TD | dgi | DGI |
 
 ## Testing
 
@@ -133,7 +134,7 @@ docker compose exec api pip install pytest pytest-asyncio httpx     # Install de
 
 **Test DB** (`scripts/setup_test_db.sh`): `pg_dump --schema-only` from `goreos_model` + `COPY ref.category` + territory + test users. Never apply `goreos_ddl.sql` directly (circular deps). Test users live in `goreos_seed_users.sql`.
 
-**conftest.py**: fresh `AsyncSession` per test, overrides `get_db`, real JWT for 8 roles (admin, regional, jefe, encargado, dgi, analista, rtf, juridico). `catalog` fixture pre-fetches common IDs.
+**conftest.py**: fresh `AsyncSession` per test, overrides `get_db`, real JWT for 15 roles (admin, regional, gobernador, secretario, jefe, jefe_departamento, jefe_unidad, dgi, esp_control, esp_procesos, esp_td, consejero, analista, rtf, juridico). `catalog` fixture pre-fetches common IDs.
 
 **Known issues** (test data pollution):
 - `test_initiatives::test_move_to_en_curso` — WIP limit. Clean: `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL;`
@@ -170,7 +171,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 - **DGI Data**: `dgi_indicator` (5 dimensions, lifecycle VIGENTE/DEPRECADO/ARCHIVADO/PROPUESTO, refresh idempotent), `dgi_cartera` (IPR portfolio + health VERDE/AMARILLO/ROJO), `dgi_report` (4 types, atomic `jsonb_set`), `dgi_decree` (DS7-DS12, Ley 21.180).
 - **DGI Improvement**: `dgi_initiative` (Kanban, WIP EN_CURSO:5/REVISION:2, `sort_order` @dnd-kit, DMAIC `jsonb_set`, **5th phase=VERIFY not CONTROL**, `trg_initiative_timing`), `dgi_process` (hub + 6 satellites, bridges Process→Opportunity→Initiative), `dgi_bottleneck_investigation` (6-state, 3 detection queries).
 - **DGI Coordination**: `dgi_ar_decision` (4 types, `source_session_id` crisis bridge), `dgi_escalation` (4 levels, auto-code ESC-YYYY-NNNN, auto-alert), `dgi_service`+`dgi_service_request`+`dgi_sla` (catalog visible all populations, any user creates requests, DGI manages), `dgi_td_sessions` (COMITE-TD, no voting), `calendar` (UNION ALL 5 sources).
-- **Cross-cutting**: `risk` (6-state FSM, RSK-NNNN, auto-alert ALTA/MUY_ALTA, role scoping: ENCARGADO→own, JEFE→division, ADMIN→all), `command_center` (6 parallel queries + timeline, 4 admin/exec roles).
+- **Cross-cutting**: `risk` (6-state FSM, RSK-NNNN, auto-alert ALTA/MUY_ALTA, role scoping: ANALISTA/RTF/JURIDICO→own, JEFE→division, ADMIN→all), `command_center` (6 parallel queries + timeline, 4 admin/exec roles).
 
 ## Demo Data
 

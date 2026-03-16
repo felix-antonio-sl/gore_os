@@ -211,13 +211,13 @@ async def test_operativa_cannot_approve(client, regional_token, dgi_token, db):
 
 
 @pytest.mark.asyncio
-async def test_encargado_can_resubmit_observed(client, encargado_token, dgi_token, db):
-    """ENCARGADO can re-submit OBSERVADA → EN_REVISION_RTF."""
-    rid = await _create_rendicion(client, encargado_token, db)
-    await _transition(client, encargado_token, rid, "EN_REVISION_RTF", db)
+async def test_encargado_can_resubmit_observed(client, analista_token, dgi_token, db):
+    """ANALISTA can re-submit OBSERVADA → EN_REVISION_RTF."""
+    rid = await _create_rendicion(client, analista_token, db)
+    await _transition(client, analista_token, rid, "EN_REVISION_RTF", db)
     await _transition(client, dgi_token, rid, "OBSERVADA", db)
     # Encargado reenvía
-    status = await _transition(client, encargado_token, rid, "EN_REVISION_RTF", db)
+    status = await _transition(client, analista_token, rid, "EN_REVISION_RTF", db)
     assert status == 200
 
 

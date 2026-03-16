@@ -383,15 +383,15 @@ async def test_track_info_includes_evaluations(
 
 
 async def test_evaluation_forbidden_encargado(
-    client: AsyncClient, encargado_token: str, db: AsyncSession,
+    client: AsyncClient, analista_token: str, db: AsyncSession,
 ):
-    """ENCARGADO cannot create evaluations."""
+    """ANALISTA cannot create evaluations."""
     ipr_id = await _create_test_ipr(db, "EN_EVALUACION", "F2", mechanism_code="SNI")
     evaluator_type_id = await _get_category_id(db, "evaluator_type", "MDSF")
 
     resp = await client.post(
         f"/api/ipr/{ipr_id}/evaluaciones",
         json={"evaluator_type_id": evaluator_type_id},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 403

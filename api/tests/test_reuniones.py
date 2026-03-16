@@ -239,18 +239,18 @@ async def test_finish_before_start_error(client, regional_token):
 
 
 # ---------------------------------------------------------------------------
-# 11. ENCARGADO cannot create reunion (role restriction)
+# 11. ANALISTA cannot create reunion (role restriction)
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_encargado_cannot_create(client, encargado_token):
-    """ENCARGADO is not a manager role — creation returns 403."""
+async def test_encargado_cannot_create(client, analista_token):
+    """ANALISTA is not a manager role — creation returns 403."""
     resp = await client.post(
         "/api/reuniones",
         json={
             "scheduled_at": "2026-03-15T10:00:00",
             "location": "Test",
         },
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 403

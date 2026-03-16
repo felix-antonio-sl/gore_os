@@ -137,14 +137,14 @@ async def test_verify_item_correct_role(client: AsyncClient, admin_token: str, j
     assert resp.status_code == 200, resp.text
 
 
-async def test_verify_item_wrong_role(client: AsyncClient, admin_token: str, encargado_token: str, db):
+async def test_verify_item_wrong_role(client: AsyncClient, admin_token: str, analista_token: str, db):
     track_id = await _get_track_id(client, admin_token)
     item_id = await _create_item(client, admin_token, track_id, f"TEST-ROLE-{uuid.uuid4().hex[:4]}", "JEFE_DIVISION")
     ipr_id = await _create_ipr_pre_admisible(db, track_id)
     resp = await client.post(
         f"/api/ipr/{ipr_id}/admisibilidad/{item_id}/verificar",
         json={},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 403
 

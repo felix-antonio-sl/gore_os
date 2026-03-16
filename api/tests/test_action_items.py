@@ -46,9 +46,9 @@ async def test_action_items_priority_ordering(client: AsyncClient, regional_toke
 
 
 @pytest.mark.asyncio
-async def test_action_items_encargado_no_decisions(client: AsyncClient, encargado_token: str):
-    """ENCARGADO should not see AR decisions, escalations, SLA, risks."""
-    resp = await client.get("/api/dashboard/action-items", headers=auth(encargado_token))
+async def test_action_items_encargado_no_decisions(client: AsyncClient, analista_token: str):
+    """ANALISTA should not see AR decisions, escalations, SLA, risks."""
+    resp = await client.get("/api/dashboard/action-items", headers=auth(analista_token))
     data = resp.json()
     categories = {item["category"] for item in data["items"]}
     assert "DECISION" not in categories
@@ -86,11 +86,11 @@ async def test_action_items_greeting_name(client: AsyncClient, regional_token: s
 async def test_action_items_all_roles_accessible(
     client: AsyncClient,
     admin_token: str, regional_token: str, jefe_token: str,
-    encargado_token: str, dgi_token: str,
+    analista_token: str, dgi_token: str,
     analista_token: str, rtf_token: str, juridico_token: str,
 ):
     """All 8 test role tokens can access the endpoint."""
-    for token in (admin_token, regional_token, jefe_token, encargado_token,
+    for token in (admin_token, regional_token, jefe_token, analista_token,
                   dgi_token, analista_token, rtf_token, juridico_token):
         resp = await client.get("/api/dashboard/action-items", headers=auth(token))
         assert resp.status_code == 200

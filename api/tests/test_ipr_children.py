@@ -155,7 +155,7 @@ async def test_delete_party(client: AsyncClient, regional_token: str, db: AsyncS
 
 @pytest.mark.asyncio
 async def test_party_requires_admin_role(
-    client: AsyncClient, encargado_token: str, db: AsyncSession
+    client: AsyncClient, analista_token: str, db: AsyncSession
 ):
     """POST /api/ipr/{id}/partes rejects non-admin role."""
     ipr_id = await _get_ipr_id(db)
@@ -165,7 +165,7 @@ async def test_party_requires_admin_role(
     r = await client.post(
         f"/api/ipr/{ipr_id}/partes",
         json={"organization_id": org_id, "party_role_id": role_id},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert r.status_code == 403
 

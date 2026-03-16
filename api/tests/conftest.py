@@ -167,9 +167,45 @@ async def jefe_token(db):
 
 
 @pytest_asyncio.fixture
-async def encargado_token(db):
-    uid = await _get_user_id(db, "encargado.daf@goreos.cl")
-    return create_access_token({"sub": uid, "role": "ENCARGADO"})
+async def gobernador_token(db):
+    uid = await _get_user_id(db, "gobernador@goreos.cl")
+    return create_access_token({"sub": uid, "role": "GOBERNADOR"})
+
+
+@pytest_asyncio.fixture
+async def secretario_token(db):
+    uid = await _get_user_id(db, "secretario.core@goreos.cl")
+    return create_access_token({"sub": uid, "role": "SECRETARIO_EJECUTIVO"})
+
+
+@pytest_asyncio.fixture
+async def jefe_departamento_token(db):
+    uid = await _get_user_id(db, "jefe.finanzas@goreos.cl")
+    return create_access_token({"sub": uid, "role": "JEFE_DEPARTAMENTO"})
+
+
+@pytest_asyncio.fixture
+async def jefe_unidad_token(db):
+    uid = await _get_user_id(db, "jefe.ucr@goreos.cl")
+    return create_access_token({"sub": uid, "role": "JEFE_UNIDAD"})
+
+
+@pytest_asyncio.fixture
+async def esp_control_token(db):
+    uid = await _get_user_id(db, "control.gestion@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ESP_CONTROL_GESTION"})
+
+
+@pytest_asyncio.fixture
+async def esp_procesos_token(db):
+    uid = await _get_user_id(db, "procesos@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ESP_PROCESOS"})
+
+
+@pytest_asyncio.fixture
+async def esp_td_token(db):
+    uid = await _get_user_id(db, "td@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ESP_TD"})
 
 
 @pytest_asyncio.fixture
@@ -180,7 +216,7 @@ async def dgi_token(db):
 
 @pytest_asyncio.fixture
 async def consejero_token(db):
-    uid = await _get_user_id(db, "consejero@goreos.cl")
+    uid = await _get_user_id(db, "consejero1@goreos.cl")
     return create_access_token({"sub": uid, "role": "CONSEJERO_REGIONAL"})
 
 

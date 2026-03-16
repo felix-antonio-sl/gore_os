@@ -27,9 +27,9 @@ async def test_cartera_requires_dgi_role(client, jefe_token):
 
 
 @pytest.mark.asyncio
-async def test_resumen_requires_dgi_role(client, encargado_token):
+async def test_resumen_requires_dgi_role(client, analista_token):
     """GET /api/dgi/cartera/resumen with operational role → 403."""
-    resp = await client.get("/api/dgi/cartera/resumen", headers=auth(encargado_token))
+    resp = await client.get("/api/dgi/cartera/resumen", headers=auth(analista_token))
     assert resp.status_code == 403
 
 

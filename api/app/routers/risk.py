@@ -2,7 +2,7 @@
 E-1: Risk Management CRUD
 
 Cross-population risk register. DGI + ADMIN roles write, all roles read
-(scoped by ENCARGADO → own IPRs, JEFE_DIVISION → division IPRs).
+(scoped by ANALISTA/RTF/JURIDICO → own IPRs, JEFE_DIVISION → division IPRs).
 
 Route ordering: static paths (summary, matrix, check-alerts) BEFORE /{id}.
 """
@@ -28,8 +28,9 @@ router = APIRouter(prefix="/api/risk", tags=["risk"])
 # ---------------------------------------------------------------------------
 _WRITE_ROLES = {*DGI_ROLES, "ADMIN_REGIONAL", "ADMIN_SISTEMA"}
 _ALL_ROLES = {*DGI_ROLES, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR",
-              "JEFE_DIVISION", "ENCARGADO", "SECRETARIO_EJECUTIVO",
-              "JEFE_DEPARTAMENTO", "JEFE_UNIDAD", "CONSEJERO_REGIONAL"}
+              "JEFE_DIVISION", "SECRETARIO_EJECUTIVO",
+              "JEFE_DEPARTAMENTO", "JEFE_UNIDAD", "CONSEJERO_REGIONAL",
+              "ANALISTA", "RTF", "ASESOR_JURIDICO"}
 
 
 def _require_read(user: dict) -> None:
@@ -106,7 +107,7 @@ _DETAIL_FROM = f"""
 def _scope_where(user: dict, params: dict) -> str:
     """Return extra WHERE clause based on role scoping."""
     role = user.get("role_code")
-    if role == "ENCARGADO":
+    if role in ("ANALISTA", "RTF", "ASESOR_JURIDICO"):
         params["user_id"] = str(user["id"])
         return """
             AND (

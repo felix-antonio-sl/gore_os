@@ -256,18 +256,18 @@ async def test_check_alerts_ignores_closed(client: AsyncClient, dgi_token: str, 
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_encargado_can_read_risks(client: AsyncClient, dgi_token: str, encargado_token: str, db: AsyncSession):
+async def test_encargado_can_read_risks(client: AsyncClient, dgi_token: str, analista_token: str, db: AsyncSession):
     await _seed_risk(client, dgi_token, db)
-    resp = await client.get("/api/risk?page=1", headers=auth(encargado_token))
+    resp = await client.get("/api/risk?page=1", headers=auth(analista_token))
     assert resp.status_code == 200
 
 
 @pytest.mark.asyncio
-async def test_encargado_cannot_create_risk(client: AsyncClient, encargado_token: str):
+async def test_encargado_cannot_create_risk(client: AsyncClient, analista_token: str):
     resp = await client.post(
         "/api/risk",
         json={"name": "Unauthorized", "subject_type": "core.ipr", "subject_id": "00000000-0000-0000-0000-000000000000"},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 403
 

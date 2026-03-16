@@ -14,7 +14,7 @@ import { ModuleJuridico } from "./module-juridico";
 import type { ActionItemsResponse, RoleCode, KPICardData, DashboardExecutivoResponse, DivisionBreakdown } from "@/types";
 
 // Role → module mapping
-const KPI_ROLES: RoleCode[] = ["ENCARGADO", "ANALISTA", "RTF", "ASESOR_JURIDICO"];
+const KPI_ROLES: RoleCode[] = ["ANALISTA", "RTF", "ASESOR_JURIDICO"];
 const TEAM_ROLES: RoleCode[] = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD"];
 const DGI_TEAM_ROLES: RoleCode[] = ["JEFE_DGI"];
 const INDICATOR_ROLES: RoleCode[] = ["ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD"];
@@ -93,7 +93,7 @@ export function CommandCenter() {
       {actionData && <AttentionStrip items={actionData.items} />}
 
       {/* 3. Conditional module — journey-specific */}
-      {role === "ENCARGADO" && actionData && <ModuleMyWork items={actionData.items} />}
+      {role === "ANALISTA" && actionData && <ModuleMyWork items={actionData.items} />}
       {role === "ANALISTA" && <ModuleFormulacion />}
       {role && TEAM_ROLES.includes(role) && <ModuleMyTeam />}
       {role && DGI_TEAM_ROLES.includes(role) && <ModuleDgiTeam />}

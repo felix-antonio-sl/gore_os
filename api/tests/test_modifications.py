@@ -235,20 +235,20 @@ async def test_fsm_terminals_have_no_transitions(db: AsyncSession):
 # Role restrictions
 # ---------------------------------------------------------------------------
 
-async def test_create_modification_encargado(client: AsyncClient, encargado_token: str, db: AsyncSession):
-    """ENCARGADO (in WRITE_OPERATIONAL_ROLES) can create modifications."""
+async def test_create_modification_encargado(client: AsyncClient, analista_token: str, db: AsyncSession):
+    """ANALISTA (in WRITE_OPERATIONAL_ROLES) can create modifications."""
     ipr_id = await _create_test_ipr(db)
     type_id = await _get_cat_id(db, "modification_type", "TECNICO")
     resp = await client.post(
         f"/api/ipr/{ipr_id}/modificaciones",
         json={"modification_type_id": type_id, "description": "Cambio técnico menor"},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 201
 
 
-async def test_approve_modification_requires_admin(client: AsyncClient, encargado_token: str, db: AsyncSession):
-    """ENCARGADO cannot approve/reject modifications (only ADMIN roles)."""
+async def test_approve_modification_requires_admin(client: AsyncClient, analista_token: str, db: AsyncSession):
+    """ANALISTA cannot approve/reject modifications (only ADMIN roles)."""
     ipr_id = await _create_test_ipr(db)
     # Create as admin first
     type_id = await _get_cat_id(db, "modification_type", "PRESUPUESTO")
@@ -273,7 +273,7 @@ async def test_approve_modification_requires_admin(client: AsyncClient, encargad
     resp = await client.patch(
         f"/api/ipr/{ipr_id}/modificaciones/{mod_id}",
         json={"status_id": en_rev_id},
-        headers=auth(encargado_token),
+        headers=auth(analista_token),
     )
     assert resp.status_code == 403
 

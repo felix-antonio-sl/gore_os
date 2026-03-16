@@ -82,7 +82,7 @@ function IprDetailPageInner() {
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "GOBERNADOR"].includes(user.role_code);
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"].includes(user.role_code);
   const canTransition = user && TRANSITION_ROLES.includes(user.role_code);
-  const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA", "ENCARGADO"].includes(user.role_code);
+  const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD", "ANALISTA"].includes(user.role_code);
   const canCreateProblema = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
   const canCreateConvenio = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
   const canManageChildren = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA"].includes(user.role_code);

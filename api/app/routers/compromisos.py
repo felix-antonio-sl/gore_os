@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.security import WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
 from app.schemas.compromiso import CompromisoCreate, CompromisoListItem, CompromisoDetail, HistoryEntry, StateChangeRequest, CompromisoUpdate
 
 router = APIRouter(prefix="/api/compromisos", tags=["compromisos"])
@@ -127,7 +127,7 @@ async def list_compromisos(
     else:
         if role == "JEFE_DIVISION" and not division_id:
             effective_division_id = user.get("division_id")
-        if role == "ENCARGADO" and not responsible_id:
+        if role in PERSONAL_SCOPE_ROLES and not responsible_id:
             effective_responsible_id = user["id"]
 
     conditions = ["oc.deleted_at IS NULL"]
@@ -294,7 +294,7 @@ async def create_compromiso(
     db: AsyncSession = Depends(get_db),
 ):
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION",
-                   "JEFE_DEPARTAMENTO", "ANALISTA", "ENCARGADO")
+                   "JEFE_DEPARTAMENTO", "JEFE_UNIDAD", "ANALISTA")
 
     code = await _next_oc_code(db)
 

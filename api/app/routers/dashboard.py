@@ -66,7 +66,7 @@ _SEVERITY_MAP = {
 }
 
 # Roles that scope to own items only (no DGI / global views)
-_PERSONAL_ROLES = ("ENCARGADO", "ANALISTA", "RTF", "ASESOR_JURIDICO")
+_PERSONAL_ROLES = ("ANALISTA", "RTF", "ASESOR_JURIDICO")
 _DIVISION_ROLES = ("JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD")
 
 
@@ -555,9 +555,7 @@ async def _ai_ipr_stale(db: AsyncSession, user: dict) -> list[ActionItem]:
     division_id = user.get("division_id")
 
     # Scope filter by role
-    if role == "ENCARGADO":
-        scope = "AND i.assignee_id = :uid"
-    elif role == "ANALISTA":
+    if role in ("ANALISTA", "RTF", "ASESOR_JURIDICO"):
         scope = "AND i.assignee_id = :uid"
     elif role in _DIVISION_ROLES:
         if not division_id:
@@ -623,9 +621,9 @@ _OVERDUE_PRED = (
 
 
 # ---------------------------------------------------------------------------
-# ENCARGADO dashboard
+# Personal scope dashboard (ANALISTA, RTF, ASESOR_JURIDICO, JEFE_UNIDAD)
 # ---------------------------------------------------------------------------
-async def _dashboard_encargado(user: dict, db: AsyncSession) -> DashboardResponse:
+async def _dashboard_personal(user: dict, db: AsyncSession) -> DashboardResponse:
     user_id = str(user["id"])
 
     # ── KPIs ──────────────────────────────────────────────────────────────
@@ -1067,14 +1065,14 @@ async def get_dashboard(
     Role-aware dashboard endpoint.
 
     Returns KPIs, commitments, alerts, and problems scoped to the user's role:
-    - ENCARGADO: personal commitments and alerts on their assigned IPRs
+    - ANALISTA/RTF/ASESOR_JURIDICO/JEFE_UNIDAD: personal commitments and alerts on assigned IPRs
     - JEFE_DIVISION: division-scoped commitments and problems
     - ADMIN_REGIONAL / ADMIN_SISTEMA / JEFE_DGI / ESP_*: global overview
     """
     role_code = user["role_code"]
 
-    if role_code in ("ENCARGADO", "JEFE_UNIDAD"):
-        return await _dashboard_encargado(user, db)
+    if role_code in ("ANALISTA", "RTF", "ASESOR_JURIDICO", "JEFE_UNIDAD"):
+        return await _dashboard_personal(user, db)
 
     if role_code in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO"):
         return await _dashboard_jefe_division(user, db)
@@ -1179,7 +1177,7 @@ async def get_mi_division(
 
 
 # ---------------------------------------------------------------------------
-# GET /api/dashboard/mis-compromisos — Personal commitments for ENCARGADO
+# GET /api/dashboard/mis-compromisos — Personal commitments for personal-scope roles
 # ---------------------------------------------------------------------------
 
 @router.get("/mis-compromisos", response_model=MisCompromisosResponse)

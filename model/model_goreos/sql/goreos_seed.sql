@@ -307,7 +307,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('org_type', 'MINISTERIO', 'Ministerio', 'Ministerio sectorial', 7),
 ('org_type', 'UNIVERSIDAD', 'Universidad', 'Institución educación superior', 8),
 ('org_type', 'ONG', 'ONG', 'Organización sin fines de lucro', 9),
-('org_type', 'EMPRESA', 'Empresa', 'Entidad privada', 10)
+('org_type', 'EMPRESA', 'Empresa', 'Entidad privada', 10),
+('org_type', 'STAFF_UNIT', 'Unidad de Staff', 'Dependencia directa del Gobernador/a o Administrador/a Regional', 11),
+('org_type', 'ADVISORY_BODY', 'Cuerpo Asesor', 'Órgano colegiado de asesoría (COSOC, CTCI, CDR)', 12),
+('org_type', 'ORG_COMUNITARIA', 'Organización Comunitaria', 'Organización de la sociedad civil', 13),
+('org_type', 'COMUNITARIA', 'Comunidad', 'Comunidad territorial', 14)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -534,16 +538,24 @@ ON CONFLICT (scheme, code) DO UPDATE SET
 --    SCHEMA: ref.category - SCHEMES ESPECIFICACIONES.MD (NUEVOS)
 -- ============================================================================
 
--- ROLES DEL SISTEMA (RF-001, RF-002)
+-- ROLES DEL SISTEMA — 15 roles alineados con SSOT organica + organigrama
+-- sort_order 4 (ex-ENCARGADO) vacante deliberadamente para evitar cascada
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('system_role', 'GOBERNADOR', 'Gobernador Regional', 'Autoridad ejecutiva máxima. Firma actos, preside CORE', 0),
 ('system_role', 'ADMIN_SISTEMA', 'Administrador del Sistema', 'Configura sistema, usuarios, importa datos', 1),
 ('system_role', 'ADMIN_REGIONAL', 'Administrador Regional', 'Visión 360°, coordina divisiones, gestiona crisis', 2),
 ('system_role', 'JEFE_DIVISION', 'Jefe de División', 'Supervisa división, verifica trabajo, asigna', 3),
-('system_role', 'ENCARGADO', 'Encargado', 'Ejecuta trabajo, actualiza avances, reporta problemas', 4),
 ('system_role', 'JEFE_DGI', 'Jefe DGI', 'Dirige Departamento de Gestión Institucional, decide escalamientos', 5),
 ('system_role', 'ESP_CONTROL_GESTION', 'Especialista Control de Gestión', 'Monitorea indicadores, valida datos, genera alertas', 6),
 ('system_role', 'ESP_PROCESOS', 'Especialista Procesos', 'Levanta procesos BPMN, gestiona mejora continua DMAIC', 7),
-('system_role', 'ESP_TD', 'Especialista Transformación Digital', 'Monitorea cumplimiento Ley 21.180, gestiona KB', 8)
+('system_role', 'ESP_TD', 'Especialista Transformación Digital', 'Monitorea cumplimiento Ley 21.180, gestiona KB', 8),
+('system_role', 'CONSEJERO_REGIONAL', 'Consejero Regional', 'Miembro del Consejo Regional, vota IPRs >7K UTM', 9),
+('system_role', 'SECRETARIO_EJECUTIVO', 'Secretario Ejecutivo', 'Secretaría Ejecutiva del CORE, prepara agenda y actas', 10),
+('system_role', 'JEFE_DEPARTAMENTO', 'Jefe de Departamento', 'Supervisa departamento dentro de una división', 11),
+('system_role', 'JEFE_UNIDAD', 'Jefe de Unidad', 'Supervisa unidad operativa', 12),
+('system_role', 'ANALISTA', 'Analista', 'Formula IPR F0-F3, evalúa admisibilidad, registra evaluaciones', 13),
+('system_role', 'RTF', 'Referente Técnico-Financiero', 'Analista Otorgante SISREC, revisa rendiciones 7d SLA', 14),
+('system_role', 'ASESOR_JURIDICO', 'Asesor Jurídico', 'V.B. legalidad de actos administrativos y convenios', 15)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,

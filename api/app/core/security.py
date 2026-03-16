@@ -6,18 +6,23 @@ from app.core.config import get_settings
 settings = get_settings()
 
 OPERATIONAL_ROLES = {
-    "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "ENCARGADO",
+    "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION",
     "GOBERNADOR", "CONSEJERO_REGIONAL", "SECRETARIO_EJECUTIVO",
     "JEFE_DEPARTAMENTO", "JEFE_UNIDAD",
     "ANALISTA", "RTF", "ASESOR_JURIDICO",
 }
 WRITE_OPERATIONAL_ROLES = {
-    "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "ENCARGADO",
+    "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION",
     "GOBERNADOR", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD",
     "ANALISTA", "RTF", "ASESOR_JURIDICO",
 }
 DGI_ROLES = {"JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD"}
 ALL_ROLES = OPERATIONAL_ROLES | DGI_ROLES
+
+# Roles that auto-scope to personal items (own IPRs/compromisos).
+# Replaces the collapsed ENCARGADO role — "encargado" is now a dynamic
+# assignment (responsible_id), not a system role.
+PERSONAL_SCOPE_ROLES = {"ANALISTA", "RTF", "ASESOR_JURIDICO"}
 
 
 def verify_password(plain: str, hashed: str) -> bool:

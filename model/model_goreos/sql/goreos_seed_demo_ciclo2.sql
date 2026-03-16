@@ -169,7 +169,7 @@ INSERT INTO core.budget_program (
     NOW(), NOW()
 ) ON CONFLICT DO NOTHING;
 
--- DIFOT — Subtítulo 24, FNDR 8%, ejecución alta (80%)
+-- DIFOI — Subtítulo 24, FNDR 8%, ejecución alta (80%)
 INSERT INTO core.budget_program (
     code, name, fiscal_year,
     program_type_id, subtitle_id, item_id, allocation_id, owner_division_id,
@@ -183,7 +183,7 @@ INSERT INTO core.budget_program (
     (SELECT id FROM ref.category WHERE scheme='budget_subtitle' AND code='24' LIMIT 1),
     (SELECT id FROM ref.category WHERE scheme='budget_item' AND code='TRANSFERENCIAS_CTES' LIMIT 1),
     (SELECT id FROM ref.category WHERE scheme='budget_allocation' AND code='FNDR_8PCT' LIMIT 1),
-    (SELECT id FROM core.organization WHERE code='DIFOT' LIMIT 1),
+    (SELECT id FROM core.organization WHERE code='DIFOI' LIMIT 1),
     600000000.00, 580000000.00, 400000000.00, 350000000.00, 464000000.00,
     580000000.00,
     NOW(), NOW()
@@ -373,7 +373,7 @@ INSERT INTO core.agreement (
     (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE' LIMIT 1),
     (SELECT id FROM core.ipr WHERE codigo_bip='2401SC0180' LIMIT 1),
     (SELECT id FROM core.organization WHERE code='DIPIR' LIMIT 1),
-    (SELECT id FROM core.organization WHERE code='DIFOT' LIMIT 1),
+    (SELECT id FROM core.organization WHERE code='DIFOI' LIMIT 1),
     350000000.00,
     '2024-04-15', '2024-04-15',
     (CURRENT_DATE + INTERVAL '28 days')::timestamptz,
@@ -410,7 +410,7 @@ INSERT INTO core.agreement (
     (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VENCIDO' LIMIT 1),
     (SELECT id FROM core.ipr WHERE codigo_bip='2401D0160' LIMIT 1),
     (SELECT id FROM core.organization WHERE code='DIPLADE' LIMIT 1),
-    (SELECT id FROM core.organization WHERE code='DIDECO' LIMIT 1),
+    (SELECT id FROM core.organization WHERE code='DGI' LIMIT 1),
     800000000.00,
     '2024-02-01', '2024-02-01', '2025-01-31',
     NOW(), NOW()

@@ -19,9 +19,9 @@ async def test_jefe_dashboard(client, jefe_token):
     assert "kpis" in body
 
 
-async def test_encargado_dashboard(client, encargado_token):
-    """ENCARGADO gets personal dashboard."""
-    resp = await client.get("/api/dashboard", headers=auth(encargado_token))
+async def test_encargado_dashboard(client, analista_token):
+    """ANALISTA gets personal dashboard."""
+    resp = await client.get("/api/dashboard", headers=auth(analista_token))
     assert resp.status_code == 200
     body = resp.json()
     assert "kpis" in body
@@ -35,9 +35,9 @@ async def test_mi_division_endpoint(client, jefe_token):
     assert "kpis" in body
 
 
-async def test_mis_compromisos_endpoint(client, encargado_token):
+async def test_mis_compromisos_endpoint(client, analista_token):
     """GET /api/dashboard/mis-compromisos returns grouped commitments."""
-    resp = await client.get("/api/dashboard/mis-compromisos", headers=auth(encargado_token))
+    resp = await client.get("/api/dashboard/mis-compromisos", headers=auth(analista_token))
     assert resp.status_code == 200
     body = resp.json()
     assert "kpis" in body

@@ -21,8 +21,8 @@ async def test_cartera_por_division(client: AsyncClient, admin_token: str):
         assert item["health_signal"] in ("VERDE", "AMARILLO", "ROJO")
 
 
-async def test_cartera_por_division_requires_admin(client: AsyncClient, encargado_token: str):
+async def test_cartera_por_division_requires_admin(client: AsyncClient, analista_token: str):
     """Non-admin roles cannot access cartera."""
-    headers = {"Authorization": f"Bearer {encargado_token}"}
+    headers = {"Authorization": f"Bearer {analista_token}"}
     resp = await client.get("/api/ipr/cartera-por-division", headers=headers)
     assert resp.status_code == 403

@@ -217,29 +217,35 @@ DO $$
 DECLARE
     v_gore_type_id UUID;
     v_division_type_id UUID;
+    v_staff_unit_type_id UUID;
     v_gore_id UUID;
 BEGIN
     -- Obtener tipos de organización
     SELECT id INTO v_gore_type_id FROM ref.category WHERE scheme = 'org_type' AND code = 'GORE';
     SELECT id INTO v_division_type_id FROM ref.category WHERE scheme = 'org_type' AND code = 'DIVISION';
+    SELECT id INTO v_staff_unit_type_id FROM ref.category WHERE scheme = 'org_type' AND code = 'STAFF_UNIT';
 
     -- GORE Ñuble
-    -- NOTA: DDL de core.organization no tiene territory_id ni is_active
     INSERT INTO core.organization (code, name, org_type_id, parent_id)
     VALUES ('GORE-NUBLE', 'Gobierno Regional de Ñuble', v_gore_type_id, NULL)
     RETURNING id INTO v_gore_id;
 
-    -- Divisiones del GORE
+    -- 6 Divisiones canónicas SSOT (ssot-organica.md)
     INSERT INTO core.organization (code, name, org_type_id, parent_id) VALUES
-        ('DIPIR', 'División de Planificación e Inversión Regional', v_division_type_id, v_gore_id),
-        ('DAF', 'División de Administración y Finanzas', v_division_type_id, v_gore_id),
-        ('DIFOT', 'División de Fomento e Industria', v_division_type_id, v_gore_id),
-        ('DIDERSO', 'División de Desarrollo Social y Humano', v_division_type_id, v_gore_id),
-        ('DIJ', 'División Jurídica', v_division_type_id, v_gore_id),
-        ('DIDECO', 'División de Control de Gestión', v_division_type_id, v_gore_id),
-        ('GABINETE', 'Gabinete del Gobernador', v_division_type_id, v_gore_id);
+        ('DIPLADE', 'División de Planificación y Desarrollo Regional', v_division_type_id, v_gore_id),
+        ('DIPIR',   'División de Presupuesto e Inversión Regional', v_division_type_id, v_gore_id),
+        ('DIDESO',  'División de Desarrollo Social y Humano', v_division_type_id, v_gore_id),
+        ('DIFOI',   'División de Fomento e Industria', v_division_type_id, v_gore_id),
+        ('DIT',     'División de Infraestructura y Transportes', v_division_type_id, v_gore_id),
+        ('DAF',     'División de Administración y Finanzas', v_division_type_id, v_gore_id);
 
-    RAISE NOTICE 'Organizaciones GORE Ñuble insertadas: 1 GORE, 7 divisiones';
+    -- 3 Staff Units relevantes para el sistema (ssot-organica.md: gnub:StaffUnit)
+    INSERT INTO core.organization (code, name, org_type_id, parent_id) VALUES
+        ('DGI',      'Depto. de Gestión Institucional', v_staff_unit_type_id, v_gore_id),
+        ('DIJ',      'Depto. Jurídico', v_staff_unit_type_id, v_gore_id),
+        ('GABINETE', 'Gabinete y Participación Social', v_staff_unit_type_id, v_gore_id);
+
+    RAISE NOTICE 'Organizaciones GORE Ñuble insertadas: 1 GORE, 6 divisiones, 3 staff units';
 
 END $$;
 

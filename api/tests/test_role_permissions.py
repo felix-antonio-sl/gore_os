@@ -154,13 +154,13 @@ async def test_transiciones_admin_all_allowed(client: AsyncClient, admin_token: 
         assert t["allowed"] is True, f"ADMIN_SISTEMA should be allowed for {t['code']}"
 
 
-async def test_transiciones_encargado_not_allowed(client: AsyncClient, encargado_token: str, db: AsyncSession):
-    """ENCARGADO should have allowed=False for all transitions (lens subject, not transition agent)."""
+async def test_transiciones_encargado_not_allowed(client: AsyncClient, analista_token: str, db: AsyncSession):
+    """ANALISTA should have allowed=False for all transitions (lens subject, not transition agent)."""
     ipr_id = await _create_ipr(db, "EN_EJECUCION", "F4", nature="PROGRAMA")
-    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(encargado_token))
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(analista_token))
     assert resp.status_code == 200
     for t in resp.json():
-        assert t["allowed"] is False, f"ENCARGADO should NOT be allowed for {t['code']}"
+        assert t["allowed"] is False, f"ANALISTA should NOT be allowed for {t['code']}"
 
 
 # ---------------------------------------------------------------------------
@@ -240,10 +240,10 @@ async def test_regional_can_anular(client: AsyncClient, regional_token: str, db:
 # 5C. Roles without transition authority are blocked at endpoint level
 # ---------------------------------------------------------------------------
 
-async def test_encargado_blocked_from_transitions(client: AsyncClient, encargado_token: str, db: AsyncSession):
-    """ENCARGADO cannot execute any transition (not in _ASSIGN_ROLES)."""
+async def test_encargado_blocked_from_transitions(client: AsyncClient, analista_token: str, db: AsyncSession):
+    """ANALISTA cannot execute any transition (not in _ASSIGN_ROLES)."""
     ipr_id = await _create_ipr(db, "EN_REVISION", "F1")
-    code = await _transition(client, ipr_id, "PRE_ADMISIBLE", encargado_token, db)
+    code = await _transition(client, ipr_id, "PRE_ADMISIBLE", analista_token, db)
     assert code == 403
 
 

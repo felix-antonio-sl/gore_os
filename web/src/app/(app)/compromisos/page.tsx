@@ -38,8 +38,9 @@ export default function CompromisosPage() {
   const role = user?.role_code;
   const responsibleIdParam = searchParams.get("responsible_id");
   const isJefe = role && ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(role);
+  const isPersonalScope = role && ["ANALISTA", "RTF", "ASESOR_JURIDICO"].includes(role);
   const viewMode: ViewMode =
-    role === "ENCARGADO"
+    isPersonalScope
       ? "work"
       : isJefe && !responsibleIdParam
         ? "team"
@@ -137,7 +138,7 @@ export default function CompromisosPage() {
     detail &&
     detail.state === "PENDIENTE" &&
     user &&
-    (user.role_code === "ENCARGADO" || detail.responsible_id === user.id);
+    detail.responsible_id === user.id;
   const canVerify =
     detail &&
     detail.state === "COMPLETADO" &&

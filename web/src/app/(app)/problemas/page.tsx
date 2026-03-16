@@ -57,7 +57,7 @@ export default function ProblemasPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user } = useAuth();
-  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ENCARGADO", "ANALISTA"].includes(user.role_code);
+  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD", "ANALISTA"].includes(user.role_code);
   const [data, setData] = useState<PaginatedResponse<ProblemaListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);

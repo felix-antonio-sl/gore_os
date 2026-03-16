@@ -9,7 +9,7 @@ from tests.conftest import auth
 # Helpers
 # ---------------------------------------------------------------------------
 
-async def _get_role_id(db, code: str = "ENCARGADO") -> str:
+async def _get_role_id(db, code: str = "ANALISTA") -> str:
     """Fetch a system_role category ID from the test DB."""
     result = await db.execute(
         text("SELECT id FROM ref.category WHERE scheme = 'system_role' AND code = :code"),
@@ -22,7 +22,7 @@ async def _get_role_id(db, code: str = "ENCARGADO") -> str:
 
 async def _create_test_user(client, admin_token, db, catalog, *, email=None):
     """Helper: create a user via POST and return the response body."""
-    role_id = await _get_role_id(db, "ENCARGADO")
+    role_id = await _get_role_id(db, "ANALISTA")
     email = email or f"test-{uuid4().hex[:8]}@goreos.cl"
     payload = {
         "email": email,
@@ -87,7 +87,7 @@ async def test_list_usuarios_search(client, admin_token):
 @pytest.mark.asyncio
 async def test_create_usuario(client, admin_token, db, catalog):
     """POST /api/admin/usuarios creates a new user and returns id + email."""
-    role_id = await _get_role_id(db, "ENCARGADO")
+    role_id = await _get_role_id(db, "ANALISTA")
     unique_email = f"test-create-{uuid4().hex[:8]}@goreos.cl"
 
     payload = {
@@ -122,7 +122,7 @@ async def test_create_usuario(client, admin_token, db, catalog):
 @pytest.mark.asyncio
 async def test_create_usuario_duplicate_email(client, admin_token, db, catalog):
     """POST /api/admin/usuarios with existing email returns 409."""
-    role_id = await _get_role_id(db, "ENCARGADO")
+    role_id = await _get_role_id(db, "ANALISTA")
     payload = {
         "email": "admin@goreos.cl",
         "password": "testpass123",
@@ -253,13 +253,13 @@ async def test_403_for_non_admin(client, regional_token):
 
 
 # ---------------------------------------------------------------------------
-# 10. POST /api/admin/usuarios → 403 for ENCARGADO
+# 10. POST /api/admin/usuarios → 403 for ANALISTA
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_403_for_encargado(client, encargado_token, db):
-    """POST /api/admin/usuarios with ENCARGADO role returns 403."""
-    role_id = await _get_role_id(db, "ENCARGADO")
+async def test_403_for_encargado(client, analista_token, db):
+    """POST /api/admin/usuarios with ANALISTA role returns 403."""
+    role_id = await _get_role_id(db, "ANALISTA")
     payload = {
         "email": f"test-forbidden-{uuid4().hex[:8]}@goreos.cl",
         "password": "testpass123",
@@ -268,7 +268,7 @@ async def test_403_for_encargado(client, encargado_token, db):
         "system_role_id": role_id,
     }
     resp = await client.post(
-        "/api/admin/usuarios", json=payload, headers=auth(encargado_token)
+        "/api/admin/usuarios", json=payload, headers=auth(analista_token)
     )
     assert resp.status_code == 403
 

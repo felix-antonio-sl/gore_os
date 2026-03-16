@@ -1961,7 +1961,7 @@ async def list_iprs(
     List IPRs with server-side pagination and role-aware filtering.
 
     - JEFE_DIVISION: restricted to IPRs where sponsor_division_id = user.division_id
-    - ENCARGADO: restricted to IPRs where assignee_id = user.id
+    - ANALISTA/RTF/ASESOR_JURIDICO/JEFE_UNIDAD: restricted to IPRs where assignee_id = user.id
     - Admin roles: unrestricted access
     - assignee_id: explicit filter by assigned user (any role)
     - sponsor_division_id: explicit filter by sponsor division (any role)
@@ -1975,7 +1975,7 @@ async def list_iprs(
     params: dict = {}
 
     # Role-based scope restriction
-    if role_code in ("ENCARGADO", "JEFE_UNIDAD"):
+    if role_code in ("ANALISTA", "RTF", "ASESOR_JURIDICO", "JEFE_UNIDAD"):
         conditions.append("i.assignee_id = :assignee_id")
         params["assignee_id"] = user_id
     elif role_code in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO") and division_id:

@@ -7,7 +7,7 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.security import WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
 from app.core.audit import record_event
 from app.schemas.alerta import AlertaListItem, AlertaAttendRequest
 
@@ -103,8 +103,8 @@ async def list_alertas(
         params["alert_type"] = alert_type
 
     # Role-based IPR scope filters
-    # Canonical morphisms: ENCARGADO → ipr.assignee_id, JEFE_DIVISION → ipr.sponsor_division_id
-    if role == "ENCARGADO":
+    # Personal scope roles → ipr.assignee_id, JEFE_DIVISION → ipr.sponsor_division_id
+    if role in PERSONAL_SCOPE_ROLES:
         conditions.append("""
             (
                 (a.subject_type = 'core.ipr' AND a.subject_id IN (
