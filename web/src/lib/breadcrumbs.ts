@@ -36,6 +36,7 @@ const ROUTE_LABELS: Record<string, string> = {
   "/centro-de-mando": "Centro de Mando",
   "/mi-division": "Mi División",
   "/mis-compromisos": "Mis Compromisos",
+  "/aprobaciones": "Aprobaciones",
 };
 
 /**
@@ -75,4 +76,53 @@ export function buildBreadcrumbs(
   }
 
   return crumbs;
+}
+
+/* ── Accent color by route ─────────────────────────────── */
+
+const ROUTE_ACCENT: Record<string, string> = {
+  "/ipr": "indigo",
+  "/compromisos": "amber",
+  "/mis-compromisos": "amber",
+  "/presupuesto": "emerald",
+  "/convenios": "emerald",
+  "/actos": "violet",
+  "/reuniones": "violet",
+  "/core-sessions": "violet",
+  "/riesgos": "rose",
+  "/alertas": "rose",
+  "/problemas": "rose",
+  "/datos": "cyan",
+  "/informes": "cyan",
+  "/cartera": "cyan",
+  "/tablero": "cyan",
+  "/procesos": "cyan",
+  "/cuellos-de-botella": "cyan",
+  "/coordinacion": "teal",
+  "/escalamiento": "teal",
+  "/servicios": "teal",
+  "/comite-td": "teal",
+  "/calendario": "teal",
+  "/centro-de-mando": "indigo",
+  "/admin": "violet",
+  "/aprobaciones": "emerald",
+};
+
+/**
+ * Returns the domain accent color for a given route pathname.
+ * Falls back to "indigo" if no match.
+ */
+export function getAccentColorByRoute(
+  pathname: string
+): "indigo" | "amber" | "emerald" | "violet" | "rose" | "cyan" | "teal" {
+  // Try exact match first, then progressively shorter prefixes
+  const segments = pathname.split("/").filter(Boolean);
+  let accumulated = "";
+  for (const seg of segments) {
+    accumulated += "/" + seg;
+    if (ROUTE_ACCENT[accumulated]) {
+      return ROUTE_ACCENT[accumulated] as ReturnType<typeof getAccentColorByRoute>;
+    }
+  }
+  return "indigo";
 }

@@ -546,6 +546,27 @@ export default function ConveniosPage() {
                 <Badge variant="outline" className="text-xs">{detail.agreement_type_label}</Badge>
                 <StatusBadge status={detail.state} size="sm" />
               </div>
+              {/* Financial chain strip */}
+              {(detail.pending_renditions != null && detail.pending_renditions > 0) && (
+                <div className="mt-2 flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs">
+                  <AlertTriangle className="size-3.5 text-amber-600 shrink-0" />
+                  <span className="text-amber-800">
+                    {detail.pending_renditions} rendición{detail.pending_renditions > 1 ? "es" : ""} pendiente{detail.pending_renditions > 1 ? "s" : ""}
+                    {detail.blocked_renditions != null && detail.blocked_renditions > 0 && (
+                      <> · <span className="font-medium">{detail.blocked_renditions} bloqueante{detail.blocked_renditions > 1 ? "s" : ""} (Art. 18)</span></>
+                    )}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setSelectedId(null);
+                      router.push(`/datos?dominio=rendiciones`);
+                    }}
+                    className="ml-auto text-amber-700 underline hover:text-amber-900"
+                  >
+                    Ver
+                  </button>
+                </div>
+              )}
               {canEdit && !isEditing && (
                 <Button size="sm" variant="outline" onClick={openEdit} className="mt-2 w-full">
                   Editar

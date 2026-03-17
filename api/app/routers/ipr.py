@@ -2162,7 +2162,8 @@ async def list_iprs(
                 ELSE NULL
             END            AS total_budget,
             assignee_div.short_name AS assignee_division_abbr,
-            sponsor_div.short_name  AS sponsor_division_abbr
+            sponsor_div.short_name  AS sponsor_division_abbr,
+            i.phase_entered_at
         FROM core.ipr i
         LEFT JOIN ref.category  ct   ON ct.id   = i.ipr_type_id
         LEFT JOIN ref.category  st   ON st.id   = i.status_id
@@ -2219,6 +2220,7 @@ async def list_iprs(
             total_budget=row["total_budget"],
             actor_role=actor_role,
             actor_action=actor_action,
+            phase_entered_at=row["phase_entered_at"],
         ))
 
     return PaginatedResponse(

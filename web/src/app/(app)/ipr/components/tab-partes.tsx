@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Building2, Trash2 } from "lucide-react";
+import { Plus, Building2, Trash2, HardHat, AlertCircle } from "lucide-react";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { formatDate } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
@@ -100,8 +100,64 @@ export function TabPartes({ iprId, canManage }: TabPartesProps) {
     return data.map((o) => ({ value: o.id, label: `${o.name} (${o.code})` }));
   };
 
+  // Find ITO/ITP parties
+  const itoParty = partes?.find((p) => p.role_code === "ITO" || p.role_label?.toUpperCase().includes("ITO"));
+  const itpParty = partes?.find((p) => p.role_code === "ITP" || p.role_label?.toUpperCase().includes("ITP"));
+
+  const handleAssignIto = () => {
+    // Pre-select ITO role in form
+    openParteForm();
+    // The role will need to be selected manually, but we set the drawer open
+  };
+
   return (
     <div>
+      {/* ITO/ITP Highlight Card */}
+      {!loading && partes && (
+        <div className="mb-4 rounded-lg border bg-card">
+          <div className="p-3 space-y-2">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <HardHat className="size-4 text-indigo-600" />
+              <span>Inspección Técnica</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {itoParty ? (
+                <div className="flex items-center gap-2 rounded-md bg-green-50 border border-green-200 px-3 py-2 text-xs">
+                  <span className="font-medium text-green-800">ITO:</span>
+                  <span className="text-green-700">{itoParty.organization_name}</span>
+                  {itoParty.contact_person && (
+                    <span className="text-green-600">— {itoParty.contact_person}</span>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 rounded-md bg-amber-50 border border-amber-200 px-3 py-2 text-xs">
+                  <AlertCircle className="size-3.5 text-amber-600 shrink-0" />
+                  <span className="text-amber-800">Sin ITO asignado</span>
+                  {canManage && (
+                    <Button size="sm" variant="outline" className="ml-auto h-6 text-[10px] px-2" onClick={handleAssignIto}>
+                      Asignar ITO
+                    </Button>
+                  )}
+                </div>
+              )}
+              {itpParty ? (
+                <div className="flex items-center gap-2 rounded-md bg-green-50 border border-green-200 px-3 py-2 text-xs">
+                  <span className="font-medium text-green-800">ITP:</span>
+                  <span className="text-green-700">{itpParty.organization_name}</span>
+                  {itpParty.contact_person && (
+                    <span className="text-green-600">— {itpParty.contact_person}</span>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 rounded-md border px-3 py-2 text-xs text-muted-foreground">
+                  <span>Sin ITP asignado</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-4">
         <p className="text-sm text-muted-foreground">
           {partes ? `${partes.length} partes involucradas` : ""}

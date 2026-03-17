@@ -105,6 +105,7 @@ export interface IPRListItem {
   total_budget: number | null;
   actor_role: string | null;
   actor_action: string | null;
+  phase_entered_at: string | null;
 }
 
 export interface CompromisoListItem {
@@ -288,6 +289,8 @@ export interface ConvenioDetail extends ConvenioListItem {
   created_at: string;
   installments: InstallmentItem[];
   history?: { id: string; previous_state: string | null; new_state: string; changed_by_name: string | null; comment: string | null; changed_at: string }[];
+  pending_renditions?: number;
+  blocked_renditions?: number;
 }
 
 // ---------------------------------------------------------------------------

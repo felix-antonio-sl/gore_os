@@ -1,6 +1,8 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { TEMPORAL_STATES, resolveTemporalState } from "@/lib/status-colors";
 
 interface TemporalIndicatorProps {
   daysRemaining: number;
@@ -8,53 +10,33 @@ interface TemporalIndicatorProps {
 }
 
 export function TemporalIndicator({ daysRemaining, state }: TemporalIndicatorProps) {
-  if (state === "VERIFICADO" || state === "CANCELADO") {
-    return null;
-  }
+  const key = resolveTemporalState(daysRemaining, state);
+  const config = TEMPORAL_STATES[key];
 
-  if (state === "COMPLETADO") {
+  if (config.hidden) return null;
+
+  const label = typeof config.label === "function"
+    ? config.label(daysRemaining)
+    : config.label;
+
+  if (key === "completed") {
     return (
-      <Badge variant="default" className="bg-amber-500">
-        Por verificar
+      <Badge variant="default" className={config.className}>
+        {label}
       </Badge>
     );
   }
 
-  if (daysRemaining <= -5) {
-    return (
-      <span className="inline-flex items-center rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700">
-        Vencido {Math.abs(daysRemaining)}d
-      </span>
-    );
-  }
-
-  if (daysRemaining < 0) {
-    return (
-      <span className="inline-flex items-center rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-700">
-        Vencido {Math.abs(daysRemaining)}d
-      </span>
-    );
-  }
-
-  if (daysRemaining <= 1) {
-    return (
-      <span className="inline-flex items-center rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-700">
-        Vence mañana
-      </span>
-    );
-  }
-
-  if (daysRemaining <= 3) {
-    return (
-      <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-        Vence en {daysRemaining}d
-      </span>
-    );
+  if (key === "normal") {
+    return <span className={cn("text-xs", config.className)}>{label}</span>;
   }
 
   return (
-    <span className="text-xs text-muted-foreground">
-      en {daysRemaining}d
+    <span className={cn(
+      "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
+      config.className
+    )}>
+      {label}
     </span>
   );
 }

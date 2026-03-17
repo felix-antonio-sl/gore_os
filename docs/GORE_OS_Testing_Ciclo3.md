@@ -1333,3 +1333,62 @@ Los siguientes tests pueden fallar debido a contaminacion de datos entre ejecuci
 ```bash
 ./scripts/setup_test_db.sh
 ```
+
+---
+
+## 11. Capa View UX (C50)
+
+### 11.1 Fase 1 — Coherencia de Señales
+
+Tokens de color centralizados en `lib/status-colors.ts`: KPI_CARD_BG, KPI_CARD_VALUE, ALERT_SEVERITY_BORDER, ALERT_SEVERITY_ICON_COLOR, TEMPORAL_STATES + resolveTemporalState(). 3 componentes refactorizados (KpiCard, AlertCard, TemporalIndicator).
+
+**Verificación**: Dashboard → KpiCards y AlertCards mantienen colores originales. Compromisos → TemporalIndicator muestra badges correctos.
+
+### 11.2 Fase 2 — Prominencia del Actor G15
+
+- Lista IPR: columna "Actor" (rol + sublínea acción), columna "Días" (semáforo verde ≤30d / amber ≤90d / rojo >90d)
+- Detalle IPR: card actor en tab Resumen (icono + badge + acción)
+- Sticky header: actor visible en mobile (era `hidden sm:flex`, ahora `flex`)
+- Backend: `phase_entered_at` agregado a `IPRListItem`
+
+**Verificación**:
+
+| Paso | Acción | Resultado esperado |
+|------|--------|--------------------|
+| 1 | Login `admin` → `/ipr` | Columnas "Actor" y "Días" visibles |
+| 2 | Click IPR → tab Resumen | Card "Le toca a: [rol] — [acción]" antes del stepper |
+| 3 | Probar mobile (DevTools) | Actor visible en sticky header sin scroll |
+
+### 11.3 Fase 3 — Navegación por Journey
+
+- Sidebar: 3 items condicionales (RTF → "Mis Rendiciones", ASESOR_JURIDICO → "Pendientes V.B.", JEFE_DEPARTAMENTO → "Aprobaciones")
+- Nueva página `/aprobaciones`: cola unificada con 3 secciones (rendiciones VISADA_RTF, CDPs pendientes, cuotas por pagar)
+- Endpoint `GET /api/dashboard/pending-approvals` (scoped por division_id)
+- Convenio drawer: banner amber con conteo de rendiciones pendientes/bloqueantes
+- DataTable: props `emptyTitle`/`emptyDescription` para mensajes contextuales por rol
+- Actos: empty state contextual para ANALISTA/RTF
+
+**Verificación**:
+
+| Paso | Acción | Resultado esperado |
+|------|--------|--------------------|
+| 1 | Login `rtf.daf` | Sidebar muestra "Mis Rendiciones" en "Mi Trabajo" |
+| 2 | Login `juridico` | Sidebar muestra "Pendientes V.B." en "Mi Trabajo" |
+| 3 | Login `jefe.finanzas` → "Aprobaciones" | Página con 3 secciones colapsables |
+| 4 | Login `admin` → Convenios → click convenio con rendiciones | Banner amber "X rendiciones pendientes" |
+| 5 | Login `analista.dipir` → `/actos` (vacío) | "Sin actos en tu cola" (no genérico) |
+
+### 11.4 Fase 4 — Gaps Funcionales
+
+- G18: ITO card destacada en tab Partes (verde si asignado, amber si falta + botón "Asignar ITO")
+- G20: Wizard 4 pasos en tab Eval. Posterior (Pertinencia → Eficiencia → Eficacia → Sostenibilidad)
+
+**Verificación**:
+
+| Paso | Acción | Resultado esperado |
+|------|--------|--------------------|
+| 1 | IPR → tab Partes | Card "Inspección Técnica" con estado ITO/ITP |
+| 2 | IPR sin ITO | Alerta amber "Sin ITO asignado" + botón |
+| 3 | IPR cerrado → tab Eval. Posterior → "Nueva Evaluación" | Wizard 4 pasos con stepper visual |
+| 4 | Wizard: siguiente sin tipo/fecha | Error "Tipo y fecha requeridos" |
+| 5 | Wizard: completar 4 pasos → Crear | Evaluación creada con 4 scores |

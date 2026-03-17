@@ -77,9 +77,7 @@ export function IprStickyHeader({ ipr, canEdit, canAssign, onEdit, onAssign }: I
         </div>
       </div>
 
-      <div className="hidden sm:flex items-center gap-4 ml-11 text-xs text-muted-foreground mt-0.5">
-        {ipr.executor_name && <span>Ejecutor: <span className="text-foreground">{ipr.executor_name}</span></span>}
-        {ipr.formulator_name && <span>Responsable: <span className="text-foreground">{ipr.formulator_name}</span></span>}
+      <div className="flex items-center gap-4 ml-11 text-xs text-muted-foreground mt-0.5 flex-wrap">
         {ipr.current_actor && (
           <span className="flex items-center gap-1.5">
             <span>Le toca a:</span>
@@ -89,6 +87,8 @@ export function IprStickyHeader({ ipr, canEdit, canAssign, onEdit, onAssign }: I
             <span className="text-muted-foreground">— {ipr.current_actor.action}</span>
           </span>
         )}
+        {ipr.executor_name && <span className="hidden sm:inline">Ejecutor: <span className="text-foreground">{ipr.executor_name}</span></span>}
+        {ipr.formulator_name && <span className="hidden sm:inline">Responsable: <span className="text-foreground">{ipr.formulator_name}</span></span>}
       </div>
     </header>
   );

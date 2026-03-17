@@ -29,6 +29,8 @@ interface DataTableProps {
   onPageChange: (page: number) => void;
   onRowClick?: (row: unknown) => void;
   isLoading?: boolean;
+  emptyTitle?: string;
+  emptyDescription?: string;
 }
 
 export function DataTable({
@@ -40,6 +42,8 @@ export function DataTable({
   onPageChange,
   onRowClick,
   isLoading = false,
+  emptyTitle,
+  emptyDescription,
 }: DataTableProps) {
   if (isLoading) {
     return (
@@ -73,7 +77,7 @@ export function DataTable({
                   colSpan={columns.length}
                   className="py-12"
                 >
-                  <EmptyState title="Sin resultados" description="Intente ajustar los filtros" />
+                  <EmptyState title={emptyTitle ?? "Sin resultados"} description={emptyDescription ?? "Intente ajustar los filtros"} />
                 </TableCell>
               </TableRow>
             ) : (

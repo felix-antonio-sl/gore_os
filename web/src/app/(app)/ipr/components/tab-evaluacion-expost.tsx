@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, BarChart3 } from "lucide-react";
+import { Plus, BarChart3, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
 import type { CategoryRef } from "@/types";
@@ -72,6 +72,7 @@ export function TabEvaluacionExpost({ iprId, canManage }: TabEvaluacionExpostPro
   const [ratings, setRatings] = useState<CategoryRef[]>([]);
 
   // Form state
+  const [wizardStep, setWizardStep] = useState(0);
   const [evalDate, setEvalDate] = useState("");
   const [typeId, setTypeId] = useState("");
   const [impact, setImpact] = useState("");
@@ -84,6 +85,13 @@ export function TabEvaluacionExpost({ iprId, canManage }: TabEvaluacionExpostPro
   const [lessons, setLessons] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const WIZARD_STEPS = [
+    { label: "Pertinencia", description: "Tipo, fecha y hallazgos" },
+    { label: "Eficiencia", description: "Score + observaciones presupuesto" },
+    { label: "Eficacia", description: "Score + indicadores logrados" },
+    { label: "Sostenibilidad", description: "Score + lecciones aprendidas" },
+  ] as const;
 
   const loadEvals = () => {
     setLoading(true);
@@ -111,6 +119,7 @@ export function TabEvaluacionExpost({ iprId, canManage }: TabEvaluacionExpostPro
     setRecommendations("");
     setLessons("");
     setError(null);
+    setWizardStep(0);
     setShowForm(true);
     if (evalTypes.length === 0) {
       api.get<CategoryRef[]>("/api/catalogs/categories/expost_eval_type").then(setEvalTypes).catch(() => {});
@@ -219,75 +228,155 @@ export function TabEvaluacionExpost({ iprId, canManage }: TabEvaluacionExpostPro
       )}
 
       <DrawerPanel open={showForm} onClose={() => setShowForm(false)} title="Nueva Evaluación Ex-Post">
+        {/* Wizard stepper */}
+        <div className="flex items-center gap-1 mb-5">
+          {WIZARD_STEPS.map((step, i) => (
+            <div key={step.label} className="flex items-center gap-1 flex-1">
+              <button
+                type="button"
+                onClick={() => setWizardStep(i)}
+                className={`flex items-center justify-center size-7 rounded-full text-xs font-medium shrink-0 transition-colors ${
+                  i < wizardStep
+                    ? "bg-green-100 text-green-700"
+                    : i === wizardStep
+                      ? "bg-indigo-600 text-white"
+                      : "bg-muted text-muted-foreground"
+                }`}
+              >
+                {i < wizardStep ? <Check className="size-3.5" /> : i + 1}
+              </button>
+              <span className={`text-[10px] hidden sm:inline truncate ${i === wizardStep ? "font-medium" : "text-muted-foreground"}`}>
+                {step.label}
+              </span>
+              {i < WIZARD_STEPS.length - 1 && (
+                <div className={`h-px flex-1 mx-1 ${i < wizardStep ? "bg-green-300" : "bg-muted"}`} />
+              )}
+            </div>
+          ))}
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium">Tipo *</label>
-              <Select value={typeId} onValueChange={setTypeId}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione tipo" />
-                </SelectTrigger>
-                <SelectContent>
-                  {evalTypes.map((t) => (
-                    <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          {/* Step 0: Pertinencia */}
+          {wizardStep === 0 && (
+            <div className="space-y-4">
+              <p className="text-xs text-muted-foreground">Identifique el tipo de evaluación, fecha y hallazgos principales.</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium">Tipo *</label>
+                  <Select value={typeId} onValueChange={setTypeId}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccione tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {evalTypes.map((t) => (
+                        <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium">Fecha *</label>
+                  <input type="date" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={evalDate} onChange={(e) => setEvalDate(e.target.value)} />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Impacto / Pertinencia (0-100)</label>
+                <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={impact} onChange={(e) => setImpact(e.target.value)} placeholder="¿La inversión respondió a la necesidad identificada?" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Hallazgos</label>
+                <textarea className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" value={findings} onChange={(e) => setFindings(e.target.value)} placeholder="Hallazgos principales..." />
+              </div>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium">Fecha *</label>
-              <input type="date" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={evalDate} onChange={(e) => setEvalDate(e.target.value)} />
+          )}
+
+          {/* Step 1: Eficiencia */}
+          {wizardStep === 1 && (
+            <div className="space-y-4">
+              <p className="text-xs text-muted-foreground">Evalúe la relación entre recursos utilizados y resultados obtenidos.</p>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Eficiencia (0-100)</label>
+                <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={efficiency} onChange={(e) => setEfficiency(e.target.value)} placeholder="¿Se usaron los recursos de manera óptima?" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Recomendaciones</label>
+                <textarea className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" value={recommendations} onChange={(e) => setRecommendations(e.target.value)} placeholder="Recomendaciones para mejorar la eficiencia en futuras inversiones..." />
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium">Impacto (0-100)</label>
-              <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={impact} onChange={(e) => setImpact(e.target.value)} />
+          )}
+
+          {/* Step 2: Eficacia */}
+          {wizardStep === 2 && (
+            <div className="space-y-4">
+              <p className="text-xs text-muted-foreground">Evalúe el grado de cumplimiento de los objetivos planificados.</p>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Eficacia (0-100)</label>
+                <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={effectiveness} onChange={(e) => setEffectiveness(e.target.value)} placeholder="¿Se lograron los indicadores comprometidos?" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Calificación General</label>
+                <Select value={ratingId} onValueChange={setRatingId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccione calificación" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ratings.map((r) => (
+                      <SelectItem key={r.id} value={r.id}>{r.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium">Sostenibilidad (0-100)</label>
-              <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={sustainability} onChange={(e) => setSustainability(e.target.value)} />
+          )}
+
+          {/* Step 3: Sostenibilidad */}
+          {wizardStep === 3 && (
+            <div className="space-y-4">
+              <p className="text-xs text-muted-foreground">Evalúe si los beneficios se mantienen en el tiempo.</p>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Sostenibilidad (0-100)</label>
+                <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={sustainability} onChange={(e) => setSustainability(e.target.value)} placeholder="¿Los beneficios perduran sin el proyecto?" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Lecciones Aprendidas</label>
+                <textarea className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" value={lessons} onChange={(e) => setLessons(e.target.value)} placeholder="¿Qué aprendizajes se rescatan para futuras inversiones?" />
+              </div>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium">Eficiencia (0-100)</label>
-              <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={efficiency} onChange={(e) => setEfficiency(e.target.value)} />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium">Eficacia (0-100)</label>
-              <input type="number" min="0" max="100" step="0.1" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={effectiveness} onChange={(e) => setEffectiveness(e.target.value)} />
-            </div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Calificación General</label>
-            <Select value={ratingId} onValueChange={setRatingId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione calificación" />
-              </SelectTrigger>
-              <SelectContent>
-                {ratings.map((r) => (
-                  <SelectItem key={r.id} value={r.id}>{r.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Hallazgos</label>
-            <textarea className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" value={findings} onChange={(e) => setFindings(e.target.value)} placeholder="Hallazgos principales..." />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Recomendaciones</label>
-            <textarea className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" value={recommendations} onChange={(e) => setRecommendations(e.target.value)} placeholder="Recomendaciones..." />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Lecciones Aprendidas</label>
-            <textarea className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm" value={lessons} onChange={(e) => setLessons(e.target.value)} placeholder="Lecciones aprendidas..." />
-          </div>
+          )}
+
           {error && <p className="text-sm text-red-600">{error}</p>}
-          <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={submitting}>
-              {submitting ? "Guardando..." : "Crear Evaluación"}
-            </Button>
-            <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancelar</Button>
+
+          {/* Navigation buttons */}
+          <div className="flex items-center gap-2 pt-2">
+            {wizardStep > 0 && (
+              <Button type="button" variant="outline" size="sm" onClick={() => setWizardStep(wizardStep - 1)}>
+                <ChevronLeft className="size-3.5 mr-1" />
+                Anterior
+              </Button>
+            )}
+            <div className="flex-1" />
+            {wizardStep < WIZARD_STEPS.length - 1 ? (
+              <Button
+                type="button"
+                size="sm"
+                onClick={() => {
+                  if (wizardStep === 0 && (!typeId || !evalDate)) {
+                    setError("Tipo de evaluación y fecha son requeridos.");
+                    return;
+                  }
+                  setError(null);
+                  setWizardStep(wizardStep + 1);
+                }}
+              >
+                Siguiente
+                <ChevronRight className="size-3.5 ml-1" />
+              </Button>
+            ) : (
+              <Button type="submit" size="sm" disabled={submitting}>
+                {submitting ? "Guardando..." : "Crear Evaluación"}
+              </Button>
+            )}
+            <Button type="button" variant="ghost" size="sm" onClick={() => setShowForm(false)}>Cancelar</Button>
           </div>
         </form>
       </DrawerPanel>

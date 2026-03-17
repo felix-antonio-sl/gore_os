@@ -28,6 +28,8 @@ import {
   BookOpen,
   Shield,
   ShieldAlert,
+  ClipboardCheck,
+  Scale,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -100,6 +102,9 @@ const NAV = {
   // Mi Trabajo
   miDivision: { label: "Mi División", href: "/mi-division", icon: <FolderKanban className="size-4" /> },
   misCompromisos: { label: "Mis Compromisos", href: "/mis-compromisos", icon: <UserCheck className="size-4" /> },
+  misRendiciones: { label: "Mis Rendiciones", href: "/datos?dominio=rendiciones&state=EN_REVISION_RTF", icon: <Receipt className="size-4" /> },
+  pendientesVB: { label: "Pendientes V.B.", href: "/actos?estado=EN_REVISION", icon: <Scale className="size-4" /> },
+  aprobaciones: { label: "Aprobaciones", href: "/aprobaciones", icon: <ClipboardCheck className="size-4" /> },
 
   // Admin
   usuarios: { label: "Usuarios", href: "/admin/usuarios", icon: <Users className="size-4" /> },
@@ -158,6 +163,9 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
   const showCarteraDiv = ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DGI"].includes(user.role_code);
   const showMiDivision = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code);
   const showMisCompromisos = ["ANALISTA", "RTF", "ASESOR_JURIDICO", "JEFE_UNIDAD"].includes(user.role_code);
+  const showMisRendiciones = user.role_code === "RTF";
+  const showPendientesVB = user.role_code === "ASESOR_JURIDICO";
+  const showAprobaciones = user.role_code === "JEFE_DEPARTAMENTO";
   const showAdmin = user.role_code === "ADMIN_SISTEMA";
 
   return (
@@ -246,10 +254,13 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               {link(NAV.servicios)}
             </NavSection>
 
-            {(showMiDivision || showMisCompromisos) && (
+            {(showMiDivision || showMisCompromisos || showMisRendiciones || showPendientesVB || showAprobaciones) && (
               <NavSection id="op-mi-trabajo" label="Mi Trabajo" defaultOpen>
                 {showMiDivision && link(NAV.miDivision)}
                 {showMisCompromisos && link(NAV.misCompromisos)}
+                {showMisRendiciones && link(NAV.misRendiciones)}
+                {showPendientesVB && link(NAV.pendientesVB)}
+                {showAprobaciones && link(NAV.aprobaciones)}
               </NavSection>
             )}
 

@@ -1605,3 +1605,83 @@ async def get_pending_vb(
         })
 
     return {"items": items, "total": len(items)}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dashboard/pending-approvals — JEFE_DEPARTAMENTO unified queue
+# ---------------------------------------------------------------------------
+
+@router.get("/pending-approvals")
+async def get_pending_approvals(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Cola unificada de aprobaciones para JEFE_DEPARTAMENTO."""
+    division_id = user.get("division_id")
+    if not division_id:
+        return {"rendiciones": [], "cdps": [], "cuotas": []}
+
+    div_id = str(division_id)
+
+    # Rendiciones en VISADA_RTF (pendientes de aprobación departamento)
+    rend_sql = text("""
+        SELECT r.id, LEFT(r.id::text, 8) AS code,
+               COALESCE(r.phase_entered_at, r.updated_at) AS entered_at,
+               ag.agreement_number,
+               ipr.codigo_bip AS ipr_codigo_bip,
+               ipr.name AS ipr_name,
+               r.total_amount
+        FROM core.rendition r
+        JOIN ref.category ph ON ph.id = r.state_id
+        LEFT JOIN core.agreement ag ON ag.id = r.agreement_id
+        LEFT JOIN core.ipr ipr ON ipr.id = ag.ipr_id
+        WHERE ph.code = 'VISADA_RTF'
+          AND r.deleted_at IS NULL
+          AND ag.deleted_at IS NULL
+          AND ipr.sponsor_division_id = :div_id
+        ORDER BY r.phase_entered_at ASC NULLS LAST
+        LIMIT 50
+    """)
+    rendiciones = [dict(r) for r in (await db.execute(rend_sql, {"div_id": div_id})).mappings().all()]
+
+    # CDPs pendientes de la división
+    cdp_sql = text("""
+        SELECT bc.id, bc.code, bc.amount, bc.created_at,
+               ipr.codigo_bip AS ipr_codigo_bip,
+               ipr.name AS ipr_name,
+               st.code AS status
+        FROM core.budget_commitment bc
+        JOIN ref.category st ON st.id = bc.status_id
+        LEFT JOIN core.ipr ipr ON ipr.id = bc.ipr_id
+        WHERE st.code = 'PENDIENTE'
+          AND bc.deleted_at IS NULL
+          AND ipr.sponsor_division_id = :div_id
+        ORDER BY bc.created_at ASC
+        LIMIT 50
+    """)
+    cdps = [dict(r) for r in (await db.execute(cdp_sql, {"div_id": div_id})).mappings().all()]
+
+    # Cuotas por pagar
+    cuota_sql = text("""
+        SELECT ai.id, ai.installment_number, ai.amount, ai.due_date,
+               ag.agreement_number,
+               ipr.codigo_bip AS ipr_codigo_bip,
+               ps.code AS payment_status
+        FROM core.agreement_installment ai
+        JOIN core.agreement ag ON ag.id = ai.agreement_id
+        JOIN ref.category ps ON ps.id = ai.payment_status_id
+        LEFT JOIN core.ipr ipr ON ipr.id = ag.ipr_id
+        WHERE ps.code = 'PENDIENTE'
+          AND ai.deleted_at IS NULL
+          AND ag.deleted_at IS NULL
+          AND ipr.sponsor_division_id = :div_id
+        ORDER BY ai.due_date ASC
+        LIMIT 50
+    """)
+    cuotas = [dict(r) for r in (await db.execute(cuota_sql, {"div_id": div_id})).mappings().all()]
+
+    return {
+        "rendiciones": rendiciones,
+        "cdps": cdps,
+        "cuotas": cuotas,
+    }

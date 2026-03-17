@@ -4,6 +4,8 @@ import { IprPhaseStepper } from "./ipr-phase-stepper";
 import { IprTransitionPanel } from "./ipr-transition-panel";
 import { IprHistorySection } from "./ipr-history-section";
 import { TrackCard } from "./track-card";
+import { Badge } from "@/components/ui/badge";
+import { UserCheck } from "lucide-react";
 import { formatDate, formatCurrency } from "@/lib/format";
 import type { IprDetail } from "./ipr-constants";
 import type { IprTransition, TrackInfo, HistoryEntry } from "@/types";
@@ -29,6 +31,23 @@ export function TabResumen({
 }: TabResumenProps) {
   return (
     <div className="space-y-4">
+      {ipr.current_actor && ipr.current_actor.role_label && (
+        <div className="flex items-center gap-3 rounded-lg border bg-card p-3">
+          <div className="flex items-center justify-center size-8 rounded-full bg-indigo-100 text-indigo-600 shrink-0">
+            <UserCheck className="size-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs text-muted-foreground">Le toca a</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Badge variant="outline" className="font-medium text-xs">
+                {ipr.current_actor.role_label}
+              </Badge>
+              <span className="text-sm text-muted-foreground">— {ipr.current_actor.action}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {ipr.mcd_phase && (
         <IprPhaseStepper
           currentPhase={ipr.mcd_phase}

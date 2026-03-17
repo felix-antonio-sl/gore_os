@@ -337,8 +337,26 @@ export default function IprPage() {
         if (!role) return <span className="text-muted-foreground text-xs">—</span>;
         const action = (row as Record<string, unknown>).actor_action as string | null;
         return (
-          <span className="text-xs" title={action ?? undefined}>
-            {role}
+          <div className="text-xs leading-tight" title={action ?? undefined}>
+            <span>{role}</span>
+            {action && (
+              <span className="block text-[10px] text-muted-foreground truncate max-w-[120px]">{action}</span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      key: "phase_entered_at",
+      label: "Días",
+      render: (value: unknown) => {
+        if (!value) return <span className="text-muted-foreground text-xs">—</span>;
+        const entered = new Date(String(value));
+        const days = Math.floor((Date.now() - entered.getTime()) / 86400000);
+        const color = days > 90 ? "text-red-600" : days > 30 ? "text-amber-600" : "text-green-600";
+        return (
+          <span className={cn("text-xs tabular-nums font-medium", color)} title={`En fase desde ${entered.toLocaleDateString("es-CL")}`}>
+            {days}d
           </span>
         );
       },

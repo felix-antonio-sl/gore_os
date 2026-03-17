@@ -77,7 +77,25 @@ async def _get_convenio_or_404(convenio_id: UUID, db: AsyncSession) -> dict:
     row = result.mappings().first()
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Convenio no encontrado")
-    return dict(row)
+    data = dict(row)
+
+    # Count pending renditions for financial chain visibility
+    rend_result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) FILTER (WHERE st.code NOT IN ('APROBADA','RECHAZADA')) AS pending_renditions,
+                COUNT(*) FILTER (WHERE st.code IN ('OBSERVADA')) AS blocked_renditions
+            FROM core.rendition r
+            JOIN ref.category st ON st.id = r.state_id
+            WHERE r.agreement_id = :aid AND r.deleted_at IS NULL
+        """),
+        {"aid": str(convenio_id)},
+    )
+    rend_row = rend_result.mappings().first()
+    data["pending_renditions"] = rend_row["pending_renditions"] if rend_row else 0
+    data["blocked_renditions"] = rend_row["blocked_renditions"] if rend_row else 0
+
+    return data
 
 
 async def _get_agreement_history(convenio_id: UUID, db: AsyncSession) -> list[dict]:

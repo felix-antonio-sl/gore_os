@@ -431,6 +431,16 @@ export default function ActosPage() {
         onPageChange={handlePageChange}
         onRowClick={openDetail}
         isLoading={isLoading}
+        emptyTitle={
+          role === "ANALISTA" || role === "RTF"
+            ? "Sin actos en tu cola"
+            : undefined
+        }
+        emptyDescription={
+          role === "ANALISTA" || role === "RTF"
+            ? "Los actos administrativos son gestionados por Asesor Jurídico y Gobernador."
+            : undefined
+        }
       />
 
       <DrawerPanel

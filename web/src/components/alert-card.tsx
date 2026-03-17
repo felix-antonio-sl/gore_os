@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatDateTimeShort } from "@/lib/format";
+import { ALERT_SEVERITY_BORDER, ALERT_SEVERITY_ICON_COLOR } from "@/lib/status-colors";
 import type { AlertaListItem } from "@/types";
 
 interface AlertCardProps {
@@ -13,30 +14,26 @@ interface AlertCardProps {
   onViewSubject?: (type: string, id: string) => void;
 }
 
-const severityBorderMap: Record<string, string> = {
-  CRITICO: "border-l-red-600",
-  ALTO: "border-l-orange-600",
-  ATENCION: "border-l-amber-500",
-  INFO: "border-l-blue-600",
-};
-
-const severityIconMap: Record<string, React.ReactNode> = {
-  CRITICO: <AlertTriangle className="size-4 text-red-600 shrink-0" />,
-  ALTO: <AlertTriangle className="size-4 text-orange-600 shrink-0" />,
-  ATENCION: <AlertCircle className="size-4 text-amber-500 shrink-0" />,
-  INFO: <Info className="size-4 text-blue-600 shrink-0" />,
+const SEVERITY_ICON_COMPONENT: Record<string, typeof AlertTriangle> = {
+  CRITICO: AlertTriangle,
+  ALTO: AlertTriangle,
+  ATENCION: AlertCircle,
+  INFO: Info,
 };
 
 export function AlertCard({ alert, onAttend, onViewSubject }: AlertCardProps) {
   const severity = alert.severity ?? "INFO";
-  const borderClass = severityBorderMap[severity] ?? "border-l-blue-600";
-  const icon = severityIconMap[severity] ?? <Info className="size-4 text-blue-600 shrink-0" />;
+  const borderClass = ALERT_SEVERITY_BORDER[severity] ?? ALERT_SEVERITY_BORDER.INFO;
+  const IconComp = SEVERITY_ICON_COMPONENT[severity] ?? Info;
+  const iconColor = ALERT_SEVERITY_ICON_COLOR[severity] ?? ALERT_SEVERITY_ICON_COLOR.INFO;
 
   return (
     <Card className={cn("border-l-4 rounded-lg py-4", borderClass)}>
       <CardContent className="px-5 py-0">
         <div className="flex items-start gap-3">
-          <div className="mt-0.5">{icon}</div>
+          <div className="mt-0.5">
+            <IconComp className={cn("size-4 shrink-0", iconColor)} />
+          </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2">
               <p className="font-semibold text-sm">{alert.alert_type_label}</p>

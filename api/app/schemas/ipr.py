@@ -25,6 +25,7 @@ class IPRListItem(BaseModel):
     total_budget: float | None
     actor_role: str | None = None
     actor_action: str | None = None
+    phase_entered_at: datetime | None = None
 
 
 class IPRDetail(BaseModel):
