@@ -22,6 +22,7 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { toast } from "sonner";
 import { Plus, Clock } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { DGI_AREA_COLORS } from "@/lib/status-colors";
 import type { DGIService } from "@/types";
 
 const AREA_LABELS: Record<string, string> = {
@@ -29,13 +30,6 @@ const AREA_LABELS: Record<string, string> = {
   MP: "Mejora de Procesos",
   TD: "Transformación Digital",
   KC: "Gestión del Conocimiento",
-};
-
-const AREA_COLORS: Record<string, string> = {
-  CG: "bg-blue-50 text-blue-700 border-blue-200",
-  MP: "bg-green-50 text-green-700 border-green-200",
-  TD: "bg-purple-50 text-purple-700 border-purple-200",
-  KC: "bg-amber-50 text-amber-700 border-amber-200",
 };
 
 const AREAS = ["TODOS", "CG", "MP", "TD", "KC"];
@@ -149,7 +143,7 @@ export default function ServiciosPage() {
             >
               <CardContent className="pt-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <Badge variant="outline" className={`text-xs ${AREA_COLORS[svc.area] ?? ""}`}>
+                  <Badge variant="outline" className={`text-xs ${DGI_AREA_COLORS[svc.area] ?? ""}`}>
                     {AREA_LABELS[svc.area] ?? svc.area}
                   </Badge>
                   <span className="font-mono text-xs text-muted-foreground">{svc.code}</span>

@@ -5,6 +5,7 @@ from uuid import UUID
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -656,7 +657,14 @@ async def create_cdp(
         actor_id=user["id"],
         data={"commitment_number": commitment_number, "amount": float(body.amount)},
     )
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
     return {"id": row["id"], "commitment_number": row["commitment_number"]}
 
 
@@ -715,6 +723,8 @@ async def initialize_cycle(
         """),
         {"fy": fiscal_year},
     )
+    await record_event(db, "CREACION", "core.budget_cycle_tracking", user["id"], user["id"],
+                       {"fiscal_year": fiscal_year})
     await db.commit()
 
     return await _cycle_summary(db, fiscal_year)
@@ -960,8 +970,17 @@ async def create_presupuesto(
             "created_by_id": str(user["id"]),
         },
     )
-    await db.commit()
     row = result.mappings().first()
+    await record_event(db, "CREACION", "core.budget_program", row["id"], user["id"],
+                       {"code": body.code, "fiscal_year": body.fiscal_year})
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
     return {"id": row["id"], "code": row["code"]}
 
 
@@ -1001,5 +1020,14 @@ async def update_presupuesto(
         text(f"UPDATE core.budget_program SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
         updates,
     )
-    await db.commit()
+    await record_event(db, "MODIFICACION", "core.budget_program", presupuesto_id, user["id"],
+                       {"fields": list(updates.keys())})
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
     return {"message": "Actualizado correctamente"}

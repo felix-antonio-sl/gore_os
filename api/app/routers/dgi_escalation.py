@@ -11,6 +11,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -441,7 +442,14 @@ async def create_escalation(
 
     await record_event(db, "ESCALATION_CREATED", "core.dgi_escalation", new_id, user["id"],
                        {"code": code, "level": level_code})
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
 
     row = (await db.execute(
         text(f"SELECT {_LIST_COLS} {_LIST_FROM} WHERE e.id = :id"),
@@ -547,7 +555,14 @@ async def update_escalation(
                            escalation_id, user["id"],
                            {"old_status": current_status, "new_status": body.status.upper()})
 
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
 
     row = (await db.execute(
         text(f"SELECT {_LIST_COLS} {_LIST_FROM} WHERE e.id = :id"),

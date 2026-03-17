@@ -2,6 +2,7 @@ import json
 from datetime import date, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
@@ -313,7 +314,14 @@ async def create_report(
     })
     row = result.mappings().first()
     await record_event(db, "CREACION", "core.dgi_report", row["id"], user["id"], {"report_type": body.report_type.upper()})
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
     return {"id": row["id"]}
 
 
@@ -504,7 +512,14 @@ async def change_report_status(
         {"target": target, "id": str(report_id)},
     )
     await record_event(db, "STATE_TRANSITION", "core.dgi_report", report_id, user["id"], {"from": current, "to": target})
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
     return {"message": f"Estado cambiado a {target}"}
 
 

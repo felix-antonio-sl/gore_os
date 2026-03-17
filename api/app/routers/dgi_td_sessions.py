@@ -10,6 +10,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -243,7 +244,14 @@ async def create_td_session(
     )
 
     await record_event(db, "CREACION", "core.session", session_id, user["id"], {"committee": TD_COMMITTEE_CODE, "session_number": session_number})
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
     return {"id": session_id, "session_number": session_number}
 
 

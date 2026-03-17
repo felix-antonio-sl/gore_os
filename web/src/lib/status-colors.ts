@@ -122,6 +122,50 @@ export const TEMPORAL_STATES: {
   },
 };
 
+/* ── DGI service area colors ──────────────────────────────── */
+
+export const DGI_AREA_COLORS: Record<string, string> = {
+  CG: "bg-blue-50 text-blue-700 border-blue-200",
+  MP: "bg-green-50 text-green-700 border-green-200",
+  TD: "bg-purple-50 text-purple-700 border-purple-200",
+  KC: "bg-amber-50 text-amber-700 border-amber-200",
+};
+
+/* ── Risk status & probability colors ────────────────────── */
+
+export const RISK_STATUS_COLORS: Record<string, string> = {
+  IDENTIFICADO: "bg-slate-50 text-slate-700 border-slate-200",
+  EN_EVALUACION: "bg-blue-50 text-blue-700 border-blue-200",
+  EN_MITIGACION: "bg-amber-50 text-amber-700 border-amber-200",
+  MITIGADO: "bg-green-50 text-green-700 border-green-200",
+  ACEPTADO: "bg-cyan-50 text-cyan-700 border-cyan-200",
+  CERRADO: "bg-gray-50 text-gray-500 border-gray-200",
+};
+
+export const RISK_PROBABILITY_COLORS: Record<string, string> = {
+  MUY_BAJA: "bg-green-50 text-green-700 border-green-200",
+  BAJA: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  MEDIA: "bg-amber-50 text-amber-700 border-amber-200",
+  ALTA: "bg-orange-50 text-orange-700 border-orange-200",
+  MUY_ALTA: "bg-red-50 text-red-700 border-red-200",
+};
+
+/* ── Escalation level & status colors ────────────────────── */
+
+export const ESCALATION_LEVEL_COLORS: Record<string, string> = {
+  NIVEL_1: "bg-blue-50 text-blue-700 border-blue-200",
+  NIVEL_2: "bg-amber-50 text-amber-700 border-amber-200",
+  NIVEL_3: "bg-orange-50 text-orange-700 border-orange-200",
+  NIVEL_4: "bg-red-50 text-red-700 border-red-200",
+};
+
+export const ESCALATION_STATUS_COLORS: Record<string, string> = {
+  ABIERTO: "bg-slate-50 text-slate-700 border-slate-200",
+  EN_GESTION: "bg-blue-50 text-blue-700 border-blue-200",
+  RESUELTO: "bg-green-50 text-green-700 border-green-200",
+  CERRADO: "bg-gray-50 text-gray-500 border-gray-200",
+};
+
 /**
  * Resolve which temporal state applies for the given days + status.
  */

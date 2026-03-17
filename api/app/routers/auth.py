@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.deps import CurrentUser
 from app.core.security import verify_password, hash_password, create_access_token, DGI_ROLES
+from app.core.audit import record_event
 from app.schemas.auth import LoginResponse, UserInfo, ChangePasswordRequest
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -55,6 +56,8 @@ async def login(form: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = 
             text(f'UPDATE core."user" SET failed_login_attempts = :attempts{lock_clause}, updated_at = NOW() WHERE id = CAST(:uid AS uuid)'),
             params,
         )
+        await record_event(db, "LOGIN_FAILED", "core.user", user["id"], user["id"],
+                           {"email": form.username, "attempts": new_attempts})
         await db.commit()
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales inválidas")
 
@@ -70,6 +73,10 @@ async def login(form: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = 
         await db.commit()
 
     token = create_access_token({"sub": str(user["id"]), "role": user["role_code"]})
+
+    await record_event(db, "LOGIN", "core.user", user["id"], user["id"],
+                       {"email": form.username, "role": user["role_code"]})
+    await db.commit()
 
     population = "dgi" if user["role_code"] in DGI_ROLES else "operativa"
 
@@ -111,5 +118,6 @@ async def change_password(
         text('UPDATE core."user" SET password_hash = :hash, updated_at = NOW() WHERE id = :id'),
         {"hash": new_hash, "id": str(user["id"])},
     )
+    await record_event(db, "PASSWORD_CHANGED", "core.user", user["id"], user["id"])
     await db.commit()
     return {"message": "Contraseña actualizada exitosamente"}

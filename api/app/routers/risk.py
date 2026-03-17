@@ -14,6 +14,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import Response
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
@@ -421,7 +422,14 @@ async def create_risk(body: dict, user: CurrentUser, db=Depends(get_db)):
 
     await record_event(db, "RISK_CREATED", "core.risk", risk_id, user["id"],
                        {"code": code, "name": body["name"]})
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
 
     # Fetch and return detail
     row = (await db.execute(
@@ -505,7 +513,14 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
         await record_event(db, "RISK_STATUS_CHANGE", "core.risk", risk_id, user["id"],
                            {"old_status": old_status, "new_status": params.get("new_status_id")})
 
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
 
     row = (await db.execute(
         text(f"SELECT {_DETAIL_COLS} {_DETAIL_FROM} WHERE r.id = :id"),

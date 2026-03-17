@@ -24,22 +24,9 @@ import { Plus } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { useAuth } from "@/lib/auth";
+import { ESCALATION_LEVEL_COLORS, ESCALATION_STATUS_COLORS } from "@/lib/status-colors";
 import { DGI_ROLES } from "@/types";
 import type { PaginatedResponse, Escalation } from "@/types";
-
-const LEVEL_COLORS: Record<string, string> = {
-  NIVEL_1: "bg-blue-50 text-blue-700 border-blue-200",
-  NIVEL_2: "bg-amber-50 text-amber-700 border-amber-200",
-  NIVEL_3: "bg-orange-50 text-orange-700 border-orange-200",
-  NIVEL_4: "bg-red-50 text-red-700 border-red-200",
-};
-
-const STATUS_COLORS: Record<string, string> = {
-  ABIERTO: "bg-slate-50 text-slate-700 border-slate-200",
-  EN_GESTION: "bg-blue-50 text-blue-700 border-blue-200",
-  RESUELTO: "bg-green-50 text-green-700 border-green-200",
-  CERRADO: "bg-gray-50 text-gray-500 border-gray-200",
-};
 
 const STATUS_TABS = ["TODOS", "ABIERTO", "EN_GESTION", "RESUELTO", "CERRADO"];
 
@@ -134,7 +121,7 @@ export default function EscalamientoPage() {
       render: (v: unknown, row: unknown) => {
         const r = row as Escalation;
         return (
-          <Badge variant="outline" className={`text-xs ${LEVEL_COLORS[r.level] ?? ""}`}>
+          <Badge variant="outline" className={`text-xs ${ESCALATION_LEVEL_COLORS[r.level] ?? ""}`}>
             {r.level_label}
           </Badge>
         );
@@ -163,7 +150,7 @@ export default function EscalamientoPage() {
       render: (v: unknown, row: unknown) => {
         const r = row as Escalation;
         return (
-          <Badge variant="outline" className={`text-xs ${STATUS_COLORS[r.status] ?? ""}`}>
+          <Badge variant="outline" className={`text-xs ${ESCALATION_STATUS_COLORS[r.status] ?? ""}`}>
             {r.status_label}
           </Badge>
         );

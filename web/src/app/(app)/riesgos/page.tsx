@@ -24,27 +24,11 @@ import { toast } from "sonner";
 import { Plus, ShieldAlert } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
+import { RISK_STATUS_COLORS, RISK_PROBABILITY_COLORS } from "@/lib/status-colors";
 import { DGI_ROLES } from "@/types";
 import type { PaginatedResponse, RiskListItem, RiskMatrixCell, RiskSummary } from "@/types";
 
 const STATUS_TABS = ["TODOS", "IDENTIFICADO", "EN_EVALUACION", "EN_MITIGACION", "MITIGADO", "ACEPTADO", "CERRADO"];
-
-const STATUS_COLORS: Record<string, string> = {
-  IDENTIFICADO: "bg-slate-50 text-slate-700 border-slate-200",
-  EN_EVALUACION: "bg-blue-50 text-blue-700 border-blue-200",
-  EN_MITIGACION: "bg-amber-50 text-amber-700 border-amber-200",
-  MITIGADO: "bg-green-50 text-green-700 border-green-200",
-  ACEPTADO: "bg-cyan-50 text-cyan-700 border-cyan-200",
-  CERRADO: "bg-gray-50 text-gray-500 border-gray-200",
-};
-
-const PROB_COLORS: Record<string, string> = {
-  MUY_BAJA: "bg-green-50 text-green-700 border-green-200",
-  BAJA: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  MEDIA: "bg-amber-50 text-amber-700 border-amber-200",
-  ALTA: "bg-orange-50 text-orange-700 border-orange-200",
-  MUY_ALTA: "bg-red-50 text-red-700 border-red-200",
-};
 
 const WRITE_ROLES = [...DGI_ROLES, "ADMIN_REGIONAL", "ADMIN_SISTEMA"];
 
@@ -176,7 +160,7 @@ export default function RiesgosPage() {
       render: (_v: unknown, row: unknown) => {
         const r = row as RiskListItem;
         return r.probability ? (
-          <Badge variant="outline" className={`text-xs ${PROB_COLORS[r.probability] ?? ""}`}>
+          <Badge variant="outline" className={`text-xs ${RISK_PROBABILITY_COLORS[r.probability] ?? ""}`}>
             {r.probability_label}
           </Badge>
         ) : <span className="text-xs text-muted-foreground">-</span>;
@@ -198,7 +182,7 @@ export default function RiesgosPage() {
       render: (_v: unknown, row: unknown) => {
         const r = row as RiskListItem;
         return r.status ? (
-          <Badge variant="outline" className={`text-xs ${STATUS_COLORS[r.status] ?? ""}`}>
+          <Badge variant="outline" className={`text-xs ${RISK_STATUS_COLORS[r.status] ?? ""}`}>
             {r.status_label}
           </Badge>
         ) : <span className="text-xs text-muted-foreground">-</span>;

@@ -2713,6 +2713,7 @@ async def create_ipr(
         "metadata": metadata,
     })
     row = result.mappings().first()
+    await record_event(db, "CREACION", "core.ipr", row["id"], user["id"], {"codigo_bip": codigo_bip})
     await db.commit()
 
     return {"id": str(row["id"]), "codigo_bip": row["codigo_bip"]}
@@ -2917,6 +2918,8 @@ async def update_ipr(
                 user["id"],
                 {"old_status_id": _old_status_id, "new_status_id": str(updates["status_id"])},
             )
+        if _old_status_id is None:
+            await record_event(db, "MODIFICACION", "core.ipr", ipr_id, user["id"])
         await db.commit()
     except DBAPIError as e:
         await db.rollback()
@@ -3367,6 +3370,7 @@ async def create_progress_report(
         "user_id": str(user["id"]),
     })
     row = result.mappings().first()
+    await record_event(db, "CREACION", "core.progress_report", row["id"], user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
 
     return {"id": str(row["id"]), "report_number": row["report_number"]}
@@ -3517,6 +3521,7 @@ async def create_ipr_party(
             "user_id": str(user["id"]),
         })
         row = result.mappings().first()
+        await record_event(db, "CREACION", "core.ipr_party", row["id"], user["id"], {"ipr_id": str(ipr_id)})
         await db.commit()
         return {"id": str(row["id"])}
     except Exception as e:
@@ -3555,6 +3560,7 @@ async def delete_ipr_party(
     )
     if result.rowcount == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parte no encontrada")
+    await record_event(db, "ELIMINACION", "core.ipr_party", party_id, user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
 
 
@@ -3637,6 +3643,7 @@ async def create_ipr_territory(
             "user_id": str(user["id"]),
         })
         row = result.mappings().first()
+        await record_event(db, "CREACION", "core.ipr_territory", row["id"], user["id"], {"ipr_id": str(ipr_id)})
         await db.commit()
         return {"id": str(row["id"])}
     except Exception as e:
@@ -3675,6 +3682,7 @@ async def delete_ipr_territory(
     )
     if result.rowcount == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Territorio no encontrado")
+    await record_event(db, "ELIMINACION", "core.ipr_territory", record_id, user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
 
 
@@ -3760,6 +3768,7 @@ async def create_ipr_milestone(
         "user_id": str(user["id"]),
     })
     row = result.mappings().first()
+    await record_event(db, "CREACION", "core.ipr_milestone", row["id"], user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"id": str(row["id"])}
 
@@ -3807,6 +3816,7 @@ async def update_ipr_milestone(
     result = await db.execute(sql, params)
     if result.rowcount == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Hito no encontrado")
+    await record_event(db, "MODIFICACION", "core.ipr_milestone", hito_id, user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"message": "Hito actualizado"}
 
@@ -3935,6 +3945,7 @@ async def create_evaluation(
             "convocatoria_code": body.convocatoria_code,
         },
     )).mappings().first()
+    await record_event(db, "CREACION", "core.evaluation_assignment", row["id"], user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"id": str(row["id"]), "message": "Evaluación asignada"}
 
@@ -4006,6 +4017,7 @@ async def update_evaluation(
     result = await db.execute(sql, params)
     if result.rowcount == 0:
         raise HTTPException(status_code=404, detail="Evaluación no encontrada")
+    await record_event(db, "MODIFICACION", "core.evaluation_assignment", eval_id, user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"message": "Evaluación actualizada"}
 
@@ -4724,6 +4736,7 @@ async def create_modification(
             "user_id": str(user["id"]),
         },
     )).mappings().first()
+    await record_event(db, "CREACION", "core.ipr_modification", row["id"], user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
 
     return {"id": str(row["id"]), "code": row["code"]}
@@ -4784,6 +4797,7 @@ async def update_modification(
     sql = text(f"UPDATE core.ipr_modification SET {', '.join(set_clauses)} WHERE id = CAST(:id AS uuid)")
     try:
         await db.execute(sql, params)
+        await record_event(db, "MODIFICACION", "core.ipr_modification", mod_id, user["id"], {"ipr_id": str(ipr_id)})
         await db.commit()
     except DBAPIError as e:
         await db.rollback()
@@ -4974,6 +4988,7 @@ async def create_closure(
             "uid": str(user["id"]),
         },
     )).mappings().first()
+    await record_event(db, "CIERRE", "core.ipr_closure", row["id"], user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"id": str(row["id"]), "message": "Registro de cierre creado"}
 
@@ -5016,6 +5031,7 @@ async def update_closure(
 
     sql = text(f"UPDATE core.ipr_closure SET {', '.join(set_clauses)} WHERE ipr_id = CAST(:ipr_id AS uuid)")
     await db.execute(sql, params)
+    await record_event(db, "MODIFICACION", "core.ipr_closure", ipr_id, user["id"])
     await db.commit()
     return {"message": "Registro de cierre actualizado"}
 
@@ -5121,6 +5137,7 @@ async def create_expost_evaluation(
             "lessons": body.get("lessons_learned"),
         },
     )).mappings().first()
+    await record_event(db, "CREACION", "core.ipr_expost_evaluation", row["id"], user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"id": str(row["id"]), "message": "Evaluación ex-post creada"}
 
@@ -5164,6 +5181,7 @@ async def update_expost_evaluation(
 
     sql = text(f"UPDATE core.ipr_expost_evaluation SET {', '.join(set_clauses)} WHERE id = CAST(:id AS uuid)")
     await db.execute(sql, params)
+    await record_event(db, "MODIFICACION", "core.ipr_expost_evaluation", eval_id, user["id"], {"ipr_id": str(ipr_id)})
     await db.commit()
     return {"message": "Evaluación ex-post actualizada"}
 

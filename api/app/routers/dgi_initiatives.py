@@ -3,6 +3,7 @@ import math
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -239,7 +240,14 @@ async def create_initiative(
         },
     )
     new_id = str(result.scalar())
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
 
     row = await _get_initiative_row(new_id, db)
     return InitiativeItem(
@@ -442,7 +450,14 @@ async def move_initiative(
         },
     )
     await record_event(db, "STATE_TRANSITION", "core.dgi_initiative", initiative_id, user["id"], {"from": existing["status"], "to": target_status})
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as e:
+        await db.rollback()
+        error_msg = str(e.orig) if e.orig else str(e)
+        if "Transición de estado inválida" in error_msg:
+            raise HTTPException(status_code=409, detail=error_msg)
+        raise HTTPException(status_code=409, detail="Conflicto de integridad")
 
     # ── Return updated initiative ─────────────────────────────────────────
     updated = await _get_initiative_row(initiative_id_str, db)
