@@ -1,5 +1,8 @@
 """Tests for the CORE sessions (Consejo Regional) module — governance + voting."""
 import pytest
+from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
 from tests.conftest import auth
 
 
@@ -31,6 +34,42 @@ async def _add_topic(client, token, session_id, subject="Tema de prueba", quorum
     )
     assert resp.status_code == 201, resp.text
     return resp.json()
+
+
+async def _ensure_consejero_is_voting_member(db: AsyncSession):
+    """Ensure consejero1 is a voting member of CONSEJO-REGIONAL committee."""
+    # Get or create the committee
+    row = (await db.execute(
+        text("SELECT id FROM core.committee WHERE code = 'CONSEJO-REGIONAL' AND deleted_at IS NULL")
+    )).mappings().first()
+    if not row:
+        return  # Committee auto-created by session creation
+    committee_id = str(row["id"])
+
+    # Get consejero1's person_id
+    person_row = (await db.execute(
+        text("""SELECT p.id FROM core.person p
+                JOIN core."user" u ON u.person_id = p.id
+                WHERE u.email = 'consejero1@goreos.cl'""")
+    )).mappings().first()
+    if not person_row:
+        return
+    person_id = str(person_row["id"])
+
+    # Check if already a member
+    existing = (await db.execute(
+        text("""SELECT id FROM core.committee_member
+                WHERE committee_id = :cid AND person_id = :pid"""),
+        {"cid": committee_id, "pid": person_id},
+    )).mappings().first()
+    if not existing:
+        await db.execute(
+            text("""INSERT INTO core.committee_member
+                    (committee_id, person_id, is_voting_member, start_date)
+                    VALUES (:cid, :pid, TRUE, CURRENT_DATE)"""),
+            {"cid": committee_id, "pid": person_id},
+        )
+        await db.commit()
 
 
 # ---------------------------------------------------------------------------
@@ -140,9 +179,10 @@ async def test_add_tema_with_quorum(client, regional_token):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_votar_a_favor(client, regional_token, consejero_token):
+async def test_votar_a_favor(client, regional_token, consejero_token, db):
     """POST votar with consejero → 200, vote recorded."""
     data = await _create_core_session(client, regional_token)
+    await _ensure_consejero_is_voting_member(db)
     topic = await _add_topic(client, regional_token, data["id"])
 
     # Must start session first
@@ -173,9 +213,10 @@ async def test_votar_a_favor(client, regional_token, consejero_token):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_votar_duplicate_rejected(client, regional_token, consejero_token):
+async def test_votar_duplicate_rejected(client, regional_token, consejero_token, db):
     """POST votar x2 by same consejero → 409 second time."""
     data = await _create_core_session(client, regional_token)
+    await _ensure_consejero_is_voting_member(db)
     topic = await _add_topic(client, regional_token, data["id"])
 
     await client.post(

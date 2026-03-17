@@ -12,7 +12,7 @@ async def _create_commitment(client, token, catalog, **overrides):
     payload = {
         "description": f"Test commitment {uuid.uuid4().hex[:8]}",
         "commitment_type_id": catalog["commitment_type_id"],
-        "responsible_id": users["encargado.daf@goreos.cl"]["id"],
+        "responsible_id": users["analista.dipir@goreos.cl"]["id"],
         "due_date": str(date.today() + timedelta(days=30)),
         **overrides,
     }
@@ -39,7 +39,7 @@ async def test_create_encargado_allowed(client, analista_token, catalog):
         json={
             "description": "Created by encargado",
             "commitment_type_id": catalog["commitment_type_id"],
-            "responsible_id": catalog["users"]["encargado.daf@goreos.cl"]["id"],
+            "responsible_id": catalog["users"]["analista.dipir@goreos.cl"]["id"],
             "due_date": str(date.today() + timedelta(days=30)),
         },
         headers=auth(analista_token),
@@ -82,14 +82,16 @@ async def test_complete_as_admin(client, regional_token, catalog):
     assert resp.status_code == 200
 
 
-async def test_complete_already_verified(client, regional_token, analista_token, jefe_token, catalog):
+async def test_complete_already_verified(client, regional_token, rtf_token, jefe_token, catalog):
     """Cannot complete a VERIFICADO commitment (409)."""
-    data = await _create_commitment(client, regional_token, catalog)
+    # Use RTF (DAF) as responsible so jefe.daf can verify (same division)
+    data = await _create_commitment(client, regional_token, catalog,
+                                     responsible_id=catalog["users"]["rtf.daf@goreos.cl"]["id"])
     cid = data["id"]
 
-    # PENDIENTE -> COMPLETADO
-    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(analista_token))
-    # COMPLETADO -> VERIFICADO
+    # PENDIENTE -> COMPLETADO (by responsible)
+    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(rtf_token))
+    # COMPLETADO -> VERIFICADO (by jefe same division)
     await client.post(f"/api/compromisos/{cid}/verificar", json={}, headers=auth(jefe_token))
 
     # Try to complete VERIFICADO -> should 409
@@ -105,12 +107,13 @@ async def test_complete_already_verified(client, regional_token, analista_token,
 # Verificar
 # ---------------------------------------------------------------------------
 
-async def test_verify_as_jefe_own_division(client, regional_token, analista_token, jefe_token, catalog):
+async def test_verify_as_jefe_own_division(client, regional_token, rtf_token, jefe_token, catalog):
     """JEFE_DIVISION can verify commitment in own division."""
-    data = await _create_commitment(client, regional_token, catalog)
+    data = await _create_commitment(client, regional_token, catalog,
+                                     responsible_id=catalog["users"]["rtf.daf@goreos.cl"]["id"])
     cid = data["id"]
 
-    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(analista_token))
+    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(rtf_token))
     resp = await client.post(f"/api/compromisos/{cid}/verificar", json={}, headers=auth(jefe_token))
     assert resp.status_code == 200
 
@@ -121,7 +124,8 @@ async def test_verify_as_jefe_own_division(client, regional_token, analista_toke
 
 async def test_verify_from_pendiente(client, regional_token, jefe_token, catalog):
     """Cannot verify from PENDIENTE — only from COMPLETADO (409)."""
-    data = await _create_commitment(client, regional_token, catalog)
+    data = await _create_commitment(client, regional_token, catalog,
+                                     responsible_id=catalog["users"]["rtf.daf@goreos.cl"]["id"])
     resp = await client.post(
         f"/api/compromisos/{data['id']}/verificar",
         json={},
@@ -148,12 +152,13 @@ async def test_encargado_cannot_verify(client, regional_token, analista_token, c
 # Devolver
 # ---------------------------------------------------------------------------
 
-async def test_devolver_from_completado(client, regional_token, analista_token, jefe_token, catalog):
+async def test_devolver_from_completado(client, regional_token, rtf_token, jefe_token, catalog):
     """Devolver returns COMPLETADO -> EN_PROGRESO and clears completed_at."""
-    data = await _create_commitment(client, regional_token, catalog)
+    data = await _create_commitment(client, regional_token, catalog,
+                                     responsible_id=catalog["users"]["rtf.daf@goreos.cl"]["id"])
     cid = data["id"]
 
-    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(analista_token))
+    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(rtf_token))
     resp = await client.post(
         f"/api/compromisos/{cid}/devolver",
         json={"observations": "Requiere corrección"},
@@ -166,12 +171,13 @@ async def test_devolver_from_completado(client, regional_token, analista_token, 
     assert detail.json()["completed_at"] is None
 
 
-async def test_devolver_requires_observations(client, regional_token, analista_token, jefe_token, catalog):
+async def test_devolver_requires_observations(client, regional_token, rtf_token, jefe_token, catalog):
     """Devolver without observations returns 422."""
-    data = await _create_commitment(client, regional_token, catalog)
+    data = await _create_commitment(client, regional_token, catalog,
+                                     responsible_id=catalog["users"]["rtf.daf@goreos.cl"]["id"])
     cid = data["id"]
 
-    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(analista_token))
+    await client.post(f"/api/compromisos/{cid}/completar", json={}, headers=auth(rtf_token))
     resp = await client.post(
         f"/api/compromisos/{cid}/devolver",
         json={},
@@ -182,7 +188,8 @@ async def test_devolver_requires_observations(client, regional_token, analista_t
 
 async def test_devolver_from_pendiente(client, regional_token, jefe_token, catalog):
     """Cannot devolver from PENDIENTE (409)."""
-    data = await _create_commitment(client, regional_token, catalog)
+    data = await _create_commitment(client, regional_token, catalog,
+                                     responsible_id=catalog["users"]["rtf.daf@goreos.cl"]["id"])
     resp = await client.post(
         f"/api/compromisos/{data['id']}/devolver",
         json={"observations": "Should fail"},
@@ -202,9 +209,9 @@ async def test_encargado_sees_only_own(client, regional_token, analista_token, c
     resp = await client.get("/api/compromisos", headers=auth(analista_token))
     assert resp.status_code == 200
     items = resp.json()["items"]
-    encargado_id = catalog["users"]["encargado.daf@goreos.cl"]["id"]
+    analista_id = catalog["users"]["analista.dipir@goreos.cl"]["id"]
     for item in items:
-        assert item["responsible_id"] == encargado_id
+        assert item["responsible_id"] == analista_id
 
 
 # ---------------------------------------------------------------------------

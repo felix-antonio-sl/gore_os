@@ -355,7 +355,7 @@ async def catalog(db):
     users = {}
     for email in [
         "admin@goreos.cl", "regional@goreos.cl",
-        "jefe.daf@goreos.cl", "encargado.daf@goreos.cl",
+        "jefe.daf@goreos.cl",
         "jefe.dgi@goreos.cl",
         "analista.dipir@goreos.cl", "rtf.daf@goreos.cl", "juridico@goreos.cl",
     ]:

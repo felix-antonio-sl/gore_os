@@ -154,20 +154,27 @@ async def test_delete_party(client: AsyncClient, regional_token: str, db: AsyncS
 
 
 @pytest.mark.asyncio
-async def test_party_requires_admin_role(
+async def test_party_analista_allowed(
     client: AsyncClient, analista_token: str, db: AsyncSession
 ):
-    """POST /api/ipr/{id}/partes rejects non-admin role."""
+    """POST /api/ipr/{id}/partes allows ANALISTA (absorbed ENCARGADO permissions)."""
     ipr_id = await _get_ipr_id(db)
     org_id = await _get_org_id(db)
     role_id = await _get_category_id(db, "ipr_party_role")
+
+    # Clean existing parties to avoid duplicate conflicts
+    await db.execute(
+        text("DELETE FROM core.ipr_party WHERE ipr_id = :id"),
+        {"id": ipr_id},
+    )
+    await db.commit()
 
     r = await client.post(
         f"/api/ipr/{ipr_id}/partes",
         json={"organization_id": org_id, "party_role_id": role_id},
         headers=auth(analista_token),
     )
-    assert r.status_code == 403
+    assert r.status_code == 201
 
 
 # ---------------------------------------------------------------------------

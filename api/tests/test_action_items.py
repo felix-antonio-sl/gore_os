@@ -87,11 +87,11 @@ async def test_action_items_all_roles_accessible(
     client: AsyncClient,
     admin_token: str, regional_token: str, jefe_token: str,
     analista_token: str, dgi_token: str,
-    analista_token: str, rtf_token: str, juridico_token: str,
+    rtf_token: str, juridico_token: str,
 ):
-    """All 8 test role tokens can access the endpoint."""
+    """All 7 test role tokens can access the endpoint."""
     for token in (admin_token, regional_token, jefe_token, analista_token,
-                  dgi_token, analista_token, rtf_token, juridico_token):
+                  dgi_token, rtf_token, juridico_token):
         resp = await client.get("/api/dashboard/action-items", headers=auth(token))
         assert resp.status_code == 200
 

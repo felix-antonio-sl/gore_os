@@ -154,13 +154,18 @@ async def test_transiciones_admin_all_allowed(client: AsyncClient, admin_token: 
         assert t["allowed"] is True, f"ADMIN_SISTEMA should be allowed for {t['code']}"
 
 
-async def test_transiciones_encargado_not_allowed(client: AsyncClient, analista_token: str, db: AsyncSession):
-    """ANALISTA should have allowed=False for all transitions (lens subject, not transition agent)."""
+async def test_transiciones_analista_allowed_in_f4(client: AsyncClient, analista_token: str, db: AsyncSession):
+    """ANALISTA should have allowed=True for intra-F4 transitions (absorbed ENCARGADO permissions)."""
     ipr_id = await _create_ipr(db, "EN_EJECUCION", "F4", nature="PROGRAMA")
     resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(analista_token))
     assert resp.status_code == 200
+    # ANULADO/TERMINADO_ANTICIPADAMENTE are cross-cutting terminal states — require anulacion roles
+    terminal_codes = {"ANULADO", "TERMINADO_ANTICIPADAMENTE"}
     for t in resp.json():
-        assert t["allowed"] is False, f"ANALISTA should NOT be allowed for {t['code']}"
+        if t["code"] in terminal_codes:
+            assert t["allowed"] is False, f"ANALISTA should NOT be allowed for {t['code']}"
+        else:
+            assert t["allowed"] is True, f"ANALISTA should be allowed for {t['code']}"
 
 
 # ---------------------------------------------------------------------------
@@ -239,13 +244,6 @@ async def test_regional_can_anular(client: AsyncClient, regional_token: str, db:
 # ---------------------------------------------------------------------------
 # 5C. Roles without transition authority are blocked at endpoint level
 # ---------------------------------------------------------------------------
-
-async def test_encargado_blocked_from_transitions(client: AsyncClient, analista_token: str, db: AsyncSession):
-    """ANALISTA cannot execute any transition (not in _ASSIGN_ROLES)."""
-    ipr_id = await _create_ipr(db, "EN_REVISION", "F1")
-    code = await _transition(client, ipr_id, "PRE_ADMISIBLE", analista_token, db)
-    assert code == 403
-
 
 async def test_consejero_blocked_from_transitions(client: AsyncClient, consejero_token: str, db: AsyncSession):
     """CONSEJERO_REGIONAL operates via core_sessions.py, not ipr.py transitions."""

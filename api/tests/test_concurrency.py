@@ -25,7 +25,7 @@ async def test_sequential_compromiso_codes_unique(client, regional_token, catalo
         "due_date": "2026-06-01",
         "commitment_type_id": catalog["commitment_type_id"],
         "ipr_id": ipr_id,
-        "responsible_id": catalog["users"]["encargado.daf@goreos.cl"]["id"],
+        "responsible_id": catalog["users"]["analista.dipir@goreos.cl"]["id"],
     }
 
     r1 = await client.post("/api/compromisos", json=payload, headers=auth(regional_token))

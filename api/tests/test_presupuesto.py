@@ -164,8 +164,8 @@ async def test_create_cdp_exceeds_available(client, regional_token, catalog):
     assert "saldo disponible" in resp.json()["detail"]
 
 
-async def test_encargado_cannot_create(client, analista_token, catalog):
-    """ANALISTA cannot create budget programs."""
+async def test_rtf_cannot_create(client, rtf_token, catalog):
+    """RTF cannot create budget programs (not in ADMIN_ROLES)."""
     resp = await client.post(
         "/api/presupuesto",
         json={
@@ -174,7 +174,7 @@ async def test_encargado_cannot_create(client, analista_token, catalog):
             "fiscal_year": 2026,
             "initial_amount": 100,
         },
-        headers=auth(analista_token),
+        headers=auth(rtf_token),
     )
     assert resp.status_code == 403
 
@@ -253,8 +253,8 @@ async def test_update_milestone_invalid_status(client, regional_token):
     assert resp.status_code == 422
 
 
-async def test_encargado_cannot_modify_cycle(client, analista_token):
-    """ANALISTA cannot initialize or modify cycle."""
+async def test_analista_cannot_modify_cycle(client, analista_token):
+    """ANALISTA cannot initialize or modify cycle (requires ADMIN/REGIONAL/GOBERNADOR)."""
     resp = await client.post("/api/presupuesto/ciclo/2026", headers=auth(analista_token))
     assert resp.status_code == 403
 

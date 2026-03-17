@@ -382,10 +382,10 @@ async def test_track_info_includes_evaluations(
     assert data["evaluations"][0]["evaluator_type"] == "MDSF"
 
 
-async def test_evaluation_forbidden_encargado(
+async def test_evaluation_allowed_analista(
     client: AsyncClient, analista_token: str, db: AsyncSession,
 ):
-    """ANALISTA cannot create evaluations."""
+    """ANALISTA can create evaluations (absorbed ENCARGADO permissions)."""
     ipr_id = await _create_test_ipr(db, "EN_EVALUACION", "F2", mechanism_code="SNI")
     evaluator_type_id = await _get_category_id(db, "evaluator_type", "MDSF")
 
@@ -394,4 +394,4 @@ async def test_evaluation_forbidden_encargado(
         json={"evaluator_type_id": evaluator_type_id},
         headers=auth(analista_token),
     )
-    assert resp.status_code == 403
+    assert resp.status_code == 201
