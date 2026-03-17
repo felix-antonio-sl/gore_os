@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.audit import record_event
 from app.schemas.problema import ProblemaCreate, ProblemaDetail, ProblemaListItem, ProblemaUpdate
 
 router = APIRouter(prefix="/api/problemas", tags=["problemas"])
@@ -231,8 +232,13 @@ async def create_problema(
                 "created_by_id": str(user["id"]),
             },
         )
-        await db.commit()
         row = result.mappings().first()
+        await record_event(
+            db, "CREACION", "core.ipr_problem", row["id"],
+            actor_id=user["id"],
+            data={"code": row["code"], "ipr_id": str(data.ipr_id)},
+        )
+        await db.commit()
         return {"id": str(row["id"]), "code": row["code"]}
     except IntegrityError:
         await db.rollback()
@@ -305,6 +311,17 @@ async def update_problema(
         """),
         params,
     )
+    if data.state_id is not None:
+        await record_event(
+            db, "STATE_TRANSITION", "core.ipr_problem", problema_id,
+            actor_id=user["id"],
+            data={"from": current["state"], "to": cat_row["code"]},
+        )
+    else:
+        await record_event(
+            db, "MODIFICACION", "core.ipr_problem", problema_id,
+            actor_id=user["id"],
+        )
     await db.commit()
 
     updated = await _get_problema_or_404(problema_id, db)

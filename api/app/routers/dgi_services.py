@@ -16,6 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 
 from app.schemas.dgi import (
     ServiceCreate,
@@ -291,6 +292,7 @@ async def create_service(
         },
     )
     new_id = str(result.scalar())
+    await record_event(db, "CREACION", "core.dgi_service", new_id, user["id"], {"code": code})
     await db.commit()
 
     row = (await db.execute(
@@ -414,6 +416,7 @@ async def create_request(
         },
     )
     new_id = str(result.scalar())
+    await record_event(db, "CREACION", "core.dgi_service_request", new_id, user["id"], {"code": code, "service_id": str(body.service_id)})
     await db.commit()
 
     row = (await db.execute(
@@ -524,6 +527,8 @@ async def update_request(
         await db.execute(
             text(f"UPDATE core.dgi_service_request SET {set_clause} WHERE id = :id"), params,
         )
+        if "status" in body_data:
+            await record_event(db, "STATE_TRANSITION", "core.dgi_service_request", request_id, user["id"], {"from": existing["current_status"], "to": body_data["status"].upper()})
         await db.commit()
     except Exception as e:
         await db.rollback()
@@ -720,6 +725,7 @@ async def update_service(
     await db.execute(
         text(f"UPDATE core.dgi_service SET {set_clause} WHERE id = :id"), params,
     )
+    await record_event(db, "MODIFICACION", "core.dgi_service", service_id, user["id"])
     await db.commit()
 
     row = (await db.execute(
@@ -799,6 +805,7 @@ async def create_sla(
             },
         )
         new_id = str(result.scalar())
+        await record_event(db, "CREACION", "core.dgi_sla", new_id, user["id"], {"service_id": str(service_id)})
         await db.commit()
     except Exception as e:
         await db.rollback()

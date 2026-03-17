@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import hash_password
+from app.core.audit import record_event
 from app.schemas.admin import (
     UserListItem,
     UserDetail,
@@ -225,6 +226,7 @@ async def create_usuario(
             },
         )
         new_user_id = user_result.scalar()
+        await record_event(db, "CREACION", "core.user", new_user_id, user["id"], {"email": data.email})
         await db.commit()
 
         return {"id": str(new_user_id), "email": data.email}
@@ -289,6 +291,7 @@ async def update_usuario(
             params,
         )
 
+    await record_event(db, "MODIFICACION", "core.user", user_id, user["id"])
     await db.commit()
     return {"message": "Usuario actualizado"}
 
@@ -318,6 +321,7 @@ async def toggle_activo(
         text("UPDATE core.\"user\" SET is_active = :active, updated_at = NOW() WHERE id = :uid"),
         {"active": new_status, "uid": str(user_id)},
     )
+    await record_event(db, "MODIFICACION", "core.user", user_id, user["id"], {"is_active": new_status})
     await db.commit()
 
     label = "activado" if new_status else "desactivado"

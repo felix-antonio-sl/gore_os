@@ -8,6 +8,7 @@ from uuid import UUID
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 from app.schemas.dgi import ReportItem, ReportContent, ReportContentSection, ReportCreate, ReportSectionUpdate, ReportStatusChange
 
 router = APIRouter(prefix="/api/dgi/reports", tags=["dgi"])
@@ -310,8 +311,9 @@ async def create_report(
         "recipient": body.recipient,
         "generated_by_id": str(user["id"]),
     })
-    await db.commit()
     row = result.mappings().first()
+    await record_event(db, "CREACION", "core.dgi_report", row["id"], user["id"], {"report_type": body.report_type.upper()})
+    await db.commit()
     return {"id": row["id"]}
 
 
@@ -501,6 +503,7 @@ async def change_report_status(
         text(f"UPDATE core.dgi_report SET {', '.join(set_parts)} WHERE id = :id"),
         {"target": target, "id": str(report_id)},
     )
+    await record_event(db, "STATE_TRANSITION", "core.dgi_report", report_id, user["id"], {"from": current, "to": target})
     await db.commit()
     return {"message": f"Estado cambiado a {target}"}
 

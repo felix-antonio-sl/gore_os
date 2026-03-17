@@ -87,9 +87,60 @@ async def cleanup_test_artifacts(db: AsyncSession):
     await db.execute(text("DELETE FROM core.subv8_fund_ceiling WHERE notes LIKE 'TEST-%'"))
     await db.execute(text("DELETE FROM core.subv8_fund WHERE code LIKE 'TEST-%'"))
     await db.execute(text("DELETE FROM core.fril_category WHERE code LIKE 'T%' AND LENGTH(code) > 2"))
+    # Bottleneck cleanup
+    await db.execute(text("DELETE FROM core.dgi_bottleneck_investigation"))
+    # TD Sessions cleanup (session_agreement -> minute -> session, scoped to COMITE-TD)
+    await db.execute(text("""
+        DELETE FROM core.session_agreement WHERE minute_id IN (
+            SELECT m.id FROM core.minute m
+            JOIN core.session s ON s.id = m.session_id
+            JOIN core.committee c ON c.id = s.committee_id
+            WHERE c.code = 'COMITE-TD'
+        )
+    """))
+    await db.execute(text("""
+        DELETE FROM core.minute WHERE session_id IN (
+            SELECT s.id FROM core.session s
+            JOIN core.committee c ON c.id = s.committee_id
+            WHERE c.code = 'COMITE-TD'
+        )
+    """))
+    await db.execute(text("""
+        DELETE FROM core.session WHERE committee_id IN (
+            SELECT id FROM core.committee WHERE code = 'COMITE-TD'
+        )
+    """))
+    # DGI Data test cleanup (indicators + test renditions)
+    await db.execute(text(
+        "DELETE FROM core.dgi_indicator_lifecycle_history WHERE indicator_id IN "
+        "(SELECT id FROM core.dgi_indicator WHERE name LIKE 'Test %')"
+    ))
+    await db.execute(text(
+        "DELETE FROM core.dgi_indicator_snapshot WHERE indicator_id IN "
+        "(SELECT id FROM core.dgi_indicator WHERE name LIKE 'Test %')"
+    ))
+    await db.execute(text("DELETE FROM core.dgi_indicator WHERE name LIKE 'Test %'"))
+    # Clean test renditions (created without agreement, with small amounts as marker)
+    await db.execute(text(
+        "DELETE FROM core.rendition_history WHERE rendition_id IN "
+        "(SELECT id FROM core.rendition WHERE created_by_id IS NOT NULL "
+        "AND created_at > NOW() - INTERVAL '1 hour')"
+    ))
+    await db.execute(text(
+        "DELETE FROM core.rendition WHERE created_by_id IS NOT NULL "
+        "AND created_at > NOW() - INTERVAL '1 hour' "
+        "AND agreement_id IS NULL"
+    ))
     # Wave E cleanup
     await db.execute(text("DELETE FROM core.risk"))
     await db.execute(text("DELETE FROM txn.event"))
+    # DGI Processes cleanup
+    await db.execute(text("DELETE FROM core.dgi_process_actor"))
+    await db.execute(text("DELETE FROM core.dgi_process_rule"))
+    await db.execute(text("DELETE FROM core.dgi_process_metric"))
+    await db.execute(text("DELETE FROM core.dgi_process_pain_point"))
+    await db.execute(text("DELETE FROM core.dgi_improvement_opportunity"))
+    await db.execute(text("DELETE FROM core.dgi_process"))
     # Wave B cleanup (order matters for FK constraints)
     await db.execute(text("DELETE FROM core.dgi_service_request"))
     await db.execute(text("DELETE FROM core.dgi_sla"))

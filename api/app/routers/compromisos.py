@@ -9,6 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
+from app.core.audit import record_event
 from app.schemas.compromiso import CompromisoCreate, CompromisoListItem, CompromisoDetail, HistoryEntry, StateChangeRequest, CompromisoUpdate
 
 router = APIRouter(prefix="/api/compromisos", tags=["compromisos"])
@@ -337,8 +338,13 @@ async def create_compromiso(
                 "created_by_id": str(user["id"]),
             },
         )
-        await db.commit()
         row = result.mappings().first()
+        await record_event(
+            db, "COMPROMISO", "core.operational_commitment", row["id"],
+            actor_id=user["id"],
+            data={"code": row["code"]},
+        )
+        await db.commit()
         return {"id": str(row["id"]), "code": row["code"]}
     except IntegrityError:
         await db.rollback()
@@ -447,6 +453,11 @@ async def completar(
             "updated_by": str(user["id"]),
         },
     )
+    await record_event(
+        db, "STATE_TRANSITION", "core.operational_commitment", compromiso_id,
+        actor_id=user["id"],
+        data={"from": row["state"], "to": "COMPLETADO"},
+    )
     await db.commit()
     return {"message": "Compromiso marcado como completado"}
 
@@ -501,6 +512,11 @@ async def verificar(
             "verified_by": str(user["id"]),
             "updated_by": str(user["id"]),
         },
+    )
+    await record_event(
+        db, "STATE_TRANSITION", "core.operational_commitment", compromiso_id,
+        actor_id=user["id"],
+        data={"from": "COMPLETADO", "to": "VERIFICADO"},
     )
     await db.commit()
     return {"message": "Compromiso verificado"}
@@ -560,6 +576,11 @@ async def devolver(
             "observations": body.observations,
             "updated_by": str(user["id"]),
         },
+    )
+    await record_event(
+        db, "STATE_TRANSITION", "core.operational_commitment", compromiso_id,
+        actor_id=user["id"],
+        data={"from": "COMPLETADO", "to": "EN_PROGRESO", "reason": body.observations},
     )
     await db.commit()
     return {"message": "Compromiso devuelto para corrección"}

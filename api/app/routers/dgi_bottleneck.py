@@ -16,6 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 
 from app.schemas.dgi import (
     BottleneckFinding,
@@ -575,6 +576,7 @@ async def create_investigation(
         },
     )
     new_id = str(result.scalar())
+    await record_event(db, "CREACION", "core.dgi_bottleneck", new_id, user["id"], {"code": code})
     await db.commit()
 
     # Fetch full detail
@@ -700,6 +702,10 @@ async def update_investigation(
         text(f"UPDATE core.dgi_bottleneck_investigation SET {set_clause} WHERE id = :id"),
         params,
     )
+    if body.status is not None:
+        await record_event(db, "STATE_TRANSITION", "core.dgi_bottleneck", investigation_id, user["id"], {"from": current_status, "to": body.status.upper()})
+    else:
+        await record_event(db, "MODIFICACION", "core.dgi_bottleneck", investigation_id, user["id"])
     await db.commit()
 
     # Return updated detail

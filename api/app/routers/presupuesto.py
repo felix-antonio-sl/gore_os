@@ -8,6 +8,7 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.audit import record_event
 from app.schemas.common import PaginatedResponse
 from app.schemas.presupuesto import (
     PresupuestoListItem,
@@ -649,8 +650,13 @@ async def create_cdp(
         {"amount": body.amount, "pid": str(presupuesto_id)},
     )
 
-    await db.commit()
     row = result.mappings().first()
+    await record_event(
+        db, "CDP", "core.budget_commitment", row["id"],
+        actor_id=user["id"],
+        data={"commitment_number": commitment_number, "amount": float(body.amount)},
+    )
+    await db.commit()
     return {"id": row["id"], "commitment_number": row["commitment_number"]}
 
 

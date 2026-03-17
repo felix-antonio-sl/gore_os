@@ -10,6 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.audit import record_event
 from app.schemas.common import PaginatedResponse
 from app.schemas.acto import ActoListItem, ActoDetail, ActoCreate, ActoUpdate, ActoHistoryEntry
 
@@ -400,6 +401,11 @@ async def create_acto(
             )
             resolution_id = str(res_result.mappings().first()["id"])
 
+        await record_event(
+            db, "CREACION", "core.administrative_act", act_id,
+            actor_id=user["id"],
+            data={"act_number": act_row["act_number"], "act_type": type_code},
+        )
         await db.commit()
         return {"id": act_id, "act_number": act_row["act_number"], "resolution_id": resolution_id}
     except HTTPException:
@@ -496,6 +502,18 @@ async def update_acto(
                 res_updates,
             )
 
+    if "state_id" in act_updates:
+        await record_event(
+            db, "STATE_TRANSITION", "core.administrative_act", acto_id,
+            actor_id=user["id"],
+            data={"from": current_code, "to": new_code},
+        )
+    elif act_updates or res_updates:
+        await record_event(
+            db, "MODIFICACION", "core.administrative_act", acto_id,
+            actor_id=user["id"],
+            data={"fields": [k for k in {**act_updates, **res_updates} if k not in ("id", "updated_by_id", "res_id")]},
+        )
     await db.commit()
     result = {"message": "Actualizado correctamente"}
     if warnings:

@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 from app.schemas.dgi import InitiativeItem, InitiativeCreate, InitiativeUpdate, InitiativeMove, InitiativeReorder, DMAICDetail, DMAICGateResult, DMAICPhaseUpdate, DMAICTransition, LeanMetrics
 
 
@@ -440,6 +441,7 @@ async def move_initiative(
             "sort_order": max_order + 1,
         },
     )
+    await record_event(db, "STATE_TRANSITION", "core.dgi_initiative", initiative_id, user["id"], {"from": existing["status"], "to": target_status})
     await db.commit()
 
     # ── Return updated initiative ─────────────────────────────────────────
@@ -731,6 +733,7 @@ async def transition_dmaic_phase(
         """),
         {"id": initiative_id_str, "phase_id": str(phase_row["id"]), "user_id": str(user["id"])},
     )
+    await record_event(db, "STATE_TRANSITION", "core.dgi_initiative", initiative_id, user["id"], {"dmaic_phase": target_phase, "from": current_phase, "to": target_phase})
     await db.commit()
 
     # Evaluate gates for the result

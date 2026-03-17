@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.audit import record_event
 from app.schemas.common import PaginatedResponse
 from app.schemas.core_session import (
     CoreSessionCreate,
@@ -301,6 +302,11 @@ async def create_core_session(
             },
         )
 
+        await record_event(
+            db, "CREACION", "core.session", session_id,
+            actor_id=user["id"],
+            data={"session_number": session_number, "session_type": body.session_type},
+        )
         await db.commit()
         return {"id": session_id, "session_number": session_number}
     except HTTPException:
@@ -471,6 +477,11 @@ async def start_core_session(
         """),
         {"id": str(session_id), "quorum": quorum_reached},
     )
+    await record_event(
+        db, "STATE_TRANSITION", "core.session", session_id,
+        actor_id=user["id"],
+        data={"from": "PROGRAMADA", "to": "EN_CURSO", "quorum_reached": quorum_reached},
+    )
     await db.commit()
     return {
         "message": "Sesión iniciada",
@@ -515,6 +526,11 @@ async def finish_core_session(
             {"id": str(session_id)},
         )
 
+    await record_event(
+        db, "STATE_TRANSITION", "core.session", session_id,
+        actor_id=user["id"],
+        data={"from": "EN_CURSO", "to": "FINALIZADA"},
+    )
     await db.commit()
     return {"message": "Sesión finalizada"}
 
@@ -652,6 +668,11 @@ async def cast_vote(
                 "voter_id": voter_member_id,
                 "vote_id": vote_option_id,
             },
+        )
+        await record_event(
+            db, "APROBACION", "core.session", session_id,
+            actor_id=user["id"],
+            data={"topic_id": str(tema_id), "vote": body.vote},
         )
         await db.commit()
     except IntegrityError:

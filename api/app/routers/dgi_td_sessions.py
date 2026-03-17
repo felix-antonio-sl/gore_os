@@ -15,6 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 from app.schemas.common import PaginatedResponse
 from app.schemas.dgi import (
     TDSessionCreate,
@@ -241,6 +242,7 @@ async def create_td_session(
         },
     )
 
+    await record_event(db, "CREACION", "core.session", session_id, user["id"], {"committee": TD_COMMITTEE_CODE, "session_number": session_number})
     await db.commit()
     return {"id": session_id, "session_number": session_number}
 
@@ -349,6 +351,7 @@ async def update_td_session(
             text("UPDATE core.session SET started_at = NOW(), updated_at = NOW() WHERE id = :id"),
             {"id": str(session_id)},
         )
+        await record_event(db, "STATE_TRANSITION", "core.session", session_id, user["id"], {"from": "PROGRAMADA", "to": "EN_CURSO"})
         await db.commit()
         return {"message": "Sesión iniciada"}
 
@@ -373,6 +376,7 @@ async def update_td_session(
                 text("UPDATE core.session SET ended_at = NOW(), updated_at = NOW() WHERE id = :id"),
                 {"id": str(session_id)},
             )
+        await record_event(db, "STATE_TRANSITION", "core.session", session_id, user["id"], {"from": "EN_CURSO", "to": "FINALIZADA"})
         await db.commit()
         return {"message": "Sesión finalizada"}
 
@@ -429,6 +433,7 @@ async def add_td_topic(
         },
     )
     topic_id = str(sa_result.mappings().first()["id"])
+    await record_event(db, "CREACION", "core.session_agreement", topic_id, user["id"], {"session_id": str(session_id)})
     await db.commit()
     return {"id": topic_id, "topic_number": next_num}
 

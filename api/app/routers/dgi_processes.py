@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 from app.schemas.dgi import (
     ProcessItem, ProcessCreate, ProcessUpdate, ProcessDetail,
     ProcessActorItem, ProcessActorCreate,
@@ -331,6 +332,7 @@ async def create_process(
         },
     )
     new_id = str(result.scalar())
+    await record_event(db, "CREACION", "core.dgi_process", new_id, user["id"], {"code": code})
     await db.commit()
 
     row = await _get_process_row(new_id, db)
@@ -466,6 +468,11 @@ async def update_process(
         text(f"UPDATE core.dgi_process SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
         updates,
     )
+    if "status_id" in updates:
+        target_status = body.status.upper()
+        await record_event(db, "STATE_TRANSITION", "core.dgi_process", process_id, user["id"], {"from": existing["status"], "to": target_status})
+    else:
+        await record_event(db, "MODIFICACION", "core.dgi_process", process_id, user["id"])
     await db.commit()
 
     row = await _get_process_row(process_id_str, db)
@@ -502,6 +509,7 @@ async def delete_process(
         """),
         {"id": process_id_str, "deleted_by_id": str(user["id"])},
     )
+    await record_event(db, "ELIMINACION", "core.dgi_process", process_id, user["id"], {"code": existing["code"]})
     await db.commit()
 
 
@@ -569,6 +577,7 @@ async def create_actor(
         },
     )
     r = result.mappings().first()
+    await record_event(db, "CREACION", "core.dgi_process_actor", r["id"], user["id"], {"process_id": str(process_id)})
     await db.commit()
 
     return ProcessActorItem(
@@ -658,6 +667,7 @@ async def create_rule(
             },
         )
         r = result.mappings().first()
+        await record_event(db, "CREACION", "core.dgi_process_rule", r["id"], user["id"], {"process_id": str(process_id)})
         await db.commit()
     except Exception as e:
         await db.rollback()
@@ -763,6 +773,7 @@ async def create_metric(
         },
     )
     r = result.mappings().first()
+    await record_event(db, "CREACION", "core.dgi_process_metric", r["id"], user["id"], {"process_id": str(process_id)})
     await db.commit()
 
     return ProcessMetricItem(
@@ -824,7 +835,6 @@ async def get_metrics_comparison(
             m.measurement_type
         FROM core.dgi_process_metric m
         WHERE m.process_id = :process_id
-          AND m.deleted_at IS NULL
           AND m.measurement_type IN ('BASELINE', 'POST_MEJORA')
         ORDER BY m.name, m.measurement_type
     """)
@@ -934,6 +944,7 @@ async def create_pain_point(
         },
     )
     r = result.mappings().first()
+    await record_event(db, "CREACION", "core.dgi_process_pain_point", r["id"], user["id"], {"process_id": str(process_id)})
     await db.commit()
 
     # Re-fetch to get reported_by_name via JOIN
@@ -1050,6 +1061,7 @@ async def create_opportunity(
         },
     )
     r = result.mappings().first()
+    await record_event(db, "CREACION", "core.dgi_opportunity", r["id"], user["id"], {"process_id": str(process_id)})
     await db.commit()
 
     return ImprovementOpportunityItem(

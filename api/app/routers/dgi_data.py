@@ -17,6 +17,7 @@ from app.schemas.dgi import (
     IndicatorLifecycleTransition, IndicatorLifecycleHistoryEntry,
 )
 from app.core.security import DGI_ROLES, WRITE_OPERATIONAL_ROLES
+from app.core.audit import record_event
 
 _RENDICION_WRITE_ROLES = WRITE_OPERATIONAL_ROLES | DGI_ROLES
 
@@ -487,6 +488,7 @@ async def create_indicator(
         "source_description": body.source_description,
     })).mappings().first()
 
+    await record_event(db, "CREACION", "core.dgi_indicator", result["id"], user["id"], {"code": code})
     await db.commit()
     return await _get_indicator_item(result["id"], db)
 
@@ -559,6 +561,7 @@ async def update_indicator(
         WHERE id = :id
     """), params)
 
+    await record_event(db, "MODIFICACION", "core.dgi_indicator", indicator_id, user["id"])
     await db.commit()
     return await _get_indicator_item(indicator_id, db)
 
@@ -646,6 +649,7 @@ async def set_indicator_value(
             WHERE id = :id
         """), {"val": new_value, "id": str(indicator_id)})
 
+    await record_event(db, "MODIFICACION", "core.dgi_indicator", indicator_id, user["id"], {"value": new_value})
     await db.commit()
     return await _get_indicator_item(indicator_id, db)
 
@@ -740,6 +744,7 @@ async def transition_indicator_lifecycle(
         WHERE id = :id
     """), {"new_id": str(target_cat["id"]), "id": str(indicator_id)})
 
+    await record_event(db, "STATE_TRANSITION", "core.dgi_indicator", indicator_id, user["id"], {"from": current, "to": target})
     await db.commit()
     return await _get_indicator_item(indicator_id, db)
 
@@ -1695,6 +1700,10 @@ async def archive_rendicion(
         text("UPDATE core.rendition SET archived_at = NOW() WHERE id = :id"),
         {"id": str(rendicion_id)},
     )
+    await record_event(db, "STATE_TRANSITION", "core.rendition", rendicion_id, user["id"], {
+        "from": "APROBADA",
+        "to": "ARCHIVADA",
+    })
     await db.commit()
     return {"archived": True, "rendicion_id": str(rendicion_id)}
 
@@ -1771,6 +1780,12 @@ async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSe
             "created_by_id": str(user["id"]),
         },
     )).mappings().first()
+
+    await record_event(db, "CREACION", "core.rendition", row["id"], user["id"], {
+        "agreement_id": str(body.agreement_id) if body.agreement_id else None,
+        "ipr_id": str(body.ipr_id) if body.ipr_id else None,
+        "amount": float(body.amount) if body.amount else None,
+    })
     await db.commit()
     return {"id": str(row["id"])}
 
@@ -1965,6 +1980,13 @@ async def patch_rendicion(
             """),
             {"comment": comment, "rendition_id": str(rendicion_id)},
         )
+
+    # Audit trail
+    if "state_id" in updates:
+        await record_event(db, "STATE_TRANSITION", "core.rendition", rendicion_id, user["id"], {
+            "from": current_state,
+            "to": new_state,
+        })
 
     await db.commit()
 

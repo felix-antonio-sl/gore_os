@@ -9,6 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.audit import record_event
 from app.schemas.common import PaginatedResponse
 from app.schemas.convenio import (
     ConvenioListItem,
@@ -390,8 +391,13 @@ async def create_convenio(
                 "created_by_id": str(user["id"]),
             },
         )
-        await db.commit()
         row = result.mappings().first()
+        await record_event(
+            db, "CREACION", "core.agreement", row["id"],
+            actor_id=user["id"],
+            data={"agreement_number": agreement_number},
+        )
+        await db.commit()
         return {"id": row["id"], "agreement_number": row["agreement_number"]}
     except IntegrityError:
         await db.rollback()
@@ -568,6 +574,18 @@ async def update_convenio(
         text(f"UPDATE core.agreement SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
         updates,
     )
+    if "state_id" in updates:
+        await record_event(
+            db, "STATE_TRANSITION", "core.agreement", convenio_id,
+            actor_id=user["id"],
+            data={"from": current_code, "to": new_code},
+        )
+    else:
+        await record_event(
+            db, "MODIFICACION", "core.agreement", convenio_id,
+            actor_id=user["id"],
+            data={"fields": [k for k in updates if k not in ("id", "updated_by_id")]},
+        )
     await db.commit()
     result = {"message": "Actualizado correctamente"}
     if warnings:
@@ -707,6 +725,11 @@ async def bulk_create_cuotas(
         )).mappings().first()
         created.append(dict(row))
 
+    await record_event(
+        db, "CREACION", "core.agreement_installment", str(convenio_id),
+        actor_id=user["id"],
+        data={"count": len(created), "total_amount": float(body.total_amount), "bulk": True},
+    )
     await db.commit()
     return created
 
@@ -755,8 +778,13 @@ async def add_cuota(
             "payment_status_id": str(body.payment_status_id),
         },
     )
-    await db.commit()
     row = result.mappings().first()
+    await record_event(
+        db, "CREACION", "core.agreement_installment", row["id"],
+        actor_id=user["id"],
+        data={"agreement_id": str(convenio_id), "installment_number": body.installment_number},
+    )
+    await db.commit()
     return {"id": row["id"]}
 
 
@@ -808,6 +836,11 @@ async def update_cuota(
     await db.execute(
         text(f"UPDATE core.agreement_installment SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
         updates,
+    )
+    await record_event(
+        db, "MODIFICACION", "core.agreement_installment", cuota_id,
+        actor_id=user["id"],
+        data={"agreement_id": str(convenio_id), "fields": [k for k in updates if k != "id"]},
     )
     await db.commit()
     return {"message": "Cuota actualizada"}
