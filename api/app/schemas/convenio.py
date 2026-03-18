@@ -54,6 +54,7 @@ class ConvenioDetail(ConvenioListItem):
     created_at: datetime
     installments: list[InstallmentItem]
     history: list[AgreementHistoryEntry] = []
+    renditions: list["RenditionSummaryItem"] = []
 
 
 class ConvenioCreate(BaseModel):
@@ -96,3 +97,23 @@ class InstallmentUpdate(BaseModel):
     paid_at: Optional[datetime] = None
     paid_amount: Optional[Decimal] = None
     payment_reference: Optional[str] = None
+
+
+class RenditionSummaryItem(BaseModel):
+    id: UUID
+    short_id: str
+    amount: Optional[Decimal] = None
+    state: str
+    state_label: str
+    phase_entered_at: Optional[datetime] = None
+    created_at: datetime
+
+
+class ConvenioResumen(BaseModel):
+    total: int
+    by_state: list[dict]
+    expiring_30d: int
+    expiring_90d: int
+    total_amount: Optional[Decimal] = None
+    with_cgr: int
+    without_ipr: int

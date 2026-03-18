@@ -122,3 +122,62 @@ async def test_list_iprs_division_filter_excludes_other(
         {"id": ipr_id},
     )
     await db.commit()
+
+
+# ---------------------------------------------------------------------------
+# Track summary
+# ---------------------------------------------------------------------------
+
+
+async def test_track_summary(client, admin_token):
+    """GET /api/ipr/track-summary returns aggregated stats by track."""
+    resp = await client.get("/api/ipr/track-summary", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert isinstance(body, list)
+    if len(body) > 0:
+        track = body[0]
+        assert "track_code" in track
+        assert "track_label" in track
+        assert "total_iprs" in track
+        assert "by_phase" in track
+        assert "critical_alerts" in track
+        for phase in ("F0", "F1", "F2", "F3", "F4", "F5"):
+            assert phase in track["by_phase"]
+
+
+async def test_track_summary_all_users(client, regional_token):
+    """Track summary is accessible to any authenticated user."""
+    resp = await client.get("/api/ipr/track-summary", headers=auth(regional_token))
+    assert resp.status_code == 200
+
+
+# ---------------------------------------------------------------------------
+# SLA batch checks
+# ---------------------------------------------------------------------------
+
+
+async def test_check_admissibility_slas(client, admin_token):
+    """POST /api/ipr/check-admissibility-slas returns checked + alerts_created."""
+    resp = await client.post("/api/ipr/check-admissibility-slas", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "checked" in body
+    assert "alerts_created" in body
+    assert body["checked"] >= 0
+    assert body["alerts_created"] >= 0
+
+
+async def test_check_track_phase_slas(client, admin_token):
+    """POST /api/ipr/check-track-phase-slas returns checked + alerts_created."""
+    resp = await client.post("/api/ipr/check-track-phase-slas", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "checked" in body
+    assert "alerts_created" in body
+
+
+async def test_check_admissibility_requires_role(client, analista_token):
+    """Non-admin users cannot run admissibility SLA check."""
+    resp = await client.post("/api/ipr/check-admissibility-slas", headers=auth(analista_token))
+    assert resp.status_code == 403

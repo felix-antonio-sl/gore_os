@@ -30,6 +30,7 @@ import {
   ShieldAlert,
   ClipboardCheck,
   Scale,
+  Route,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -111,6 +112,10 @@ const NAV = {
   divisiones: { label: "Divisiones", href: "/admin/divisiones", icon: <Building2 className="size-4" /> },
   umbrales: { label: "Umbrales", href: "/admin/umbrales", icon: <ShieldCheck className="size-4" /> },
   nivelesSni: { label: "Niveles SNI", href: "/admin/niveles-sni", icon: <Layers className="size-4" /> },
+  saludDatos: { label: "Salud de Datos", href: "/admin/salud-datos", icon: <Database className="size-4" /> },
+  financingTracks: { label: "Vías Financiamiento", href: "/admin/financing-tracks", icon: <Route className="size-4" /> },
+  slas: { label: "Monitoreo SLA", href: "/admin/slas", icon: <ShieldAlert className="size-4" /> },
+  auditoria: { label: "Auditoría", href: "/admin/auditoria", icon: <Shield className="size-4" /> },
 
   // DGI — Monitoreo
   cartera: { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
@@ -270,6 +275,10 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
                 {link(NAV.divisiones)}
                 {link(NAV.umbrales)}
                 {link(NAV.nivelesSni)}
+                {link(NAV.saludDatos)}
+                {link(NAV.financingTracks)}
+                {link(NAV.slas)}
+                {link(NAV.auditoria)}
               </NavSection>
             )}
           </>

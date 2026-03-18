@@ -215,6 +215,70 @@ async def _validate_state_transition(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/actos/resumen — Aggregate statistics
+# ---------------------------------------------------------------------------
+
+@router.get("/resumen")
+async def get_actos_resumen(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Aggregate administrative act statistics for KPI strip."""
+    result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE st.code = 'VISADO') AS pending_firma,
+                COUNT(*) FILTER (WHERE st.code = 'EN_REVISION') AS en_revision,
+                COUNT(*) FILTER (WHERE st.code = 'PUBLICADO') AS publicados,
+                COUNT(*) FILTER (WHERE st.code = 'BORRADOR') AS borradores,
+                COUNT(*) FILTER (WHERE a.requires_cgr = TRUE) AS requires_cgr,
+                COUNT(*) FILTER (WHERE a.requires_cgr = TRUE AND a.cgr_outcome_id IS NULL) AS pending_cgr
+            FROM core.administrative_act a
+            JOIN ref.category st ON st.id = a.state_id
+            WHERE a.deleted_at IS NULL
+        """)
+    )
+    row = result.mappings().first()
+
+    state_result = await db.execute(
+        text("""
+            SELECT st.code, st.label, COUNT(*) AS count
+            FROM core.administrative_act a
+            JOIN ref.category st ON st.id = a.state_id
+            WHERE a.deleted_at IS NULL
+            GROUP BY st.code, st.label
+            ORDER BY count DESC
+        """)
+    )
+    by_state = [dict(r) for r in state_result.mappings().all()]
+
+    type_result = await db.execute(
+        text("""
+            SELECT at.code, at.label, COUNT(*) AS count
+            FROM core.administrative_act a
+            JOIN ref.category at ON at.id = a.act_type_id
+            WHERE a.deleted_at IS NULL
+            GROUP BY at.code, at.label
+            ORDER BY count DESC
+        """)
+    )
+    by_type = [dict(r) for r in type_result.mappings().all()]
+
+    return {
+        "total": row["total"],
+        "pending_firma": row["pending_firma"],
+        "en_revision": row["en_revision"],
+        "publicados": row["publicados"],
+        "borradores": row["borradores"],
+        "requires_cgr": row["requires_cgr"],
+        "pending_cgr": row["pending_cgr"],
+        "by_state": by_state,
+        "by_type": by_type,
+    }
+
+
+# ---------------------------------------------------------------------------
 # GET /api/actos — List (paginated, filtered)
 # ---------------------------------------------------------------------------
 

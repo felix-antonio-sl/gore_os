@@ -16,10 +16,12 @@ from app.schemas.convenio import (
     ConvenioDetail,
     ConvenioCreate,
     ConvenioUpdate,
+    ConvenioResumen,
     InstallmentItem,
     InstallmentCreate,
     InstallmentUpdate,
     BulkCuotaRequest,
+    RenditionSummaryItem,
 )
 
 router = APIRouter(prefix="/api/convenios", tags=["convenios"])
@@ -139,6 +141,28 @@ async def _get_installments(convenio_id: UUID, db: AsyncSession) -> list[dict]:
         {"aid": str(convenio_id)},
     )
     return [dict(r) for r in result.mappings().all()]
+
+
+async def _get_renditions(convenio_id: UUID, db: AsyncSession) -> list[dict]:
+    """Fetch renditions linked to this agreement for financial chain view."""
+    result = await db.execute(
+        text("""
+            SELECT
+                r.id,
+                LEFT(r.id::text, 8) AS short_id,
+                r.amount,
+                st.code   AS state,
+                st.label  AS state_label,
+                COALESCE(r.phase_entered_at, r.updated_at) AS phase_entered_at,
+                r.created_at
+            FROM core.rendition r
+            JOIN ref.category st ON st.id = r.state_id
+            WHERE r.agreement_id = :aid AND r.deleted_at IS NULL
+            ORDER BY r.created_at ASC
+        """),
+        {"aid": str(convenio_id)},
+    )
+    return [dict(row) for row in result.mappings().all()]
 
 
 async def _check_pending_renditions(agreement_id: UUID, db: AsyncSession) -> None:
@@ -339,6 +363,157 @@ async def list_convenios(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/convenios/resumen — Aggregate statistics
+# ---------------------------------------------------------------------------
+
+@router.get("/resumen", response_model=ConvenioResumen)
+async def get_convenios_resumen(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Aggregate convenio statistics for KPI strip."""
+    result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (
+                    WHERE st.code = 'VIGENTE' AND a.valid_to IS NOT NULL
+                    AND a.valid_to <= NOW() + INTERVAL '30 days'
+                    AND a.valid_to > NOW()
+                ) AS expiring_30d,
+                COUNT(*) FILTER (
+                    WHERE st.code = 'VIGENTE' AND a.valid_to IS NOT NULL
+                    AND a.valid_to <= NOW() + INTERVAL '90 days'
+                    AND a.valid_to > NOW()
+                ) AS expiring_90d,
+                SUM(a.total_amount) AS total_amount,
+                COUNT(*) FILTER (WHERE a.cgr_outcome_id IS NOT NULL) AS with_cgr,
+                COUNT(*) FILTER (WHERE a.ipr_id IS NULL) AS without_ipr
+            FROM core.agreement a
+            JOIN ref.category st ON st.id = a.state_id
+            WHERE a.deleted_at IS NULL
+        """)
+    )
+    row = result.mappings().first()
+
+    # Breakdown by state
+    state_result = await db.execute(
+        text("""
+            SELECT st.code, st.label, COUNT(*) AS count
+            FROM core.agreement a
+            JOIN ref.category st ON st.id = a.state_id
+            WHERE a.deleted_at IS NULL
+            GROUP BY st.code, st.label
+            ORDER BY count DESC
+        """)
+    )
+    by_state = [dict(r) for r in state_result.mappings().all()]
+
+    return ConvenioResumen(
+        total=row["total"],
+        by_state=by_state,
+        expiring_30d=row["expiring_30d"],
+        expiring_90d=row["expiring_90d"],
+        total_amount=row["total_amount"],
+        with_cgr=row["with_cgr"],
+        without_ipr=row["without_ipr"],
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/convenios/check-payment-slas — Batch check first-payment SLA
+# ---------------------------------------------------------------------------
+
+@router.post("/check-payment-slas")
+async def check_payment_slas(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Detect VIGENTE convenios without any paid installment exceeding SLA."""
+    from app.core.security import OPERATIONAL_ROLES
+    from datetime import datetime, timezone
+
+    if user["role_code"] not in ("ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION"):
+        raise HTTPException(status_code=403, detail="Rol no autorizado")
+
+    default_sla = 90  # 90 days from VIGENTE without first payment
+
+    convenios = (await db.execute(
+        text("""
+            SELECT a.id, a.agreement_number, a.valid_from,
+                   st.code AS state_code
+            FROM core.agreement a
+            JOIN ref.category st ON st.id = a.state_id
+            WHERE a.deleted_at IS NULL
+              AND st.code = 'VIGENTE'
+              AND a.valid_from IS NOT NULL
+              AND NOT EXISTS (
+                  SELECT 1 FROM core.agreement_installment ai
+                  JOIN ref.category ps ON ps.id = ai.payment_status_id
+                  WHERE ai.agreement_id = a.id AND ps.code = 'PAGADO'
+              )
+        """),
+    )).mappings().all()
+
+    now = datetime.now(timezone.utc)
+    alert_severity_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = 'ATENCION'"),
+    )).scalar()
+    alert_type_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_type' AND code = 'PLAZO_LEGAL'"),
+    )).scalar()
+    created = 0
+
+    for conv in convenios:
+        valid_from = conv["valid_from"]
+        if hasattr(valid_from, 'tzinfo') and valid_from.tzinfo is None:
+            valid_from = valid_from.replace(tzinfo=timezone.utc)
+        elif not hasattr(valid_from, 'tzinfo'):
+            # date object, convert to datetime
+            valid_from = datetime(valid_from.year, valid_from.month, valid_from.day, tzinfo=timezone.utc)
+        days_since = (now - valid_from).days
+        if days_since <= default_sla:
+            continue
+
+        existing = (await db.execute(
+            text("""
+                SELECT id FROM core.alert
+                WHERE subject_type = 'core.agreement' AND subject_id = CAST(:aid AS uuid)
+                  AND message LIKE '%sin pago de cuota%'
+                  AND created_at::date = CURRENT_DATE
+            """),
+            {"aid": str(conv["id"])},
+        )).first()
+        if existing:
+            continue
+
+        agr_num = conv["agreement_number"] or str(conv["id"])[:8]
+        await db.execute(
+            text("""
+                INSERT INTO core.alert (
+                    alert_type_id, subject_type, subject_id, severity_id,
+                    message, created_by_id, created_at, updated_at
+                ) VALUES (
+                    CAST(:alert_type AS uuid),
+                    'core.agreement', CAST(:aid AS uuid), CAST(:sev AS uuid),
+                    :msg, CAST(:uid AS uuid), NOW(), NOW()
+                )
+            """),
+            {
+                "alert_type": str(alert_type_id),
+                "aid": str(conv["id"]),
+                "sev": str(alert_severity_id),
+                "msg": f"Convenio {agr_num} vigente sin pago de cuota hace {days_since} días (SLA: {default_sla}d)",
+                "uid": str(user["id"]),
+            },
+        )
+        created += 1
+
+    await db.commit()
+    return {"checked": len(convenios), "alerts_created": created}
+
+
+# ---------------------------------------------------------------------------
 # GET /api/convenios/{id} — Detail with installments
 # ---------------------------------------------------------------------------
 
@@ -351,6 +526,7 @@ async def get_convenio(
     row = await _get_convenio_or_404(convenio_id, db)
     installments_raw = await _get_installments(convenio_id, db)
     history_raw = await _get_agreement_history(convenio_id, db)
+    renditions_raw = await _get_renditions(convenio_id, db)
 
     # Installment counts for list fields
     installments = [InstallmentItem(**r) for r in installments_raw]
@@ -363,6 +539,7 @@ async def get_convenio(
         paid_installments=paid_installments,
         installments=installments,
         history=history_raw,
+        renditions=[RenditionSummaryItem(**r) for r in renditions_raw],
     )
 
 

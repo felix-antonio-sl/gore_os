@@ -299,3 +299,106 @@ async def test_add_cuota_allowed_when_renditions_approved(client, regional_token
         headers=auth(regional_token),
     )
     assert resp.status_code == 201
+
+
+# ---------------------------------------------------------------------------
+# Resumen endpoint
+# ---------------------------------------------------------------------------
+
+
+async def test_convenios_resumen(client, regional_token, catalog):
+    """GET /api/convenios/resumen returns aggregate stats."""
+    # Ensure at least one agreement exists
+    await _create_agreement(client, regional_token, catalog)
+    resp = await client.get("/api/convenios/resumen", headers=auth(regional_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["total"] >= 1
+    assert "by_state" in body
+    assert isinstance(body["by_state"], list)
+    assert "expiring_30d" in body
+    assert "expiring_90d" in body
+    assert "without_ipr" in body
+
+
+async def test_convenios_resumen_expiring(client, regional_token, catalog):
+    """Resumen counts expiring-in-30d agreements correctly."""
+    # Create one VIGENTE agreement expiring in 15 days
+    await _create_agreement(
+        client, regional_token, catalog,
+        state_id=catalog["agreement_state_vigente_id"],
+        valid_to=str(date.today() + timedelta(days=15)),
+    )
+    resp = await client.get("/api/convenios/resumen", headers=auth(regional_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["expiring_30d"] >= 1
+    assert body["expiring_90d"] >= 1
+
+
+# ---------------------------------------------------------------------------
+# Detail includes renditions
+# ---------------------------------------------------------------------------
+
+
+async def test_detail_includes_renditions(client, regional_token, catalog, db):
+    """GET /api/convenios/{id} includes renditions array."""
+    ipr_id = await _create_test_ipr(db)
+    data = await _create_agreement(client, regional_token, catalog, ipr_id=ipr_id)
+    agreement_id = data["id"]
+
+    # Insert a rendition
+    pending_state = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' AND code = 'INGRESADA'")
+    )).scalar()
+    if not pending_state:
+        pending_state = (await db.execute(
+            text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' LIMIT 1")
+        )).scalar()
+    renderer_id = (await db.execute(
+        text("SELECT id FROM core.organization WHERE deleted_at IS NULL LIMIT 1")
+    )).scalar()
+
+    await db.execute(
+        text("""
+            INSERT INTO core.rendition (agreement_id, renderer_id, ipr_id, state_id, amount, created_at, updated_at)
+            VALUES (:agreement_id, :renderer_id, :ipr_id, :state_id, 3000000, NOW(), NOW())
+        """),
+        {"agreement_id": agreement_id, "renderer_id": str(renderer_id), "ipr_id": ipr_id, "state_id": str(pending_state)},
+    )
+    await db.commit()
+
+    resp = await client.get(f"/api/convenios/{agreement_id}", headers=auth(regional_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "renditions" in body
+    assert len(body["renditions"]) >= 1
+    rend = body["renditions"][0]
+    assert "short_id" in rend
+    assert "state" in rend
+    assert "state_label" in rend
+    assert float(rend["amount"]) == 3000000
+
+
+async def test_detail_no_renditions_empty_array(client, regional_token, catalog):
+    """Detail with no renditions returns empty array."""
+    data = await _create_agreement(client, regional_token, catalog)
+    resp = await client.get(f"/api/convenios/{data['id']}", headers=auth(regional_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["renditions"] == []
+
+
+# ---------------------------------------------------------------------------
+# Payment SLA check
+# ---------------------------------------------------------------------------
+
+
+async def test_check_payment_slas(client, admin_token):
+    """POST /api/convenios/check-payment-slas returns checked + alerts_created."""
+    resp = await client.post("/api/convenios/check-payment-slas", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "checked" in body
+    assert "alerts_created" in body
+    assert body["checked"] >= 0

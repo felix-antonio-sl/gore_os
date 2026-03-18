@@ -603,6 +603,61 @@ async def get_evaluator_routing(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/admin/financing-tracks/{code}/iprs — IPRs in a track
+# ---------------------------------------------------------------------------
+
+@router.get("/financing-tracks/{track_code}/iprs")
+async def list_track_iprs(
+    track_code: str,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+):
+    """List IPRs belonging to a specific financing track (by mechanism code)."""
+    _require_admin(user)
+
+    params: dict = {"track_code": track_code}
+    base_query = """
+        FROM core.ipr i
+        JOIN ref.category mech ON mech.id = i.mechanism_id AND mech.scheme = 'mechanism' AND mech.code = :track_code
+        LEFT JOIN ref.category st ON st.id = i.status_id
+        LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+        LEFT JOIN core.organization exc ON exc.id = i.executor_id
+        WHERE i.deleted_at IS NULL
+    """
+
+    count_result = await db.execute(text(f"SELECT COUNT(*) AS total {base_query}"), params)
+    total = count_result.scalar() or 0
+
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows_result = await db.execute(
+        text(f"""
+            SELECT i.id, i.codigo_bip, i.name,
+                   st.code AS status, st.label AS status_label,
+                   mcd.code AS mcd_phase,
+                   exc.name AS executor_name
+            {base_query}
+            ORDER BY i.codigo_bip ASC
+            LIMIT :limit OFFSET :offset
+        """),
+        params,
+    )
+    items = [dict(r) for r in rows_result.mappings().all()]
+
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }
+
+
+# ---------------------------------------------------------------------------
 # PATCH /api/admin/financing-tracks/{id} — Update a financing track
 # ---------------------------------------------------------------------------
 
@@ -1501,3 +1556,445 @@ async def update_admissibility_item(
     )).mappings().first()
     await db.commit()
     return dict(row)
+
+
+# ===========================================================================
+# DATA QUALITY — Completeness metrics
+# ===========================================================================
+
+
+@router.get("/data-quality")
+async def get_data_quality(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Return data completeness metrics across key entities."""
+    _require_admin(user)
+
+    # Person metrics
+    person_result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE email IS NOT NULL AND email != '') AS with_email,
+                COUNT(*) FILTER (WHERE rut IS NOT NULL AND rut != '') AS with_rut,
+                COUNT(*) FILTER (WHERE phone IS NOT NULL AND phone != '') AS with_phone
+            FROM core.person
+        """)
+    )
+    person = dict(person_result.mappings().first())
+
+    # IPR metrics
+    ipr_result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE i.executor_id IS NOT NULL) AS with_executor,
+                COUNT(*) FILTER (WHERE i.mechanism_id IS NOT NULL) AS with_mechanism,
+                COUNT(*) FILTER (WHERE i.ipr_nature IS NOT NULL) AS with_nature,
+                COUNT(*) FILTER (WHERE EXISTS (
+                    SELECT 1 FROM core.ipr_party ip WHERE ip.ipr_id = i.id
+                )) AS with_parties,
+                COUNT(*) FILTER (WHERE EXISTS (
+                    SELECT 1 FROM core.ipr_territory it WHERE it.ipr_id = i.id
+                )) AS with_territory
+            FROM core.ipr i
+            WHERE i.deleted_at IS NULL
+        """)
+    )
+    ipr = dict(ipr_result.mappings().first())
+
+    # Agreement metrics
+    agreement_result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE a.cgr_outcome_id IS NOT NULL) AS with_cgr,
+                COUNT(*) FILTER (WHERE a.ipr_id IS NOT NULL) AS with_ipr,
+                COUNT(*) FILTER (WHERE a.technical_referent_id IS NOT NULL) AS with_referent
+            FROM core.agreement a
+            WHERE a.deleted_at IS NULL
+        """)
+    )
+    agreement = dict(agreement_result.mappings().first())
+
+    # Document metrics
+    document_result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE d.document_type_id IS NOT NULL) AS with_type,
+                COUNT(*) FILTER (WHERE d.storage_url IS NOT NULL AND d.storage_url != '') AS with_url
+            FROM core.document d
+        """)
+    )
+    document = dict(document_result.mappings().first())
+
+    # Organization metrics
+    org_result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE o.org_type_id IS NOT NULL) AS with_type,
+                COUNT(*) FILTER (WHERE o.parent_id IS NOT NULL) AS with_parent
+            FROM core.organization o
+            WHERE o.deleted_at IS NULL
+        """)
+    )
+    org = dict(org_result.mappings().first())
+
+    def pct(num: int, den: int) -> float:
+        return round(num * 100.0 / den, 1) if den > 0 else 0.0
+
+    return {
+        "persons": {
+            **person,
+            "pct_email": pct(person["with_email"], person["total"]),
+            "pct_rut": pct(person["with_rut"], person["total"]),
+            "pct_phone": pct(person["with_phone"], person["total"]),
+        },
+        "iprs": {
+            **ipr,
+            "pct_executor": pct(ipr["with_executor"], ipr["total"]),
+            "pct_mechanism": pct(ipr["with_mechanism"], ipr["total"]),
+            "pct_nature": pct(ipr["with_nature"], ipr["total"]),
+            "pct_parties": pct(ipr["with_parties"], ipr["total"]),
+            "pct_territory": pct(ipr["with_territory"], ipr["total"]),
+        },
+        "agreements": {
+            **agreement,
+            "pct_cgr": pct(agreement["with_cgr"], agreement["total"]),
+            "pct_ipr": pct(agreement["with_ipr"], agreement["total"]),
+            "pct_referent": pct(agreement["with_referent"], agreement["total"]),
+        },
+        "documents": {
+            **document,
+            "pct_type": pct(document["with_type"], document["total"]),
+            "pct_url": pct(document["with_url"], document["total"]),
+        },
+        "organizations": {
+            **org,
+            "pct_type": pct(org["with_type"], org["total"]),
+            "pct_parent": pct(org["with_parent"], org["total"]),
+        },
+    }
+
+
+# ===========================================================================
+# SLA DASHBOARD — Consolidated view of all 12 SLA sources
+# ===========================================================================
+
+
+@router.get("/slas/dashboard")
+async def get_sla_dashboard(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Aggregate all SLA states into a single response with semáforo."""
+    _require_admin(user)
+
+    slas = []
+
+    # 1. SISREC: RTF 7d
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total,
+               COUNT(*) FILTER (WHERE EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 > 7) AS breached
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id AND st.code = 'EN_REVISION_RTF'
+        WHERE r.deleted_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "SISREC: Revisión RTF", "sla_days": 7, "active": r["total"], "breached": r["breached"]})
+
+    # 2. SISREC: VISADA_RTF 1d
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total,
+               COUNT(*) FILTER (WHERE EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 > 1) AS breached
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id AND st.code = 'VISADA_RTF'
+        WHERE r.deleted_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "SISREC: Traspaso DAF", "sla_days": 1, "active": r["total"], "breached": r["breached"]})
+
+    # 3. SISREC: UCR 2d
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total,
+               COUNT(*) FILTER (WHERE EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 > 2) AS breached
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id AND st.code = 'EN_REVISION_UCR'
+        WHERE r.deleted_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "SISREC: Revisión UCR", "sla_days": 2, "active": r["total"], "breached": r["breached"]})
+
+    # 4. SISREC: OBSERVADA 15d
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total,
+               COUNT(*) FILTER (WHERE EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 > 15) AS breached
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id AND st.code = 'OBSERVADA'
+        WHERE r.deleted_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "SISREC: Observada", "sla_days": 15, "active": r["total"], "breached": r["breached"]})
+
+    # 5. IPR stale (>7d sin transición)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total,
+               COUNT(*) FILTER (WHERE EXTRACT(EPOCH FROM (NOW() - COALESCE(i.phase_entered_at, i.updated_at))) / 86400.0 > 7) AS breached
+        FROM core.ipr i
+        JOIN ref.category s ON s.id = i.status_id
+        WHERE i.deleted_at IS NULL AND s.code NOT IN ('CERRADO', 'ANULADO', 'TERMINADO_ANTICIPADAMENTE')
+          AND i.phase_entered_at IS NOT NULL
+    """))).mappings().first()
+    slas.append({"name": "IPR: Sin movimiento >7d", "sla_days": 7, "active": r["total"], "breached": r["breached"]})
+
+    # 6. Report compliance (periodic reports)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.alert a
+        WHERE a.subject_type = 'core.ipr' AND a.message LIKE '%informe de avance vencido%'
+          AND a.deleted_at IS NULL AND a.resolved_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "IPR: Informe periódico", "sla_days": None, "active": None, "breached": r["total"]})
+
+    # 7. Evaluation SLA
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.alert a
+        WHERE a.subject_type = 'core.ipr' AND a.message LIKE '%evaluación excede%'
+          AND a.deleted_at IS NULL AND a.resolved_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "IPR: Evaluación", "sla_days": None, "active": None, "breached": r["total"]})
+
+    # 8. Pending signatures (actos VISADO)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.administrative_act a
+        JOIN ref.category st ON st.id = a.state_id AND st.code = 'VISADO'
+        WHERE a.deleted_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "Actos: Pendientes firma", "sla_days": None, "active": r["total"], "breached": 0})
+
+    # 9. Pending renditions (JEFE_DEPARTAMENTO)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id
+        WHERE r.deleted_at IS NULL AND st.code NOT IN ('APROBADA', 'RECHAZADA')
+    """))).mappings().first()
+    slas.append({"name": "Rendiciones: Activas", "sla_days": None, "active": r["total"], "breached": 0})
+
+    # 10. Admissibility SLA (NEW)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.alert a
+        WHERE a.subject_type = 'core.ipr' AND a.message LIKE '%admisibilidad excede%'
+          AND a.deleted_at IS NULL AND a.resolved_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "IPR: Admisibilidad", "sla_days": 30, "active": None, "breached": r["total"]})
+
+    # 11. Convenio payment SLA (NEW)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.alert a
+        WHERE a.subject_type = 'core.agreement' AND a.message LIKE '%sin pago de cuota%'
+          AND a.deleted_at IS NULL AND a.resolved_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "Convenio: Primer pago", "sla_days": 90, "active": None, "breached": r["total"]})
+
+    # 12. Track-phase SLA (NEW)
+    r = (await db.execute(text("""
+        SELECT COUNT(*) AS total
+        FROM core.alert a
+        WHERE a.subject_type = 'core.ipr' AND a.message LIKE '%fase excede plazo%'
+          AND a.deleted_at IS NULL AND a.resolved_at IS NULL
+    """))).mappings().first()
+    slas.append({"name": "IPR: Fase por track", "sla_days": None, "active": None, "breached": r["total"]})
+
+    # Compute semáforo
+    for sla in slas:
+        b = sla["breached"] or 0
+        a = sla["active"]
+        if a is not None and a > 0:
+            pct = (a - b) * 100.0 / a
+            sla["compliance_pct"] = round(pct, 1)
+            sla["signal"] = "VERDE" if pct >= 90 else "AMARILLO" if pct >= 70 else "ROJO"
+        elif b > 0:
+            sla["compliance_pct"] = 0.0
+            sla["signal"] = "ROJO"
+        else:
+            sla["compliance_pct"] = 100.0
+            sla["signal"] = "VERDE"
+
+    total_monitored = len(slas)
+    total_green = sum(1 for s in slas if s["signal"] == "VERDE")
+    total_red = sum(1 for s in slas if s["signal"] == "ROJO")
+
+    return {
+        "total_monitored": total_monitored,
+        "total_green": total_green,
+        "total_red": total_red,
+        "slas": slas,
+    }
+
+
+# ===========================================================================
+# AUDIT TRAIL — txn.event viewer
+# ===========================================================================
+
+
+@router.get("/audit")
+async def list_audit_events(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    event_type: str | None = None,
+    subject_type: str | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    search: str | None = None,
+):
+    """Paginated audit trail from txn.event. ADMIN_SISTEMA only."""
+    _require_admin(user)
+
+    conditions = ["1=1"]
+    params: dict = {}
+
+    if event_type:
+        conditions.append("et.code = :event_type")
+        params["event_type"] = event_type
+    if subject_type:
+        conditions.append("e.subject_type = :subject_type")
+        params["subject_type"] = subject_type
+    if date_from:
+        conditions.append("e.occurred_at >= :date_from::timestamptz")
+        params["date_from"] = date_from
+    if date_to:
+        conditions.append("e.occurred_at < (:date_to::date + 1)::timestamptz")
+        params["date_to"] = date_to
+    if search:
+        conditions.append(
+            "(e.data::text ILIKE :search OR e.subject_id::text ILIKE :search)"
+        )
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM txn.event e
+        JOIN ref.category et ON et.id = e.event_type_id
+        LEFT JOIN core."user" u ON u.id = e.actor_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE {where_clause}
+    """
+
+    count_result = await db.execute(
+        text(f"SELECT COUNT(*) AS total {base_query}"), params
+    )
+    total = count_result.scalar() or 0
+
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows_result = await db.execute(
+        text(f"""
+            SELECT
+                e.id::text AS id,
+                e.occurred_at,
+                et.code AS event_type,
+                et.label AS event_type_label,
+                e.subject_type,
+                e.subject_id::text AS subject_id,
+                COALESCE(p.names || ' ' || p.paternal_surname, 'Sistema') AS actor_name,
+                e.data
+            {base_query}
+            ORDER BY e.occurred_at DESC
+            LIMIT :limit OFFSET :offset
+        """),
+        params,
+    )
+    items = [dict(r) for r in rows_result.mappings().all()]
+
+    # Get distinct event types for filter dropdown
+    event_types = (await db.execute(
+        text("""
+            SELECT DISTINCT et.code, et.label
+            FROM txn.event e
+            JOIN ref.category et ON et.id = e.event_type_id
+            ORDER BY et.code
+        """)
+    )).mappings().all()
+
+    # Get distinct subject types for filter dropdown
+    subject_types = (await db.execute(
+        text("SELECT DISTINCT subject_type FROM txn.event ORDER BY subject_type")
+    )).mappings().all()
+
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+        "filters": {
+            "event_types": [dict(r) for r in event_types],
+            "subject_types": [r["subject_type"] for r in subject_types],
+        },
+    }
+
+
+# ===========================================================================
+# DOCUMENT QUALITY — core.document statistics
+# ===========================================================================
+
+
+@router.get("/data-quality/documents")
+async def get_document_quality(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Document completeness statistics for TDE foundation."""
+    _require_admin(user)
+
+    result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE d.document_type_id IS NOT NULL) AS with_type,
+                COUNT(*) FILTER (WHERE d.storage_url IS NOT NULL AND d.storage_url != '') AS with_url,
+                COUNT(*) FILTER (WHERE d.ipr_id IS NOT NULL) AS with_ipr,
+                COUNT(*) FILTER (WHERE d.agreement_id IS NOT NULL) AS with_agreement,
+                COUNT(*) FILTER (WHERE d.folio_number IS NOT NULL) AS with_folio,
+                COUNT(*) FILTER (WHERE d.metadata != '{}' AND d.metadata IS NOT NULL) AS with_metadata
+            FROM core.document d
+            WHERE d.deleted_at IS NULL
+        """)
+    )
+    doc = dict(result.mappings().first())
+
+    # Breakdown by type
+    type_result = await db.execute(
+        text("""
+            SELECT COALESCE(dt.label, 'Sin tipo') AS type_label, COUNT(*) AS count
+            FROM core.document d
+            LEFT JOIN ref.category dt ON dt.id = d.document_type_id
+            WHERE d.deleted_at IS NULL
+            GROUP BY dt.label
+            ORDER BY count DESC
+        """)
+    )
+    by_type = [dict(r) for r in type_result.mappings().all()]
+
+    def pct(num: int, den: int) -> float:
+        return round(num * 100.0 / den, 1) if den > 0 else 0.0
+
+    return {
+        **doc,
+        "pct_type": pct(doc["with_type"], doc["total"]),
+        "pct_url": pct(doc["with_url"], doc["total"]),
+        "pct_ipr": pct(doc["with_ipr"], doc["total"]),
+        "pct_agreement": pct(doc["with_agreement"], doc["total"]),
+        "pct_folio": pct(doc["with_folio"], doc["total"]),
+        "pct_metadata": pct(doc["with_metadata"], doc["total"]),
+        "by_type": by_type,
+    }

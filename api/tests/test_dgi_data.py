@@ -949,3 +949,22 @@ async def test_operational_cannot_transition_lifecycle(client: AsyncClient, dgi_
         headers=auth(analista_token),
     )
     assert resp.status_code == 403
+
+
+# ---------------------------------------------------------------------------
+# Rendiciones resumen
+# ---------------------------------------------------------------------------
+
+
+async def test_rendiciones_resumen(client, dgi_token):
+    """GET /api/dgi/data/rendiciones/resumen returns aggregate stats."""
+    resp = await client.get("/api/dgi/data/rendiciones/resumen", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "total" in body
+    assert "active" in body
+    assert "sla_compliance_pct" in body
+    assert "by_state" in body
+    assert isinstance(body["by_state"], list)
+    # SLA compliance should be 0-100
+    assert 0 <= body["sla_compliance_pct"] <= 100

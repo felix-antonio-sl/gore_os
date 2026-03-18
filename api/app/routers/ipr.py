@@ -2440,6 +2440,55 @@ async def get_cartera_por_division(
     return results
 
 
+# ---------------------------------------------------------------------------
+# GET /api/ipr/track-summary — Aggregate IPR statistics by financing track
+# ---------------------------------------------------------------------------
+
+@router.get("/track-summary")
+async def get_track_summary(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Aggregate IPR statistics grouped by financing track (mechanism)."""
+    result = await db.execute(
+        text("""
+            SELECT
+                ft.code AS track_code,
+                ft.label AS track_label,
+                COUNT(i.id) AS total_iprs,
+                COUNT(i.id) FILTER (WHERE mcd.code = 'F0') AS f0,
+                COUNT(i.id) FILTER (WHERE mcd.code = 'F1') AS f1,
+                COUNT(i.id) FILTER (WHERE mcd.code = 'F2') AS f2,
+                COUNT(i.id) FILTER (WHERE mcd.code = 'F3') AS f3,
+                COUNT(i.id) FILTER (WHERE mcd.code = 'F4') AS f4,
+                COUNT(i.id) FILTER (WHERE mcd.code = 'F5') AS f5,
+                COUNT(i.id) FILTER (WHERE al.code IN ('CRITICO', 'ALTO')) AS critical_alerts
+            FROM core.financing_track ft
+            LEFT JOIN ref.category mech ON mech.scheme = 'mechanism' AND mech.code = ft.code
+            LEFT JOIN core.ipr i ON i.mechanism_id = mech.id AND i.deleted_at IS NULL
+            LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+            LEFT JOIN ref.category al ON al.id = i.alert_level_id
+            WHERE ft.is_active = TRUE
+            GROUP BY ft.code, ft.label
+            ORDER BY total_iprs DESC
+        """)
+    )
+    rows = result.mappings().all()
+    return [
+        {
+            "track_code": r["track_code"],
+            "track_label": r["track_label"],
+            "total_iprs": r["total_iprs"],
+            "by_phase": {
+                "F0": r["f0"], "F1": r["f1"], "F2": r["f2"],
+                "F3": r["f3"], "F4": r["f4"], "F5": r["f5"],
+            },
+            "critical_alerts": r["critical_alerts"],
+        }
+        for r in rows
+    ]
+
+
 @router.get("/{ipr_id}/track-info", response_model=TrackInfo)
 async def get_track_info(
     ipr_id: UUID,
@@ -5264,6 +5313,188 @@ async def check_evaluation_slas(
                 "ipr_id": str(ipr["id"]),
                 "sev": str(alert_severity_id),
                 "msg": f"Evaluación excede plazo SLA para {ipr['codigo_bip']} ({ipr['track_label']}): {days_in} días (máx {max_days}d)",
+                "uid": str(user["id"]),
+            },
+        )
+        created += 1
+
+    await db.commit()
+    return {"checked": len(iprs), "alerts_created": created}
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/check-admissibility-slas — Batch check admissibility timing
+# ---------------------------------------------------------------------------
+
+@router.post("/check-admissibility-slas")
+async def check_admissibility_slas(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Detect IPRs stuck in PRE_ADMISIBLE exceeding the admissibility SLA."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    iprs = (await db.execute(
+        text("""
+            SELECT i.id, i.codigo_bip, i.name, i.phase_entered_at,
+                   ft.sla_days, ft.label AS track_label
+            FROM core.ipr i
+            JOIN ref.category s ON s.id = i.status_id
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.deleted_at IS NULL
+              AND s.code = 'PRE_ADMISIBLE'
+              AND i.phase_entered_at IS NOT NULL
+        """),
+    )).mappings().all()
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    default_sla = 30
+
+    alert_severity_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = 'ATENCION'"),
+    )).scalar()
+    alert_type_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_type' AND code = 'PLAZO_LEGAL'"),
+    )).scalar()
+    created = 0
+
+    for ipr in iprs:
+        sla = ipr["sla_days"] or {}
+        max_days = sla.get("admisibilidad", default_sla)
+
+        entered = ipr["phase_entered_at"]
+        if entered.tzinfo is None:
+            entered = entered.replace(tzinfo=timezone.utc)
+        days_in = (now - entered).days
+        if days_in <= max_days:
+            continue
+
+        existing = (await db.execute(
+            text("""
+                SELECT id FROM core.alert
+                WHERE subject_type = 'core.ipr' AND subject_id = CAST(:ipr_id AS uuid)
+                  AND message LIKE '%admisibilidad excede%'
+                  AND created_at::date = CURRENT_DATE
+            """),
+            {"ipr_id": str(ipr["id"])},
+        )).first()
+        if existing:
+            continue
+
+        track_label = ipr["track_label"] or "sin track"
+        await db.execute(
+            text("""
+                INSERT INTO core.alert (
+                    alert_type_id, subject_type, subject_id, severity_id,
+                    message, created_by_id, created_at, updated_at
+                ) VALUES (
+                    CAST(:alert_type AS uuid),
+                    'core.ipr', CAST(:ipr_id AS uuid), CAST(:sev AS uuid),
+                    :msg, CAST(:uid AS uuid), NOW(), NOW()
+                )
+            """),
+            {
+                "alert_type": str(alert_type_id),
+                "ipr_id": str(ipr["id"]),
+                "sev": str(alert_severity_id),
+                "msg": f"Admisibilidad excede plazo SLA para {ipr['codigo_bip']} ({track_label}): {days_in} días (máx {max_days}d)",
+                "uid": str(user["id"]),
+            },
+        )
+        created += 1
+
+    await db.commit()
+    return {"checked": len(iprs), "alerts_created": created}
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/check-track-phase-slas — Batch check phase timing per track
+# ---------------------------------------------------------------------------
+
+@router.post("/check-track-phase-slas")
+async def check_track_phase_slas(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Compare phase_entered_at vs financing_track.sla_days per phase."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    iprs = (await db.execute(
+        text("""
+            SELECT i.id, i.codigo_bip, i.name, i.phase_entered_at,
+                   s.code AS status_code, mcd.code AS mcd_phase,
+                   ft.sla_days, ft.label AS track_label
+            FROM core.ipr i
+            JOIN ref.category s ON s.id = i.status_id
+            LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN core.financing_track ft ON ft.code = m.code AND ft.is_active = TRUE
+            WHERE i.deleted_at IS NULL
+              AND i.phase_entered_at IS NOT NULL
+              AND ft.sla_days IS NOT NULL
+              AND s.code NOT IN ('CERRADO', 'ANULADO', 'TERMINADO_ANTICIPADAMENTE')
+        """),
+    )).mappings().all()
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+
+    alert_severity_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = 'ATENCION'"),
+    )).scalar()
+    alert_type_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_type' AND code = 'PLAZO_LEGAL'"),
+    )).scalar()
+    created = 0
+
+    for ipr in iprs:
+        sla = ipr["sla_days"] or {}
+        phase = ipr["mcd_phase"] or ""
+        phase_key = f"{phase}_max_days"
+        max_days = sla.get(phase_key)
+        if not max_days:
+            max_days = sla.get(f"{ipr['status_code']}_max_days")
+        if not max_days:
+            continue
+
+        entered = ipr["phase_entered_at"]
+        if entered.tzinfo is None:
+            entered = entered.replace(tzinfo=timezone.utc)
+        days_in = (now - entered).days
+        if days_in <= max_days:
+            continue
+
+        existing = (await db.execute(
+            text("""
+                SELECT id FROM core.alert
+                WHERE subject_type = 'core.ipr' AND subject_id = CAST(:ipr_id AS uuid)
+                  AND message LIKE '%fase excede plazo%'
+                  AND created_at::date = CURRENT_DATE
+            """),
+            {"ipr_id": str(ipr["id"])},
+        )).first()
+        if existing:
+            continue
+
+        track_label = ipr["track_label"] or "sin track"
+        await db.execute(
+            text("""
+                INSERT INTO core.alert (
+                    alert_type_id, subject_type, subject_id, severity_id,
+                    message, created_by_id, created_at, updated_at
+                ) VALUES (
+                    CAST(:alert_type AS uuid),
+                    'core.ipr', CAST(:ipr_id AS uuid), CAST(:sev AS uuid),
+                    :msg, CAST(:uid AS uuid), NOW(), NOW()
+                )
+            """),
+            {
+                "alert_type": str(alert_type_id),
+                "ipr_id": str(ipr["id"]),
+                "sev": str(alert_severity_id),
+                "msg": f"Fase {phase} excede plazo SLA para {ipr['codigo_bip']} ({track_label}): {days_in} días (máx {max_days}d)",
                 "uid": str(user["id"]),
             },
         )

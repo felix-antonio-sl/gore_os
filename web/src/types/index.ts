@@ -282,6 +282,16 @@ export interface ConvenioListItem {
   paid_installments: number;
 }
 
+export interface RenditionSummaryItem {
+  id: string;
+  short_id: string;
+  amount: number | null;
+  state: string;
+  state_label: string;
+  phase_entered_at: string | null;
+  created_at: string;
+}
+
 export interface ConvenioDetail extends ConvenioListItem {
   technical_referent_name: string | null;
   cgr_outcome: string | null;
@@ -291,6 +301,25 @@ export interface ConvenioDetail extends ConvenioListItem {
   history?: { id: string; previous_state: string | null; new_state: string; changed_by_name: string | null; comment: string | null; changed_at: string }[];
   pending_renditions?: number;
   blocked_renditions?: number;
+  renditions?: RenditionSummaryItem[];
+}
+
+export interface ConvenioResumen {
+  total: number;
+  by_state: { code: string; label: string; count: number }[];
+  expiring_30d: number;
+  expiring_90d: number;
+  total_amount: number | null;
+  with_cgr: number;
+  without_ipr: number;
+}
+
+export interface DataQualityMetrics {
+  persons: { total: number; with_email: number; pct_email: number; with_rut: number; pct_rut: number; with_phone: number; pct_phone: number };
+  iprs: { total: number; with_executor: number; pct_executor: number; with_mechanism: number; pct_mechanism: number; with_nature: number; pct_nature: number; with_parties: number; pct_parties: number; with_territory: number; pct_territory: number };
+  agreements: { total: number; with_cgr: number; pct_cgr: number; with_ipr: number; pct_ipr: number; with_referent: number; pct_referent: number };
+  documents: { total: number; with_type: number; pct_type: number; with_url: number; pct_url: number };
+  organizations: { total: number; with_type: number; pct_type: number; with_parent: number; pct_parent: number };
 }
 
 // ---------------------------------------------------------------------------

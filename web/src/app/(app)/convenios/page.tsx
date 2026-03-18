@@ -35,7 +35,7 @@ import { cn } from "@/lib/utils";
 import { formatCLP, formatDate } from "@/lib/format";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { PageHeader } from "@/components/page-header";
-import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef, InstallmentItem } from "@/types";
+import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, ConvenioResumen, CategoryRef, InstallmentItem, RenditionSummaryItem } from "@/types";
 
 const CSV_COLUMNS = [
   { key: "agreement_number", label: "Número" },
@@ -77,6 +77,17 @@ const PAYMENT_STATUS_COLORS: Record<string, string> = {
   PENDIENTE: "text-amber-700 bg-amber-50 border-amber-200",
   DIFERIDO: "text-orange-700 bg-orange-50 border-orange-200",
   RECHAZADO: "text-red-700 bg-red-50 border-red-200",
+};
+
+const RENDITION_STATE_COLORS: Record<string, string> = {
+  INGRESADA: "text-blue-700 bg-blue-50 border-blue-200",
+  EN_REVISION_RTF: "text-purple-700 bg-purple-50 border-purple-200",
+  VISADA_RTF: "text-indigo-700 bg-indigo-50 border-indigo-200",
+  EN_REVISION_UCR: "text-cyan-700 bg-cyan-50 border-cyan-200",
+  OBSERVADA: "text-amber-700 bg-amber-50 border-amber-200",
+  APROBADA: "text-green-700 bg-green-50 border-green-200",
+  RECHAZADA: "text-red-700 bg-red-50 border-red-200",
+  EN_CORRECCION: "text-orange-700 bg-orange-50 border-orange-200",
 };
 
 export default function ConveniosPage() {
@@ -133,6 +144,7 @@ export default function ConveniosPage() {
   const didAutoScope = useRef(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [expiringItems, setExpiringItems] = useState<ConvenioListItem[]>([]);
+  const [resumen, setResumen] = useState<ConvenioResumen | null>(null);
 
   const page = Number(searchParams.get("page") ?? "1");
   const state = searchParams.get("state") ?? "";
@@ -189,7 +201,7 @@ export default function ConveniosPage() {
     }
   }, [isJuridico, searchParams, pathname, router]);
 
-  // Fetch expiring convenios
+  // Fetch expiring convenios + resumen
   useEffect(() => {
     api
       .get<PaginatedResponse<ConvenioListItem>>("/api/convenios?state=VIGENTE&page_size=50")
@@ -201,6 +213,10 @@ export default function ConveniosPage() {
         )
       )
       .catch(() => setExpiringItems([]));
+    api
+      .get<ConvenioResumen>("/api/convenios/resumen")
+      .then(setResumen)
+      .catch(() => setResumen(null));
   }, [refreshKey]);
 
   const openDetail = (row: unknown) => {
@@ -444,6 +460,32 @@ export default function ConveniosPage() {
           </>
         }
       />
+
+      {/* KPI Strip */}
+      {resumen && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Total convenios</p>
+            <p className="text-2xl font-semibold tabular-nums">{resumen.total}</p>
+          </div>
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Vencen en 30 días</p>
+            <p className={cn("text-2xl font-semibold tabular-nums", resumen.expiring_30d > 0 ? "text-red-600" : "")}>
+              {resumen.expiring_30d}
+            </p>
+          </div>
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Sin IPR vinculado</p>
+            <p className={cn("text-2xl font-semibold tabular-nums", resumen.without_ipr > 0 ? "text-amber-600" : "")}>
+              {resumen.without_ipr}
+            </p>
+          </div>
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Monto total</p>
+            <p className="text-lg font-semibold tabular-nums font-mono">{formatCLP(resumen.total_amount)}</p>
+          </div>
+        </div>
+      )}
 
       {/* Próximos a vencer */}
       {expiringItems.length > 0 && (
@@ -845,6 +887,55 @@ export default function ConveniosPage() {
                 </div>
               )}
             </div>
+
+            {/* Cadena Financiera: cuotas ↔ rendiciones */}
+            {detail.renditions && detail.renditions.length > 0 && (
+              <div className="space-y-2">
+                <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">
+                  Cadena Financiera
+                </p>
+                <div className="rounded-lg border overflow-hidden">
+                  <div className="grid grid-cols-[1fr_auto_auto] gap-2 px-3 py-1.5 bg-muted/40 text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                    <span>Rendición</span>
+                    <span>Monto</span>
+                    <span>Estado</span>
+                  </div>
+                  <div className="divide-y">
+                    {detail.renditions.map((rend) => (
+                      <div key={rend.id} className="grid grid-cols-[1fr_auto_auto] gap-2 px-3 py-2 items-center">
+                        <div>
+                          <span className="font-mono text-xs text-muted-foreground">{rend.short_id}…</span>
+                          <span className="text-[10px] text-muted-foreground ml-2">{formatDate(rend.created_at)}</span>
+                        </div>
+                        <span className="text-xs font-mono tabular-nums">{rend.amount ? formatCLP(rend.amount) : "—"}</span>
+                        <span className={cn(
+                          "text-[10px] px-1.5 py-0.5 rounded border font-medium whitespace-nowrap",
+                          RENDITION_STATE_COLORS[rend.state] ?? "text-gray-700 bg-gray-50 border-gray-200"
+                        )}>
+                          {rend.state_label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Summary line */}
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{detail.renditions.length} rendición{detail.renditions.length > 1 ? "es" : ""}</span>
+                  <span>·</span>
+                  <span className="text-green-600">
+                    {detail.renditions.filter((r) => r.state === "APROBADA").length} aprobada{detail.renditions.filter((r) => r.state === "APROBADA").length !== 1 ? "s" : ""}
+                  </span>
+                  {detail.renditions.some((r) => r.state === "OBSERVADA") && (
+                    <>
+                      <span>·</span>
+                      <span className="text-amber-600">
+                        {detail.renditions.filter((r) => r.state === "OBSERVADA").length} observada{detail.renditions.filter((r) => r.state === "OBSERVADA").length !== 1 ? "s" : ""}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Historial de estados */}
             {detail.history && detail.history.length > 0 && (

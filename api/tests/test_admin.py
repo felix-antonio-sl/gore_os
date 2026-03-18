@@ -294,3 +294,135 @@ async def test_get_usuario_detail(client, admin_token, catalog):
     assert "paternal_surname" in body
     assert "is_active" in body
     assert "system_role_id" in body
+
+
+# ---------------------------------------------------------------------------
+# Data quality
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_data_quality_endpoint(client, admin_token):
+    """GET /api/admin/data-quality returns metrics for all entity types."""
+    resp = await client.get("/api/admin/data-quality", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    for section in ("persons", "iprs", "agreements", "documents", "organizations"):
+        assert section in body, f"Missing section: {section}"
+        assert "total" in body[section]
+
+
+@pytest.mark.asyncio
+async def test_data_quality_requires_admin(client, regional_token):
+    """Non-admin users cannot access data-quality endpoint."""
+    resp = await client.get("/api/admin/data-quality", headers=auth(regional_token))
+    assert resp.status_code == 403
+
+
+@pytest.mark.asyncio
+async def test_data_quality_has_percentages(client, admin_token):
+    """Data quality response includes percentage fields."""
+    resp = await client.get("/api/admin/data-quality", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    # Persons section must have percentage fields
+    assert "pct_email" in body["persons"]
+    assert "pct_rut" in body["persons"]
+    # IPRs section must have percentage fields
+    assert "pct_executor" in body["iprs"]
+    assert "pct_mechanism" in body["iprs"]
+    # All percentages should be 0-100 floats
+    for pct_key in ("pct_email", "pct_rut", "pct_phone"):
+        assert 0 <= body["persons"][pct_key] <= 100
+
+
+# ---------------------------------------------------------------------------
+# SLA Dashboard
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_sla_dashboard(client, admin_token):
+    """GET /api/admin/slas/dashboard returns 12 SLA items."""
+    resp = await client.get("/api/admin/slas/dashboard", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "total_monitored" in body
+    assert body["total_monitored"] == 12
+    assert "slas" in body
+    assert len(body["slas"]) == 12
+    for sla in body["slas"]:
+        assert "name" in sla
+        assert "signal" in sla
+        assert sla["signal"] in ("VERDE", "AMARILLO", "ROJO")
+        assert "compliance_pct" in sla
+        assert 0 <= sla["compliance_pct"] <= 100
+
+
+@pytest.mark.asyncio
+async def test_sla_dashboard_requires_admin(client, regional_token):
+    """Non-admin cannot access SLA dashboard."""
+    resp = await client.get("/api/admin/slas/dashboard", headers=auth(regional_token))
+    assert resp.status_code == 403
+
+
+# ---------------------------------------------------------------------------
+# Audit trail
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_audit_list(client, admin_token):
+    """GET /api/admin/audit returns paginated events with filter metadata."""
+    resp = await client.get("/api/admin/audit", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "items" in body
+    assert "total" in body
+    assert "filters" in body
+    assert "event_types" in body["filters"]
+    assert "subject_types" in body["filters"]
+
+
+@pytest.mark.asyncio
+async def test_audit_filter_by_subject_type(client, admin_token):
+    """Audit can filter by subject_type."""
+    resp = await client.get(
+        "/api/admin/audit?subject_type=core.ipr", headers=auth(admin_token)
+    )
+    assert resp.status_code == 200
+    body = resp.json()
+    for item in body["items"]:
+        assert item["subject_type"] == "core.ipr"
+
+
+@pytest.mark.asyncio
+async def test_audit_requires_admin(client, regional_token):
+    """Non-admin cannot access audit."""
+    resp = await client.get("/api/admin/audit", headers=auth(regional_token))
+    assert resp.status_code == 403
+
+
+# ---------------------------------------------------------------------------
+# Document quality
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_document_quality(client, admin_token):
+    """GET /api/admin/data-quality/documents returns document metrics."""
+    resp = await client.get("/api/admin/data-quality/documents", headers=auth(admin_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "total" in body
+    assert "pct_type" in body
+    assert "pct_url" in body
+    assert "by_type" in body
+    assert isinstance(body["by_type"], list)
+
+
+@pytest.mark.asyncio
+async def test_document_quality_requires_admin(client, regional_token):
+    """Non-admin cannot access document quality."""
+    resp = await client.get("/api/admin/data-quality/documents", headers=auth(regional_token))
+    assert resp.status_code == 403

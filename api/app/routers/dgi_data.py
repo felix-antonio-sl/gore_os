@@ -1223,6 +1223,71 @@ async def list_rendiciones(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones/resumen — Aggregate statistics
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones/resumen")
+async def get_rendiciones_resumen(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Aggregate rendition statistics for KPI strip and reporting."""
+    result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE st.code NOT IN ('APROBADA', 'RECHAZADA')) AS active,
+                COUNT(*) FILTER (WHERE st.code = 'APROBADA') AS aprobadas,
+                COUNT(*) FILTER (WHERE st.code = 'RECHAZADA') AS rechazadas,
+                COUNT(*) FILTER (WHERE st.code = 'OBSERVADA') AS observadas,
+                COUNT(*) FILTER (WHERE st.code = 'EN_REVISION_RTF') AS en_revision_rtf,
+                COUNT(*) FILTER (WHERE st.code = 'EN_REVISION_UCR') AS en_revision_ucr,
+                COUNT(*) FILTER (
+                    WHERE st.code NOT IN ('APROBADA', 'RECHAZADA')
+                    AND EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 > rp.sla_days
+                ) AS sla_breached,
+                SUM(r.amount) FILTER (WHERE st.code = 'APROBADA') AS total_approved_amount
+            FROM core.rendition r
+            JOIN ref.category st ON st.id = r.state_id
+            LEFT JOIN core.rendition_phase rp ON rp.code = st.code
+            WHERE r.deleted_at IS NULL
+        """)
+    )
+    row = result.mappings().first()
+
+    by_state = await db.execute(
+        text("""
+            SELECT st.code, st.label, COUNT(*) AS count
+            FROM core.rendition r
+            JOIN ref.category st ON st.id = r.state_id
+            WHERE r.deleted_at IS NULL
+            GROUP BY st.code, st.label
+            ORDER BY count DESC
+        """)
+    )
+    by_state_list = [dict(r) for r in by_state.mappings().all()]
+
+    # SLA compliance rate
+    total_active = row["active"] or 0
+    sla_breached = row["sla_breached"] or 0
+    sla_compliance_pct = round((total_active - sla_breached) * 100.0 / total_active, 1) if total_active > 0 else 100.0
+
+    return {
+        "total": row["total"],
+        "active": total_active,
+        "aprobadas": row["aprobadas"],
+        "rechazadas": row["rechazadas"],
+        "observadas": row["observadas"],
+        "en_revision_rtf": row["en_revision_rtf"],
+        "en_revision_ucr": row["en_revision_ucr"],
+        "sla_breached": sla_breached,
+        "sla_compliance_pct": sla_compliance_pct,
+        "total_approved_amount": row["total_approved_amount"],
+        "by_state": by_state_list,
+    }
+
+
+# ---------------------------------------------------------------------------
 # GET /api/dgi/data/rendiciones/fases — TP-06 parametric phase definitions
 # ---------------------------------------------------------------------------
 

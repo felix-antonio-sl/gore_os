@@ -324,3 +324,35 @@ async def test_history_not_recorded_for_non_state_patch(client, regional_token, 
     resp = await client.get(f"/api/actos/{created['id']}", headers=auth(regional_token))
     assert resp.status_code == 200
     assert resp.json()["history"] == []
+
+
+# ---------------------------------------------------------------------------
+# Resumen endpoint
+# ---------------------------------------------------------------------------
+
+
+async def test_actos_resumen(client, regional_token):
+    """GET /api/actos/resumen returns aggregate stats."""
+    resp = await client.get("/api/actos/resumen", headers=auth(regional_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "total" in body
+    assert "pending_firma" in body
+    assert "en_revision" in body
+    assert "by_state" in body
+    assert isinstance(body["by_state"], list)
+    assert "by_type" in body
+    assert isinstance(body["by_type"], list)
+
+
+async def test_actos_resumen_has_counts(client, regional_token, db):
+    """Resumen has non-negative counts."""
+    # Ensure at least one acto exists
+    act_ids = await _fetch_act_ids(db)
+    await _create_acto(client, regional_token, act_ids)
+    resp = await client.get("/api/actos/resumen", headers=auth(regional_token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["total"] >= 1
+    for key in ("pending_firma", "en_revision", "publicados", "borradores", "pending_cgr"):
+        assert body[key] >= 0

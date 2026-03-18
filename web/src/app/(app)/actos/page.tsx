@@ -176,6 +176,12 @@ export default function ActosPage() {
   const [pendingItems, setPendingItems] = useState<ActoListItem[]>([]);
   const [pendingLoading, setPendingLoading] = useState(false);
 
+  // Resumen KPI
+  const [resumen, setResumen] = useState<{
+    total: number; pending_firma: number; en_revision: number;
+    publicados: number; borradores: number; pending_cgr: number;
+  } | null>(null);
+
   // Drawer state
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<ActoDetail | null>(null);
@@ -228,6 +234,14 @@ export default function ActosPage() {
       .catch(() => setPendingItems([]))
       .finally(() => setPendingLoading(false));
   }, [pendingState, refreshKey]);
+
+  // Fetch resumen
+  useEffect(() => {
+    api
+      .get<typeof resumen>("/api/actos/resumen")
+      .then(setResumen)
+      .catch(() => setResumen(null));
+  }, [refreshKey]);
 
   // Fetch main list
   useEffect(() => {
@@ -389,6 +403,34 @@ export default function ActosPage() {
           </>
         }
       />
+
+      {/* KPI Strip */}
+      {resumen && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Total actos</p>
+            <p className="text-2xl font-semibold tabular-nums">{resumen.total}</p>
+          </div>
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Pendientes firma</p>
+            <p className={cn("text-2xl font-semibold tabular-nums", resumen.pending_firma > 0 ? "text-amber-600" : "")}>
+              {resumen.pending_firma}
+            </p>
+          </div>
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">En revisión</p>
+            <p className={cn("text-2xl font-semibold tabular-nums", resumen.en_revision > 0 ? "text-blue-600" : "")}>
+              {resumen.en_revision}
+            </p>
+          </div>
+          <div className="rounded-lg border bg-card p-3">
+            <p className="text-xs text-muted-foreground">Pendientes CGR</p>
+            <p className={cn("text-2xl font-semibold tabular-nums", resumen.pending_cgr > 0 ? "text-red-600" : "")}>
+              {resumen.pending_cgr}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Pending Queue — role-aware */}
       {isFirmante && !pendingLoading && (
