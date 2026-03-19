@@ -755,19 +755,26 @@ ON CONFLICT (codigo_bip) DO NOTHING;
 
 
 -- =============================================================================
--- TIER 3: SATÉLITES IPR (~305 registros)
+-- TIER 3: SATÉLITES IPR (ENRIQUECIDOS)
 -- =============================================================================
+-- 6 "IPRs héroe" con cadenas completas:
+--   H1: DEMO-R-SNI-007 (EN_OBRA, Pavimentación Chillán) — obra activa con ITO
+--   H2: DEMO-R-SNI-008 (CERRADO, Multicancha Yungay) — ciclo completo
+--   H3: DEMO-R-FRIL-005 (EN_EJECUCION, Techado Feria) — ejecución media
+--   H4: DEMO-R-TRF-003 (EN_EJECUCION, Turismo Punilla) — programa transferencia
+--   H5: DEMO-R-SUBV8-004 (FORMALIZADO, Huertos Punilla) — programa social
+--   H6: DEMO-R-EXT-003 (ADJUDICADO, Parque Urbano) — recién adjudicado
+-- Resto: satélites genéricos via DO blocks.
 
--- 3.1 IPR_PARTY (~120 registros) — 3-4 por IPR activo (F1+)
--- Patrón: POSTULANTE(muni) + EJECUTOR(org) + UNIDAD_TECNICA(gore div) + opcionalmente ITO/FISCALIZADOR
+-- =============================================================================
+-- 3.1 IPR_PARTY — genéricos + héroe enrichment
+-- =============================================================================
 DO $$
 DECLARE
     v_ipr RECORD;
-    v_party_roles UUID[];
-    v_postulante UUID;
-    v_ejecutor UUID;
-    v_ut UUID;
-    v_ito UUID;
+    v_postulante UUID; v_ejecutor UUID; v_ut UUID; v_ito UUID;
+    v_formulador UUID; v_fiscalizador UUID; v_mandante UUID; v_mandatario UUID;
+    v_beneficiario UUID; v_cofinanciador UUID; v_supervisor UUID;
     v_munis TEXT[] := ARRAY['DEMO-R-MUNI-CHILLAN','DEMO-R-MUNI-SANCARLOS','DEMO-R-MUNI-QUIRIHUE','DEMO-R-MUNI-COIHUECO','DEMO-R-MUNI-BULNES','DEMO-R-MUNI-PINTO','DEMO-R-MUNI-COELEMU'];
     v_idx INTEGER := 0;
 BEGIN
@@ -775,30 +782,30 @@ BEGIN
     SELECT id INTO v_ejecutor FROM ref.category WHERE scheme='ipr_party_role' AND code='EJECUTOR';
     SELECT id INTO v_ut FROM ref.category WHERE scheme='ipr_party_role' AND code='UNIDAD_TECNICA';
     SELECT id INTO v_ito FROM ref.category WHERE scheme='ipr_party_role' AND code='ITO';
+    SELECT id INTO v_formulador FROM ref.category WHERE scheme='ipr_party_role' AND code='FORMULADOR';
+    SELECT id INTO v_fiscalizador FROM ref.category WHERE scheme='ipr_party_role' AND code='FISCALIZADOR';
+    SELECT id INTO v_mandante FROM ref.category WHERE scheme='ipr_party_role' AND code='MANDANTE';
+    SELECT id INTO v_mandatario FROM ref.category WHERE scheme='ipr_party_role' AND code='MANDATARIO';
+    SELECT id INTO v_beneficiario FROM ref.category WHERE scheme='ipr_party_role' AND code='BENEFICIARIO';
+    SELECT id INTO v_cofinanciador FROM ref.category WHERE scheme='ipr_party_role' AND code='COFINANCIADOR';
+    SELECT id INTO v_supervisor FROM ref.category WHERE scheme='ipr_party_role' AND code='SUPERVISOR_GORE';
 
     FOR v_ipr IN SELECT id, codigo_bip, sponsor_division_id FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%' ORDER BY codigo_bip LOOP
         v_idx := v_idx + 1;
 
-        -- POSTULANTE: municipalidad rotativa
+        -- === BASE: todos los IPRs tienen POSTULANTE + EJECUTOR + UNIDAD_TECNICA ===
         INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person, contact_email)
-        VALUES (v_ipr.id,
-                (SELECT id FROM core.organization WHERE code = v_munis[1 + (v_idx % 7)]),
-                v_postulante, true,
-                'Contacto Municipal ' || v_idx,
-                'contacto' || v_idx || '@municipio.cl')
+        VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code = v_munis[1 + (v_idx % 7)]),
+                v_postulante, true, 'Contacto Municipal ' || v_idx, 'contacto' || v_idx || '@municipio.cl')
         ON CONFLICT DO NOTHING;
 
-        -- EJECUTOR: sponsor division
         INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
         VALUES (v_ipr.id, v_ipr.sponsor_division_id, v_ejecutor, false, 'Encargado Ejecución')
         ON CONFLICT DO NOTHING;
 
-        -- UNIDAD_TECNICA: SERVIU para infra, GORE para otros
         IF v_idx % 3 = 0 THEN
             INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
-            VALUES (v_ipr.id,
-                    (SELECT id FROM core.organization WHERE code = 'DEMO-R-SERVIU-NUBLE'),
-                    v_ut, false, 'Profesional SERVIU')
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code = 'DEMO-R-SERVIU-NUBLE'), v_ut, false, 'Profesional SERVIU')
             ON CONFLICT DO NOTHING;
         ELSE
             INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
@@ -806,88 +813,256 @@ BEGIN
             ON CONFLICT DO NOTHING;
         END IF;
 
-        -- ITO: solo para IPRs en F4 EN_OBRA o posterior
-        IF v_idx % 5 = 0 THEN
+        -- === HÉROE H1: SNI-007 (EN_OBRA) — cadena completa de obra ===
+        IF v_ipr.codigo_bip = 'DEMO-R-SNI-007' THEN
             INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person, contact_email)
-            VALUES (v_ipr.id,
-                    (SELECT id FROM core.organization WHERE code = 'DEMO-R-ING-NUBLE'),
-                    v_ito, false,
-                    'Inspector Técnico Asignado',
-                    'ito@ingnuble.cl')
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-ING-NUBLE'), v_ito, false, 'Ing. Gonzalo Riquelme A.', 'griquelme@ingnuble.cl')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person, contact_email)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-CONST-ITATA'), v_mandatario, false, 'Gerente Técnico Const. Itata', 'gerencia@constructoraitata.cl')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-SERVIU-NUBLE'), v_fiscalizador, false, 'Fiscalizador SERVIU Regional')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='GORE-NUBLE'), v_mandante, false, 'GORE Ñuble — Mandante')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, v_ipr.sponsor_division_id, v_supervisor, false, 'Supervisor DIT')
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === HÉROE H2: SNI-008 (CERRADO) — ciclo completo ===
+        IF v_ipr.codigo_bip = 'DEMO-R-SNI-008' THEN
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-ING-NUBLE'), v_ito, false, 'ITO asignado (obra finalizada)')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-BULNES'), v_beneficiario, false, 'Comunidad Yungay — beneficiaria directa')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='GORE-NUBLE'), v_mandante, false, 'GORE Ñuble — Mandante')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-SERVIU-NUBLE'), v_mandatario, false, 'SERVIU Ñuble — Mandatario')
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === HÉROE H4: TRF-003 (EN_EJECUCION programa) ===
+        IF v_ipr.codigo_bip = 'DEMO-R-TRF-003' THEN
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person, contact_email)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-SERNATUR-NUBLE'), v_mandatario, false, 'Dir. Regional SERNATUR', 'dcontreras@sernatur-nuble.cl')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-SANCARLOS'), v_beneficiario, false, 'Cámara de Turismo Punilla')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-UBB'), v_cofinanciador, false, 'Facultad Ciencias Empresariales UBB')
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === HÉROE H6: EXT-003 (ADJUDICADO parque) ===
+        IF v_ipr.codigo_bip = 'DEMO-R-EXT-003' THEN
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-CONST-ITATA'), v_mandatario, false, 'Constructora Itata — adjudicatario')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-CHILLAN'), v_beneficiario, false, 'Vecinos sector Ribera Norte')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='GORE-NUBLE'), v_mandante, false, 'GORE Ñuble — Mandante')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-MOP-NUBLE'), v_fiscalizador, false, 'MOP DOH — fiscalización hidráulica')
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === HÉROE H5: SUBV8-004 (FORMALIZADO programa social) ===
+        IF v_ipr.codigo_bip = 'DEMO-R-SUBV8-004' THEN
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-FUND-NUBLE'), v_mandatario, false, 'Fundación Ñuble — ejecutor técnico')
+            ON CONFLICT DO NOTHING;
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id, is_primary, contact_person)
+            VALUES (v_ipr.id, (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-COIHUECO'), v_beneficiario, false, 'Familias beneficiarias comunas rurales')
             ON CONFLICT DO NOTHING;
         END IF;
     END LOOP;
 END $$;
 
--- 3.2 IPR_TERRITORY (~70 registros) — 2 por IPR
+-- =============================================================================
+-- 3.2 IPR_TERRITORY — genéricos + héroe con zonas de influencia
+-- =============================================================================
 DO $$
 DECLARE
     v_ipr RECORD;
     v_comunas TEXT[] := ARRAY['16101','16102','16103','16104','16105','16106','16107','16201','16202','16203','16204','16205','16206','16207','16301','16302','16303','16304','16305'];
-    v_ubicacion UUID;
-    v_impacto UUID;
+    v_ubicacion UUID; v_impacto_d UUID; v_impacto_i UUID; v_zona UUID;
     v_idx INTEGER := 0;
 BEGIN
     SELECT id INTO v_ubicacion FROM ref.category WHERE scheme='territory_impact' AND code='UBICACION';
-    SELECT id INTO v_impacto FROM ref.category WHERE scheme='territory_impact' AND code='IMPACTO_DIRECTO';
+    SELECT id INTO v_impacto_d FROM ref.category WHERE scheme='territory_impact' AND code='IMPACTO_DIRECTO';
+    SELECT id INTO v_impacto_i FROM ref.category WHERE scheme='territory_impact' AND code='IMPACTO_INDIRECTO';
+    SELECT id INTO v_zona FROM ref.category WHERE scheme='territory_impact' AND code='ZONA_INFLUENCIA';
 
-    FOR v_ipr IN SELECT id FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%' ORDER BY codigo_bip LOOP
+    FOR v_ipr IN SELECT id, codigo_bip FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%' ORDER BY codigo_bip LOOP
         v_idx := v_idx + 1;
 
-        -- Ubicación: comuna principal
+        -- Ubicación principal
         INSERT INTO core.ipr_territory (ipr_id, territory_id, impact_type_id, is_primary)
-        VALUES (v_ipr.id,
-                (SELECT id FROM core.territory WHERE code = v_comunas[1 + (v_idx % 19)]),
-                v_ubicacion, true)
+        VALUES (v_ipr.id, (SELECT id FROM core.territory WHERE code = v_comunas[1 + (v_idx % 19)]), v_ubicacion, true)
         ON CONFLICT DO NOTHING;
 
-        -- Impacto directo: comuna adyacente
+        -- Impacto directo
         INSERT INTO core.ipr_territory (ipr_id, territory_id, impact_type_id, is_primary)
-        VALUES (v_ipr.id,
-                (SELECT id FROM core.territory WHERE code = v_comunas[1 + ((v_idx + 5) % 19)]),
-                v_impacto, false)
+        VALUES (v_ipr.id, (SELECT id FROM core.territory WHERE code = v_comunas[1 + ((v_idx + 5) % 19)]), v_impacto_d, false)
         ON CONFLICT DO NOTHING;
+
+        -- === HÉROES: +2 territorios adicionales (impacto indirecto + zona influencia) ===
+        IF v_ipr.codigo_bip IN ('DEMO-R-SNI-007','DEMO-R-SNI-008','DEMO-R-TRF-003','DEMO-R-SUBV8-004','DEMO-R-EXT-003','DEMO-R-FRIL-005') THEN
+            INSERT INTO core.ipr_territory (ipr_id, territory_id, impact_type_id, is_primary, notes)
+            VALUES (v_ipr.id, (SELECT id FROM core.territory WHERE code = v_comunas[1 + ((v_idx + 10) % 19)]), v_impacto_i, false, 'Impacto indirecto por conectividad')
+            ON CONFLICT DO NOTHING;
+
+            INSERT INTO core.ipr_territory (ipr_id, territory_id, impact_type_id, is_primary, notes)
+            VALUES (v_ipr.id, (SELECT id FROM core.territory WHERE code = '16'), v_zona, false, 'Zona de influencia regional')
+            ON CONFLICT DO NOTHING;
+        END IF;
     END LOOP;
 END $$;
 
--- 3.3 IPR_MILESTONE (~100 registros) — 3 por IPR (F1+)
+-- =============================================================================
+-- 3.3 IPR_MILESTONE — HÉROES con cadenas completas de 13 tipos, resto genérico
+-- =============================================================================
+-- Héroes: hitos artesanales con actual_date según avance real
+-- Genéricos: 3 hitos base
+
+-- H1: DEMO-R-SNI-007 (EN_OBRA) — 10 hitos, 6 completados
+INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ENTREGA_DISENO'), 'Entrega diseño definitivo SERVIU', CURRENT_DATE - INTERVAL '200 days', CURRENT_DATE - INTERVAL '195 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP'), 'CDP aprobado por DAF', CURRENT_DATE - INTERVAL '170 days', CURRENT_DATE - INTERVAL '168 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO'), 'Firma convenio mandato SERVIU', CURRENT_DATE - INTERVAL '150 days', CURRENT_DATE - INTERVAL '145 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='LICITACION'), 'Publicación bases licitación', CURRENT_DATE - INTERVAL '140 days', CURRENT_DATE - INTERVAL '138 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ADJUDICACION'), 'Adjudicación a Constructora Itata SpA', CURRENT_DATE - INTERVAL '125 days', CURRENT_DATE - INTERVAL '122 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA'), 'Inicio de obras en terreno', CURRENT_DATE - INTERVAL '120 days', CURRENT_DATE - INTERVAL '118 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_25'), 'Avance 25% — fundaciones y trazado', CURRENT_DATE - INTERVAL '80 days', CURRENT_DATE - INTERVAL '75 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50'), 'Avance 50% — carpeta y drenaje', CURRENT_DATE - INTERVAL '40 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_75'), 'Avance 75% — pavimentación y señalética', CURRENT_DATE + INTERVAL '20 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_PROV'), 'Recepción provisoria obra', CURRENT_DATE + INTERVAL '60 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_DEF'), 'Recepción definitiva', CURRENT_DATE + INTERVAL '120 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INFORME_FINAL'), 'Informe final DIT al CORE', CURRENT_DATE + INTERVAL '140 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='CIERRE_ADMIN'), 'Cierre administrativo DIPIR', CURRENT_DATE + INTERVAL '180 days', NULL)
+ON CONFLICT DO NOTHING;
+
+-- H2: DEMO-R-SNI-008 (CERRADO) — 11 hitos, TODOS completados
+INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ENTREGA_DISENO'), 'Diseño estructural aprobado', CURRENT_DATE - INTERVAL '300 days', CURRENT_DATE - INTERVAL '298 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP'), 'CDP aprobado DIPIR', CURRENT_DATE - INTERVAL '280 days', CURRENT_DATE - INTERVAL '275 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO'), 'Convenio transferencia Muni Bulnes', CURRENT_DATE - INTERVAL '270 days', CURRENT_DATE - INTERVAL '265 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='LICITACION'), 'Bases de licitación publicadas', CURRENT_DATE - INTERVAL '260 days', CURRENT_DATE - INTERVAL '258 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ADJUDICACION'), 'Adjudicación constructora', CURRENT_DATE - INTERVAL '240 days', CURRENT_DATE - INTERVAL '235 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA'), 'Acta de inicio de obra', CURRENT_DATE - INTERVAL '230 days', CURRENT_DATE - INTERVAL '228 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_25'), 'Hito 25% — radier y estructura', CURRENT_DATE - INTERVAL '180 days', CURRENT_DATE - INTERVAL '176 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50'), 'Hito 50% — techado y cerramiento', CURRENT_DATE - INTERVAL '130 days', CURRENT_DATE - INTERVAL '125 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_75'), 'Hito 75% — terminaciones', CURRENT_DATE - INTERVAL '90 days', CURRENT_DATE - INTERVAL '88 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_PROV'), 'Recepción provisoria municipal', CURRENT_DATE - INTERVAL '60 days', CURRENT_DATE - INTERVAL '58 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_DEF'), 'Recepción definitiva', CURRENT_DATE - INTERVAL '40 days', CURRENT_DATE - INTERVAL '38 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INFORME_FINAL'), 'Informe final al CORE', CURRENT_DATE - INTERVAL '35 days', CURRENT_DATE - INTERVAL '33 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='CIERRE_ADMIN'), 'Cierre administrativo — acta firmada', CURRENT_DATE - INTERVAL '30 days', CURRENT_DATE - INTERVAL '30 days')
+ON CONFLICT DO NOTHING;
+
+-- H3: DEMO-R-FRIL-005 (EN_EJECUCION) — 8 hitos, 5 completados
+INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP'), 'CDP FRIL aprobado', CURRENT_DATE - INTERVAL '110 days', CURRENT_DATE - INTERVAL '108 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO'), 'Convenio Muni San Nicolás firmado', CURRENT_DATE - INTERVAL '100 days', CURRENT_DATE - INTERVAL '98 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='LICITACION'), 'Trato directo publicado', CURRENT_DATE - INTERVAL '95 days', CURRENT_DATE - INTERVAL '93 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ADJUDICACION'), 'Adjudicación proveedor', CURRENT_DATE - INTERVAL '92 days', CURRENT_DATE - INTERVAL '90 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA'), 'Inicio obras en feria', CURRENT_DATE - INTERVAL '90 days', CURRENT_DATE - INTERVAL '88 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_25'), 'Retiro estructura antigua', CURRENT_DATE - INTERVAL '60 days', CURRENT_DATE - INTERVAL '55 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50'), 'Instalación nuevo techado 50%', CURRENT_DATE - INTERVAL '30 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_PROV'), 'Recepción provisoria feria', CURRENT_DATE + INTERVAL '30 days', NULL)
+ON CONFLICT DO NOTHING;
+
+-- H4: DEMO-R-TRF-003 (EN_EJECUCION programa) — 6 hitos
+INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO'), 'Convenio SERNATUR firmado', CURRENT_DATE - INTERVAL '90 days', CURRENT_DATE - INTERVAL '85 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP'), 'CDP programa turismo aprobado', CURRENT_DATE - INTERVAL '85 days', CURRENT_DATE - INTERVAL '82 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA'), 'Inicio actividades en terreno', CURRENT_DATE - INTERVAL '70 days', CURRENT_DATE - INTERVAL '68 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_25'), 'Capacitación 25% operadores turísticos', CURRENT_DATE - INTERVAL '40 days', CURRENT_DATE - INTERVAL '38 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50'), 'Avance 50% — señalética instalada', CURRENT_DATE + INTERVAL '10 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INFORME_FINAL'), 'Informe final programa turismo', CURRENT_DATE + INTERVAL '90 days', NULL)
+ON CONFLICT DO NOTHING;
+
+-- H5: DEMO-R-SUBV8-004 (FORMALIZADO) — 5 hitos, 2 completados
+INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-004'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP'), 'CDP programa huertos aprobado', CURRENT_DATE - INTERVAL '105 days', CURRENT_DATE - INTERVAL '102 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-004'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO'), 'Convenio Muni Coihueco', CURRENT_DATE - INTERVAL '100 days', CURRENT_DATE - INTERVAL '100 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-004'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA'), 'Inicio programa en comunas', CURRENT_DATE - INTERVAL '80 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-004'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50'), 'Entrega 50% kits huertos', CURRENT_DATE + INTERVAL '30 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-004'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INFORME_FINAL'), 'Informe final DIDESO', CURRENT_DATE + INTERVAL '120 days', NULL)
+ON CONFLICT DO NOTHING;
+
+-- H6: DEMO-R-EXT-003 (ADJUDICADO) — 7 hitos, 5 completados
+INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ENTREGA_DISENO'), 'Diseño paisajístico aprobado', CURRENT_DATE - INTERVAL '90 days', CURRENT_DATE - INTERVAL '88 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP'), 'CDP parque urbano aprobado', CURRENT_DATE - INTERVAL '60 days', CURRENT_DATE - INTERVAL '58 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO'), 'Convenio mandato Const. Itata', CURRENT_DATE - INTERVAL '40 days', CURRENT_DATE - INTERVAL '38 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='LICITACION'), 'Licitación pública publicada', CURRENT_DATE - INTERVAL '30 days', CURRENT_DATE - INTERVAL '28 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='ADJUDICACION'), 'Adjudicación Constructora Itata', CURRENT_DATE - INTERVAL '18 days', CURRENT_DATE - INTERVAL '18 days'),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA'), 'Inicio obras planificado', CURRENT_DATE + INTERVAL '15 days', NULL),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_DEF'), 'Recepción definitiva', CURRENT_DATE + INTERVAL '270 days', NULL)
+ON CONFLICT DO NOTHING;
+
+-- Genéricos: 3 hitos base para los demás IPRs (no héroes)
 DO $$
 DECLARE
     v_ipr RECORD;
-    v_mt_inicio UUID;
-    v_mt_avance UUID;
-    v_mt_cierre UUID;
+    v_mt_inicio UUID; v_mt_avance UUID; v_mt_cierre UUID;
+    v_heroes TEXT[] := ARRAY['DEMO-R-SNI-007','DEMO-R-SNI-008','DEMO-R-FRIL-005','DEMO-R-TRF-003','DEMO-R-SUBV8-004','DEMO-R-EXT-003'];
     v_idx INTEGER := 0;
 BEGIN
     SELECT id INTO v_mt_inicio FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA';
     SELECT id INTO v_mt_avance FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50';
     SELECT id INTO v_mt_cierre FROM ref.category WHERE scheme='milestone_type' AND code='CIERRE_ADMIN';
 
-    FOR v_ipr IN SELECT id, codigo_bip FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%' ORDER BY codigo_bip LOOP
+    FOR v_ipr IN SELECT id, codigo_bip FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%' AND codigo_bip != ALL(v_heroes) ORDER BY codigo_bip LOOP
         v_idx := v_idx + 1;
-
         INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date)
         VALUES (v_ipr.id, v_mt_inicio, 'Inicio de ejecución', CURRENT_DATE - INTERVAL '60 days' + (v_idx * INTERVAL '3 days'))
         ON CONFLICT DO NOTHING;
-
         INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date)
         VALUES (v_ipr.id, v_mt_avance, 'Avance 50% físico', CURRENT_DATE + (v_idx * INTERVAL '5 days'))
         ON CONFLICT DO NOTHING;
-
         INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date)
         VALUES (v_ipr.id, v_mt_cierre, 'Cierre administrativo', CURRENT_DATE + INTERVAL '90 days' + (v_idx * INTERVAL '7 days'))
         ON CONFLICT DO NOTHING;
     END LOOP;
 END $$;
 
--- 3.4 EVALUATION_ASSIGNMENT (~20 registros) — IPRs en F2+
+-- =============================================================================
+-- 3.4 EVALUATION_ASSIGNMENT — héroes con evaluaciones múltiples, resto genérico
+-- =============================================================================
+-- H1: SNI-007 — 2 evaluaciones (MDSF + GORE_COMITE)
+INSERT INTO core.evaluation_assignment (ipr_id, evaluator_type_id, evaluator_name, assigned_at, completed_at, result_id, numeric_score, rank_position, rank_total, observations, created_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='evaluator_type' AND code='MDSF'), 'Evaluador MDSF Central — Div. Inversiones', CURRENT_TIMESTAMP - INTERVAL '200 days', CURRENT_TIMESTAMP - INTERVAL '180 days', (SELECT id FROM ref.category WHERE scheme='evaluation_result' AND code='RS'), 88.50, 3, 12, 'Proyecto estratégico para conectividad urbana. Diseño cumple normativa MOP. Recomendado para financiamiento.', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), (SELECT id FROM ref.category WHERE scheme='evaluator_type' AND code='GORE_COMITE'), 'Comité Evaluador Regional GORE', CURRENT_TIMESTAMP - INTERVAL '190 days', CURRENT_TIMESTAMP - INTERVAL '175 days', (SELECT id FROM ref.category WHERE scheme='evaluation_result' AND code='RS'), 91.00, 1, 8, 'Prioridad regional alta. Complementa Plan Regulador vigente. Aprobado por unanimidad.', (SELECT id FROM core."user" WHERE email='jefe.dipir@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- H2: SNI-008 — 2 evaluaciones (cerrado, scores altos)
+INSERT INTO core.evaluation_assignment (ipr_id, evaluator_type_id, evaluator_name, assigned_at, completed_at, result_id, numeric_score, rank_position, rank_total, observations, created_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='evaluator_type' AND code='MDSF'), 'Evaluador MDSF Regional Ñuble', CURRENT_TIMESTAMP - INTERVAL '320 days', CURRENT_TIMESTAMP - INTERVAL '300 days', (SELECT id FROM ref.category WHERE scheme='evaluation_result' AND code='RS'), 82.30, 5, 15, 'Proyecto deportivo con alto impacto comunal. Costos dentro de rango FRIL.', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), (SELECT id FROM ref.category WHERE scheme='evaluator_type' AND code='GORE_DIDESO'), 'Evaluación social DIDESO', CURRENT_TIMESTAMP - INTERVAL '310 days', CURRENT_TIMESTAMP - INTERVAL '295 days', (SELECT id FROM ref.category WHERE scheme='evaluation_result' AND code='RS'), 85.00, NULL, NULL, 'Impacto social positivo en población joven de Yungay.', (SELECT id FROM core."user" WHERE email='jefe.dideso@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- H6: EXT-003 — evaluación reciente + CORE approval
+INSERT INTO core.evaluation_assignment (ipr_id, evaluator_type_id, evaluator_name, assigned_at, completed_at, result_id, numeric_score, rank_position, rank_total, convocatoria_code, observations, created_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='evaluator_type' AND code='MDSF'), 'Evaluador MDSF Central — Proyectos Urbanos', CURRENT_TIMESTAMP - INTERVAL '90 days', CURRENT_TIMESTAMP - INTERVAL '70 days', (SELECT id FROM ref.category WHERE scheme='evaluation_result' AND code='RS'), 93.20, 1, 6, 'CONV-2026-001', 'Proyecto emblemático. Máximo puntaje en dimensión ambiental. Requiere aprobación CORE (>7K UTM).', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- Genéricos: resto de IPRs F2+
 DO $$
 DECLARE
-    v_ipr RECORD;
-    v_eval_type UUID;
-    v_result_rs UUID;
-    v_result_fi UUID;
-    v_result_ot UUID;
+    v_ipr RECORD; v_eval_type UUID; v_result_rs UUID; v_result_fi UUID; v_result_ot UUID;
+    v_heroes TEXT[] := ARRAY['DEMO-R-SNI-007','DEMO-R-SNI-008','DEMO-R-EXT-003'];
     v_idx INTEGER := 0;
 BEGIN
     SELECT id INTO v_eval_type FROM ref.category WHERE scheme='evaluator_type' AND code='MDSF';
@@ -896,55 +1071,75 @@ BEGIN
     SELECT id INTO v_result_ot FROM ref.category WHERE scheme='evaluation_result' AND code='OT';
 
     FOR v_ipr IN
-        SELECT i.id, i.codigo_bip, c.code as status_code
-        FROM core.ipr i
+        SELECT i.id, i.codigo_bip, c.code as status_code FROM core.ipr i
         JOIN ref.category c ON i.status_id = c.id
-        WHERE i.codigo_bip LIKE 'DEMO-R-%'
+        WHERE i.codigo_bip LIKE 'DEMO-R-%' AND i.codigo_bip != ALL(v_heroes)
           AND c.code NOT IN ('INGRESADO','EN_REVISION','PRE_ADMISIBLE','ADMISIBLE','INADMISIBLE')
         ORDER BY i.codigo_bip
     LOOP
         v_idx := v_idx + 1;
-        INSERT INTO core.evaluation_assignment (
-            ipr_id, evaluator_type_id, evaluator_name, assigned_at,
-            result_id, numeric_score, observations,
-            created_by_id
-        ) VALUES (
-            v_ipr.id, v_eval_type,
+        INSERT INTO core.evaluation_assignment (ipr_id, evaluator_type_id, evaluator_name, assigned_at, result_id, numeric_score, observations, created_by_id)
+        VALUES (v_ipr.id, v_eval_type,
             CASE WHEN v_idx % 3 = 0 THEN 'Evaluador MDSF Regional' ELSE 'Evaluador MDSF Central' END,
             CURRENT_TIMESTAMP - INTERVAL '30 days',
-            CASE
-                WHEN v_ipr.status_code IN ('RS','CDP_EMITIDO','EN_FORMALIZACION','FORMALIZADO','EN_EJECUCION','EN_OBRA','EN_LICITACION','ADJUDICADO','CONTRATO_FIRMADO','RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA','EN_RENDICION','RENDICION_APROBADA','EN_CIERRE_ADMINISTRATIVO','CERRADO','TERMINADO_ANTICIPADAMENTE') THEN v_result_rs
-                WHEN v_ipr.status_code = 'FI' THEN v_result_fi
-                WHEN v_ipr.status_code IN ('OT','AT') THEN v_result_ot
-                ELSE v_result_rs
-            END,
+            CASE WHEN v_ipr.status_code = 'FI' THEN v_result_fi
+                 WHEN v_ipr.status_code IN ('OT','AT') THEN v_result_ot
+                 ELSE v_result_rs END,
             CASE WHEN v_idx % 2 = 0 THEN 85.50 ELSE 72.30 END,
-            'Evaluación técnica completada — ' || v_ipr.codigo_bip,
-            (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')
-        ) ON CONFLICT DO NOTHING;
+            'Evaluación técnica — ' || v_ipr.codigo_bip,
+            (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl'))
+        ON CONFLICT DO NOTHING;
     END LOOP;
 END $$;
 
--- 3.5 PROGRESS_REPORT (~15 registros) — IPRs en F4+
+-- =============================================================================
+-- 3.5 PROGRESS_REPORT — héroes con series temporales, resto genérico
+-- =============================================================================
+-- H1: SNI-007 — 4 informes mostrando progresión de obra
+INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, issues_detected, reported_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), 1, CURRENT_DATE - INTERVAL '90 days', 12.0, 8.5, 'Inicio de obras. Trazado completado, excavaciones en curso. Equipo de 15 personas en terreno. Sin problemas.', NULL, (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), 2, CURRENT_DATE - INTERVAL '60 days', 28.0, 22.0, 'Avance en fundaciones y subbase. Se detectó problema de drenaje en sector norte (PRB-001). ITO realizó 3 visitas.', 'Falla en sistema de drenaje sector norte — requiere rediseño parcial. Retraso estimado 15 días.', (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), 3, CURRENT_DATE - INTERVAL '30 days', 42.0, 35.0, 'Rediseño drenaje aprobado por SERVIU. Carpeta asfáltica iniciada en tramo sur. 2 estados de pago procesados.', 'Retraso acumulado de 10 días por rediseño. Plan de recuperación activo.', (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'), 4, CURRENT_DATE - INTERVAL '5 days', 48.0, 40.0, 'Carpeta asfáltica 60% completada. Solicitud de modificación presupuestaria ingresada (MOD-001). Próxima visita ITO programada.', 'Incremento de costos materiales 12% — modificación en trámite.', (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- H2: SNI-008 — 5 informes (ciclo completo cerrado)
+INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, reported_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), 1, CURRENT_DATE - INTERVAL '200 days', 15.0, 10.0, 'Radier completado. Estructura metálica en proceso de montaje. Sin novedades.', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), 2, CURRENT_DATE - INTERVAL '160 days', 35.0, 28.0, 'Estructura completa. Techado en instalación. Visita ITO satisfactoria.', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), 3, CURRENT_DATE - INTERVAL '120 days', 58.0, 50.0, 'Cerramiento perimetral completado. Instalaciones eléctricas al 80%. Se detectó defecto menor en soldadura (resuelto in situ).', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), 4, CURRENT_DATE - INTERVAL '70 days', 85.0, 78.0, 'Terminaciones interiores y exteriores al 90%. Pintura y señalética. Programación de recepción provisoria con municipio.', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), 5, CURRENT_DATE - INTERVAL '35 days', 100.0, 98.5, 'Obra 100% completada. Recepción definitiva firmada. Informe final entregado al CORE. Cierre administrativo en proceso.', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- H3: FRIL-005 — 2 informes
+INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, issues_detected, reported_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), 1, CURRENT_DATE - INTERVAL '55 days', 20.0, 15.0, 'Desmontaje estructura antigua completado. Nuevo trazado de pilares marcado. Equipo de 8 personas.', NULL, (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'), 2, CURRENT_DATE - INTERVAL '20 days', 40.0, 32.0, 'Pilares instalados. Estructura metálica al 60%. Lluvia retrasó 5 días. Solicitud extensión plazo ingresada (MOD-002).', 'Alza 12% en costo materiales — evaluar modificación presupuestaria.', (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- H4: TRF-003 — 2 informes
+INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, issues_detected, reported_by_id) VALUES
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), 1, CURRENT_DATE - INTERVAL '40 days', 25.0, 20.0, 'Capacitación operadores turísticos Fase 1 completada (8 comunas). Señalética en proceso de fabricación.', 'SERNATUR no ha designado contraparte técnica regional (PRB-004).', (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl')),
+((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), 2, CURRENT_DATE - INTERVAL '10 days', 38.0, 30.0, 'Señalética 30% instalada en rutas principales. Actividades de terreno retrasadas por falta de contraparte SERNATUR.', 'Problema de coordinación persiste — escalamiento N2 activado.', (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl'))
+ON CONFLICT DO NOTHING;
+
+-- Genéricos: resto F4+ con 1 informe
 DO $$
 DECLARE
-    v_ipr RECORD;
-    v_idx INTEGER := 0;
-    v_reporter UUID;
+    v_ipr RECORD; v_idx INTEGER := 0; v_reporter UUID;
+    v_heroes TEXT[] := ARRAY['DEMO-R-SNI-007','DEMO-R-SNI-008','DEMO-R-FRIL-005','DEMO-R-TRF-003'];
 BEGIN
     SELECT id INTO v_reporter FROM core."user" WHERE email='jefe.dit@goreos.cl';
-
     FOR v_ipr IN
-        SELECT i.id FROM core.ipr i
-        JOIN ref.category c ON i.status_id = c.id
-        WHERE i.codigo_bip LIKE 'DEMO-R-%'
+        SELECT i.id FROM core.ipr i JOIN ref.category c ON i.status_id = c.id
+        WHERE i.codigo_bip LIKE 'DEMO-R-%' AND i.codigo_bip != ALL(v_heroes)
           AND c.code IN ('EN_EJECUCION','EN_OBRA','RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA','SUSPENDIDO','EN_RENDICION','RENDICION_APROBADA','EN_CIERRE_ADMINISTRATIVO','CERRADO','FORMALIZADO')
         ORDER BY i.codigo_bip
     LOOP
         v_idx := v_idx + 1;
         INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, reported_by_id)
-        VALUES (v_ipr.id, 1, CURRENT_DATE - INTERVAL '30 days',
-                LEAST(v_idx * 15.0, 100.0), LEAST(v_idx * 12.0, 100.0),
+        VALUES (v_ipr.id, 1, CURRENT_DATE - INTERVAL '30 days', LEAST(v_idx * 15.0, 100.0), LEAST(v_idx * 12.0, 100.0),
                 'Informe de avance N°1 — progreso según planificación', v_reporter)
         ON CONFLICT DO NOTHING;
     END LOOP;
