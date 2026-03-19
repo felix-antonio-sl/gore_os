@@ -79,6 +79,18 @@ DELETE FROM core.dgi_process_actor WHERE process_id IN (SELECT id FROM core.dgi_
 DELETE FROM core.dgi_process WHERE code LIKE 'DEMO-R-%';
 DELETE FROM core.dgi_indicator WHERE code LIKE 'DEMO-R-%';
 
+-- TIER 5B: Cadenas IPR↔Convenio↔Resolución
+-- Nullify resolution_id on CDPs before deleting resolutions
+UPDATE core.budget_commitment SET resolution_id = NULL
+WHERE commitment_number LIKE 'DEMO-R-%' AND resolution_id IS NOT NULL;
+-- Nullify closure_act_id before deleting admin acts
+UPDATE core.ipr_closure SET closure_act_id = NULL
+WHERE ipr_id IN (SELECT id FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%') AND closure_act_id IS NOT NULL;
+-- Delete resolutions (must come before admin acts due to FK)
+DELETE FROM core.resolution WHERE administrative_act_id IN (
+    SELECT id FROM core.administrative_act WHERE act_number LIKE 'DEMO-R-%'
+);
+
 -- TIER 5: Normativo + Operacional
 DELETE FROM core.ipr_problem WHERE code LIKE 'DEMO-R-%';
 DELETE FROM core.operational_commitment WHERE code LIKE 'DEMO-R-%';

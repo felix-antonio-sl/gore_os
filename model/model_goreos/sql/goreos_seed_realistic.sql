@@ -2068,6 +2068,216 @@ ON CONFLICT (code) DO NOTHING;
 
 
 -- =============================================================================
+-- TIER 5B: CADENAS IPR ↔ CONVENIO ↔ RESOLUCIÓN ↔ CDP
+-- =============================================================================
+-- Conecta las entidades que estaban desvinculadas:
+-- 1. resolution: puente entre administrative_act ↔ ipr ↔ agreement
+-- 2. budget_commitment.resolution_id: CDP vinculado a resolución
+-- 3. ipr_closure.closure_act_id: cierre vinculado a acto administrativo
+-- 4. renditions: rendiciones para convenios F4+ nuevos
+
+-- 5B.1 RESOLUCIONES — vinculan actos administrativos con IPRs y convenios
+DO $$
+DECLARE
+    v_aprobatoria UUID; v_modificatoria UUID;
+    v_sub_convenio UUID; v_sub_pago UUID; v_sub_modifica UUID;
+    v_admin UUID;
+BEGIN
+    SELECT id INTO v_aprobatoria FROM ref.category WHERE scheme='resolution_type' AND code='APROBATORIA';
+    SELECT id INTO v_modificatoria FROM ref.category WHERE scheme='resolution_type' AND code='MODIFICATORIA';
+    SELECT id INTO v_sub_convenio FROM ref.category WHERE scheme='resolution_subtype' AND code='APRUEBA_CONVENIO';
+    SELECT id INTO v_sub_pago FROM ref.category WHERE scheme='resolution_subtype' AND code='APRUEBA_PAGO';
+    SELECT id INTO v_sub_modifica FROM ref.category WHERE scheme='resolution_subtype' AND code='MODIFICA_PRESUPUESTO';
+    SELECT id INTO v_admin FROM core."user" WHERE email='admin@goreos.cl';
+
+    -- RES-001: Resolución aprueba convenio SNI-007 ↔ AGR-006 (SERVIU pavimentación)
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, agreement_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-RES-004'),
+        v_aprobatoria, v_sub_convenio,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-007'),
+        (SELECT id FROM core.agreement WHERE agreement_number='DEMO-R-AGR-006'),
+        5800000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-RES-004')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-002: Resolución aprueba convenio EXT-003 ↔ AGR-005 (Constructora parque)
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, agreement_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-RES-003'),
+        v_aprobatoria, v_sub_convenio,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'),
+        (SELECT id FROM core.agreement WHERE agreement_number='DEMO-R-AGR-005'),
+        2800000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-RES-003')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-003: Resolución aprueba pago cuota convenio FRIL-005
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, agreement_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-RES-007'),
+        v_aprobatoria, v_sub_pago,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-005'),
+        (SELECT id FROM core.agreement WHERE agreement_number='DEMO-R-AGR-007'),
+        36666666, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-RES-007')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-004: Decreto aprueba CDP SNI-006 (piscina Coihueco)
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-DEC-001'),
+        v_aprobatoria, v_sub_pago,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-006'),
+        1600000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-DEC-001')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-005: Decreto modifica presupuesto programa DIDESO
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-DEC-002'),
+        v_modificatoria, v_sub_modifica,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-003'),
+        95000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-DEC-002')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-006: Decreto asignación FNDR multicancha Yungay (cerrado)
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, agreement_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-DEC-003'),
+        v_aprobatoria, v_sub_convenio,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'),
+        (SELECT id FROM core.agreement WHERE agreement_number='DEMO-R-AGR-014'),
+        890000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-DEC-003')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-007: Decreto convenio marco UBB
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, agreement_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-DEC-004'),
+        v_aprobatoria, v_sub_convenio,
+        (SELECT id FROM core.agreement WHERE agreement_number='DEMO-R-AGR-018'),
+        1500000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-DEC-004')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-008: Resolución aprueba convenio TRF-003 ↔ AGR-008 (SERNATUR turismo)
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, agreement_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-RES-004'),
+        v_aprobatoria, v_sub_convenio,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'),
+        (SELECT id FROM core.agreement WHERE agreement_number='DEMO-R-AGR-008'),
+        280000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-RES-004')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-009: Resolución cierre multicancha Yungay
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, ipr_id, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-RES-009'),
+        v_aprobatoria,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'),
+        v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-RES-009')
+    ON CONFLICT DO NOTHING;
+
+    -- RES-010: Resolución aprueba ambulancias SAMU
+    INSERT INTO core.resolution (administrative_act_id, resolution_type_id, resolution_subtype_id, ipr_id, budget_amount, created_by_id)
+    SELECT
+        (SELECT id FROM core.administrative_act WHERE act_number='DEMO-R-RES-008'),
+        v_aprobatoria, v_sub_pago,
+        (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRPD-002'),
+        480000000, v_admin
+    WHERE EXISTS (SELECT 1 FROM core.administrative_act WHERE act_number='DEMO-R-RES-008')
+    ON CONFLICT DO NOTHING;
+END $$;
+
+-- 5B.2 CDP ↔ RESOLUCIÓN — vincular CDPs originales a resoluciones
+DO $$
+DECLARE
+    v_res_id UUID;
+BEGIN
+    -- CDP-001 (SNI-006 piscina) → resolución del decreto DEC-001
+    SELECT r.id INTO v_res_id FROM core.resolution r
+    JOIN core.administrative_act a ON r.administrative_act_id = a.id
+    WHERE a.act_number = 'DEMO-R-DEC-001' LIMIT 1;
+
+    IF v_res_id IS NOT NULL THEN
+        UPDATE core.budget_commitment SET resolution_id = v_res_id
+        WHERE commitment_number = 'DEMO-R-CDP-001' AND resolution_id IS NULL;
+    END IF;
+
+    -- CDP-019 (SNI-008 cerrado) → resolución del decreto DEC-003
+    SELECT r.id INTO v_res_id FROM core.resolution r
+    JOIN core.administrative_act a ON r.administrative_act_id = a.id
+    WHERE a.act_number = 'DEMO-R-DEC-003'
+    AND r.ipr_id = (SELECT id FROM core.ipr WHERE codigo_bip = 'DEMO-R-SNI-008')
+    LIMIT 1;
+
+    IF v_res_id IS NOT NULL THEN
+        UPDATE core.budget_commitment SET resolution_id = v_res_id
+        WHERE commitment_number = 'DEMO-R-CDP-019' AND resolution_id IS NULL;
+    END IF;
+END $$;
+
+-- 5B.3 CIERRE ↔ ACTO: moved to TIER 10.2b (after ipr_closure INSERT)
+
+-- 5B.4 RENDICIONES PARA CONVENIOS NUEVOS (F4+)
+-- Genera 1-2 rendiciones por convenio F4+ nuevo que no tenga rendiciones
+DO $$
+DECLARE
+    v_agr RECORD;
+    v_pendiente UUID; v_en_revision UUID; v_aprobada UUID; v_observada UUID;
+    v_states UUID[];
+    v_idx INTEGER := 0;
+    v_reporter UUID;
+BEGIN
+    SELECT id INTO v_pendiente FROM ref.category WHERE scheme='rendition_state' AND code='PENDIENTE';
+    SELECT id INTO v_en_revision FROM ref.category WHERE scheme='rendition_state' AND code='EN_REVISION_RTF';
+    SELECT id INTO v_aprobada FROM ref.category WHERE scheme='rendition_state' AND code='APROBADA';
+    SELECT id INTO v_observada FROM ref.category WHERE scheme='rendition_state' AND code='OBSERVADA';
+    SELECT id INTO v_reporter FROM core."user" WHERE email='rtf.daf@goreos.cl';
+
+    v_states := ARRAY[v_pendiente, v_en_revision, v_aprobada, v_observada, v_pendiente, v_en_revision];
+
+    FOR v_agr IN
+        SELECT a.id, a.agreement_number, a.receiver_id
+        FROM core.agreement a
+        JOIN ref.category s ON a.state_id = s.id
+        WHERE a.agreement_number LIKE 'DEMO-R-AGR-2%' -- New batch (200+)
+          AND s.code = 'VIGENTE'
+          AND NOT EXISTS (SELECT 1 FROM core.rendition r WHERE r.agreement_id = a.id)
+        ORDER BY a.agreement_number
+    LOOP
+        v_idx := v_idx + 1;
+
+        -- Rendición trimestre anterior
+        INSERT INTO core.rendition (agreement_id, renderer_id, state_id, period_start, period_end, submitted_at, created_by_id)
+        VALUES (v_agr.id, v_agr.receiver_id,
+                v_states[1 + ((v_idx - 1) % 6)],
+                '2025-10-01', '2025-12-31',
+                CASE WHEN v_idx % 3 != 0 THEN CURRENT_TIMESTAMP - (v_idx * 3 * INTERVAL '1 day') ELSE NULL END,
+                v_reporter)
+        ON CONFLICT DO NOTHING;
+
+        -- Rendición trimestre actual (solo para algunos)
+        IF v_idx % 2 = 0 THEN
+            INSERT INTO core.rendition (agreement_id, renderer_id, state_id, period_start, period_end, submitted_at, created_by_id)
+            VALUES (v_agr.id, v_agr.receiver_id, v_pendiente,
+                    '2026-01-01', '2026-03-31', NULL, v_reporter)
+            ON CONFLICT DO NOTHING;
+        END IF;
+    END LOOP;
+
+    RAISE NOTICE 'Generated renditions for % new agreements', v_idx;
+END $$;
+
+
+-- =============================================================================
 -- TIER 6: DGI CORE (~70 registros)
 -- =============================================================================
 
@@ -2487,6 +2697,13 @@ INSERT INTO core.ipr_closure (ipr_id, closure_date, closure_report, physical_com
 ((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-008'), CURRENT_DATE - INTERVAL '30 days', 'Cierre administrativo multicancha techada Yungay. Obra ejecutada al 100%, sin observaciones pendientes.', 100.00, 98.50, 876000000, (SELECT id FROM core."user" WHERE email='jefe.dipir@goreos.cl'), CURRENT_TIMESTAMP - INTERVAL '28 days', (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
 ((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-G06-004'), CURRENT_DATE - INTERVAL '45 days', 'Cierre estudio zonificación borde costero Itata. Productos entregados al MDSF y aprobados.', 100.00, 100.00, 210000000, (SELECT id FROM core."user" WHERE email='jefe.diplade@goreos.cl'), CURRENT_TIMESTAMP - INTERVAL '43 days', (SELECT id FROM core."user" WHERE email='analista.diplade@goreos.cl'))
 ON CONFLICT DO NOTHING;
+
+-- 10.2b: Vincular cierres con actos administrativos
+UPDATE core.ipr_closure SET closure_act_id = (
+    SELECT id FROM core.administrative_act WHERE act_number = 'DEMO-R-RES-009'
+)
+WHERE ipr_id = (SELECT id FROM core.ipr WHERE codigo_bip = 'DEMO-R-SNI-008')
+  AND closure_act_id IS NULL;
 
 -- 10.3 IPR_EXPOST_EVALUATION (1) — post-CERRADO, 4 dimensiones
 INSERT INTO core.ipr_expost_evaluation (ipr_id, evaluation_date, evaluator_id, evaluation_type_id, impact_score, sustainability_score, efficiency_score, effectiveness_score, overall_rating_id, findings, recommendations, lessons_learned) VALUES
