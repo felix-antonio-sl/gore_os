@@ -755,9 +755,302 @@ ON CONFLICT (codigo_bip) DO NOTHING;
 
 
 -- =============================================================================
--- TIER 3: SATÉLITES IPR (ENRIQUECIDOS)
+-- TIER 2B: IPRs ADICIONALES (~70 registros via DO block)
 -- =============================================================================
--- 6 "IPRs héroe" con cadenas completas:
+-- Genera 70 IPRs más para llegar a 110 total.
+-- Nombres realistas de proyectos Región de Ñuble.
+-- Distribución: ~10 F0, ~12 F1, ~15 F2, ~8 F3, ~18 F4, ~7 F5.
+
+DO $$
+DECLARE
+    v_codes TEXT[];
+    v_names TEXT[];
+    v_natures TEXT[];
+    v_types TEXT[];
+    v_states TEXT[];
+    v_phases TEXT[];
+    v_mechs TEXT[];
+    v_sources TEXT[];
+    v_divs TEXT[];
+    v_sectors TEXT[];
+    v_users TEXT[];
+    v_amounts NUMERIC[];
+    v_days INTEGER[];
+    v_i INTEGER;
+BEGIN
+    -- === Parallel arrays: 70 IPRs ===
+    v_codes := ARRAY[
+        -- SNI extras (17)
+        'DEMO-R-SNI-101','DEMO-R-SNI-102','DEMO-R-SNI-103','DEMO-R-SNI-104','DEMO-R-SNI-105',
+        'DEMO-R-SNI-106','DEMO-R-SNI-107','DEMO-R-SNI-108','DEMO-R-SNI-109','DEMO-R-SNI-110',
+        'DEMO-R-SNI-111','DEMO-R-SNI-112','DEMO-R-SNI-113','DEMO-R-SNI-114','DEMO-R-SNI-115',
+        'DEMO-R-SNI-116','DEMO-R-SNI-117',
+        -- FRIL extras (13)
+        'DEMO-R-FRIL-101','DEMO-R-FRIL-102','DEMO-R-FRIL-103','DEMO-R-FRIL-104','DEMO-R-FRIL-105',
+        'DEMO-R-FRIL-106','DEMO-R-FRIL-107','DEMO-R-FRIL-108','DEMO-R-FRIL-109','DEMO-R-FRIL-110',
+        'DEMO-R-FRIL-111','DEMO-R-FRIL-112','DEMO-R-FRIL-113',
+        -- C33 extras (11)
+        'DEMO-R-C33-101','DEMO-R-C33-102','DEMO-R-C33-103','DEMO-R-C33-104','DEMO-R-C33-105',
+        'DEMO-R-C33-106','DEMO-R-C33-107','DEMO-R-C33-108','DEMO-R-C33-109','DEMO-R-C33-110',
+        'DEMO-R-C33-111',
+        -- SUBV8 extras (10)
+        'DEMO-R-SUBV8-101','DEMO-R-SUBV8-102','DEMO-R-SUBV8-103','DEMO-R-SUBV8-104','DEMO-R-SUBV8-105',
+        'DEMO-R-SUBV8-106','DEMO-R-SUBV8-107','DEMO-R-SUBV8-108','DEMO-R-SUBV8-109','DEMO-R-SUBV8-110',
+        -- TRANSFER extras (8)
+        'DEMO-R-TRF-101','DEMO-R-TRF-102','DEMO-R-TRF-103','DEMO-R-TRF-104',
+        'DEMO-R-TRF-105','DEMO-R-TRF-106','DEMO-R-TRF-107','DEMO-R-TRF-108',
+        -- GLOSA06 extras (6)
+        'DEMO-R-G06-101','DEMO-R-G06-102','DEMO-R-G06-103','DEMO-R-G06-104','DEMO-R-G06-105','DEMO-R-G06-106',
+        -- FRPD extras (5)
+        'DEMO-R-FRPD-101','DEMO-R-FRPD-102','DEMO-R-FRPD-103','DEMO-R-FRPD-104','DEMO-R-FRPD-105'
+    ];
+
+    v_names := ARRAY[
+        -- SNI (17)
+        'Ampliación Hospital San Carlos','Construcción Gimnasio Municipal Coelemu','Mejoramiento Red APR El Carmen',
+        'Reposición Escuela Rural Pemuco','Centro Día Adulto Mayor Chillán','Ampliación CESFAM Quillón',
+        'Mejoramiento Estadio Municipal Quirihue','Paseo Peatonal Costanera Chillán','Reposición Cuartel Bomberos Yungay',
+        'Sede Comunitaria San Ignacio','Mejoramiento Parque Municipal Coihueco','Ampliación Liceo Técnico San Carlos',
+        'Puente Vehicular Río Ñuble','Mejoramiento Terminal Rodoviario Chillán','Reposición Red Alcantarillado Bulnes',
+        'Centro Cultural Ninhue','Mejoramiento Acceso Sur San Fabián',
+        -- FRIL (13)
+        'Reposición Luminarias LED Chillán Viejo','Mejoramiento Cancha Futbolito Pinto','Cierre Perimetral Escuela Cobquecura',
+        'Reposición Juegos Infantiles Plaza Ránquil','Vereda Calle Principal Treguaco','Área Verde Portezuelo',
+        'Techado Cancha Municipal El Carmen','Sede JV Villa Los Héroes Chillán','Paradero Buses Pemuco Centro',
+        'Reposición Baños Públicos Feria Quillón','Iluminación Parque Central Bulnes','Estacionamiento Municipal Coelemu',
+        'Reposición Mobiliario Urbano Plaza Yungay',
+        -- C33 (11)
+        'Conservación Ruta Q-50 Ñiquén-San Carlos','Conservación Puente Río Chillán Sur','Conservación Camino Cobquecura Alto',
+        'Conservación Edificio Municipal Treguaco','Conservación Red Vial Rural Coihueco','Conservación Puente San Fabián',
+        'Conservación Costanera Río Chillán Tr.2','Conservación Camino San Ignacio-Pemuco','Conservación Edificio GORE Ala Norte',
+        'Conservación Aceras Centro Histórico Chillán','Conservación Ruta Panorámica Itata',
+        -- SUBV8 (10)
+        'Programa Emprendedoras Rurales Ñuble','Programa Deporte Escolar Punilla','Programa Ferias Costumbristas Itata',
+        'Programa Alfabetización Digital Adultos','Programa Rescate Patrimonio Artesanal','Programa Reciclaje Comunitario Diguillín',
+        'Programa Alimentación Saludable Escuelas','Programa Turismo Rural Comunitario','Programa Capacitación Oficios Jóvenes',
+        'Programa Inclusión Deportiva PcD',
+        -- TRANSFER (8)
+        'Transferencia Innovación Agrícola UBB','Transferencia Energías Renovables Ñuble','Transferencia Acuicultura Cobquecura',
+        'Transferencia Conservación Bosque Nativo','Transferencia Gastronomía Regional','Transferencia Formación TIC Municipios',
+        'Transferencia Innovación Vitivinícola 2.0','Transferencia Observatorio Territorial',
+        -- GLOSA06 (6)
+        'Estudio Impacto Ambiental Ruta Costera','Estudio Plan Movilidad Urbana Chillán','Estudio Catastro Patrimonio Arquitectónico',
+        'Estudio Riego Tecnificado Valle Itata','Estudio Masterplan Parque Industrial','Estudio Red Ciclovías Chillán',
+        -- FRPD (5)
+        'Equipamiento Cámaras Seguridad Comunal','Adquisición Vehículos Emergencia GORE','Equipamiento Cocinas Escuelas Rurales',
+        'Adquisición Equipos Topográficos DIT','Equipamiento Bibliotecas Digitales Comunales'
+    ];
+
+    v_natures := ARRAY[
+        -- SNI: all PROYECTO
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO',
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO',
+        -- FRIL: all PROYECTO
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO',
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO',
+        -- C33: all PROYECTO
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO',
+        'PROYECTO','PROYECTO',
+        -- SUBV8: all PROGRAMA
+        'PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA',
+        -- TRANSFER: all PROGRAMA
+        'PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA','PROGRAMA',
+        -- GLOSA06: all PROYECTO
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO',
+        -- FRPD: all PROYECTO
+        'PROYECTO','PROYECTO','PROYECTO','PROYECTO','PROYECTO'
+    ];
+
+    v_types := ARRAY[
+        -- SNI
+        'INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA',
+        'INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA',
+        'INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA',
+        -- FRIL
+        'EQUIPAMIENTO','INFRAESTRUCTURA','INFRAESTRUCTURA','EQUIPAMIENTO','INFRAESTRUCTURA','INFRAESTRUCTURA',
+        'INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','INFRAESTRUCTURA','EQUIPAMIENTO','INFRAESTRUCTURA','EQUIPAMIENTO',
+        -- C33
+        'CONSERVACION','CONSERVACION','CONSERVACION','CONSERVACION','CONSERVACION','CONSERVACION',
+        'CONSERVACION','CONSERVACION','CONSERVACION','CONSERVACION','CONSERVACION',
+        -- SUBV8
+        'PROGRAMA_SOCIAL','PROGRAMA_SOCIAL','PROGRAMA_SOCIAL','PROGRAMA_SOCIAL','PROGRAMA_SOCIAL',
+        'PROGRAMA_SOCIAL','PROGRAMA_SOCIAL','PROGRAMA_SOCIAL','PROGRAMA_SOCIAL','PROGRAMA_SOCIAL',
+        -- TRANSFER
+        'TRANSFERENCIA','TRANSFERENCIA','TRANSFERENCIA','TRANSFERENCIA','TRANSFERENCIA','TRANSFERENCIA','TRANSFERENCIA','TRANSFERENCIA',
+        -- GLOSA06
+        'ESTUDIO','ESTUDIO','ESTUDIO','ESTUDIO','ESTUDIO','ESTUDIO',
+        -- FRPD
+        'EQUIPAMIENTO','EQUIPAMIENTO','EQUIPAMIENTO','EQUIPAMIENTO','EQUIPAMIENTO'
+    ];
+
+    -- States distributed across all phases:
+    -- F0(10), F1(12), F2(15), F3(8), F4(18), F5(7)
+    v_states := ARRAY[
+        -- SNI: F0(3), F1(2), F2(3), F3(2), F4(5), F5(2)
+        'INGRESADO','INGRESADO','INGRESADO','EN_REVISION','ADMISIBLE',
+        'EN_EVALUACION','RS','AD','CDP_EMITIDO','CDP_EMITIDO',
+        'EN_FORMALIZACION','FORMALIZADO','EN_EJECUCION','EN_OBRA','EN_OBRA',
+        'RECEPCION_DEFINITIVA','EN_RENDICION',
+        -- FRIL: F0(2), F1(2), F2(2), F3(1), F4(4), F5(2)
+        'INGRESADO','INGRESADO','EN_REVISION','PRE_ADMISIBLE',
+        'EN_EVALUACION','FC','CDP_EMITIDO',
+        'EN_EJECUCION','EN_EJECUCION','EN_EJECUCION','RECEPCION_PROVISORIA',
+        'CERRADO','EN_CIERRE_ADMINISTRATIVO',
+        -- C33: F0(1), F1(2), F2(2), F3(1), F4(3), F5(2)
+        'INGRESADO','EN_REVISION','ADMISIBLE','EN_EVALUACION','RS',
+        'CDP_EMITIDO','EN_EJECUCION','EN_OBRA','RECEPCION_PROVISORIA',
+        'EN_RENDICION','RENDICION_APROBADA',
+        -- SUBV8: F1(2), F2(2), F3(1), F4(3), F5(2)
+        'EN_REVISION','ADMISIBLE','EN_EVALUACION','OT','CDP_EMITIDO',
+        'FORMALIZADO','FORMALIZADO','EN_EJECUCION','EN_CIERRE_ADMINISTRATIVO','CERRADO',
+        -- TRANSFER: F1(1), F2(2), F3(1), F4(3), F5(1)
+        'ADMISIBLE','EN_EVALUACION','RF','CDP_EMITIDO',
+        'EN_FORMALIZACION','FORMALIZADO','EN_EJECUCION','TERMINADO_ANTICIPADAMENTE',
+        -- GLOSA06: F0(1), F1(1), F2(2), F4(1), F5(1)
+        'INGRESADO','EN_REVISION','EN_EVALUACION','ITF','EN_EJECUCION','CERRADO',
+        -- FRPD: F0(1), F2(1), F3(1), F4(1), F5(1)
+        'INGRESADO','AT','CDP_EMITIDO','ADJUDICADO','EN_RENDICION'
+    ];
+
+    v_phases := ARRAY[
+        -- SNI
+        'F0','F0','F0','F1','F1','F2','F2','F2','F3','F3','F4','F4','F4','F4','F4','F4','F5',
+        -- FRIL
+        'F0','F0','F1','F1','F2','F2','F3','F4','F4','F4','F4','F5','F5',
+        -- C33
+        'F0','F1','F1','F2','F2','F3','F4','F4','F4','F5','F5',
+        -- SUBV8
+        'F1','F1','F2','F2','F3','F4','F4','F4','F5','F5',
+        -- TRANSFER
+        'F1','F2','F2','F3','F4','F4','F4','F5',
+        -- GLOSA06
+        'F0','F1','F2','F2','F4','F5',
+        -- FRPD
+        'F0','F2','F3','F4','F5'
+    ];
+
+    v_mechs := ARRAY[
+        'SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI','SNI',
+        'FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL','FRIL',
+        'C33','C33','C33','C33','C33','C33','C33','C33','C33','C33','C33',
+        'SUBV8','SUBV8','SUBV8','SUBV8','SUBV8','SUBV8','SUBV8','SUBV8','SUBV8','SUBV8',
+        'TRANSFER','TRANSFER','TRANSFER','TRANSFER','TRANSFER','TRANSFER','TRANSFER','TRANSFER',
+        'GLOSA06','GLOSA06','GLOSA06','GLOSA06','GLOSA06','GLOSA06',
+        'FRPD','FRPD','FRPD','FRPD','FRPD'
+    ];
+
+    v_sources := ARRAY[
+        'FNDR','SECTORIAL','FNDR','FNDR','FNDR','SECTORIAL','FNDR','FNDR','FNDR','FNDR',
+        'FNDR','FNDR','SECTORIAL','FNDR','FNDR','FNDR','FNDR',
+        'FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR',
+        'FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR',
+        'FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR','FNDR',
+        'FIC','FNDR','FNDR','FNDR','FNDR','FNDR','FIC','FNDR',
+        'FNDR','FNDR','FNDR','FNDR','FNDR','FNDR',
+        'FNDR','FNDR','FNDR','SECTORIAL','FNDR'
+    ];
+
+    v_divs := ARRAY[
+        'DIT','DIT','DIT','DIPIR','DIDESO','DIDESO','DIT','DIT','DIPIR','DIPIR',
+        'DIT','DIPIR','DIT','DIT','DIT','DIPIR','DIPIR',
+        'DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR','DIPIR',
+        'DIT','DIT','DIT','DIT','DIT','DIT','DIT','DIT','DIT','DIT','DIT',
+        'DIDESO','DIDESO','DIFOI','DIDESO','DIDESO','DIDESO','DIDESO','DIFOI','DIDESO','DIDESO',
+        'DIFOI','DIFOI','DIFOI','DIFOI','DIFOI','DIFOI','DIFOI','DIPLADE',
+        'DIPLADE','DIPLADE','DIPLADE','DIPLADE','DIPLADE','DIPLADE',
+        'DAF','DAF','DIDESO','DIT','DIDESO'
+    ];
+
+    v_sectors := ARRAY[
+        'HEALTH','SPORTS','HEALTH','EDUCATION','HEALTH','HEALTH','SPORTS','CULTURE','SECURITY','CULTURE',
+        'ENVIRONMENT','EDUCATION','TRANSPORT','TRANSPORT','HEALTH','CULTURE','TRANSPORT',
+        'CULTURE','SPORTS','EDUCATION','CULTURE','TRANSPORT','ENVIRONMENT','SPORTS','CULTURE','TRANSPORT',
+        'HEALTH','SPORTS','TRANSPORT','SPORTS',
+        'TRANSPORT','TRANSPORT','TRANSPORT','CULTURE','TRANSPORT','TRANSPORT','TRANSPORT','TRANSPORT','CULTURE',
+        'CULTURE','TOURISM',
+        'ECONOMIC_DEV','SPORTS','TOURISM','EDUCATION','CULTURE','ENVIRONMENT','HEALTH','TOURISM','EDUCATION','SPORTS',
+        'SCIENCE','ENVIRONMENT','SCIENCE','ENVIRONMENT','TOURISM','EDUCATION','ECONOMIC_DEV','ENVIRONMENT',
+        'ENVIRONMENT','TRANSPORT','CULTURE','ENVIRONMENT','ECONOMIC_DEV','TRANSPORT',
+        'SECURITY','SECURITY','EDUCATION','SCIENCE','EDUCATION'
+    ];
+
+    v_users := ARRAY[
+        'jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','analista.dipir@goreos.cl','jefe.dideso@goreos.cl',
+        'jefe.dideso@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl',
+        'jefe.dit@goreos.cl','analista.dipir@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl',
+        'analista.dipir@goreos.cl','analista.dipir@goreos.cl',
+        'analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl',
+        'analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl',
+        'analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl','analista.dipir@goreos.cl',
+        'jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl',
+        'jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl','jefe.dit@goreos.cl',
+        'jefe.dideso@goreos.cl','jefe.dideso@goreos.cl','jefe.difoi@goreos.cl','jefe.dideso@goreos.cl','jefe.dideso@goreos.cl',
+        'jefe.dideso@goreos.cl','jefe.dideso@goreos.cl','jefe.difoi@goreos.cl','jefe.dideso@goreos.cl','jefe.dideso@goreos.cl',
+        'jefe.difoi@goreos.cl','jefe.difoi@goreos.cl','jefe.difoi@goreos.cl','jefe.difoi@goreos.cl','jefe.difoi@goreos.cl',
+        'jefe.difoi@goreos.cl','jefe.difoi@goreos.cl','analista.diplade@goreos.cl',
+        'analista.diplade@goreos.cl','analista.diplade@goreos.cl','analista.diplade@goreos.cl','analista.diplade@goreos.cl',
+        'analista.diplade@goreos.cl','analista.diplade@goreos.cl',
+        'jefe.daf@goreos.cl','jefe.daf@goreos.cl','jefe.dideso@goreos.cl','jefe.dit@goreos.cl','jefe.dideso@goreos.cl'
+    ];
+
+    v_amounts := ARRAY[
+        3200000000,1500000000,850000000,420000000,1200000000,680000000,780000000,2100000000,350000000,
+        280000000,1800000000,950000000,4200000000,3800000000,2600000000,450000000,1100000000,
+        95000000,75000000,55000000,42000000,68000000,38000000,88000000,72000000,58000000,
+        48000000,65000000,82000000,52000000,
+        520000000,380000000,290000000,180000000,450000000,310000000,680000000,240000000,350000000,420000000,280000000,
+        180000000,120000000,95000000,150000000,85000000,65000000,110000000,140000000,200000000,160000000,
+        380000000,220000000,290000000,180000000,250000000,120000000,420000000,350000000,
+        480000000,320000000,280000000,190000000,550000000,210000000,
+        250000000,180000000,95000000,320000000,140000000
+    ];
+
+    v_days := ARRAY[
+        3,5,8,18,25,48,55,22,12,9,35,40,95,130,110,20,28,
+        2,4,12,30,42,52,10,75,85,65,15,22,45,
+        6,15,20,50,58,8,100,115,18,25,35,
+        14,22,45,62,10,105,95,80,20,38,
+        25,48,68,12,32,98,88,15,
+        4,16,46,56,92,42,
+        3,55,9,22,30
+    ];
+
+    FOR v_i IN 1..array_length(v_codes, 1) LOOP
+        INSERT INTO core.ipr (
+            codigo_bip, name, ipr_nature, ipr_type_id, status_id, mcd_phase_id,
+            mechanism_id, funding_source_id, sponsor_division_id, investment_sector_id,
+            assignee_id, phase_entered_at, metadata, created_by_id
+        ) VALUES (
+            v_codes[v_i], v_names[v_i], v_natures[v_i]::ipr_nature_enum,
+            (SELECT id FROM ref.category WHERE scheme='ipr_type' AND code=v_types[v_i]),
+            (SELECT id FROM ref.category WHERE scheme='ipr_state' AND code=v_states[v_i]),
+            (SELECT id FROM ref.category WHERE scheme='mcd_phase' AND code=v_phases[v_i]),
+            (SELECT id FROM ref.category WHERE scheme='mechanism' AND code=v_mechs[v_i]),
+            (SELECT id FROM ref.category WHERE scheme='funding_source' AND code=v_sources[v_i]),
+            (SELECT id FROM core.organization WHERE code=v_divs[v_i]),
+            (SELECT id FROM ref.category WHERE scheme='investment_sector' AND code=v_sectors[v_i]),
+            (SELECT id FROM core."user" WHERE email=v_users[v_i]),
+            CURRENT_TIMESTAMP - (v_days[v_i] || ' days')::interval,
+            jsonb_build_object('monto_total', v_amounts[v_i]),
+            (SELECT id FROM core."user" WHERE email=v_users[v_i])
+        ) ON CONFLICT (codigo_bip) DO NOTHING;
+    END LOOP;
+
+    RAISE NOTICE 'Inserted % additional IPRs', array_length(v_codes, 1);
+END $$;
+
+
+-- =============================================================================
+-- TIER 3: SATÉLITES IPR (ENRIQUECIDOS — PHASE-AWARE)
+-- =============================================================================
+-- TODOS los IPRs reciben satélites ricos según su fase:
+-- F0: 3 parties, 2 territories, 1-2 milestones
+-- F1: 4 parties, 2 territories, 2-3 milestones
+-- F2: 4 parties, 3 territories, 3-5 milestones, 1 evaluation
+-- F3: 5 parties, 3 territories, 4-6 milestones, 1-2 evaluations
+-- F4: 6-8 parties (ITO/mandatario/fiscalizador), 4 territories, 6-13 milestones, 2 evals, 2-4 reports
+-- F5: 7-10 parties, 4 territories, 10-13 milestones (all completed), 2 evals, 3-5 reports
+-- 6 "IPRs héroe" con cadenas artesanales completas:
 --   H1: DEMO-R-SNI-007 (EN_OBRA, Pavimentación Chillán) — obra activa con ITO
 --   H2: DEMO-R-SNI-008 (CERRADO, Multicancha Yungay) — ciclo completo
 --   H3: DEMO-R-FRIL-005 (EN_EJECUCION, Techado Feria) — ejecución media
@@ -1012,28 +1305,168 @@ INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_
 ((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-003'), (SELECT id FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_DEF'), 'Recepción definitiva', CURRENT_DATE + INTERVAL '270 days', NULL)
 ON CONFLICT DO NOTHING;
 
--- Genéricos: 3 hitos base para los demás IPRs (no héroes)
+-- Phase-aware milestones para TODOS los demás IPRs (no héroes)
+-- F0-F1: 2-3 hitos planificados
+-- F2: 4 hitos (diseño+CDP completados, convenio+licitación planificados)
+-- F3: 5 hitos (diseño→CDP completados, convenio+licitación+inicio planificados)
+-- F4: 7-10 hitos (cadena parcialmente completada según sub-estado)
+-- F5: 8-11 hitos (todos completados)
 DO $$
 DECLARE
     v_ipr RECORD;
-    v_mt_inicio UUID; v_mt_avance UUID; v_mt_cierre UUID;
+    v_mt RECORD;
     v_heroes TEXT[] := ARRAY['DEMO-R-SNI-007','DEMO-R-SNI-008','DEMO-R-FRIL-005','DEMO-R-TRF-003','DEMO-R-SUBV8-004','DEMO-R-EXT-003'];
+    v_phase_num INTEGER;
     v_idx INTEGER := 0;
+    v_base_offset INTEGER;
+    -- Milestone type IDs
+    v_diseno UUID; v_cdp UUID; v_convenio UUID; v_licit UUID; v_adjud UUID;
+    v_inicio UUID; v_a25 UUID; v_a50 UUID; v_a75 UUID;
+    v_rprov UUID; v_rdef UUID; v_informe UUID; v_cierre UUID;
 BEGIN
-    SELECT id INTO v_mt_inicio FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA';
-    SELECT id INTO v_mt_avance FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50';
-    SELECT id INTO v_mt_cierre FROM ref.category WHERE scheme='milestone_type' AND code='CIERRE_ADMIN';
+    SELECT id INTO v_diseno FROM ref.category WHERE scheme='milestone_type' AND code='ENTREGA_DISENO';
+    SELECT id INTO v_cdp FROM ref.category WHERE scheme='milestone_type' AND code='APROBACION_CDP';
+    SELECT id INTO v_convenio FROM ref.category WHERE scheme='milestone_type' AND code='FIRMA_CONVENIO';
+    SELECT id INTO v_licit FROM ref.category WHERE scheme='milestone_type' AND code='LICITACION';
+    SELECT id INTO v_adjud FROM ref.category WHERE scheme='milestone_type' AND code='ADJUDICACION';
+    SELECT id INTO v_inicio FROM ref.category WHERE scheme='milestone_type' AND code='INICIO_OBRA';
+    SELECT id INTO v_a25 FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_25';
+    SELECT id INTO v_a50 FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_50';
+    SELECT id INTO v_a75 FROM ref.category WHERE scheme='milestone_type' AND code='AVANCE_75';
+    SELECT id INTO v_rprov FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_PROV';
+    SELECT id INTO v_rdef FROM ref.category WHERE scheme='milestone_type' AND code='RECEPCION_DEF';
+    SELECT id INTO v_informe FROM ref.category WHERE scheme='milestone_type' AND code='INFORME_FINAL';
+    SELECT id INTO v_cierre FROM ref.category WHERE scheme='milestone_type' AND code='CIERRE_ADMIN';
 
-    FOR v_ipr IN SELECT id, codigo_bip FROM core.ipr WHERE codigo_bip LIKE 'DEMO-R-%' AND codigo_bip != ALL(v_heroes) ORDER BY codigo_bip LOOP
+    FOR v_ipr IN
+        SELECT i.id, i.codigo_bip, p.code as phase_code, s.code as status_code
+        FROM core.ipr i
+        JOIN ref.category p ON i.mcd_phase_id = p.id
+        JOIN ref.category s ON i.status_id = s.id
+        WHERE i.codigo_bip LIKE 'DEMO-R-%' AND i.codigo_bip != ALL(v_heroes)
+        ORDER BY i.codigo_bip
+    LOOP
         v_idx := v_idx + 1;
-        INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date)
-        VALUES (v_ipr.id, v_mt_inicio, 'Inicio de ejecución', CURRENT_DATE - INTERVAL '60 days' + (v_idx * INTERVAL '3 days'))
-        ON CONFLICT DO NOTHING;
-        INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date)
-        VALUES (v_ipr.id, v_mt_avance, 'Avance 50% físico', CURRENT_DATE + (v_idx * INTERVAL '5 days'))
-        ON CONFLICT DO NOTHING;
-        INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date)
-        VALUES (v_ipr.id, v_mt_cierre, 'Cierre administrativo', CURRENT_DATE + INTERVAL '90 days' + (v_idx * INTERVAL '7 days'))
+        v_base_offset := v_idx * 2; -- stagger dates per IPR
+        v_phase_num := CASE v_ipr.phase_code WHEN 'F0' THEN 0 WHEN 'F1' THEN 1 WHEN 'F2' THEN 2 WHEN 'F3' THEN 3 WHEN 'F4' THEN 4 WHEN 'F5' THEN 5 END;
+
+        -- === DISEÑO (F0+ planned, F2+ completed) ===
+        IF v_phase_num >= 0 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_diseno, 'Entrega diseño / formulación',
+                    CURRENT_DATE - INTERVAL '180 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num >= 2 THEN CURRENT_DATE - INTERVAL '175 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === CDP (F1+ planned, F3+ completed) ===
+        IF v_phase_num >= 1 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_cdp, 'Aprobación CDP',
+                    CURRENT_DATE - INTERVAL '150 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num >= 3 THEN CURRENT_DATE - INTERVAL '148 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === CONVENIO (F2+ planned, F3+ completed) ===
+        IF v_phase_num >= 2 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_convenio, 'Firma de convenio',
+                    CURRENT_DATE - INTERVAL '130 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num >= 3 THEN CURRENT_DATE - INTERVAL '128 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === LICITACIÓN (F2+ planned, F4+ completed) ===
+        IF v_phase_num >= 2 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_licit, 'Publicación licitación / trato directo',
+                    CURRENT_DATE - INTERVAL '120 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num >= 4 THEN CURRENT_DATE - INTERVAL '118 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === ADJUDICACIÓN (F3+ planned, F4+ completed) ===
+        IF v_phase_num >= 3 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_adjud, 'Adjudicación',
+                    CURRENT_DATE - INTERVAL '110 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num >= 4 THEN CURRENT_DATE - INTERVAL '108 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === INICIO OBRA (F3+ planned, F4+ completed) ===
+        IF v_phase_num >= 3 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_inicio, 'Inicio de ejecución',
+                    CURRENT_DATE - INTERVAL '100 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num >= 4 AND v_ipr.status_code NOT IN ('EN_FORMALIZACION','EN_LICITACION') THEN CURRENT_DATE - INTERVAL '98 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === AVANCE 25% (F4+ planned, completed for mid-F4+) ===
+        IF v_phase_num >= 4 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_a25, 'Avance 25%',
+                    CURRENT_DATE - INTERVAL '70 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_ipr.status_code IN ('EN_OBRA','RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA','EN_EJECUCION') OR v_phase_num = 5
+                         THEN CURRENT_DATE - INTERVAL '65 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === AVANCE 50% (F4 mid+ planned, completed for late-F4/F5) ===
+        IF v_phase_num >= 4 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_a50, 'Avance 50%',
+                    CURRENT_DATE - INTERVAL '40 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_ipr.status_code IN ('RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA') OR v_phase_num = 5
+                         THEN CURRENT_DATE - INTERVAL '35 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === AVANCE 75% (F4 mid+ planned, completed for recepción/F5) ===
+        IF v_phase_num >= 4 AND v_ipr.status_code NOT IN ('EN_FORMALIZACION','EN_LICITACION','ADJUDICADO','CONTRATO_FIRMADO') THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_a75, 'Avance 75%',
+                    CURRENT_DATE + INTERVAL '10 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_ipr.status_code IN ('RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA') OR v_phase_num = 5
+                         THEN CURRENT_DATE - INTERVAL '10 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === RECEPCION PROVISORIA (F4 late+, completed for F5) ===
+        IF v_phase_num >= 4 AND v_ipr.status_code NOT IN ('EN_FORMALIZACION','FORMALIZADO','EN_LICITACION','ADJUDICADO','CONTRATO_FIRMADO') THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_rprov, 'Recepción provisoria',
+                    CURRENT_DATE + INTERVAL '40 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_ipr.status_code IN ('RECEPCION_DEFINITIVA') OR v_phase_num = 5
+                         THEN CURRENT_DATE - INTERVAL '5 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === RECEPCION DEFINITIVA (F4 late+, completed for F5) ===
+        IF v_phase_num >= 4 AND v_ipr.status_code NOT IN ('EN_FORMALIZACION','FORMALIZADO','EN_LICITACION','ADJUDICADO','CONTRATO_FIRMADO','EN_EJECUCION','EN_OBRA') THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_rdef, 'Recepción definitiva',
+                    CURRENT_DATE + INTERVAL '60 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num = 5 THEN CURRENT_DATE - INTERVAL '3 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === INFORME FINAL (F4+, completed for F5) ===
+        IF v_phase_num >= 4 THEN
+            INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+            VALUES (v_ipr.id, v_informe, 'Informe final',
+                    CURRENT_DATE + INTERVAL '80 days' + (v_base_offset * INTERVAL '1 day'),
+                    CASE WHEN v_phase_num = 5 THEN CURRENT_DATE - INTERVAL '2 days' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === CIERRE ADMIN (always planned, completed for CERRADO) ===
+        INSERT INTO core.ipr_milestone (ipr_id, milestone_type_id, description, planned_date, actual_date)
+        VALUES (v_ipr.id, v_cierre, 'Cierre administrativo',
+                CURRENT_DATE + INTERVAL '120 days' + (v_base_offset * INTERVAL '1 day'),
+                CASE WHEN v_ipr.status_code IN ('CERRADO','EN_CIERRE_ADMINISTRATIVO') THEN CURRENT_DATE - INTERVAL '1 day' + (v_base_offset * INTERVAL '1 day') ELSE NULL END)
         ON CONFLICT DO NOTHING;
     END LOOP;
 END $$;
@@ -1124,30 +1557,174 @@ INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_p
 ((SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003'), 2, CURRENT_DATE - INTERVAL '10 days', 38.0, 30.0, 'Señalética 30% instalada en rutas principales. Actividades de terreno retrasadas por falta de contraparte SERNATUR.', 'Problema de coordinación persiste — escalamiento N2 activado.', (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl'))
 ON CONFLICT DO NOTHING;
 
--- Genéricos: resto F4+ con 1 informe
+-- Phase-aware progress reports: F4 early(1-2), F4 mid(2-3), F4 late/F5(3-4)
 DO $$
 DECLARE
-    v_ipr RECORD; v_idx INTEGER := 0; v_reporter UUID;
+    v_ipr RECORD; v_idx INTEGER := 0;
     v_heroes TEXT[] := ARRAY['DEMO-R-SNI-007','DEMO-R-SNI-008','DEMO-R-FRIL-005','DEMO-R-TRF-003'];
+    v_reporter UUID;
+    v_n_reports INTEGER;
+    v_r INTEGER;
+    v_phys NUMERIC; v_fin NUMERIC;
 BEGIN
     SELECT id INTO v_reporter FROM core."user" WHERE email='jefe.dit@goreos.cl';
     FOR v_ipr IN
-        SELECT i.id FROM core.ipr i JOIN ref.category c ON i.status_id = c.id
+        SELECT i.id, i.assignee_id, s.code as status_code, p.code as phase_code
+        FROM core.ipr i
+        JOIN ref.category s ON i.status_id = s.id
+        JOIN ref.category p ON i.mcd_phase_id = p.id
         WHERE i.codigo_bip LIKE 'DEMO-R-%' AND i.codigo_bip != ALL(v_heroes)
-          AND c.code IN ('EN_EJECUCION','EN_OBRA','RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA','SUSPENDIDO','EN_RENDICION','RENDICION_APROBADA','EN_CIERRE_ADMINISTRATIVO','CERRADO','FORMALIZADO')
+          AND s.code IN ('EN_EJECUCION','EN_OBRA','RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA','SUSPENDIDO',
+                         'EN_RENDICION','RENDICION_APROBADA','EN_CIERRE_ADMINISTRATIVO','CERRADO','FORMALIZADO',
+                         'CONTRATO_FIRMADO','ADJUDICADO')
         ORDER BY i.codigo_bip
     LOOP
         v_idx := v_idx + 1;
-        INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, reported_by_id)
-        VALUES (v_ipr.id, 1, CURRENT_DATE - INTERVAL '30 days', LEAST(v_idx * 15.0, 100.0), LEAST(v_idx * 12.0, 100.0),
-                'Informe de avance N°1 — progreso según planificación', v_reporter)
-        ON CONFLICT DO NOTHING;
+
+        -- Number of reports based on how far into execution
+        v_n_reports := CASE
+            WHEN v_ipr.status_code IN ('FORMALIZADO','ADJUDICADO','CONTRATO_FIRMADO') THEN 1
+            WHEN v_ipr.status_code IN ('EN_EJECUCION','EN_OBRA','SUSPENDIDO') THEN 2 + (v_idx % 2)  -- 2 or 3
+            WHEN v_ipr.status_code IN ('RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA') THEN 3
+            WHEN v_ipr.phase_code = 'F5' THEN 3 + (v_idx % 2) -- 3 or 4
+            ELSE 2
+        END;
+
+        FOR v_r IN 1..v_n_reports LOOP
+            v_phys := LEAST((v_r::numeric / v_n_reports) * CASE
+                WHEN v_ipr.phase_code = 'F5' THEN 100
+                WHEN v_ipr.status_code IN ('RECEPCION_PROVISORIA','RECEPCION_DEFINITIVA') THEN 95
+                WHEN v_ipr.status_code IN ('EN_OBRA','EN_EJECUCION') THEN 60
+                ELSE 30
+            END, 100.0);
+            v_fin := v_phys * 0.85;
+
+            INSERT INTO core.progress_report (ipr_id, report_number, report_date, physical_progress, financial_progress, description, reported_by_id)
+            VALUES (v_ipr.id, v_r,
+                    CURRENT_DATE - ((v_n_reports - v_r + 1) * 25 * INTERVAL '1 day'),
+                    ROUND(v_phys, 1), ROUND(v_fin, 1),
+                    'Informe de avance N°' || v_r || ' — ' ||
+                    CASE v_r
+                        WHEN 1 THEN 'Inicio de actividades y movilización de recursos'
+                        WHEN 2 THEN 'Avance intermedio, sin observaciones mayores'
+                        WHEN 3 THEN 'Avance significativo, hitos contractuales en cumplimiento'
+                        ELSE 'Informe final de avance — ejecución en fase de cierre'
+                    END,
+                    COALESCE(v_ipr.assignee_id, v_reporter))
+            ON CONFLICT DO NOTHING;
+        END LOOP;
     END LOOP;
 END $$;
 
 
 -- =============================================================================
--- TIER 4: CADENA FINANCIERA (~110 registros)
+-- TIER 3B: CONVENIOS Y CDPs PARA IPRs NUEVOS (F3+)
+-- =============================================================================
+-- Genera un convenio VIGENTE + 2-3 cuotas + 1 CDP para cada IPR F3+ que no sea héroe original.
+-- Esto conecta la cadena: IPR ← CDP + Convenio ← Cuotas ← Rendiciones.
+
+DO $$
+DECLARE
+    v_ipr RECORD;
+    v_agr_num INTEGER := 200; -- Start at 200 to avoid collision with DEMO-R-AGR-001..018
+    v_cdp_num INTEGER := 100; -- Start at 100 to avoid collision with DEMO-R-CDP-001..020
+    v_vigente UUID; v_borrador UUID; v_mandato UUID; v_transferencia UUID;
+    v_pendiente UUID; v_pagado UUID; v_cdp_vigente UUID;
+    v_munis TEXT[] := ARRAY['DEMO-R-MUNI-CHILLAN','DEMO-R-MUNI-SANCARLOS','DEMO-R-MUNI-QUIRIHUE','DEMO-R-MUNI-COIHUECO','DEMO-R-MUNI-BULNES','DEMO-R-MUNI-PINTO','DEMO-R-MUNI-COELEMU'];
+    v_servs TEXT[] := ARRAY['DEMO-R-SERVIU-NUBLE','DEMO-R-MOP-NUBLE','DEMO-R-SERNATUR-NUBLE','DEMO-R-UBB','DEMO-R-CONST-ITATA','DEMO-R-ING-NUBLE','DEMO-R-FUND-NUBLE'];
+    v_agr_id UUID;
+    v_bp_id UUID;
+    v_cuota NUMERIC;
+    v_idx INTEGER := 0;
+BEGIN
+    SELECT id INTO v_vigente FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE';
+    SELECT id INTO v_borrador FROM ref.category WHERE scheme='agreement_state' AND code='BORRADOR';
+    SELECT id INTO v_mandato FROM ref.category WHERE scheme='agreement_type' AND code='MANDATO';
+    SELECT id INTO v_transferencia FROM ref.category WHERE scheme='agreement_type' AND code='TRANSFERENCIA';
+    SELECT id INTO v_pendiente FROM ref.category WHERE scheme='payment_status' AND code='PENDIENTE';
+    SELECT id INTO v_pagado FROM ref.category WHERE scheme='payment_status' AND code='PAGADO';
+    SELECT id INTO v_cdp_vigente FROM ref.category WHERE scheme='budget_commitment_status' AND code='VIGENTE';
+
+    -- Get a budget program to link CDPs to (use ciclo2 BP that already exists, or any)
+    SELECT id INTO v_bp_id FROM core.budget_program WHERE code LIKE 'DEMO-BP-%' ORDER BY code LIMIT 1;
+    IF v_bp_id IS NULL THEN
+        SELECT id INTO v_bp_id FROM core.budget_program WHERE deleted_at IS NULL ORDER BY code LIMIT 1;
+    END IF;
+
+    FOR v_ipr IN
+        SELECT i.id, i.codigo_bip, i.sponsor_division_id, p.code as phase_code, i.metadata
+        FROM core.ipr i
+        JOIN ref.category p ON i.mcd_phase_id = p.id
+        WHERE i.codigo_bip LIKE 'DEMO-R-%-1%' -- Only the new batch (101+)
+          AND p.code IN ('F3','F4','F5')
+        ORDER BY i.codigo_bip
+    LOOP
+        v_idx := v_idx + 1;
+        v_agr_num := v_agr_num + 1;
+        v_cdp_num := v_cdp_num + 1;
+
+        -- === CONVENIO ===
+        INSERT INTO core.agreement (
+            agreement_number, agreement_type_id, state_id, ipr_id, giver_id, receiver_id,
+            total_amount, signed_at, valid_from, valid_to
+        ) VALUES (
+            'DEMO-R-AGR-' || LPAD(v_agr_num::text, 3, '0'),
+            CASE WHEN v_idx % 2 = 0 THEN v_mandato ELSE v_transferencia END,
+            CASE WHEN v_ipr.phase_code = 'F3' THEN v_borrador ELSE v_vigente END,
+            v_ipr.id,
+            v_ipr.sponsor_division_id,
+            (SELECT id FROM core.organization WHERE code = v_servs[1 + (v_idx % 7)]),
+            COALESCE((v_ipr.metadata->>'monto_total')::numeric, 500000000),
+            CASE WHEN v_ipr.phase_code != 'F3' THEN CURRENT_TIMESTAMP - (v_idx * 10 * INTERVAL '1 day') ELSE NULL END,
+            CASE WHEN v_ipr.phase_code != 'F3' THEN CURRENT_TIMESTAMP - (v_idx * 10 * INTERVAL '1 day') ELSE NULL END,
+            CASE WHEN v_ipr.phase_code != 'F3' THEN CURRENT_TIMESTAMP + INTERVAL '365 days' ELSE NULL END
+        ) ON CONFLICT DO NOTHING
+        RETURNING id INTO v_agr_id;
+
+        -- === CUOTAS (3 per convenio) ===
+        IF v_agr_id IS NOT NULL THEN
+            v_cuota := ROUND(COALESCE((v_ipr.metadata->>'monto_total')::numeric, 500000000) / 3, 2);
+
+            -- Cuota 1: pagada si F4+
+            INSERT INTO core.agreement_installment (agreement_id, installment_number, amount, due_date, payment_status_id, paid_at, paid_amount)
+            VALUES (v_agr_id, 1, v_cuota,
+                    CURRENT_DATE - INTERVAL '60 days' + (v_idx * INTERVAL '3 days'),
+                    CASE WHEN v_ipr.phase_code IN ('F4','F5') THEN v_pagado ELSE v_pendiente END,
+                    CASE WHEN v_ipr.phase_code IN ('F4','F5') THEN CURRENT_TIMESTAMP - INTERVAL '55 days' ELSE NULL END,
+                    CASE WHEN v_ipr.phase_code IN ('F4','F5') THEN v_cuota ELSE NULL END)
+            ON CONFLICT DO NOTHING;
+
+            -- Cuota 2: pendiente
+            INSERT INTO core.agreement_installment (agreement_id, installment_number, amount, due_date, payment_status_id)
+            VALUES (v_agr_id, 2, v_cuota, CURRENT_DATE + INTERVAL '30 days' + (v_idx * INTERVAL '5 days'), v_pendiente)
+            ON CONFLICT DO NOTHING;
+
+            -- Cuota 3: pendiente
+            INSERT INTO core.agreement_installment (agreement_id, installment_number, amount, due_date, payment_status_id)
+            VALUES (v_agr_id, 3, v_cuota, CURRENT_DATE + INTERVAL '90 days' + (v_idx * INTERVAL '5 days'), v_pendiente)
+            ON CONFLICT DO NOTHING;
+        END IF;
+
+        -- === CDP ===
+        IF v_bp_id IS NOT NULL THEN
+            INSERT INTO core.budget_commitment (
+                commitment_number, budget_program_id, ipr_id, amount, issued_at, expires_at, status_id
+            ) VALUES (
+                'DEMO-R-CDP-' || LPAD(v_cdp_num::text, 3, '0'),
+                v_bp_id, v_ipr.id,
+                COALESCE((v_ipr.metadata->>'monto_total')::numeric, 500000000),
+                CURRENT_DATE - (v_idx * 5 * INTERVAL '1 day'),
+                '2026-12-31', v_cdp_vigente
+            ) ON CONFLICT DO NOTHING;
+        END IF;
+    END LOOP;
+
+    RAISE NOTICE 'Generated % agreements + CDPs for new F3+ IPRs', v_idx;
+END $$;
+
+
+-- =============================================================================
+-- TIER 4: CADENA FINANCIERA (~110 registros originales)
 -- =============================================================================
 
 -- 4.1 BUDGET_PROGRAMS (12) — ya existen 6 en ciclo2, estos son adicionales
@@ -1312,7 +1889,103 @@ ON CONFLICT DO NOTHING;
 
 
 -- =============================================================================
--- TIER 5: NORMATIVO + OPERACIONAL (~75 registros)
+-- TIER 4C: COMPROMISOS Y PROBLEMAS PARA IPRs NUEVOS (F4+)
+-- =============================================================================
+-- 2 compromisos por IPR F4+, 1 problema por cada 3 IPRs F4+.
+
+DO $$
+DECLARE
+    v_ipr RECORD;
+    v_ct_id UUID;
+    v_ct_visita UUID;
+    v_pendiente UUID; v_en_progreso UUID; v_completado UUID;
+    v_abierto UUID; v_en_gestion UUID;
+    v_pt_tecnico UUID; v_pt_financiero UUID; v_pt_coordinacion UUID;
+    v_com_num INTEGER := 100;
+    v_prb_num INTEGER := 100;
+    v_idx INTEGER := 0;
+    v_descs_1 TEXT[] := ARRAY['Verificar estado de obras en terreno','Coordinar próxima visita ITO','Gestionar estado de pago mensual','Preparar informe trimestral para división','Validar cumplimiento hitos contractuales','Revisar documentación rendición parcial','Coordinar con municipio agenda de actividades','Gestionar permisos ambientales pendientes'];
+    v_descs_2 TEXT[] := ARRAY['Completar registro fotográfico avance','Enviar nota técnica a evaluador','Preparar documentación para auditoría','Actualizar cronograma de ejecución','Coordinar capacitación equipo local','Gestionar ampliación de plazo','Revisar calidad de materiales recibidos','Tramitar certificado de avance parcial'];
+BEGIN
+    SELECT id INTO v_ct_id FROM ref.operational_commitment_type WHERE code = 'HITO_CONTRATO' LIMIT 1;
+    SELECT id INTO v_ct_visita FROM ref.operational_commitment_type WHERE code = 'VISITA_TERRENO' LIMIT 1;
+    SELECT id INTO v_pendiente FROM ref.category WHERE scheme='commitment_state' AND code='PENDIENTE';
+    SELECT id INTO v_en_progreso FROM ref.category WHERE scheme='commitment_state' AND code='EN_PROGRESO';
+    SELECT id INTO v_completado FROM ref.category WHERE scheme='commitment_state' AND code='COMPLETADO';
+    SELECT id INTO v_abierto FROM ref.category WHERE scheme='problem_state' AND code='ABIERTO';
+    SELECT id INTO v_en_gestion FROM ref.category WHERE scheme='problem_state' AND code='EN_GESTION';
+    SELECT id INTO v_pt_tecnico FROM ref.category WHERE scheme='problem_type' AND code='TECNICO';
+    SELECT id INTO v_pt_financiero FROM ref.category WHERE scheme='problem_type' AND code='FINANCIERO';
+    SELECT id INTO v_pt_coordinacion FROM ref.category WHERE scheme='problem_type' AND code='COORDINACION';
+
+    FOR v_ipr IN
+        SELECT i.id, i.codigo_bip, i.assignee_id, i.sponsor_division_id, s.code as status_code
+        FROM core.ipr i
+        JOIN ref.category s ON i.status_id = s.id
+        JOIN ref.category p ON i.mcd_phase_id = p.id
+        WHERE i.codigo_bip LIKE 'DEMO-R-%-1%' -- New batch only
+          AND p.code IN ('F4','F5')
+        ORDER BY i.codigo_bip
+    LOOP
+        v_idx := v_idx + 1;
+        v_com_num := v_com_num + 1;
+
+        -- Compromiso 1: PENDIENTE o EN_PROGRESO
+        INSERT INTO core.operational_commitment (
+            code, ipr_id, commitment_type_id, description, responsible_id, division_id, due_date, state_id, created_by_id
+        ) VALUES (
+            'DEMO-R-COM-' || LPAD(v_com_num::text, 3, '0'),
+            v_ipr.id, v_ct_id,
+            v_descs_1[1 + (v_idx % 8)],
+            v_ipr.assignee_id,
+            v_ipr.sponsor_division_id,
+            CURRENT_DATE + ((v_idx % 15) * INTERVAL '2 days'),
+            CASE WHEN v_idx % 3 = 0 THEN v_en_progreso ELSE v_pendiente END,
+            v_ipr.assignee_id
+        ) ON CONFLICT (code) DO NOTHING;
+
+        v_com_num := v_com_num + 1;
+
+        -- Compromiso 2: EN_PROGRESO o COMPLETADO
+        INSERT INTO core.operational_commitment (
+            code, ipr_id, commitment_type_id, description, responsible_id, division_id, due_date, state_id,
+            completed_at, created_by_id
+        ) VALUES (
+            'DEMO-R-COM-' || LPAD(v_com_num::text, 3, '0'),
+            v_ipr.id, v_ct_visita,
+            v_descs_2[1 + (v_idx % 8)],
+            v_ipr.assignee_id,
+            v_ipr.sponsor_division_id,
+            CURRENT_DATE + ((v_idx % 10) * INTERVAL '3 days'),
+            CASE WHEN v_idx % 4 = 0 THEN v_completado ELSE v_en_progreso END,
+            CASE WHEN v_idx % 4 = 0 THEN CURRENT_TIMESTAMP - INTERVAL '5 days' ELSE NULL END,
+            v_ipr.assignee_id
+        ) ON CONFLICT (code) DO NOTHING;
+
+        -- Problema: 1 cada 3 IPRs
+        IF v_idx % 3 = 0 THEN
+            v_prb_num := v_prb_num + 1;
+            INSERT INTO core.ipr_problem (
+                code, ipr_id, problem_type_id, description, state_id, detected_by_id, impact_description, created_by_id
+            ) VALUES (
+                'DEMO-R-PRB-' || LPAD(v_prb_num::text, 3, '0'),
+                v_ipr.id,
+                CASE v_idx % 3 WHEN 0 THEN v_pt_tecnico WHEN 1 THEN v_pt_financiero ELSE v_pt_coordinacion END,
+                'Problema detectado en ejecución de ' || v_ipr.codigo_bip,
+                CASE WHEN v_idx % 2 = 0 THEN v_abierto ELSE v_en_gestion END,
+                v_ipr.assignee_id,
+                'Impacto en plazo de ejecución',
+                v_ipr.assignee_id
+            ) ON CONFLICT (code) DO NOTHING;
+        END IF;
+    END LOOP;
+
+    RAISE NOTICE 'Generated % commitments + problems for new F4+ IPRs', v_com_num - 100;
+END $$;
+
+
+-- =============================================================================
+-- TIER 5: NORMATIVO + OPERACIONAL (~75 registros originales)
 -- =============================================================================
 
 -- 5.1 ADMINISTRATIVE_ACT (18) — cubriendo los 8 estados del FSM de 7 pasos
