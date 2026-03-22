@@ -31,8 +31,8 @@ INSERT INTO core.person (id, names, paternal_surname, email, is_active) VALUES
 ('a0000001-0000-0000-0000-000000000020', 'Pedro',      'López',      'control.gestion@goreos.cl', true),
 ('a0000001-0000-0000-0000-000000000021', 'Paola',      'Leiva',      'procesos@goreos.cl', true),
 ('a0000001-0000-0000-0000-000000000022', 'Roberto',    'Torres',     'td@goreos.cl', true),
-('a0000001-0000-0000-0000-000000000023', 'Martín',     'Guzmán',     'profesional.dit@goreos.cl', true),
-('a0000001-0000-0000-0000-000000000024', 'Andrea',     'Muñoz',      'profesional.dideso@goreos.cl', true)
+('a0000001-0000-0000-0000-000000000023', 'Camila',     'Soto',       'profesional.dit@goreos.cl', true),
+('a0000001-0000-0000-0000-000000000024', 'Andrés',     'Vega',       'profesional.dideso@goreos.cl', true)
 ON CONFLICT (id) DO NOTHING;
 
 -- Users (25) — password: admin123 for all

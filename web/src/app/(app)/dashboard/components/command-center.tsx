@@ -87,7 +87,7 @@ export function CommandCenter() {
       {/* 1. Contextual greeting */}
       <div>
         <h1 className="text-2xl font-bold">
-          Buenos días, {actionData?.greeting_name ?? "usuario"}
+          Buenos días, {user?.nombre?.split(" ")[0] ?? "usuario"}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
           {formatDateLong(new Date().toISOString())} — {actionData?.summary ?? "Cargando..."}
