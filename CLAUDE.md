@@ -53,7 +53,7 @@ Key files:
 - `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT
 - `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
 - `core/audit.py` — `record_event()` → txn.event (13 event_type codes, 82 integration points across 22 routers)
-- `routers/` — 28 routers, ~294 endpoints (150 GET, 84 POST, 44 PATCH, 16 DELETE). Notable: actos (7-step FSM), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals)
+- `routers/` — 29 routers, ~299 endpoints (155 GET, 85 POST, 44 PATCH, 17 DELETE). Notable: actos (7-step FSM), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals), notifications (5 endpoints + `create_notification()` helper)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -63,7 +63,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 
 - `lib/api.ts` — `ApiClient` singleton (`get/post/patch/delete<T>`). Token in localStorage (`goreos_token`). Auto-redirect on 401. Auto-extracts `.detail` from FastAPI errors. `delete()` handles 204.
 - `lib/auth.tsx` — `AuthProvider`, `useAuth()` → `{user, loading, login, logout}`
-- `lib/format.ts` — `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency` (es-CL). **All files import from here — never define local format functions.**
+- `lib/format.ts` — `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency`, `formatRelativeTime` (es-CL). **All files import from here — never define local format functions.**
 - `types/index.ts` — all interfaces. `User.population` (`"operativa"|"dgi"`) drives routing.
 - `components/sidebar.tsx` — 5-7 collapsible `NavSection` per population (localStorage-persisted). Cross-population: Servicios visible in operativa.
 - `components/filter-bar.tsx` — shared filter bar with local-state debounced search (300ms). **Search input uses `localSearch` state for instant feedback + debounced propagation.** Used by 10+ list pages.
@@ -71,6 +71,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 - `components/page-header.tsx` — shared header (`title`, `description?`, `actions?`, `breadcrumbs?`, `accentColor?`). **All list pages must use this.** Domain accents: indigo(IPR), amber(compromisos), emerald(finanzas), violet(institucional), rose(riesgos), cyan(DGI), teal(servicios).
 - `components/empty-state.tsx` — `compact` for tabs/inline, normal for full-page. **All empty states must use this.**
 - `components/confirm-dialog.tsx` — AlertDialog for destructive actions. **Always use for delete/revert.**
+- `components/notification-panel.tsx` — Bell icon dropdown: unread badge (polls 60s), 7 category icons, relative timestamps, optimistic mark-as-read. Replaces old alerts popover in header.
 - `components/page-guard.tsx` — wrapper: auth check + role gate + loading skeleton + error state
 - `components/breadcrumb.tsx` — navigable breadcrumbs, used in 18 detail/create pages
 - `components/progress-cell.tsx` — inline progress bar (green ≥70%, amber ≥40%, red <40%)
@@ -80,7 +81,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 
 ### Database
 
-**120 tables across 4 schemas** (92 core + 5 meta + 3 ref + 20 txn partitions):
+**121 tables across 4 schemas** (93 core + 5 meta + 3 ref + 20 txn partitions):
 
 | Schema | Purpose |
 |--------|---------|
@@ -176,7 +177,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 - **DGI Data**: `dgi_indicator` (5 dimensions, lifecycle VIGENTE/DEPRECADO/ARCHIVADO/PROPUESTO, refresh idempotent), `dgi_cartera` (IPR portfolio + health VERDE/AMARILLO/ROJO), `dgi_report` (4 types, atomic `jsonb_set`), `dgi_decree` (DS7-DS12, Ley 21.180).
 - **DGI Improvement**: `dgi_initiative` (Kanban, WIP EN_CURSO:5/REVISION:2, `sort_order` @dnd-kit, DMAIC `jsonb_set`, **5th phase=VERIFY not CONTROL**, `trg_initiative_timing`), `dgi_process` (hub + 6 satellites, bridges Process→Opportunity→Initiative), `dgi_bottleneck_investigation` (6-state, 3 detection queries).
 - **DGI Coordination**: `dgi_ar_decision` (4 types, `source_session_id` crisis bridge), `dgi_escalation` (4 levels, auto-code ESC-YYYY-NNNN, auto-alert), `dgi_service`+`dgi_service_request`+`dgi_sla` (catalog visible all populations, any user creates requests, DGI manages), `dgi_td_sessions` (COMITE-TD, no voting), `calendar` (UNION ALL 5 sources).
-- **Cross-cutting**: `risk` (6-state FSM, RSK-NNNN, auto-alert ALTA/MUY_ALTA, role scoping: ANALISTA/RTF/JURIDICO→own, JEFE→division, ADMIN→all), `command_center` (6 parallel queries + timeline, 4 admin/exec roles).
+- **Cross-cutting**: `risk` (6-state FSM, RSK-NNNN, auto-alert ALTA/MUY_ALTA, role scoping: ANALISTA/RTF/JURIDICO→own, JEFE→division, ADMIN→all), `command_center` (6 parallel queries + timeline, 4 admin/exec roles), `notification` (per-user, 7 categories, `create_notification()` helper for other routers, bell icon dropdown with unread badge polling 60s).
 
 ## Demo Data
 
