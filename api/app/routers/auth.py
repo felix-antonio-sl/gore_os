@@ -49,9 +49,7 @@ async def login(form: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = 
         lock_clause = ""
         params: dict = {"uid": str(user["id"]), "attempts": new_attempts}
         if new_attempts >= _MAX_LOGIN_ATTEMPTS:
-            lock_clause = ", locked_until = NOW() + INTERVAL ':mins minutes'"
-            # Use raw SQL interval to avoid asyncpg cast issues
-            lock_clause = f", locked_until = NOW() + INTERVAL '{_LOCKOUT_MINUTES} minutes'"
+            lock_clause = ", locked_until = NOW() + INTERVAL '15 minutes'"
         await db.execute(
             text(f'UPDATE core."user" SET failed_login_attempts = :attempts{lock_clause}, updated_at = NOW() WHERE id = CAST(:uid AS uuid)'),
             params,

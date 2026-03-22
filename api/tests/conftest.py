@@ -81,6 +81,12 @@ async def cleanup_test_artifacts(db: AsyncSession):
     await db.execute(text(
         "DELETE FROM core.ipr WHERE codigo_bip LIKE 'ADM-%'"
     ))
+    # Clean analista party test IPRs
+    await db.execute(text(
+        "DELETE FROM core.ipr_party WHERE ipr_id IN "
+        "(SELECT id FROM core.ipr WHERE codigo_bip LIKE 'ANAL-PTY-%')"
+    ))
+    await db.execute(text("DELETE FROM core.ipr WHERE codigo_bip LIKE 'ANAL-PTY-%'"))
     # Clean C33 certification test IPRs
     await db.execute(text("DELETE FROM core.ipr WHERE codigo_bip LIKE 'C33-%'"))
     # Clean parametric test data

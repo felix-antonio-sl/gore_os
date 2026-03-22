@@ -36,6 +36,9 @@ def _require_roles(user: dict, *roles: str) -> None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
 
+_CUOTA_FIELD_ALLOWLIST = {"payment_status_id", "paid_at", "paid_amount", "payment_reference"}
+
+
 async def _get_convenio_or_404(convenio_id: UUID, db: AsyncSession) -> dict:
     result = await db.execute(
         text("""
@@ -1004,7 +1007,7 @@ async def update_cuota(
     if not check.scalar():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cuota no encontrada")
 
-    updates = body.model_dump(exclude_none=True)
+    updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in _CUOTA_FIELD_ALLOWLIST}
     if not updates:
         return {"message": "Sin cambios"}
 

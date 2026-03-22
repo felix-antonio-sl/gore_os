@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 
 _INSECURE_JWT_SECRET = "goreos-dev-secret-change-in-production"
+_INSECURE_DB_PASSWORD = "goreos_2026"
 
 
 class Settings(BaseSettings):
@@ -20,11 +21,16 @@ class Settings(BaseSettings):
     CORS_ORIGINS: list[str] = ["http://localhost:3000"]
 
     @model_validator(mode="after")
-    def _check_jwt_secret(self):
+    def _check_secrets(self):
         if self.JWT_SECRET == _INSECURE_JWT_SECRET and self.ENV != "development":
             raise ValueError(
                 "JWT_SECRET must be changed from the default value in non-development environments. "
                 "Set a strong secret via the JWT_SECRET environment variable."
+            )
+        if self.DB_PASSWORD == _INSECURE_DB_PASSWORD and self.ENV != "development":
+            raise ValueError(
+                "DB_PASSWORD must be changed from the default value in non-development environments. "
+                "Set a strong password via the DB_PASSWORD environment variable."
             )
         return self
 

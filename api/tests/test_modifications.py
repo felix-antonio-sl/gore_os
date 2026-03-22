@@ -25,7 +25,10 @@ async def _get_cat_id(db: AsyncSession, scheme: str, code: str) -> str:
     return str(row["id"])
 
 
-async def _create_test_ipr(db: AsyncSession, status_code: str = "EN_EJECUCION") -> str:
+async def _create_test_ipr(
+    db: AsyncSession, status_code: str = "EN_EJECUCION",
+    assignee_id: str | None = None,
+) -> str:
     bip = f"MOD-{uuid.uuid4().hex[:8].upper()}"
     status_id = await _get_cat_id(db, "ipr_state", status_code)
     phase_id = await _get_cat_id(db, "mcd_phase", "F4")
@@ -33,15 +36,16 @@ async def _create_test_ipr(db: AsyncSession, status_code: str = "EN_EJECUCION") 
         text("""
             INSERT INTO core.ipr (
                 codigo_bip, name, ipr_nature, status_id, mcd_phase_id,
-                created_at, updated_at
+                assignee_id, created_at, updated_at
             ) VALUES (
                 :bip, 'Modification Test IPR', 'PROGRAMA',
                 CAST(:status_id AS uuid), CAST(:phase_id AS uuid),
-                NOW(), NOW()
+                CAST(:assignee_id AS uuid), NOW(), NOW()
             )
             RETURNING id
         """),
-        {"bip": bip, "status_id": status_id, "phase_id": phase_id},
+        {"bip": bip, "status_id": status_id, "phase_id": phase_id,
+         "assignee_id": assignee_id},
     )).mappings().first()
     await db.commit()
     return str(row["id"])
@@ -237,7 +241,11 @@ async def test_fsm_terminals_have_no_transitions(db: AsyncSession):
 
 async def test_create_modification_encargado(client: AsyncClient, analista_token: str, db: AsyncSession):
     """ANALISTA (in WRITE_OPERATIONAL_ROLES) can create modifications."""
-    ipr_id = await _create_test_ipr(db)
+    # Set assignee_id to analista user for scope check
+    analista_id = str((await db.execute(
+        text("SELECT id FROM core.\"user\" WHERE email = 'analista.dipir@goreos.cl'")
+    )).scalar())
+    ipr_id = await _create_test_ipr(db, assignee_id=analista_id)
     type_id = await _get_cat_id(db, "modification_type", "TECNICO")
     resp = await client.post(
         f"/api/ipr/{ipr_id}/modificaciones",

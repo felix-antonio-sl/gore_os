@@ -35,7 +35,7 @@ async def _create_item(client, admin_token, track_id, code, role="JEFE_DIVISION"
     return next(i["id"] for i in items_resp.json() if i["code"] == code)
 
 
-async def _create_ipr_pre_admisible(db, track_id):
+async def _create_ipr_pre_admisible(db, track_id, sponsor_division_id=None):
     """Create a PRE_ADMISIBLE IPR linked to the given financing track.
 
     The track_id is from core.financing_track; we look up the matching
@@ -51,12 +51,17 @@ async def _create_ipr_pre_admisible(db, track_id):
         JOIN core.financing_track ft ON ft.code = c.code
         WHERE c.scheme = 'mechanism' AND ft.id = CAST(:track_id AS uuid)
     """), {"track_id": track_id})).scalar())
+    # Default sponsor_division_id to DAF for scope check compatibility
+    if not sponsor_division_id:
+        sponsor_division_id = str((await db.execute(sa_text(
+            "SELECT id FROM core.organization WHERE code = 'DAF' AND deleted_at IS NULL"
+        ))).scalar())
     code = f"ADM-{uuid.uuid4().hex[:6]}"
     ipr_id = str((await db.execute(sa_text("""
-        INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, mechanism_id)
-        VALUES (:code, 'Test Admissibility', 'PROYECTO', :status_id, CAST(:mechanism_id AS uuid))
+        INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, mechanism_id, sponsor_division_id)
+        VALUES (:code, 'Test Admissibility', 'PROYECTO', :status_id, CAST(:mechanism_id AS uuid), CAST(:div_id AS uuid))
         RETURNING id
-    """), {"code": code, "status_id": status_id, "mechanism_id": mechanism_id})).scalar())
+    """), {"code": code, "status_id": status_id, "mechanism_id": mechanism_id, "div_id": sponsor_division_id})).scalar())
     await db.commit()
     return ipr_id
 
@@ -254,12 +259,16 @@ async def test_verify_rejects_non_pre_admisible(client: AsyncClient, admin_token
         JOIN core.financing_track ft ON ft.code = c.code
         WHERE c.scheme = 'mechanism' AND ft.id = CAST(:track_id AS uuid)
     """), {"track_id": track_id})).scalar())
+    # Look up DAF division for scope check
+    daf_div_id = str((await db.execute(sa_text(
+        "SELECT id FROM core.organization WHERE code = 'DAF' AND deleted_at IS NULL"
+    ))).scalar())
     code = f"ADM-NOPRE-{uuid.uuid4().hex[:6]}"
     ipr_id = str((await db.execute(sa_text("""
-        INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, mechanism_id)
-        VALUES (:code, 'Not PRE', 'PROYECTO', CAST(:s AS uuid), CAST(:m AS uuid))
+        INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, mechanism_id, sponsor_division_id)
+        VALUES (:code, 'Not PRE', 'PROYECTO', CAST(:s AS uuid), CAST(:m AS uuid), CAST(:div_id AS uuid))
         RETURNING id
-    """), {"code": code, "s": en_revision_id, "m": mechanism_id})).scalar())
+    """), {"code": code, "s": en_revision_id, "m": mechanism_id, "div_id": daf_div_id})).scalar())
     await db.commit()
 
     resp = await client.post(

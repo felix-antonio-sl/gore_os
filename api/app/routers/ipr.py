@@ -12,6 +12,7 @@ from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import OPERATIONAL_ROLES, DGI_ROLES, WRITE_OPERATIONAL_ROLES
 from app.core.audit import record_event
+from app.core.scope import check_ipr_access
 from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate, TrackInfo, CurrentActor
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
@@ -2499,6 +2500,7 @@ async def get_track_info(
     db: AsyncSession = Depends(get_db),
 ):
     """Return poly-switch track info for an IPR based on its mechanism."""
+    await check_ipr_access(db, user, ipr_id)
     row = (await db.execute(
         text("""
             SELECT m.code AS mechanism_code, m.label AS mechanism_label
@@ -2580,6 +2582,7 @@ async def get_ipr(
     Retrieve full IPR detail with all category labels resolved and
     aggregated counts for commitments, problems, and alerts.
     """
+    await check_ipr_access(db, user, ipr_id)
     sql = text("""
         SELECT
             i.id,
@@ -2798,6 +2801,7 @@ async def update_ipr(
     """Update IPR fields. ADMIN_SISTEMA, ADMIN_REGIONAL can edit all fields.
     JEFE_DIVISION can only update assignee_id."""
     _require_roles(user, *_ASSIGN_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     # Verify IPR exists
     check = await db.execute(
@@ -3044,6 +3048,7 @@ async def get_ipr_readiness(
     db: AsyncSession = Depends(get_db),
 ):
     """Satellite counts + gate precheck for next transitions."""
+    await check_ipr_access(db, user, ipr_id)
     from app.schemas.ipr import SatelliteStatus, TransitionReadiness, IprReadiness
 
     # 1. Verify IPR exists
@@ -3190,6 +3195,7 @@ async def get_ipr_historial(
     db: AsyncSession = Depends(get_db),
 ):
     """Transition history for an IPR from txn.event."""
+    await check_ipr_access(db, user, ipr_id)
     # Verify IPR exists
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -3246,6 +3252,7 @@ async def get_ipr_transitions(
     db: AsyncSession = Depends(get_db),
 ):
     """Return valid next states for this IPR with gate status per phase boundary."""
+    await check_ipr_access(db, user, ipr_id)
     row = (await db.execute(
         text("""
             SELECT st.code AS current_code, st.valid_transitions,
@@ -3381,6 +3388,7 @@ async def create_progress_report(
 ):
     """Create a new progress report for an IPR."""
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
+    await check_ipr_access(db, user, ipr_id)
     # Verify IPR exists
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -3439,6 +3447,7 @@ async def list_progress_reports(
     db: AsyncSession = Depends(get_db),
 ):
     """List all progress reports for an IPR, ordered by report_number DESC."""
+    await check_ipr_access(db, user, ipr_id)
     sql = text("""
         SELECT
             pr.id,
@@ -3487,6 +3496,7 @@ async def list_ipr_parties(
     db: AsyncSession = Depends(get_db),
 ):
     """List all parties (organizations with roles) for an IPR."""
+    await check_ipr_access(db, user, ipr_id)
     sql = text("""
         SELECT ip.id, o.name AS organization_name, o.code AS organization_code,
                c.code AS role_code, c.label AS role_label,
@@ -3535,6 +3545,7 @@ async def create_ipr_party(
     """Add an organization-role pair to an IPR."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
                    "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
+    await check_ipr_access(db, user, ipr_id)
 
     # Verify IPR exists
     check = await db.execute(
@@ -3601,6 +3612,7 @@ async def delete_ipr_party(
     """Soft-delete an IPR party."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
                    "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
+    await check_ipr_access(db, user, ipr_id)
 
     result = await db.execute(
         text("""
@@ -3627,6 +3639,7 @@ async def list_ipr_territories(
     db: AsyncSession = Depends(get_db),
 ):
     """List all territory associations for an IPR."""
+    await check_ipr_access(db, user, ipr_id)
     sql = text("""
         SELECT it.id, t.name AS territory_name, t.code AS territory_code,
                c.code AS impact_type_code, c.label AS impact_type_label,
@@ -3667,6 +3680,7 @@ async def create_ipr_territory(
     """Associate a territory with an IPR."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
                    "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
+    await check_ipr_access(db, user, ipr_id)
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -3723,6 +3737,7 @@ async def delete_ipr_territory(
     """Soft-delete an IPR territory association."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
                    "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
+    await check_ipr_access(db, user, ipr_id)
 
     result = await db.execute(
         text("""
@@ -3749,6 +3764,7 @@ async def list_ipr_milestones(
     db: AsyncSession = Depends(get_db),
 ):
     """List all milestones for an IPR, ordered by planned_date."""
+    await check_ipr_access(db, user, ipr_id)
     sql = text("""
         SELECT im.id, c.code AS milestone_type_code, c.label AS milestone_type_label,
                im.description, im.planned_date, im.actual_date, im.deviation_days,
@@ -3794,6 +3810,7 @@ async def create_ipr_milestone(
     """Create a new milestone for an IPR."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
                    "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
+    await check_ipr_access(db, user, ipr_id)
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -3839,6 +3856,7 @@ async def update_ipr_milestone(
 ):
     """Update milestone (mark as completed with actual_date). Admin roles only."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
+    await check_ipr_access(db, user, ipr_id)
 
     updates = body.model_dump(exclude_none=True)
     if not updates:
@@ -3884,6 +3902,7 @@ async def list_evaluations(
     db: AsyncSession = Depends(get_db),
 ):
     """List evaluation assignments for an IPR."""
+    await check_ipr_access(db, user, ipr_id)
     rows = (await db.execute(
         text("""
             SELECT ea.id, ea.ipr_id,
@@ -3916,6 +3935,7 @@ async def create_evaluation(
     """Create an evaluation assignment. Auto-assigns evaluator_type from financing_track DB if omitted."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA",
                    "JEFE_DIVISION", "JEFE_DEPARTAMENTO")
+    await check_ipr_access(db, user, ipr_id)
 
     # Verify IPR exists
     ipr_row = (await db.execute(
@@ -4012,6 +4032,7 @@ async def update_evaluation(
 ):
     """Update an evaluation assignment (result, observations, completion)."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "ANALISTA")
+    await check_ipr_access(db, user, ipr_id)
 
     set_clauses = ["updated_at = NOW()", "updated_by_id = CAST(:user_id AS uuid)"]
     params: dict = {"id": str(eval_id), "ipr_id": str(ipr_id), "user_id": str(user["id"])}
@@ -4112,6 +4133,7 @@ async def list_kinship_declarations(
     db: AsyncSession = Depends(get_db),
 ):
     """List all kinship declarations for an IPR."""
+    await check_ipr_access(db, user, ipr_id)
     result = await db.execute(
         text("""
             SELECT kd.id, kd.ipr_id, kd.person_id,
@@ -4144,6 +4166,7 @@ async def create_kinship_declaration(
 ):
     """Create a kinship declaration for an IPR."""
     _require_roles(user, *_KINSHIP_WRITE_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     # Validate declaration_type
     if body.declaration_type not in ("EVALUADOR", "REPRESENTANTE_LEGAL", "PERSONAL_CONTRATADO"):
@@ -4230,6 +4253,7 @@ async def validate_kinship_declaration(
 ):
     """Validate (or invalidate) a kinship declaration. Admin only."""
     _require_roles(user, "ADMIN_SISTEMA")
+    await check_ipr_access(db, user, ipr_id)
 
     existing = (await db.execute(
         text("""
@@ -4272,6 +4296,7 @@ async def delete_kinship_declaration(
 ):
     """Soft-delete a kinship declaration. Admin only."""
     _require_roles(user, "ADMIN_SISTEMA")
+    await check_ipr_access(db, user, ipr_id)
     result = await db.execute(
         text("""
             UPDATE core.kinship_declaration SET deleted_at = now(), updated_at = now()
@@ -4295,6 +4320,7 @@ async def get_admissibility_checklist(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    await check_ipr_access(db, user, ipr_id)
     ipr = (await db.execute(text("""
         SELECT i.id, i.mechanism_id,
                m.code AS mechanism_code,
@@ -4362,6 +4388,7 @@ async def verify_admissibility_item(
 ):
     if data is None:
         data = {}
+    await check_ipr_access(db, user, ipr_id)
 
     # Validate IPR exists and is in PRE_ADMISIBLE state
     ipr_state = (await db.execute(text("""
@@ -4409,6 +4436,7 @@ async def unverify_admissibility_item(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    await check_ipr_access(db, user, ipr_id)
     # Validate IPR exists and is in PRE_ADMISIBLE state
     ipr_state = (await db.execute(text("""
         SELECT c.code FROM core.ipr i
@@ -4454,6 +4482,7 @@ async def get_certification_status(
     db: AsyncSession = Depends(get_db),
 ):
     """Get C33 technical certification status for an IPR."""
+    await check_ipr_access(db, user, ipr_id)
     row = (await db.execute(text("""
         SELECT m.code AS mechanism_code,
                i.metadata->>'categoria_c33' AS categoria_c33,
@@ -4513,6 +4542,7 @@ async def solicitar_certification(
 ):
     """Request C33 technical certification from SERVIU/MOP."""
     _require_roles(user, *_CERT_REQUEST_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     row = (await db.execute(text("""
         SELECT m.code AS mechanism_code,
@@ -4593,6 +4623,7 @@ async def resolver_certification(
 ):
     """Register C33 technical certification result."""
     _require_roles(user, *_CERT_RESOLVE_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     row = (await db.execute(text("""
         SELECT m.code AS mechanism_code,
@@ -4688,6 +4719,7 @@ async def list_modifications(
 ):
     """List all formal modifications for an IPR."""
     _require_roles(user, *OPERATIONAL_ROLES, *DGI_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     rows = (await db.execute(
         text("""
@@ -4730,6 +4762,7 @@ async def create_modification(
 ):
     """Create a formal modification request for an IPR."""
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -4810,6 +4843,7 @@ async def update_modification(
 ):
     """Update a modification (status transitions, description edits)."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+    await check_ipr_access(db, user, ipr_id)
 
     check = (await db.execute(
         text("SELECT id FROM core.ipr_modification WHERE id = :id AND ipr_id = :ipr_id AND deleted_at IS NULL"),
@@ -4963,6 +4997,7 @@ async def get_closure(
 ):
     """Get the closure record for an IPR."""
     _require_roles(user, *OPERATIONAL_ROLES, *DGI_ROLES)
+    await check_ipr_access(db, user, ipr_id)
     row = (await db.execute(
         text("""
             SELECT c.id, c.closure_date, c.closure_report,
@@ -4998,6 +5033,7 @@ async def create_closure(
 ):
     """Create a closure record for an IPR."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+    await check_ipr_access(db, user, ipr_id)
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -5058,6 +5094,7 @@ async def update_closure(
 ):
     """Update closure record — sign, update completion percentages."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+    await check_ipr_access(db, user, ipr_id)
 
     check = (await db.execute(
         text("SELECT id FROM core.ipr_closure WHERE ipr_id = :id"),
@@ -5100,6 +5137,7 @@ async def list_expost_evaluations(
 ):
     """List ex-post evaluations for an IPR."""
     _require_roles(user, *OPERATIONAL_ROLES, *DGI_ROLES)
+    await check_ipr_access(db, user, ipr_id)
 
     rows = (await db.execute(
         text("""
@@ -5138,6 +5176,7 @@ async def create_expost_evaluation(
 ):
     """Create an ex-post evaluation for an IPR (only for CERRADO IPRs)."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+    await check_ipr_access(db, user, ipr_id)
 
     # Verify IPR exists and is CERRADO
     ipr_row = (await db.execute(
@@ -5208,6 +5247,7 @@ async def update_expost_evaluation(
 ):
     """Update an ex-post evaluation."""
     _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DGI", "ESP_CONTROL_GESTION")
+    await check_ipr_access(db, user, ipr_id)
 
     check = (await db.execute(
         text("SELECT id FROM core.ipr_expost_evaluation WHERE id = :id AND ipr_id = :ipr_id"),

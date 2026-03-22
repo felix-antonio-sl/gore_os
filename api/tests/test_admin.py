@@ -426,3 +426,41 @@ async def test_document_quality_requires_admin(client, regional_token):
     """Non-admin cannot access document quality."""
     resp = await client.get("/api/admin/data-quality/documents", headers=auth(regional_token))
     assert resp.status_code == 403
+
+
+# ---------------------------------------------------------------------------
+# Password validation
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_create_user_short_password(client, admin_token, db):
+    """User creation rejects passwords shorter than 8 characters."""
+    role_id = await _get_role_id(db, "ANALISTA")
+    resp = await client.post(
+        "/api/admin/usuarios",
+        json={
+            "names": "Test",
+            "paternal_surname": "User",
+            "email": "shortpwd@test.cl",
+            "password": "abc",
+            "system_role_id": role_id,
+        },
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_reset_password_short(client, admin_token, db):
+    """Password reset rejects passwords shorter than 8 characters."""
+    result = await db.execute(
+        text("SELECT id FROM core.\"user\" WHERE email = 'admin@goreos.cl' AND deleted_at IS NULL")
+    )
+    user_id = str(result.scalar())
+    resp = await client.post(
+        f"/api/admin/usuarios/{user_id}/reset-password",
+        json={"new_password": "abc"},
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 422

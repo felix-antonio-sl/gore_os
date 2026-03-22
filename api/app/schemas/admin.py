@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from uuid import UUID
 from datetime import datetime
 
@@ -28,7 +28,7 @@ class UserCreate(BaseModel):
     paternal_surname: str
     maternal_surname: str | None = None
     email: str
-    password: str
+    password: str = Field(min_length=8)
     system_role_id: UUID
     division_id: UUID | None = None
     rut: str | None = None

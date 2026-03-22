@@ -33,6 +33,7 @@ async def _create_test_ipr(
     status_code: str = "EN_EVALUACION",
     phase_code: str = "F2",
     mechanism_code: str | None = None,
+    assignee_id: str | None = None,
 ) -> str:
     """Create a minimal IPR for poly-switch tests."""
     bip = f"POLY-{uuid.uuid4().hex[:8].upper()}"
@@ -46,16 +47,16 @@ async def _create_test_ipr(
         text("""
             INSERT INTO core.ipr (
                 codigo_bip, name, ipr_nature, status_id, mcd_phase_id,
-                mechanism_id, created_at, updated_at
+                mechanism_id, assignee_id, created_at, updated_at
             ) VALUES (
                 :bip, 'Test Poly-Switch IPR', 'PROYECTO',
                 CAST(:status_id AS uuid), CAST(:phase_id AS uuid),
-                CAST(:mechanism_id AS uuid), NOW(), NOW()
+                CAST(:mechanism_id AS uuid), CAST(:assignee_id AS uuid), NOW(), NOW()
             )
             RETURNING id
         """),
         {"bip": bip, "status_id": status_id, "phase_id": phase_id,
-         "mechanism_id": mechanism_id},
+         "mechanism_id": mechanism_id, "assignee_id": assignee_id},
     )).mappings().first()
     await db.commit()
     return str(row["id"])
@@ -386,7 +387,11 @@ async def test_evaluation_allowed_analista(
     client: AsyncClient, analista_token: str, db: AsyncSession,
 ):
     """ANALISTA can create evaluations (absorbed ENCARGADO permissions)."""
-    ipr_id = await _create_test_ipr(db, "EN_EVALUACION", "F2", mechanism_code="SNI")
+    # Set assignee_id to analista user for scope check
+    analista_id = str((await db.execute(
+        text("SELECT id FROM core.\"user\" WHERE email = 'analista.dipir@goreos.cl'")
+    )).scalar())
+    ipr_id = await _create_test_ipr(db, "EN_EVALUACION", "F2", mechanism_code="SNI", assignee_id=analista_id)
     evaluator_type_id = await _get_category_id(db, "evaluator_type", "MDSF")
 
     resp = await client.post(

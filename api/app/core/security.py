@@ -36,12 +36,17 @@ def hash_password(password: str) -> str:
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(minutes=settings.JWT_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
+    to_encode.update({"exp": expire, "iss": "goreos-api", "aud": "goreos-web"})
     return jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
 
 def decode_token(token: str) -> dict | None:
     try:
-        return jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
+        return jwt.decode(
+            token, settings.JWT_SECRET,
+            algorithms=[settings.JWT_ALGORITHM],
+            issuer="goreos-api",
+            audience="goreos-web",
+        )
     except JWTError:
         return None

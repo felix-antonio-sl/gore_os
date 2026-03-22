@@ -4,7 +4,7 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -39,7 +39,7 @@ def _require_admin(user: dict):
 
 
 class ResetPasswordBody(BaseModel):
-    new_password: str
+    new_password: str = Field(min_length=8)
 
 
 # ---------------------------------------------------------------------------

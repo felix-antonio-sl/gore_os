@@ -158,16 +158,25 @@ async def test_party_analista_allowed(
     client: AsyncClient, analista_token: str, db: AsyncSession
 ):
     """POST /api/ipr/{id}/partes allows ANALISTA (absorbed ENCARGADO permissions)."""
-    ipr_id = await _get_ipr_id(db)
+    # Create an IPR assigned to the analista user for scope check
+    analista_id = str((await db.execute(
+        text("SELECT id FROM core.\"user\" WHERE email = 'analista.dipir@goreos.cl'")
+    )).scalar())
+    status_id = str((await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'ipr_state' LIMIT 1")
+    )).scalar())
+    ipr_id = str((await db.execute(
+        text("""
+            INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, assignee_id)
+            VALUES (:code, 'Test Analista Party', 'PROYECTO', CAST(:sid AS uuid), CAST(:aid AS uuid))
+            RETURNING id
+        """),
+        {"code": f"ANAL-PTY-{__import__('uuid').uuid4().hex[:6]}", "sid": status_id, "aid": analista_id},
+    )).scalar())
+    await db.commit()
+
     org_id = await _get_org_id(db)
     role_id = await _get_category_id(db, "ipr_party_role")
-
-    # Clean existing parties to avoid duplicate conflicts
-    await db.execute(
-        text("DELETE FROM core.ipr_party WHERE ipr_id = :id"),
-        {"id": ipr_id},
-    )
-    await db.commit()
 
     r = await client.post(
         f"/api/ipr/{ipr_id}/partes",

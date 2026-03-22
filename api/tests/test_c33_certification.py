@@ -31,12 +31,19 @@ async def _create_c33_ipr(
     categoria: str | None = None,
     informe: bool | None = None,
     cert_metadata: dict | None = None,
+    sponsor_division_id: str | None = None,
 ) -> str:
     """Create a C33 IPR with optional certification metadata."""
     bip = f"C33-{uuid.uuid4().hex[:8].upper()}"
     status_id = await _get_category_id(db, "ipr_state", status_code)
     phase_id = await _get_category_id(db, "mcd_phase", phase_code)
     mechanism_id = await _get_category_id(db, "mechanism", "C33")
+
+    # Default sponsor_division_id to DAF for scope check compatibility
+    if not sponsor_division_id:
+        sponsor_division_id = str((await db.execute(
+            text("SELECT id FROM core.organization WHERE code = 'DAF' AND deleted_at IS NULL")
+        )).scalar())
 
     meta = cert_metadata or {}
     if categoria:
@@ -49,18 +56,19 @@ async def _create_c33_ipr(
         text("""
             INSERT INTO core.ipr (
                 codigo_bip, name, ipr_nature, status_id, mcd_phase_id,
-                mechanism_id, metadata, created_at, updated_at
+                mechanism_id, metadata, sponsor_division_id, created_at, updated_at
             ) VALUES (
                 :bip, 'Test C33 IPR', 'PROYECTO',
                 CAST(:status_id AS uuid), CAST(:phase_id AS uuid),
                 CAST(:mechanism_id AS uuid),
-                CAST(:metadata AS jsonb), NOW(), NOW()
+                CAST(:metadata AS jsonb), CAST(:div_id AS uuid), NOW(), NOW()
             )
             RETURNING id
         """),
         {
             "bip": bip, "status_id": status_id, "phase_id": phase_id,
             "mechanism_id": mechanism_id, "metadata": meta_json,
+            "div_id": sponsor_division_id,
         },
     )).mappings().first()
     await db.commit()

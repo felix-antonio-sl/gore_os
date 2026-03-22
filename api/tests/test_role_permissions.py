@@ -50,6 +50,8 @@ async def _create_ipr(
     phase_code: str,
     nature: str = "PROYECTO",
     mechanism_code: str | None = None,
+    sponsor_division_id: str | None = None,
+    assignee_id: str | None = None,
 ) -> str:
     """Create a minimal IPR for role permission tests."""
     bip = f"RLP-{uuid.uuid4().hex[:8].upper()}"
@@ -61,11 +63,13 @@ async def _create_ipr(
         text("""
             INSERT INTO core.ipr (
                 codigo_bip, name, ipr_nature, status_id, mcd_phase_id,
-                mechanism_id, created_at, updated_at
+                mechanism_id, sponsor_division_id, assignee_id,
+                created_at, updated_at
             ) VALUES (
                 :bip, 'Role Permission Test IPR', :nature,
                 CAST(:status_id AS uuid), CAST(:phase_id AS uuid),
                 CAST(:mechanism_id AS uuid),
+                CAST(:sponsor_division_id AS uuid), CAST(:assignee_id AS uuid),
                 NOW(), NOW()
             )
             RETURNING id
@@ -73,6 +77,8 @@ async def _create_ipr(
         {
             "bip": bip, "status_id": status_id, "phase_id": phase_id,
             "nature": nature, "mechanism_id": mechanism_id,
+            "sponsor_division_id": sponsor_division_id,
+            "assignee_id": assignee_id,
         },
     )).mappings().first()
     await db.commit()
@@ -90,7 +96,24 @@ async def _transition(client: AsyncClient, ipr_id: str, target_code: str, token:
     return resp.status_code
 
 
-async def _ensure_test_user(db: AsyncSession, email: str, role_code: str) -> str:
+async def _get_daf_division_id(db: AsyncSession) -> str:
+    row = (await db.execute(
+        text("SELECT id FROM core.organization WHERE code = 'DAF' AND deleted_at IS NULL"),
+    )).scalar()
+    assert row, "DAF organization not found"
+    return str(row)
+
+
+async def _get_user_id(db: AsyncSession, email: str) -> str:
+    row = (await db.execute(
+        text("SELECT id FROM core.\"user\" WHERE email = :e"),
+        {"e": email},
+    )).scalar()
+    assert row, f"User {email} not found"
+    return str(row)
+
+
+async def _ensure_test_user(db: AsyncSession, email: str, role_code: str, division_id: str | None = None) -> str:
     """Ensure a test user exists for the given role, create if missing. Returns JWT token."""
     uid = (await db.execute(
         text("SELECT id FROM core.\"user\" WHERE email = :e"),
@@ -117,14 +140,21 @@ async def _ensure_test_user(db: AsyncSession, email: str, role_code: str) -> str
 
         uid = (await db.execute(
             text("""
-                INSERT INTO core."user" (person_id, email, password_hash, system_role_id, is_active)
+                INSERT INTO core."user" (person_id, email, password_hash, system_role_id, division_id, is_active)
                 VALUES (CAST(:pid AS uuid), :email,
                         '$2b$12$i3hvqlxesIL8chg5P7rii.f1UuWsZfCDK4dkbSmHqAtCIJSm3cIQe',
-                        CAST(:rid AS uuid), true)
+                        CAST(:rid AS uuid), CAST(:div_id AS uuid), true)
                 RETURNING id
             """),
-            {"pid": str(person_id), "email": email, "rid": str(role_id)},
+            {"pid": str(person_id), "email": email, "rid": str(role_id), "div_id": division_id},
         )).scalar()
+        await db.commit()
+    elif division_id:
+        # Update division_id if user exists but didn't have it set
+        await db.execute(
+            text("UPDATE core.\"user\" SET division_id = CAST(:div_id AS uuid) WHERE id = CAST(:uid AS uuid) AND division_id IS NULL"),
+            {"div_id": division_id, "uid": str(uid)},
+        )
         await db.commit()
 
     return create_access_token({"sub": str(uid), "role": role_code})
@@ -156,7 +186,8 @@ async def test_transiciones_admin_all_allowed(client: AsyncClient, admin_token: 
 
 async def test_transiciones_analista_allowed_in_f4(client: AsyncClient, analista_token: str, db: AsyncSession):
     """ANALISTA should have allowed=True for intra-F4 transitions (absorbed ENCARGADO permissions)."""
-    ipr_id = await _create_ipr(db, "EN_EJECUCION", "F4", nature="PROGRAMA")
+    analista_uid = await _get_user_id(db, "analista.dipir@goreos.cl")
+    ipr_id = await _create_ipr(db, "EN_EJECUCION", "F4", nature="PROGRAMA", assignee_id=analista_uid)
     resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(analista_token))
     assert resp.status_code == 200
     # ANULADO/TERMINADO_ANTICIPADAMENTE are cross-cutting terminal states — require anulacion roles
@@ -181,7 +212,8 @@ async def test_admin_can_transition_admissibility(client: AsyncClient, admin_tok
 
 async def test_analista_can_transition_admissibility(client: AsyncClient, analista_token: str, db: AsyncSession):
     """ANALISTA can advance EN_REVISION → PRE_ADMISIBLE (admissibility_check boundary)."""
-    ipr_id = await _create_ipr(db, "EN_REVISION", "F1")
+    analista_uid = await _get_user_id(db, "analista.dipir@goreos.cl")
+    ipr_id = await _create_ipr(db, "EN_REVISION", "F1", assignee_id=analista_uid)
     code = await _transition(client, ipr_id, "PRE_ADMISIBLE", analista_token, db)
     assert code == 200
 
@@ -199,7 +231,8 @@ async def test_jefe_division_can_transition_admissibility(client: AsyncClient, j
 
 async def test_jefe_division_can_send_evaluation(client: AsyncClient, jefe_token: str, db: AsyncSession):
     """JEFE_DIVISION can advance ADMISIBLE → EN_EVALUACION (send_evaluation boundary)."""
-    ipr_id = await _create_ipr(db, "ADMISIBLE", "F1")
+    daf_id = await _get_daf_division_id(db)
+    ipr_id = await _create_ipr(db, "ADMISIBLE", "F1", sponsor_division_id=daf_id)
     code = await _transition(client, ipr_id, "EN_EVALUACION", jefe_token, db)
     assert code == 200
 
@@ -214,8 +247,9 @@ async def test_jefe_departamento_blocked_from_admissibility(client: AsyncClient,
 
 async def test_jefe_departamento_can_do_intra_f4(client: AsyncClient, db: AsyncSession):
     """JEFE_DEPARTAMENTO can execute intra-F4 transitions (only boundary they're in)."""
-    token = await _ensure_test_user(db, "jefe.finanzas.test@goreos.cl", "JEFE_DEPARTAMENTO")
-    ipr_id = await _create_ipr(db, "EN_EJECUCION", "F4", nature="PROGRAMA")
+    daf_id = await _get_daf_division_id(db)
+    token = await _ensure_test_user(db, "jefe.finanzas.test@goreos.cl", "JEFE_DEPARTAMENTO", division_id=daf_id)
+    ipr_id = await _create_ipr(db, "EN_EJECUCION", "F4", nature="PROGRAMA", sponsor_division_id=daf_id)
     code = await _transition(client, ipr_id, "SUSPENDIDO", token, db)
     assert code == 200
 
@@ -279,7 +313,8 @@ async def test_juridico_blocked_from_transitions(client: AsyncClient, juridico_t
 
 async def test_fril_jefe_division_can_register_eval_result(client: AsyncClient, jefe_token: str, db: AsyncSession):
     """FRIL override: JEFE_DIVISION can register eval results (DIPIR evaluates internally)."""
-    ipr_id = await _create_ipr(db, "EN_EVALUACION", "F2", mechanism_code="FRIL")
+    daf_id = await _get_daf_division_id(db)
+    ipr_id = await _create_ipr(db, "EN_EVALUACION", "F2", mechanism_code="FRIL", sponsor_division_id=daf_id)
     code = await _transition(client, ipr_id, "AD", jefe_token, db)
     assert code == 200
 
@@ -304,7 +339,8 @@ async def test_no_mechanism_uses_universal_defaults(client: AsyncClient, jefe_to
 
 async def test_jefe_division_can_update_status_when_allowed(client: AsyncClient, jefe_token: str, db: AsyncSession):
     """JEFE_DIVISION can now update status_id for boundaries they're in."""
-    ipr_id = await _create_ipr(db, "ADMISIBLE", "F1")
+    daf_id = await _get_daf_division_id(db)
+    ipr_id = await _create_ipr(db, "ADMISIBLE", "F1", sponsor_division_id=daf_id)
     target_id = await _get_status_id(db, "EN_EVALUACION")
     resp = await client.patch(
         f"/api/ipr/{ipr_id}",

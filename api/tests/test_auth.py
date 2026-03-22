@@ -205,3 +205,37 @@ async def test_security_headers_present(client):
     assert resp.headers.get("X-Content-Type-Options") == "nosniff"
     assert resp.headers.get("X-XSS-Protection") == "1; mode=block"
     assert resp.headers.get("Referrer-Policy") == "strict-origin-when-cross-origin"
+
+
+# ---------------------------------------------------------------------------
+# JWT claims tests
+# ---------------------------------------------------------------------------
+
+async def test_jwt_contains_iss_aud(client, db):
+    """JWT tokens include issuer and audience claims."""
+    resp = await client.post("/api/auth/login", data={"username": "admin@goreos.cl", "password": "admin123"})
+    assert resp.status_code == 200
+    token = resp.json()["access_token"]
+    # Decode without verification to inspect claims
+    import base64, json
+    payload_b64 = token.split(".")[1]
+    # Add padding
+    payload_b64 += "=" * (4 - len(payload_b64) % 4)
+    payload = json.loads(base64.urlsafe_b64decode(payload_b64))
+    assert payload.get("iss") == "goreos-api"
+    assert payload.get("aud") == "goreos-web"
+
+
+async def test_token_without_aud_rejected(client, db):
+    """Tokens missing audience claim are rejected."""
+    from jose import jwt as jose_jwt
+    from app.core.config import get_settings
+    settings = get_settings()
+    # Create token WITHOUT iss/aud
+    bad_token = jose_jwt.encode(
+        {"sub": "some-user-id", "role": "ADMIN_SISTEMA"},
+        settings.JWT_SECRET,
+        algorithm=settings.JWT_ALGORITHM,
+    )
+    resp = await client.get("/api/dashboard/action-items", headers={"Authorization": f"Bearer {bad_token}"})
+    assert resp.status_code == 401
