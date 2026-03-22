@@ -35,6 +35,7 @@ import { cn } from "@/lib/utils";
 import { formatCLP, formatDate } from "@/lib/format";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { PageHeader } from "@/components/page-header";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, ConvenioResumen, CategoryRef, InstallmentItem, RenditionSummaryItem } from "@/types";
 
 const CSV_COLUMNS = [
@@ -136,6 +137,19 @@ export default function ConveniosPage() {
   const [payRef, setPayRef] = useState("");
   const [paySubmitting, setPaySubmitting] = useState(false);
   const [confirmPayOpen, setConfirmPayOpen] = useState(false);
+
+  // Create convenio drawer state
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createAgreementTypes, setCreateAgreementTypes] = useState<CategoryRef[]>([]);
+  const [createAgreementStates, setCreateAgreementStates] = useState<CategoryRef[]>([]);
+  const [createTypeId, setCreateTypeId] = useState("");
+  const [createStateId, setCreateStateId] = useState("");
+  const [createIprId, setCreateIprId] = useState("");
+  const [createTotalAmount, setCreateTotalAmount] = useState("");
+  const [createValidFrom, setCreateValidFrom] = useState("");
+  const [createValidTo, setCreateValidTo] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "ANALISTA", "ASESOR_JURIDICO"].includes(user.role_code);
 
@@ -382,6 +396,61 @@ export default function ConveniosPage() {
     }
   };
 
+  // Create convenio drawer logic
+  const openCreateDrawer = () => {
+    setCreateTypeId("");
+    setCreateStateId("");
+    setCreateIprId("");
+    setCreateTotalAmount("");
+    setCreateValidFrom("");
+    setCreateValidTo("");
+    setCreateError(null);
+    setCreateOpen(true);
+    // Load catalogs for create form
+    api.get<CategoryRef[]>("/api/catalogs/categories/agreement_type").then(setCreateAgreementTypes).catch(() => {});
+    api.get<CategoryRef[]>("/api/catalogs/categories/agreement_state").then((states) => {
+      setCreateAgreementStates(states);
+      const borrador = states.find((s) => s.code === "BORRADOR");
+      if (borrador) setCreateStateId(borrador.id);
+    }).catch(() => {});
+  };
+
+  const searchIpr = useCallback(async (query: string): Promise<ComboboxOption[]> => {
+    const results = await api.get<{ id: string; codigo_bip: string; name: string }[]>(
+      `/api/catalogs/iprs?search=${encodeURIComponent(query)}`
+    );
+    return results.map((r) => ({ value: r.id, label: `${r.codigo_bip} — ${r.name}` }));
+  }, []);
+
+  const handleCreateSubmit = async () => {
+    if (!createTypeId || !createStateId) {
+      setCreateError("Tipo y estado son requeridos.");
+      return;
+    }
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      const result = await api.post<{ id: string }>("/api/convenios", {
+        agreement_type_id: createTypeId,
+        state_id: createStateId,
+        ipr_id: createIprId || null,
+        total_amount: createTotalAmount ? Number(createTotalAmount) : null,
+        valid_from: createValidFrom || null,
+        valid_to: createValidTo || null,
+      });
+      setCreateOpen(false);
+      setRefreshKey((k) => k + 1);
+      toast.success("Convenio creado exitosamente");
+      if (result?.id) {
+        openDetail({ id: result.id } as ConvenioListItem);
+      }
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear convenio");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
+
   const columns = [
     {
       key: "agreement_number",
@@ -453,7 +522,7 @@ export default function ConveniosPage() {
               <Download className="size-4 mr-1" />CSV
             </Button>
             {canEdit && (
-              <Button size="sm" onClick={() => router.push("/convenios/nuevo")}>
+              <Button size="sm" onClick={openCreateDrawer}>
                 <Plus className="size-4 mr-1" />
                 Nuevo Convenio
               </Button>
@@ -949,6 +1018,102 @@ export default function ConveniosPage() {
         ) : (
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
         )}
+      </DrawerPanel>
+
+      {/* Crear Convenio Drawer */}
+      <DrawerPanel
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        title="Nuevo Convenio"
+        wide
+      >
+        <div className="space-y-4">
+          {createError && (
+            <div className="bg-red-50 text-red-700 text-sm p-3 rounded border border-red-200">
+              {createError}
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Tipo de Convenio *</label>
+            <Select value={createTypeId} onValueChange={setCreateTypeId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione tipo..." />
+              </SelectTrigger>
+              <SelectContent>
+                {createAgreementTypes.map((t) => (
+                  <SelectItem key={t.id} value={t.id}>
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Estado Inicial *</label>
+            <Select value={createStateId} onValueChange={setCreateStateId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione estado..." />
+              </SelectTrigger>
+              <SelectContent>
+                {createAgreementStates.map((s) => (
+                  <SelectItem key={s.id} value={s.id}>
+                    {s.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">IPR Asociada</label>
+            <ComboboxAsync
+              value={createIprId}
+              onChange={setCreateIprId}
+              searchFn={searchIpr}
+              placeholder="Buscar IPR por BIP..."
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Monto Total</label>
+            <Input
+              type="number"
+              placeholder="0"
+              value={createTotalAmount}
+              onChange={(e) => setCreateTotalAmount(e.target.value)}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Vigencia Desde</label>
+              <Input
+                type="date"
+                value={createValidFrom}
+                onChange={(e) => setCreateValidFrom(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Vigencia Hasta</label>
+              <Input
+                type="date"
+                value={createValidTo}
+                onChange={(e) => setCreateValidTo(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setCreateOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={handleCreateSubmit} disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Convenio"}
+            </Button>
+          </div>
+        </div>
       </DrawerPanel>
 
       {/* Confirmación de pago */}

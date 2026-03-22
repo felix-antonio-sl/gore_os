@@ -84,6 +84,21 @@ function UsuariosContent() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<UserDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Create user drawer state
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createNames, setCreateNames] = useState("");
+  const [createPaternal, setCreatePaternal] = useState("");
+  const [createMaternal, setCreateMaternal] = useState("");
+  const [createEmail, setCreateEmail] = useState("");
+  const [createPassword, setCreatePassword] = useState("");
+  const [createRoleId, setCreateRoleId] = useState("");
+  const [createDivisionId, setCreateDivisionId] = useState("");
+  const [createRut, setCreateRut] = useState("");
+  const [createPhone, setCreatePhone] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   // Edit mode state
   const [editing, setEditing] = useState(false);
@@ -167,7 +182,7 @@ function UsuariosContent() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, search, role_code, is_active]);
+  }, [page, search, role_code, is_active, refreshKey]);
 
   const loadDetail = (userId: string) => {
     setSelectedId(userId);
@@ -284,6 +299,50 @@ function UsuariosContent() {
       .catch(() => {});
   };
 
+  // Create user drawer logic
+  const openCreateDrawer = () => {
+    setCreateNames("");
+    setCreatePaternal("");
+    setCreateMaternal("");
+    setCreateEmail("");
+    setCreatePassword("");
+    setCreateRoleId("");
+    setCreateDivisionId("");
+    setCreateRut("");
+    setCreatePhone("");
+    setCreateError(null);
+    setCreateOpen(true);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createNames || !createPaternal || !createEmail || !createPassword || !createRoleId) {
+      setCreateError("Nombres, apellido paterno, email, contraseña y rol son requeridos.");
+      return;
+    }
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      await api.post("/api/admin/usuarios", {
+        names: createNames,
+        paternal_surname: createPaternal,
+        maternal_surname: createMaternal || null,
+        email: createEmail,
+        password: createPassword,
+        system_role_id: createRoleId,
+        division_id: createDivisionId || null,
+        rut: createRut || null,
+        phone: createPhone || null,
+      });
+      setCreateOpen(false);
+      setRefreshKey((k) => k + 1);
+      toast.success("Usuario creado exitosamente");
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear usuario");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
 
   const columns = [
     {
@@ -342,7 +401,7 @@ function UsuariosContent() {
         title="Usuarios"
         description="Administración de usuarios del sistema"
         actions={
-          <Button onClick={() => router.push("/admin/usuarios/nuevo")}>
+          <Button onClick={openCreateDrawer}>
             <Plus className="size-4 mr-1" />
             Nuevo Usuario
           </Button>
@@ -560,6 +619,135 @@ function UsuariosContent() {
         ) : (
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
         )}
+      </DrawerPanel>
+
+      {/* Crear Usuario Drawer */}
+      <DrawerPanel
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        title="Nuevo Usuario"
+      >
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
+          {createError && (
+            <div className="bg-red-50 text-red-700 text-sm p-3 rounded border border-red-200">
+              {createError}
+            </div>
+          )}
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Nombres *</label>
+            <Input
+              value={createNames}
+              onChange={(e) => setCreateNames(e.target.value)}
+              placeholder="Nombres del usuario"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Apellido paterno *</label>
+            <Input
+              value={createPaternal}
+              onChange={(e) => setCreatePaternal(e.target.value)}
+              placeholder="Apellido paterno"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Apellido materno</label>
+            <Input
+              value={createMaternal}
+              onChange={(e) => setCreateMaternal(e.target.value)}
+              placeholder="Apellido materno (opcional)"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Email *</label>
+            <Input
+              type="email"
+              value={createEmail}
+              onChange={(e) => setCreateEmail(e.target.value)}
+              placeholder="email@goreos.cl"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Contraseña *</label>
+            <Input
+              type="password"
+              value={createPassword}
+              onChange={(e) => setCreatePassword(e.target.value)}
+              placeholder="Contraseña"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Rol *</label>
+            <Select value={createRoleId} onValueChange={setCreateRoleId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione rol" />
+              </SelectTrigger>
+              <SelectContent>
+                {roles.map((r) => (
+                  <SelectItem key={r.id} value={r.id}>
+                    {r.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">División</label>
+            <Select
+              value={createDivisionId || "__none__"}
+              onValueChange={(v) => setCreateDivisionId(v === "__none__" ? "" : v)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Sin división (opcional)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__none__">Sin división</SelectItem>
+                {divisions.map((d) => (
+                  <SelectItem key={d.id} value={d.id}>
+                    {d.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">RUT</label>
+            <Input
+              value={createRut}
+              onChange={(e) => setCreateRut(e.target.value)}
+              placeholder="12.345.678-9 (opcional)"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Teléfono</label>
+            <Input
+              value={createPhone}
+              onChange={(e) => setCreatePhone(e.target.value)}
+              placeholder="+56 9 1234 5678 (opcional)"
+            />
+          </div>
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Usuario"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setCreateOpen(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
       </DrawerPanel>
     </div>
   );

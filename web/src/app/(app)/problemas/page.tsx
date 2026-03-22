@@ -10,12 +10,26 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { toast } from "sonner";
 import { Plus, Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, ProblemaListItem, CategoryRef } from "@/types";
+
+interface IprOption {
+  id: string;
+  codigo_bip: string;
+  name: string;
+}
 
 const CSV_COLUMNS = [
   { key: "code", label: "Código" },
@@ -72,6 +86,72 @@ export default function ProblemasPage() {
 
   // Cache problem_state category IDs for state transitions
   const [problemStates, setProblemStates] = useState<CategoryRef[]>([]);
+
+  // --- Create drawer state ---
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createProblemTypes, setCreateProblemTypes] = useState<CategoryRef[]>([]);
+  const [createImpacts, setCreateImpacts] = useState<CategoryRef[]>([]);
+  const [createIprId, setCreateIprId] = useState("");
+  const [createProblemTypeId, setCreateProblemTypeId] = useState("");
+  const [createImpactId, setCreateImpactId] = useState("");
+  const [createDescription, setCreateDescription] = useState("");
+  const [createImpactDescription, setCreateImpactDescription] = useState("");
+  const [createProposedSolution, setCreateProposedSolution] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+
+  const searchIprs = useCallback(async (q: string): Promise<ComboboxOption[]> => {
+    const data = await api.get<IprOption[]>(`/api/catalogs/iprs?search=${encodeURIComponent(q)}`);
+    return data.map((ipr) => ({
+      value: ipr.id,
+      label: `${ipr.codigo_bip} — ${ipr.name}`,
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (createOpen) {
+      api.get<CategoryRef[]>("/api/catalogs/categories/problem_type").then(setCreateProblemTypes).catch(() => {});
+      api.get<CategoryRef[]>("/api/catalogs/categories/impact").then(setCreateImpacts).catch(() => {});
+    }
+  }, [createOpen]);
+
+  const openCreateDrawer = () => {
+    setCreateIprId("");
+    setCreateProblemTypeId("");
+    setCreateImpactId("");
+    setCreateDescription("");
+    setCreateImpactDescription("");
+    setCreateProposedSolution("");
+    setCreateError(null);
+    setCreateOpen(true);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createIprId || !createProblemTypeId || !createDescription) {
+      setCreateError("Complete todos los campos requeridos.");
+      return;
+    }
+
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      await api.post("/api/problemas", {
+        ipr_id: createIprId,
+        problem_type_id: createProblemTypeId,
+        impact_id: createImpactId || null,
+        description: createDescription,
+        impact_description: createImpactDescription || null,
+        proposed_solution: createProposedSolution || null,
+      });
+      setCreateOpen(false);
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear problema");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
 
   const page = Number(searchParams.get("page") ?? "1");
   const estado = searchParams.get("estado") ?? "";
@@ -282,7 +362,7 @@ export default function ProblemasPage() {
               <Download className="size-4 mr-1" />CSV
             </Button>
             {canCreate && (
-              <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
+              <Button onClick={openCreateDrawer} size="sm">
                 <Plus className="size-4 mr-1" />
                 Nuevo Problema
               </Button>
@@ -495,6 +575,101 @@ export default function ProblemasPage() {
         ) : (
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
         )}
+      </DrawerPanel>
+
+      {/* Create Drawer */}
+      <DrawerPanel open={createOpen} onClose={() => setCreateOpen(false)} title="Nuevo Problema" wide>
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">IPR asociada *</label>
+            <ComboboxAsync
+              value={createIprId}
+              onChange={setCreateIprId}
+              searchFn={searchIprs}
+              placeholder="Buscar IPR por código o nombre..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Tipo de problema *</label>
+            <Select value={createProblemTypeId} onValueChange={setCreateProblemTypeId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {createProblemTypes.map((pt) => (
+                  <SelectItem key={pt.id} value={pt.id}>
+                    {pt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Impacto</label>
+            <Select value={createImpactId} onValueChange={setCreateImpactId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione impacto" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">Sin especificar</SelectItem>
+                {createImpacts.map((imp) => (
+                  <SelectItem key={imp.id} value={imp.id}>
+                    {imp.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Descripción del problema *</label>
+            <textarea
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createDescription}
+              onChange={(e) => setCreateDescription(e.target.value)}
+              placeholder="Describa el problema detectado..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Descripción del impacto</label>
+            <textarea
+              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createImpactDescription}
+              onChange={(e) => setCreateImpactDescription(e.target.value)}
+              placeholder="Describa el impacto del problema..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Solución propuesta</label>
+            <textarea
+              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createProposedSolution}
+              onChange={(e) => setCreateProposedSolution(e.target.value)}
+              placeholder="Proponga una solución..."
+            />
+          </div>
+
+          {createError && (
+            <p className="text-sm text-red-600">{createError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Problema"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setCreateOpen(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
       </DrawerPanel>
     </div>
   );

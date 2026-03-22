@@ -9,6 +9,7 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -16,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { useAuth } from "@/lib/auth";
 import { Download, Plus, FileSignature, Scale } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
@@ -28,6 +30,7 @@ import type {
   ActoListItem,
   ActoDetail,
   ActoTransition,
+  CategoryRef,
 } from "@/types";
 
 const CSV_COLUMNS = [
@@ -81,6 +84,12 @@ const STATE_STEP_COLORS: Record<string, string> = {
   RECHAZADO_CGR: "bg-red-500",
   ANULADO: "bg-gray-500",
 };
+
+interface IprOption {
+  id: string;
+  codigo_bip: string;
+  name: string;
+}
 
 function StateStepper({ currentState }: { currentState: string }) {
   const isTerminalBad = currentState === "RECHAZADO_CGR" || currentState === "ANULADO";
@@ -197,9 +206,118 @@ export default function ActosPage() {
   const [editError, setEditError] = useState<string | null>(null);
   const [validTransitions, setValidTransitions] = useState<ActoTransition[]>([]);
 
+  // Create drawer state
+  const [createOpen, setCreateOpen] = useState(false);
+  const [actTypes, setActTypes] = useState<CategoryRef[]>([]);
+  const [resolutionTypes, setResolutionTypes] = useState<CategoryRef[]>([]);
+  const [resolutionSubtypes, setResolutionSubtypes] = useState<CategoryRef[]>([]);
+  const [createActTypeId, setCreateActTypeId] = useState("");
+  const [createActTypeCode, setCreateActTypeCode] = useState("");
+  const [createSubject, setCreateSubject] = useState("");
+  const [createIssuedAt, setCreateIssuedAt] = useState(new Date().toISOString().split("T")[0]);
+  const [createRequiresCgr, setCreateRequiresCgr] = useState(false);
+  const [createIssuerId, setCreateIssuerId] = useState("");
+  const [createResolutionTypeId, setCreateResolutionTypeId] = useState("");
+  const [createResolutionSubtypeId, setCreateResolutionSubtypeId] = useState("");
+  const [createIprId, setCreateIprId] = useState("");
+  const [createBudgetAmount, setCreateBudgetAmount] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+
   const canEdit =
     user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "ANALISTA", "ASESOR_JURIDICO"].includes(user.role_code);
   const canCreate = canEdit;
+
+  const createIsResolucion = createActTypeCode === "RESOLUCION";
+
+  // Fetch catalogs for create drawer
+  useEffect(() => {
+    if (!createOpen) return;
+    api.get<CategoryRef[]>("/api/catalogs/categories/act_type").then(setActTypes).catch(() => {});
+    api.get<CategoryRef[]>("/api/catalogs/categories/resolution_type").then(setResolutionTypes).catch(() => {});
+    api.get<CategoryRef[]>("/api/catalogs/categories/resolution_subtype").then(setResolutionSubtypes).catch(() => {});
+  }, [createOpen]);
+
+  const handleCreateActTypeChange = (id: string) => {
+    setCreateActTypeId(id);
+    const selected = actTypes.find((t) => t.id === id);
+    setCreateActTypeCode(selected?.code ?? "");
+  };
+
+  const searchOrgs = useCallback(
+    async (q: string): Promise<ComboboxOption[]> => {
+      const data = await api.get<
+        { id: string; code: string; name: string; short_name: string }[]
+      >(`/api/catalogs/organizations?search=${encodeURIComponent(q)}`);
+      return data.map((org) => ({
+        value: org.id,
+        label: org.short_name || org.name,
+      }));
+    },
+    []
+  );
+
+  const searchIprs = useCallback(
+    async (q: string): Promise<ComboboxOption[]> => {
+      const data = await api.get<IprOption[]>(
+        `/api/catalogs/iprs?search=${encodeURIComponent(q)}`
+      );
+      return data.map((ipr) => ({
+        value: ipr.id,
+        label: `${ipr.codigo_bip} — ${ipr.name}`,
+      }));
+    },
+    []
+  );
+
+  const resetCreateForm = () => {
+    setCreateActTypeId("");
+    setCreateActTypeCode("");
+    setCreateSubject("");
+    setCreateIssuedAt(new Date().toISOString().split("T")[0]);
+    setCreateRequiresCgr(false);
+    setCreateIssuerId("");
+    setCreateResolutionTypeId("");
+    setCreateResolutionSubtypeId("");
+    setCreateIprId("");
+    setCreateBudgetAmount("");
+    setCreateError(null);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createActTypeId || !createSubject || !createIssuedAt) {
+      setCreateError("Complete todos los campos requeridos.");
+      return;
+    }
+    if (createIsResolucion && !createResolutionTypeId) {
+      setCreateError("Seleccione tipo de resolución.");
+      return;
+    }
+
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      await api.post("/api/actos", {
+        act_type_id: createActTypeId,
+        subject: createSubject,
+        issued_at: new Date(createIssuedAt).toISOString(),
+        requires_cgr: createRequiresCgr,
+        issuer_id: createIssuerId || null,
+        resolution_type_id: createIsResolucion ? createResolutionTypeId : null,
+        resolution_subtype_id: createIsResolucion && createResolutionSubtypeId ? createResolutionSubtypeId : null,
+        ipr_id: createIsResolucion && createIprId ? createIprId : null,
+        budget_amount: createIsResolucion && createBudgetAmount ? parseFloat(createBudgetAmount) : null,
+      });
+      setCreateOpen(false);
+      resetCreateForm();
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear acto");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
 
   const page = Number(searchParams.get("page") ?? "1");
   const state = searchParams.get("state") ?? "";
@@ -398,7 +516,7 @@ export default function ActosPage() {
               CSV
             </Button>
             {canCreate && (
-              <Button size="sm" onClick={() => router.push("/actos/nuevo")}>
+              <Button size="sm" onClick={() => setCreateOpen(true)}>
                 <Plus className="size-4 mr-1" />
                 Nuevo Acto
               </Button>
@@ -716,6 +834,149 @@ export default function ActosPage() {
             No se pudo cargar el detalle.
           </p>
         )}
+      </DrawerPanel>
+
+      {/* Create Drawer */}
+      <DrawerPanel
+        open={createOpen}
+        onClose={() => { setCreateOpen(false); resetCreateForm(); }}
+        title="Nuevo Acto Administrativo"
+      >
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Tipo de acto *</label>
+            <Select value={createActTypeId} onValueChange={handleCreateActTypeChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {actTypes.map((t) => (
+                  <SelectItem key={t.id} value={t.id}>
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Materia *</label>
+            <textarea
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createSubject}
+              onChange={(e) => setCreateSubject(e.target.value)}
+              placeholder="Describa la materia del acto..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Fecha de emisión *</label>
+            <Input
+              type="date"
+              value={createIssuedAt}
+              onChange={(e) => setCreateIssuedAt(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Emisor</label>
+            <ComboboxAsync
+              value={createIssuerId}
+              onChange={setCreateIssuerId}
+              searchFn={searchOrgs}
+              placeholder="Buscar organización..."
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="create_requires_cgr"
+              checked={createRequiresCgr}
+              onChange={(e) => setCreateRequiresCgr(e.target.checked)}
+              className="size-4 rounded border-input"
+            />
+            <label htmlFor="create_requires_cgr" className="text-sm font-medium">
+              Requiere Toma de Razón CGR
+            </label>
+          </div>
+
+          {createIsResolucion && (
+            <div className="space-y-4 rounded-lg border p-4 bg-muted/30">
+              <p className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">
+                Datos de Resolución
+              </p>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Tipo de resolución *</label>
+                <Select value={createResolutionTypeId} onValueChange={setCreateResolutionTypeId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccione tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {resolutionTypes.map((t) => (
+                      <SelectItem key={t.id} value={t.id}>
+                        {t.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Subtipo (opcional)</label>
+                <Select value={createResolutionSubtypeId} onValueChange={setCreateResolutionSubtypeId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sin subtipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {resolutionSubtypes.map((t) => (
+                      <SelectItem key={t.id} value={t.id}>
+                        {t.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">IPR vinculada</label>
+                <ComboboxAsync
+                  value={createIprId}
+                  onChange={setCreateIprId}
+                  searchFn={searchIprs}
+                  placeholder="Buscar IPR por código o nombre..."
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Monto (CLP)</label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={createBudgetAmount}
+                  onChange={(e) => setCreateBudgetAmount(e.target.value)}
+                  placeholder="Monto presupuestario"
+                />
+              </div>
+            </div>
+          )}
+
+          {createError && <p className="text-sm text-red-600">{createError}</p>}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Acto"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => { setCreateOpen(false); resetCreateForm(); }}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
       </DrawerPanel>
     </div>
   );

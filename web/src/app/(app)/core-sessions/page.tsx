@@ -5,8 +5,17 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Plus, Calendar, Users, FileText } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -55,7 +64,17 @@ export default function CoreSessionsPage() {
 
   const [data, setData] = useState<PaginatedResponse<CoreSessionListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [nextSession, setNextSession] = useState<CoreSessionListItem | null>(null);
+
+  // Create drawer state
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createScheduledAt, setCreateScheduledAt] = useState("");
+  const [createSessionType, setCreateSessionType] = useState("ORDINARIA");
+  const [createLocation, setCreateLocation] = useState("");
+  const [createSummary, setCreateSummary] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   // Role awareness
   const role = user?.role_code;
@@ -81,6 +100,41 @@ export default function CoreSessionsPage() {
   );
 
   const handlePageChange = (newPage: number) => router.push(buildUrl({ page: newPage }));
+
+  const resetCreateForm = () => {
+    setCreateScheduledAt("");
+    setCreateSessionType("ORDINARIA");
+    setCreateLocation("");
+    setCreateSummary("");
+    setCreateError(null);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createScheduledAt) {
+      setCreateError("Debe indicar la fecha y hora de la sesion.");
+      return;
+    }
+
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      const result = await api.post<{ id: string; session_number: number }>("/api/core-sessions", {
+        scheduled_at: new Date(createScheduledAt).toISOString(),
+        session_type: createSessionType,
+        location: createLocation || null,
+        summary: createSummary || null,
+      });
+      setCreateOpen(false);
+      resetCreateForm();
+      setRefreshKey((k) => k + 1);
+      router.push(`/core-sessions/${result.id}`);
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear sesion");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -109,7 +163,7 @@ export default function CoreSessionsPage() {
     return () => {
       active = false;
     };
-  }, [page, statusFilter, typeFilter]);
+  }, [page, statusFilter, typeFilter, refreshKey]);
 
   // Fetch next upcoming session (PROGRAMADA or EN_CURSO)
   useEffect(() => {
@@ -189,7 +243,7 @@ export default function CoreSessionsPage() {
         accentColor="violet"
         actions={
           canCreate ? (
-            <Button onClick={() => router.push("/core-sessions/nueva")}>
+            <Button onClick={() => setCreateOpen(true)}>
               <Plus className="size-4 mr-1" />
               Nueva Sesión
             </Button>
@@ -284,6 +338,74 @@ export default function CoreSessionsPage() {
         }}
         isLoading={isLoading}
       />
+
+      {/* Create Drawer */}
+      <DrawerPanel
+        open={createOpen}
+        onClose={() => { setCreateOpen(false); resetCreateForm(); }}
+        title="Nueva Sesion del Consejo Regional"
+      >
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Tipo de Sesion *</label>
+            <Select value={createSessionType} onValueChange={setCreateSessionType}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ORDINARIA">Sesion Ordinaria</SelectItem>
+                <SelectItem value="EXTRAORDINARIA">Sesion Extraordinaria</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Fecha y hora *</label>
+            <Input
+              type="datetime-local"
+              value={createScheduledAt}
+              onChange={(e) => setCreateScheduledAt(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Ubicacion</label>
+            <Input
+              type="text"
+              value={createLocation}
+              onChange={(e) => setCreateLocation(e.target.value)}
+              placeholder="Sala del Consejo, oficina, etc."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Resumen / Tabla</label>
+            <textarea
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createSummary}
+              onChange={(e) => setCreateSummary(e.target.value)}
+              placeholder="Describa brevemente los temas principales de la sesion..."
+            />
+          </div>
+
+          {createError && (
+            <p className="text-sm text-red-600">{createError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Sesion"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => { setCreateOpen(false); resetCreateForm(); }}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
     </div>
   );
 }

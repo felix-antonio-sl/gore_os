@@ -109,6 +109,74 @@ export default function PresupuestoPage() {
 
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
+  // --- Create drawer state ---
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createDivisions, setCreateDivisions] = useState<{ id: string; name: string }[]>([]);
+  const [createProgramTypes, setCreateProgramTypes] = useState<{ id: string; code: string; label: string }[]>([]);
+  const [createSubtitles, setCreateSubtitles] = useState<{ id: string; code: string; label: string }[]>([]);
+  const [createProgramCodes, setCreateProgramCodes] = useState<{ id: string; code: string; label: string }[]>([]);
+  const [createFiscalYear, setCreateFiscalYear] = useState(String(new Date().getFullYear()));
+  const [createDivisionId, setCreateDivisionId] = useState("");
+  const [createProgramName, setCreateProgramName] = useState("");
+  const [createCode, setCreateCode] = useState("");
+  const [createProgramTypeId, setCreateProgramTypeId] = useState("");
+  const [createSubtitleId, setCreateSubtitleId] = useState("");
+  const [createProgramCodeId, setCreateProgramCodeId] = useState("");
+  const [createInitialBudget, setCreateInitialBudget] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    if (createOpen) {
+      api.get<{ id: string; name: string }[]>("/api/catalogs/divisions").then(setCreateDivisions).catch(() => {});
+      api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/program_type").then(setCreateProgramTypes).catch(() => {});
+      api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/budget_subtitle").then(setCreateSubtitles).catch(() => {});
+      api.get<{ id: string; code: string; label: string }[]>("/api/admin/budget-program-codes").then(setCreateProgramCodes).catch(() => {});
+    }
+  }, [createOpen]);
+
+  const openCreateDrawer = () => {
+    setCreateFiscalYear(String(new Date().getFullYear()));
+    setCreateDivisionId("");
+    setCreateProgramName("");
+    setCreateCode("");
+    setCreateProgramTypeId("");
+    setCreateSubtitleId("");
+    setCreateProgramCodeId("");
+    setCreateInitialBudget("");
+    setCreateError(null);
+    setCreateOpen(true);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateError(null);
+    setCreateSubmitting(true);
+
+    try {
+      await api.post("/api/presupuesto", {
+        code: createCode,
+        name: createProgramName,
+        fiscal_year: parseInt(createFiscalYear),
+        owner_division_id: createDivisionId || undefined,
+        program_type_id: createProgramTypeId || undefined,
+        subtitle_id: createSubtitleId || undefined,
+        program_code_id: createProgramCodeId || undefined,
+        initial_amount: parseInt(createInitialBudget) || 0,
+      });
+      toast.success("Programa presupuestario creado");
+      setCreateOpen(false);
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Error al crear programa";
+      setCreateError(msg);
+      toast.error(msg);
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
+
   const page = Number(searchParams.get("page") ?? "1");
   const fiscal_year = searchParams.get("fiscal_year") ?? "";
   const subtitle = searchParams.get("subtitle") ?? "";
@@ -165,7 +233,7 @@ export default function PresupuestoPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, fiscal_year, subtitle, division_id, program_code, search]);
+  }, [page, fiscal_year, subtitle, division_id, program_code, search, refreshKey]);
 
   const searchIprs = async (query: string): Promise<ComboboxOption[]> => {
     const results = await api.get<{ id: string; codigo_bip: string; name: string }[]>(
@@ -324,7 +392,7 @@ export default function PresupuestoPage() {
         actions={
           <>
             {canEdit && (
-              <Button size="sm" onClick={() => router.push("/presupuesto/nuevo")}>
+              <Button size="sm" onClick={openCreateDrawer}>
                 <Plus className="size-4 mr-1" />Nuevo Programa
               </Button>
             )}
@@ -651,6 +719,136 @@ export default function PresupuestoPage() {
         ) : (
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
         )}
+      </DrawerPanel>
+
+      {/* Create Drawer */}
+      <DrawerPanel open={createOpen} onClose={() => setCreateOpen(false)} title="Nuevo Programa Presupuestario" wide>
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Código *</label>
+              <Input
+                value={createCode}
+                onChange={(e) => setCreateCode(e.target.value)}
+                placeholder="BP-2026-001"
+                required
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Año Fiscal *</label>
+              <Input
+                type="number"
+                min="2020"
+                max="2030"
+                value={createFiscalYear}
+                onChange={(e) => setCreateFiscalYear(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Nombre del Programa *</label>
+            <Input
+              value={createProgramName}
+              onChange={(e) => setCreateProgramName(e.target.value)}
+              placeholder="Nombre descriptivo del programa"
+              required
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">División</label>
+            <Select value={createDivisionId} onValueChange={setCreateDivisionId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar división" />
+              </SelectTrigger>
+              <SelectContent>
+                {createDivisions.map((d) => (
+                  <SelectItem key={d.id} value={d.id}>
+                    {d.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Tipo de Programa</label>
+              <Select value={createProgramTypeId} onValueChange={setCreateProgramTypeId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccionar tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {createProgramTypes.map((pt) => (
+                    <SelectItem key={pt.id} value={pt.id}>
+                      {pt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Subtítulo</label>
+              <Select value={createSubtitleId} onValueChange={setCreateSubtitleId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccionar subtítulo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {createSubtitles.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Programa DIPRES</label>
+            <Select value={createProgramCodeId} onValueChange={setCreateProgramCodeId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar programa DIPRES" />
+              </SelectTrigger>
+              <SelectContent>
+                {createProgramCodes.map((pc) => (
+                  <SelectItem key={pc.id} value={pc.id}>
+                    {pc.code} — {pc.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Presupuesto Inicial (CLP)</label>
+            <Input
+              type="number"
+              min="0"
+              step="1"
+              value={createInitialBudget}
+              onChange={(e) => setCreateInitialBudget(e.target.value)}
+              placeholder="0"
+            />
+          </div>
+
+          {createError && <p className="text-sm text-red-600">{createError}</p>}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Programa"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setCreateOpen(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
       </DrawerPanel>
     </div>
     </TooltipProvider>

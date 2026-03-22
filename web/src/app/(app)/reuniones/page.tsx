@@ -5,8 +5,10 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
@@ -45,6 +47,15 @@ export default function ReunionesPage() {
 
   const [data, setData] = useState<PaginatedResponse<ReunionListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Create drawer state
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createScheduledAt, setCreateScheduledAt] = useState("");
+  const [createLocation, setCreateLocation] = useState("");
+  const [createSummary, setCreateSummary] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   const page = Number(searchParams.get("page") ?? "1");
   const statusFilter = searchParams.get("status") ?? "";
@@ -62,6 +73,39 @@ export default function ReunionesPage() {
   );
 
   const handlePageChange = (newPage: number) => router.push(buildUrl({ page: newPage }));
+
+  const resetCreateForm = () => {
+    setCreateScheduledAt("");
+    setCreateLocation("");
+    setCreateSummary("");
+    setCreateError(null);
+  };
+
+  const handleCreateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createScheduledAt) {
+      setCreateError("Debe indicar la fecha y hora de la reunion.");
+      return;
+    }
+
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      const result = await api.post<{ id: string; session_id: string }>("/api/reuniones", {
+        scheduled_at: new Date(createScheduledAt).toISOString(),
+        location: createLocation || null,
+        summary: createSummary || null,
+      });
+      setCreateOpen(false);
+      resetCreateForm();
+      setRefreshKey((k) => k + 1);
+      router.push(`/reuniones/${result.id}`);
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear reunion");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -89,7 +133,7 @@ export default function ReunionesPage() {
     return () => {
       active = false;
     };
-  }, [page, statusFilter]);
+  }, [page, statusFilter, refreshKey]);
 
   const canCreate =
     user &&
@@ -148,7 +192,7 @@ export default function ReunionesPage() {
         accentColor="violet"
         actions={
           canCreate ? (
-            <Button onClick={() => router.push("/reuniones/nueva")}>
+            <Button onClick={() => setCreateOpen(true)}>
               <Plus className="size-4 mr-1" />
               Nueva Reunion
             </Button>
@@ -182,6 +226,61 @@ export default function ReunionesPage() {
         }}
         isLoading={isLoading}
       />
+
+      {/* Create Drawer */}
+      <DrawerPanel
+        open={createOpen}
+        onClose={() => { setCreateOpen(false); resetCreateForm(); }}
+        title="Nueva Reunion de Crisis"
+      >
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Fecha y hora *</label>
+            <Input
+              type="datetime-local"
+              value={createScheduledAt}
+              onChange={(e) => setCreateScheduledAt(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Ubicacion</label>
+            <Input
+              type="text"
+              value={createLocation}
+              onChange={(e) => setCreateLocation(e.target.value)}
+              placeholder="Sala de reuniones, oficina, etc."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Resumen / Motivo</label>
+            <textarea
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createSummary}
+              onChange={(e) => setCreateSummary(e.target.value)}
+              placeholder="Describa brevemente el motivo de la reunion..."
+            />
+          </div>
+
+          {createError && (
+            <p className="text-sm text-red-600">{createError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Reunion"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => { setCreateOpen(false); resetCreateForm(); }}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
     </div>
   );
 }

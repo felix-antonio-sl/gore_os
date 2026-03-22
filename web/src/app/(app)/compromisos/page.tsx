@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -9,6 +9,14 @@ import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { TimelineHistory } from "@/components/timeline-history";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { toast } from "sonner";
 import { Plus, UserCheck } from "lucide-react";
@@ -18,6 +26,27 @@ import { CompromisosWorkView } from "./compromisos-work-view";
 import { CompromisosTeamView } from "./compromisos-team-view";
 import { CompromisosListView } from "./compromisos-list-view";
 import type { CompromisoListItem, HistoryEntry } from "@/types";
+
+interface CommitmentType {
+  id: string;
+  code: string;
+  name: string;
+  description: string | null;
+  default_days: number | null;
+}
+
+interface UserOption {
+  id: string;
+  nombre: string;
+  apellido_paterno: string;
+  division_name: string | null;
+}
+
+interface IprOption {
+  id: string;
+  codigo_bip: string;
+  name: string;
+}
 
 interface CompromisoDetail extends CompromisoListItem {
   observations?: string | null;
@@ -160,6 +189,85 @@ export default function CompromisosPage() {
   const canCreate =
     user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
 
+  // --- Create drawer state ---
+  const [createOpen, setCreateOpen] = useState(false);
+  const [commitmentTypes, setCommitmentTypes] = useState<CommitmentType[]>([]);
+  const [userOptions, setUserOptions] = useState<UserOption[]>([]);
+  const [createDescription, setCreateDescription] = useState("");
+  const [createCommitmentTypeId, setCreateCommitmentTypeId] = useState("");
+  const [createResponsibleId, setCreateResponsibleId] = useState("");
+  const [createDueDate, setCreateDueDate] = useState("");
+  const [createIprId, setCreateIprId] = useState("");
+  const [createObservations, setCreateObservations] = useState("");
+  const [createSubmitting, setCreateSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+
+  const searchIprs = useCallback(async (q: string): Promise<ComboboxOption[]> => {
+    const data = await api.get<IprOption[]>(`/api/catalogs/iprs?search=${encodeURIComponent(q)}`);
+    return data.map((ipr) => ({
+      value: ipr.id,
+      label: `${ipr.codigo_bip} — ${ipr.name}`,
+    }));
+  }, []);
+
+  // Load catalogs when create drawer opens
+  useEffect(() => {
+    if (createOpen) {
+      api.get<CommitmentType[]>("/api/catalogs/commitment-types").then(setCommitmentTypes).catch(() => {});
+      api.get<UserOption[]>("/api/catalogs/users").then(setUserOptions).catch(() => {});
+    }
+  }, [createOpen]);
+
+  // Auto-set due date based on commitment type default_days
+  useEffect(() => {
+    if (createCommitmentTypeId && !createDueDate) {
+      const ct = commitmentTypes.find((t) => t.id === createCommitmentTypeId);
+      if (ct?.default_days) {
+        const d = new Date();
+        d.setDate(d.getDate() + ct.default_days);
+        setCreateDueDate(d.toISOString().split("T")[0]);
+      }
+    }
+  }, [createCommitmentTypeId, commitmentTypes, createDueDate]);
+
+  const openCreateDrawer = () => {
+    setCreateDescription("");
+    setCreateCommitmentTypeId("");
+    setCreateResponsibleId("");
+    setCreateDueDate("");
+    setCreateIprId("");
+    setCreateObservations("");
+    setCreateError(null);
+    setCreateOpen(true);
+  };
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!createDescription || !createCommitmentTypeId || !createResponsibleId || !createDueDate) {
+      setCreateError("Complete todos los campos requeridos.");
+      return;
+    }
+
+    setCreateSubmitting(true);
+    setCreateError(null);
+    try {
+      await api.post("/api/compromisos", {
+        description: createDescription,
+        commitment_type_id: createCommitmentTypeId,
+        responsible_id: createResponsibleId,
+        due_date: createDueDate,
+        ipr_id: createIprId || null,
+        observations: createObservations || null,
+      });
+      setCreateOpen(false);
+      onRefresh();
+    } catch (err) {
+      setCreateError(err instanceof Error ? err.message : "Error al crear compromiso");
+    } finally {
+      setCreateSubmitting(false);
+    }
+  };
+
   return (
     <div className="p-6 space-y-4">
       <PageHeader
@@ -174,7 +282,7 @@ export default function CompromisosPage() {
         accentColor="amber"
         actions={
           canCreate ? (
-            <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
+            <Button onClick={openCreateDrawer} size="sm">
               <Plus className="size-4 mr-1" />
               Nuevo Compromiso
             </Button>
@@ -409,6 +517,100 @@ export default function CompromisosPage() {
         ) : (
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
         )}
+      </DrawerPanel>
+
+      {/* Create Drawer */}
+      <DrawerPanel open={createOpen} onClose={() => setCreateOpen(false)} title="Nuevo Compromiso" wide>
+        <form onSubmit={handleCreate} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Tipo de compromiso *</label>
+            <Select value={createCommitmentTypeId} onValueChange={setCreateCommitmentTypeId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {commitmentTypes.map((ct) => (
+                  <SelectItem key={ct.id} value={ct.id}>
+                    {ct.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Descripción *</label>
+            <textarea
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createDescription}
+              onChange={(e) => setCreateDescription(e.target.value)}
+              placeholder="Describa el compromiso..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Responsable *</label>
+            <Select value={createResponsibleId} onValueChange={setCreateResponsibleId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione responsable" />
+              </SelectTrigger>
+              <SelectContent>
+                {userOptions.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.nombre} {u.apellido_paterno}
+                    {u.division_name ? ` (${u.division_name})` : ""}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Fecha limite *</label>
+            <Input
+              type="date"
+              value={createDueDate}
+              onChange={(e) => setCreateDueDate(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">IPR asociada</label>
+            <ComboboxAsync
+              value={createIprId}
+              onChange={setCreateIprId}
+              searchFn={searchIprs}
+              placeholder="Buscar IPR por código o nombre..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Observaciones</label>
+            <textarea
+              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={createObservations}
+              onChange={(e) => setCreateObservations(e.target.value)}
+              placeholder="Observaciones opcionales..."
+            />
+          </div>
+
+          {createError && (
+            <p className="text-sm text-red-600">{createError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={createSubmitting}>
+              {createSubmitting ? "Creando..." : "Crear Compromiso"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setCreateOpen(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
       </DrawerPanel>
     </div>
   );
