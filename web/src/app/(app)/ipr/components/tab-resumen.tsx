@@ -7,7 +7,7 @@ import { TrackCard } from "./track-card";
 import { Badge } from "@/components/ui/badge";
 import { UserCheck } from "lucide-react";
 import { formatDate, formatCurrency } from "@/lib/format";
-import type { IprDetail } from "./ipr-constants";
+import { sectorLabel, type IprDetail } from "./ipr-constants";
 import type { IprTransition, TrackInfo, HistoryEntry } from "@/types";
 
 interface TabResumenProps {
@@ -93,7 +93,7 @@ export function TabResumen({
           {ipr.investment_sector && (
             <div>
               <span className="text-muted-foreground text-xs">Sector</span>
-              <p>{ipr.investment_sector}</p>
+              <p>{sectorLabel[ipr.investment_sector] ?? ipr.investment_sector}</p>
             </div>
           )}
           {ipr.funding_source && (

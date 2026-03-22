@@ -78,6 +78,24 @@ export const STATUS_TO_PHASE: Record<string, string> = {
   TERMINADO_ANTICIPADAMENTE: "F5",
 };
 
+export const SECTOR_OPTIONS = [
+  { value: "SPORTS", label: "Deporte" },
+  { value: "CULTURE", label: "Cultura y Patrimonio" },
+  { value: "EDUCATION", label: "Educación" },
+  { value: "HEALTH", label: "Salud" },
+  { value: "INFRASTRUCTURE", label: "Infraestructura" },
+  { value: "ENVIRONMENT", label: "Medio Ambiente" },
+  { value: "TRANSPORT", label: "Transporte y Vialidad" },
+  { value: "SECURITY", label: "Seguridad" },
+  { value: "TOURISM", label: "Turismo" },
+  { value: "SCIENCE", label: "Ciencia e Innovación" },
+  { value: "ECONOMIC_DEV", label: "Desarrollo Económico" },
+];
+
+export const sectorLabel: Record<string, string> = Object.fromEntries(
+  SECTOR_OPTIONS.map(o => [o.value, o.label])
+);
+
 export const TAB_GROUPS = [
   { label: "Operación", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
   { label: "Finanzas", tabs: ["cdps", "convenios", "rendiciones", "resoluciones"] },

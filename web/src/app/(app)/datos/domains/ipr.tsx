@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/format";
+import { SECTOR_OPTIONS, sectorLabel } from "@/app/(app)/ipr/components/ipr-constants";
 import type { PaginatedResponse, IPRListItem } from "@/types";
 import type { DomainConfig } from "./types";
 
@@ -45,7 +46,7 @@ function IPRDetailPanel({ item, onClose }: { item: unknown; onClose: () => void 
           <Separator />
           <DetailRow label="Estado" value={<StatusBadge status={ipr.status ?? ""} size="sm" />} />
           <Separator />
-          <DetailRow label="Sector" value={ipr.investment_sector ?? "-"} />
+          <DetailRow label="Sector" value={ipr.investment_sector ? (sectorLabel[ipr.investment_sector] ?? ipr.investment_sector) : "-"} />
           <Separator />
           <DetailRow label="Fuente" value={ipr.funding_source ?? "-"} />
           <Separator />
@@ -110,13 +111,7 @@ export const iprConfig: DomainConfig = {
     },
     {
       key: "sector", label: "Sector",
-      options: [
-        { value: "SPORTS", label: "Deportes" },
-        { value: "CULTURE", label: "Cultura" },
-        { value: "EDUCATION", label: "Educación" },
-        { value: "HEALTH", label: "Salud" },
-        { value: "INFRASTRUCTURE", label: "Infraestructura" },
-      ],
+      options: SECTOR_OPTIONS,
     },
     {
       key: "alert_level", label: "Alerta",

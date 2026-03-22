@@ -15,6 +15,7 @@ import { exportCSV } from "@/lib/csv-export";
 import { formatCurrency } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, IPRListItem } from "@/types";
+import { SECTOR_OPTIONS, sectorLabel } from "./components/ipr-constants";
 
 const CSV_COLUMNS = [
   { key: "codigo_bip", label: "Código BIP" },
@@ -76,19 +77,6 @@ const STATUS_OPTIONS = [
   { value: "TERMINADO_ANTICIPADAMENTE", label: "Terminado Anticipadamente" },
 ];
 
-const SECTOR_OPTIONS = [
-  { value: "SPORTS", label: "Deporte" },
-  { value: "CULTURE", label: "Cultura y Patrimonio" },
-  { value: "EDUCATION", label: "Educación" },
-  { value: "HEALTH", label: "Salud" },
-  { value: "ENVIRONMENT", label: "Medio Ambiente" },
-  { value: "TRANSPORT", label: "Transporte y Vialidad" },
-  { value: "SECURITY", label: "Seguridad" },
-  { value: "TOURISM", label: "Turismo" },
-  { value: "SCIENCE", label: "Ciencia e Innovación" },
-  { value: "ECONOMIC_DEV", label: "Desarrollo Económico" },
-];
-
 const ALERT_LEVEL_OPTIONS = [
   { value: "CRITICO", label: "Crítico" },
   { value: "ALTO", label: "Alto" },
@@ -118,7 +106,6 @@ const MCD_PHASE_OPTIONS = [
 // === Lookup maps: code → label (derived from filter options) ===
 const iprTypeLabel: Record<string, string> = Object.fromEntries(IPR_TYPE_OPTIONS.map(o => [o.value, o.label]));
 const mechanismLabel: Record<string, string> = Object.fromEntries(MECHANISM_OPTIONS.map(o => [o.value, o.label]));
-const sectorLabel: Record<string, string> = Object.fromEntries(SECTOR_OPTIONS.map(o => [o.value, o.label]));
 const phaseLabel: Record<string, string> = Object.fromEntries(MCD_PHASE_OPTIONS.map(o => [o.value, o.label]));
 
 const alertLevelColors: Record<string, string> = {

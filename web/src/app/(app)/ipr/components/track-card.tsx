@@ -64,9 +64,15 @@ const thresholdLabels: Record<string, string> = {
   directorio_max_days: "Vigencia directorio máx.",
   pagare_coverage_pct: "Cobertura pagaré mín.",
   pagare_min_months: "Pagaré vigencia mín. (meses)",
+  pagare_validity_months: "Pagaré vigencia mín. (meses)",
   ranking_persistence: "Persistencia ranking",
   fril_max_per_comuna: "Máximo FRIL por comuna",
+  fril_max_per_territory: "Máximo FRIL por territorio",
   fril_tender_days: "Plazo licitación FRIL",
+  fril_sibling_days: "Días entre proyectos FRIL",
+  tender_deadline_days: "Plazo licitación FRIL",
+  glosa07_admin_max_pct: "Glosa 07 gasto admin. máx.",
+  glosa07_honorarios_max_pct: "Glosa 07 honorarios máx.",
 };
 
 const slaLabels: Record<string, string> = {
@@ -80,6 +86,24 @@ const slaLabels: Record<string, string> = {
   ejecucion_max_months: "Ejecución máxima (meses)",
   evaluation_max_days: "Evaluación",
   report_frequency_days: "Informe periódico",
+  rs_validity_days: "Vigencia RS",
+};
+
+const mechanismAttrLabels: Record<string, string> = {
+  rate_mdsf: "Tasa MDSF",
+  etapa_bip: "Etapa BIP",
+  sector: "Sector",
+  categoria_c33: "Categoría C33",
+  vida_util_residual: "Vida útil residual",
+  tipo_fril: "Tipo FRIL",
+  cumple_norma_5k_utm: "Cumple norma 5K UTM",
+  fase_eval_central: "Fase evaluación central",
+  rate_ses: "Tasa SES",
+  fondo_tematico: "Fondo temático",
+  puntaje_evaluacion: "Puntaje evaluación",
+  eje_fomento: "Eje de fomento",
+  nivel_trl: "Nivel TRL",
+  innovacion_ctci: "Innovación CTCI",
 };
 
 interface TrackCardProps {
@@ -194,7 +218,7 @@ export function TrackCard({ track }: TrackCardProps) {
           <div className="flex gap-2 flex-wrap">
             {Object.entries(track.mechanism_attrs).map(([key, val]) => (
               <Badge key={key} variant="outline" className="text-[10px]">
-                {key}: {String(val)}
+                {mechanismAttrLabels[key] || key}: {String(val)}
               </Badge>
             ))}
           </div>
