@@ -244,7 +244,6 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               {link(NAV.coordinacion)}
               {link(NAV.escalamiento)}
               {link(NAV.servicios)}
-              {link(NAV.comiteTD)}
               {link(NAV.calendario)}
             </NavSection>
 
