@@ -77,11 +77,16 @@ const STATUS_OPTIONS = [
 ];
 
 const SECTOR_OPTIONS = [
-  { value: "SPORTS", label: "Deportes" },
-  { value: "CULTURE", label: "Cultura" },
+  { value: "SPORTS", label: "Deporte" },
+  { value: "CULTURE", label: "Cultura y Patrimonio" },
   { value: "EDUCATION", label: "Educación" },
   { value: "HEALTH", label: "Salud" },
-  { value: "INFRASTRUCTURE", label: "Infraestructura" },
+  { value: "ENVIRONMENT", label: "Medio Ambiente" },
+  { value: "TRANSPORT", label: "Transporte y Vialidad" },
+  { value: "SECURITY", label: "Seguridad" },
+  { value: "TOURISM", label: "Turismo" },
+  { value: "SCIENCE", label: "Ciencia e Innovación" },
+  { value: "ECONOMIC_DEV", label: "Desarrollo Económico" },
 ];
 
 const ALERT_LEVEL_OPTIONS = [
@@ -109,6 +114,12 @@ const MCD_PHASE_OPTIONS = [
   { value: "F4", label: "F4 Ejecución" },
   { value: "F5", label: "F5 Cierre" },
 ];
+
+// === Lookup maps: code → label (derived from filter options) ===
+const iprTypeLabel: Record<string, string> = Object.fromEntries(IPR_TYPE_OPTIONS.map(o => [o.value, o.label]));
+const mechanismLabel: Record<string, string> = Object.fromEntries(MECHANISM_OPTIONS.map(o => [o.value, o.label]));
+const sectorLabel: Record<string, string> = Object.fromEntries(SECTOR_OPTIONS.map(o => [o.value, o.label]));
+const phaseLabel: Record<string, string> = Object.fromEntries(MCD_PHASE_OPTIONS.map(o => [o.value, o.label]));
 
 const alertLevelColors: Record<string, string> = {
   CRITICO: "bg-red-600 text-white",
@@ -292,11 +303,14 @@ export default function IprPage() {
     {
       key: "ipr_type",
       label: "Tipo",
-      render: (value: unknown) => (
-        <Badge variant="outline" className="text-xs">
-          {String(value ?? "-")}
-        </Badge>
-      ),
+      render: (value: unknown) => {
+        const v = String(value ?? "");
+        return (
+          <Badge variant="outline" className="text-xs">
+            {iprTypeLabel[v] ?? (v || "-")}
+          </Badge>
+        );
+      },
     },
     {
       key: "mechanism",
@@ -306,20 +320,20 @@ export default function IprPage() {
         if (!v) return <span className="text-muted-foreground text-xs">—</span>;
         return (
           <Badge variant="outline" className={cn("text-xs", mechanismColors[v])}>
-            {v}
+            {mechanismLabel[v] ?? v}
           </Badge>
         );
       },
     },
     {
       key: "mcd_phase",
-      label: "Fase MCD",
+      label: "Fase",
       render: (value: unknown) => {
         const v = String(value ?? "");
         if (!v) return <span className="text-muted-foreground text-xs">—</span>;
         return (
           <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[v])}>
-            {v}
+            {phaseLabel[v] ?? v}
           </Badge>
         );
       },
