@@ -2155,12 +2155,15 @@ async def list_iprs(
             al.code        AS alert_level,
             i.has_open_problems,
             exc.name       AS executor_name,
-            CASE
-                WHEN i.metadata IS NOT NULL AND i.metadata->>'monto_total' IS NOT NULL
-                     AND i.metadata->>'monto_total' != ''
-                THEN (i.metadata->>'monto_total')::float
-                ELSE NULL
-            END            AS total_budget,
+            COALESCE(
+                CASE
+                    WHEN i.metadata IS NOT NULL AND i.metadata->>'monto_total' IS NOT NULL
+                         AND i.metadata->>'monto_total' != ''
+                    THEN (i.metadata->>'monto_total')::float
+                END,
+                (SELECT SUM(bc.amount)::float FROM core.budget_commitment bc
+                 WHERE bc.ipr_id = i.id AND bc.deleted_at IS NULL)
+            )              AS total_budget,
             assignee_div.short_name AS assignee_division_abbr,
             sponsor_div.short_name  AS sponsor_division_abbr,
             i.phase_entered_at

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Select,
   SelectContent,
@@ -31,6 +32,8 @@ interface FilterBarProps {
   searchPlaceholder?: string;
   searchValue?: string;
   onSearchChange?: (v: string) => void;
+  /** Debounce delay in ms for search input (default 300) */
+  searchDebounceMs?: number;
 }
 
 export function FilterBar({
@@ -41,10 +44,44 @@ export function FilterBar({
   searchPlaceholder = "Buscar...",
   searchValue,
   onSearchChange,
+  searchDebounceMs = 300,
 }: FilterBarProps) {
   const activeFilters = Object.entries(values).filter(([, v]) => v && v !== "");
   const hasSearch = searchValue && searchValue.trim() !== "";
   const hasActive = activeFilters.length > 0 || hasSearch;
+
+  // Local state for the search input so typing is never blocked by
+  // the async URL/state update that onSearchChange may trigger.
+  const [localSearch, setLocalSearch] = useState(searchValue ?? "");
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Sync local state when the external searchValue changes (e.g. "Limpiar" button)
+  // Also cancel any pending debounce to avoid stale values firing after the reset.
+  useEffect(() => {
+    setLocalSearch(searchValue ?? "");
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+  }, [searchValue]);
+
+  const handleLocalSearchChange = useCallback(
+    (value: string) => {
+      setLocalSearch(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        onSearchChange?.(value);
+      }, searchDebounceMs);
+    },
+    [onSearchChange, searchDebounceMs]
+  );
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
 
   return (
     <div className="space-y-2">
@@ -52,8 +89,8 @@ export function FilterBar({
         {onSearchChange && (
           <Input
             placeholder={searchPlaceholder}
-            value={searchValue ?? ""}
-            onChange={(e) => onSearchChange(e.target.value)}
+            value={localSearch}
+            onChange={(e) => handleLocalSearchChange(e.target.value)}
             className="h-9 w-full sm:w-56"
           />
         )}
