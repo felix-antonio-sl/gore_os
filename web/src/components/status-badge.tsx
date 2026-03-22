@@ -9,6 +9,16 @@ interface StatusBadgeProps {
   size?: "sm" | "default";
 }
 
+// Acto administrativo states — 7-step FSM (violet accent)
+const ACTO_STATE_CONFIG: Record<string, { label: string; className: string }> = {
+  BORRADOR: { label: "Borrador", className: "border-gray-400 text-gray-700 bg-gray-50" },
+  VISADO: { label: "Visado", className: "border-violet-400 text-violet-700 bg-violet-50" },
+  FIRMADO: { label: "Firmado", className: "border-green-400 text-green-700 bg-green-50" },
+  TRAMITADO: { label: "Tramitado", className: "border-green-500 text-green-800 bg-green-50" },
+  TOMADO_RAZON: { label: "Toma de Razón", className: "border-emerald-500 text-emerald-800 bg-emerald-50" },
+  RECHAZADO_CGR: { label: "Rechazado CGR", className: "border-red-500 text-red-700 bg-red-50" },
+};
+
 // IPR states — color by phase (F0=slate, F1=blue, F2=cyan, F3=purple, F4=green, F5=gray)
 const IPR_STATE_CONFIG: Record<string, { label: string; className: string }> = {
   // F0
@@ -60,6 +70,16 @@ export function StatusBadge({ status, size = "default" }: StatusBadgeProps) {
     return (
       <Badge variant="outline" className={cn(iprConfig.className, sizeClass)}>
         {iprConfig.label}
+      </Badge>
+    );
+  }
+
+  // Acto administrativo states
+  const actoConfig = ACTO_STATE_CONFIG[status];
+  if (actoConfig) {
+    return (
+      <Badge variant="outline" className={cn(actoConfig.className, sizeClass)}>
+        {actoConfig.label}
       </Badge>
     );
   }

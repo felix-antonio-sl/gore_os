@@ -17,6 +17,7 @@ import type { ActionItemsResponse, RoleCode, KPICardData, DashboardExecutivoResp
 const KPI_ROLES: RoleCode[] = ["ANALISTA", "RTF", "ASESOR_JURIDICO"];
 const TEAM_ROLES: RoleCode[] = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD"];
 const DGI_TEAM_ROLES: RoleCode[] = ["JEFE_DGI"];
+const DGI_KPI_ROLES: RoleCode[] = ["JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD"];
 const INDICATOR_ROLES: RoleCode[] = ["ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD"];
 const PANORAMA_ROLES: RoleCode[] = [
   "ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA", "SECRETARIO_EJECUTIVO", "CONSEJERO_REGIONAL",
@@ -59,6 +60,10 @@ export function CommandCenter() {
       api.get<{ kpis: KPICardData[] }>("/api/dashboard/mis-compromisos")
         .then((d) => setKpis(d.kpis))
         .catch(() => {});
+    } else if (DGI_KPI_ROLES.includes(role)) {
+      api.get<{ kpis: KPICardData[] }>("/api/dashboard/dgi-kpis")
+        .then((d) => setKpis(d.kpis))
+        .catch(() => {});
     }
   }, [role]);
 
@@ -96,7 +101,7 @@ export function CommandCenter() {
       {role === "ANALISTA" && actionData && <ModuleMyWork items={actionData.items} />}
       {role === "ANALISTA" && <ModuleFormulacion />}
       {role && TEAM_ROLES.includes(role) && <ModuleMyTeam />}
-      {role && DGI_TEAM_ROLES.includes(role) && <ModuleDgiTeam />}
+      {role && DGI_KPI_ROLES.includes(role) && <ModuleDgiTeam />}
       {role === "ASESOR_JURIDICO" && <ModuleJuridico />}
       {/* INDICATOR_ROLES and PANORAMA_ROLES get KPIs below — no separate module */}
 

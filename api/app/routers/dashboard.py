@@ -330,8 +330,8 @@ async def _ai_escalations(db: AsyncSession, user: dict) -> list[ActionItem]:
             e.id::text AS id,
             e.code AS ref_code,
             e.situation,
-            e.deadline,
-            (e.deadline - CURRENT_DATE) AS days_remaining,
+            e.deadline::date AS deadline,
+            (e.deadline::date - CURRENT_DATE) AS days_remaining,
             lc.code AS level_code
         FROM core.dgi_escalation e
         JOIN ref.category ss ON e.status_id = ss.id
@@ -1685,3 +1685,104 @@ async def get_pending_approvals(
         "cdps": cdps,
         "cuotas": cuotas,
     }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dashboard/dgi-kpis — KPI cards for DGI population
+# ---------------------------------------------------------------------------
+
+@router.get("/dgi-kpis")
+async def get_dgi_kpis(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """KPI summary cards for DGI roles."""
+    _DGI_ROLES = ("JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD")
+    if user["role_code"] not in _DGI_ROLES:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo roles DGI")
+
+    # Active escalations
+    esc_sql = text("""
+        SELECT COUNT(*) AS total
+        FROM core.dgi_escalation e
+        JOIN ref.category ss ON e.status_id = ss.id
+        WHERE ss.code IN ('ABIERTO', 'EN_GESTION')
+          AND e.deleted_at IS NULL
+    """)
+    esc_count = (await db.execute(esc_sql)).scalar() or 0
+
+    # Active risks
+    risk_sql = text("""
+        SELECT COUNT(*) AS total
+        FROM core.risk r
+        JOIN ref.category rs ON r.status_id = rs.id
+        WHERE rs.code IN ('IDENTIFICADO', 'EN_EVALUACION', 'EN_MITIGACION')
+          AND r.deleted_at IS NULL
+    """)
+    risk_count = (await db.execute(risk_sql)).scalar() or 0
+
+    # Critical/high alerts unresolved
+    alert_sql = text("""
+        SELECT COUNT(*) AS total
+        FROM core.alert a
+        JOIN ref.category sev ON sev.id = a.severity_id
+        WHERE sev.code IN ('CRITICO', 'ALTO')
+          AND a.resolved_at IS NULL
+          AND a.deleted_at IS NULL
+    """)
+    alert_count = (await db.execute(alert_sql)).scalar() or 0
+
+    # Active initiatives (EN_CURSO + REVISION)
+    ini_sql = text("""
+        SELECT COUNT(*) AS total
+        FROM core.dgi_initiative i
+        JOIN ref.category st ON i.status_id = st.id
+        WHERE st.code IN ('EN_CURSO', 'REVISION')
+          AND i.deleted_at IS NULL
+    """)
+    ini_count = (await db.execute(ini_sql)).scalar() or 0
+
+    # Open service requests (SLA)
+    sla_sql = text("""
+        SELECT COUNT(*) AS total
+        FROM core.dgi_service_request sr
+        JOIN ref.category rs ON sr.status_id = rs.id
+        WHERE rs.code NOT IN ('COMPLETADA', 'RECHAZADA')
+          AND sr.deleted_at IS NULL
+    """)
+    sla_count = (await db.execute(sla_sql)).scalar() or 0
+
+    kpis = [
+        KPICard(
+            label="Alertas críticas",
+            value=alert_count,
+            sublabel="Críticas y altas sin resolver",
+            color="red" if alert_count > 0 else "green",
+        ),
+        KPICard(
+            label="Escalamientos",
+            value=esc_count,
+            sublabel="Abiertos o en gestión",
+            color="orange" if esc_count > 0 else "green",
+        ),
+        KPICard(
+            label="Riesgos activos",
+            value=risk_count,
+            sublabel="Identificados o en mitigación",
+            color="amber" if risk_count > 0 else "green",
+        ),
+        KPICard(
+            label="Iniciativas",
+            value=ini_count,
+            sublabel="En curso o revisión",
+            color="blue",
+        ),
+        KPICard(
+            label="Solicitudes abiertas",
+            value=sla_count,
+            sublabel="Servicios pendientes",
+            color="amber" if sla_count > 3 else "green",
+        ),
+    ]
+
+    return {"kpis": kpis}
