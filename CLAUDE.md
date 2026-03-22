@@ -16,6 +16,7 @@ docker compose up -d api web                       # Start (assumes goreos_db ru
 docker compose --profile standalone up -d           # With standalone PostgreSQL
 curl http://localhost:8000/api/health               # Verify API
 curl -I http://localhost:3000                       # Verify Web (307→/login)
+open http://localhost:3000/dev                       # Dev quick login (24 test users)
 
 # Realistic seed (~2,200 records, 110 IPRs, DEMO-R- prefix)
 docker exec -i goreos_db psql -U goreos -d goreos_model < model/model_goreos/sql/goreos_seed_realistic.sql      # Load
@@ -233,8 +234,10 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 21. **JSONB edits**: Atomic `jsonb_set` in `metadata` (not read-modify-write). Reports, DMAIC, decrees all use this pattern.
 22. **Reuniones**: Auto-created committees: `COMITE-CRISIS`, `CONSEJO-REGIONAL`, `COMITE-TD`.
 23. **Dashboard**: Unified Centro de Comando for ALL 16 roles. `GET /dashboard/action-items` (coproduct: 6 sources, role-scoped). Modules: MyProgress/MyTeam/DgiTeam/KPIs by role archetype.
-24. **Admin module**: `usuarios`, `divisiones`, `financing-tracks`, `thresholds`, `sni-levels`, `budget-program-codes`, `admissibility-items`. ADMIN_SISTEMA only.
-25. **CDPs + Cuotas**: CDP creation advisory-locked `CDP-{year}-{seq:04d}`, validates `amount ≤ current - committed`. Cuota bulk via `POST /cuotas/bulk`. Installments require `installment_number`, `amount`, `due_date`, `payment_status_id`.
+24. **Admin module**: Single `/admin` page with 5 tabs (Usuarios, Divisiones, Configuración, Monitoreo, Auditoría). Old 8 routes redirect with `?tab=`. ADMIN_SISTEMA only. Create forms in drawers.
+25. **Dev tooling**: `/dev` quick login (24 test users, cards by archetype, auto-login). `/dev/testing` checklist (15 roles, per-user progress, file-persisted via `/api/dev/checklist`→`docs/test-checklist-state.json`). `goreos_dev_mode` localStorage flag — cleared on normal login. Sidebar "Testing" link visible only in devMode.
+26. **UX Pruning (C60)**: 58→38 navigable routes (-34%). Sidebar items -55% average. ROLE_SECTIONS map in sidebar.tsx drives `defaultOpen` per role. 8 /nuevo pages→drawers (only /ipr/nuevo kept). /mi-division absorbed into ModuleMyTeam. /comite-td+/coordinacion/divisiones→tabs. /servicios consolidated with drawers. Old routes redirect for bookmarks.
+27. **CDPs + Cuotas**: CDP creation advisory-locked `CDP-{year}-{seq:04d}`, validates `amount ≤ current - committed`. Cuota bulk via `POST /cuotas/bulk`. Installments require `installment_number`, `amount`, `due_date`, `payment_status_id`.
 
 ### CORE Sessions & Governance
 
