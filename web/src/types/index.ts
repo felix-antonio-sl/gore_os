@@ -1385,6 +1385,25 @@ export interface ActionItemsResponse {
 }
 
 // ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
+export interface NotificationItem {
+  id: string;
+  title: string;
+  body: string | null;
+  category: "alerta" | "sla" | "escalamiento" | "compromiso" | "rendicion" | "firma" | "sistema";
+  entity_type: string | null;
+  entity_id: string | null;
+  link: string | null;
+  read_at: string | null;
+  created_at: string;
+}
+
+export interface NotificationUnreadCount {
+  count: number;
+}
+
+// ---------------------------------------------------------------------------
 // IPR Readiness (H3)
 // ---------------------------------------------------------------------------
 export interface SatelliteStatus {

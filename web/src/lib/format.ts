@@ -82,3 +82,32 @@ export function formatCLP(value: number | null | undefined): string {
 
 /** Alias for formatCLP */
 export const formatCurrency = formatCLP;
+
+/** Relative time: "hace 2h", "hace 3d", "hace 1 min" */
+export function formatRelativeTime(dateStr: string | null | undefined): string {
+  if (!dateStr) return "-";
+  try {
+    const now = Date.now();
+    const then = new Date(dateStr).getTime();
+    const diffMs = now - then;
+    if (diffMs < 0) return "ahora";
+
+    const minutes = Math.floor(diffMs / 60_000);
+    if (minutes < 1) return "ahora";
+    if (minutes < 60) return `hace ${minutes} min`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `hace ${hours}h`;
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return `hace ${days}d`;
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return `hace ${months} mes${months > 1 ? "es" : ""}`;
+
+    const years = Math.floor(days / 365);
+    return `hace ${years} a${years > 1 ? "nos" : "no"}`;
+  } catch {
+    return dateStr;
+  }
+}

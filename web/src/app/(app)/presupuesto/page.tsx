@@ -116,7 +116,7 @@ export default function PresupuestoPage() {
   const program_code = searchParams.get("program_code") ?? "";
   const search = searchParams.get("search") ?? "";
 
-  const filterValues: Record<string, string> = { fiscal_year, subtitle, division_id, program_code, search };
+  const filterValues: Record<string, string> = { fiscal_year, subtitle, division_id, program_code };
 
   const buildUrl = useCallback(
     (overrides: Record<string, string | number>) => {
@@ -346,6 +346,8 @@ export default function PresupuestoPage() {
         onChange={handleFilterChange}
         onClear={handleClear}
         searchPlaceholder="Buscar por código o nombre..."
+        searchValue={search}
+        onSearchChange={(v) => handleFilterChange("search", v)}
       />
 
       <DataTable
