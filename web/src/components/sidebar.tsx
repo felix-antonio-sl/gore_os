@@ -20,7 +20,6 @@ import {
   CalendarDays,
   Vote,
   ShieldCheck,
-  Layers,
   Receipt,
   GitBranch,
   SearchX,
@@ -30,7 +29,6 @@ import {
   ShieldAlert,
   ClipboardCheck,
   Scale,
-  Route,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -108,14 +106,7 @@ const NAV = {
   aprobaciones: { label: "Aprobaciones", href: "/aprobaciones", icon: <ClipboardCheck className="size-4" /> },
 
   // Admin
-  usuarios: { label: "Usuarios", href: "/admin/usuarios", icon: <Users className="size-4" /> },
-  divisiones: { label: "Divisiones", href: "/admin/divisiones", icon: <Building2 className="size-4" /> },
-  umbrales: { label: "Umbrales", href: "/admin/umbrales", icon: <ShieldCheck className="size-4" /> },
-  nivelesSni: { label: "Niveles SNI", href: "/admin/niveles-sni", icon: <Layers className="size-4" /> },
-  saludDatos: { label: "Salud de Datos", href: "/admin/salud-datos", icon: <Database className="size-4" /> },
-  financingTracks: { label: "Vías Financiamiento", href: "/admin/financing-tracks", icon: <Route className="size-4" /> },
-  slas: { label: "Monitoreo SLA", href: "/admin/slas", icon: <ShieldAlert className="size-4" /> },
-  auditoria: { label: "Auditoría", href: "/admin/auditoria", icon: <Shield className="size-4" /> },
+  admin: { label: "Administraci\u00f3n", href: "/admin", icon: <ShieldCheck className="size-4" /> },
 
   // DGI — Monitoreo
   cartera: { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
@@ -166,7 +157,6 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
 
   const showComando = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"].includes(user.role_code);
   const showCarteraDiv = ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DGI"].includes(user.role_code);
-  const showMiDivision = ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code);
   const showMisCompromisos = ["ANALISTA", "RTF", "ASESOR_JURIDICO", "JEFE_UNIDAD"].includes(user.role_code);
   const showMisRendiciones = user.role_code === "RTF";
   const showPendientesVB = user.role_code === "ASESOR_JURIDICO";
@@ -181,11 +171,11 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
     ANALISTA: ["op-gestion", "op-mi-trabajo"],
     RTF: ["op-mi-trabajo"],
     ASESOR_JURIDICO: ["op-institucional", "op-mi-trabajo"],
-    JEFE_DIVISION: ["op-gestion", "op-finanzas", "op-mi-trabajo"],
+    JEFE_DIVISION: ["op-gestion", "op-finanzas"],
     JEFE_DEPARTAMENTO: ["op-gestion", "op-finanzas", "op-mi-trabajo"],
     JEFE_UNIDAD: ["op-gestion", "op-mi-trabajo"],
     ADMIN_REGIONAL: ["op-comando", "op-gestion", "op-finanzas"],
-    ADMIN_SISTEMA: ["op-comando", "op-gestion", "op-admin"],
+    ADMIN_SISTEMA: ["op-comando", "op-gestion"],
     // Oversight roles: all sections open (Art. 36 LOC — fiscalización)
     GOBERNADOR: ["op-comando", "op-gestion", "op-finanzas", "op-institucional"],
     CONSEJERO_REGIONAL: ["op-gestion", "op-finanzas", "op-institucional"],
@@ -285,9 +275,8 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               {link(NAV.servicios)}
             </NavSection>
 
-            {(showMiDivision || showMisCompromisos || showMisRendiciones || showPendientesVB || showAprobaciones) && (
+            {(showMisCompromisos || showMisRendiciones || showPendientesVB || showAprobaciones) && (
               <NavSection id="op-mi-trabajo" label="Mi Trabajo" defaultOpen={sectionOpen("op-mi-trabajo")}>
-                {showMiDivision && link(NAV.miDivision)}
                 {showMisCompromisos && link(NAV.misCompromisos)}
                 {showMisRendiciones && link(NAV.misRendiciones)}
                 {showPendientesVB && link(NAV.pendientesVB)}
@@ -295,18 +284,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               </NavSection>
             )}
 
-            {showAdmin && (
-              <NavSection id="op-admin" label="Administración" defaultOpen={sectionOpen("op-admin")}>
-                {link(NAV.usuarios)}
-                {link(NAV.divisiones)}
-                {link(NAV.umbrales)}
-                {link(NAV.nivelesSni)}
-                {link(NAV.saludDatos)}
-                {link(NAV.financingTracks)}
-                {link(NAV.slas)}
-                {link(NAV.auditoria)}
-              </NavSection>
-            )}
+            {showAdmin && link(NAV.admin)}
           </>
         )}
       </div>
