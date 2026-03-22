@@ -21,6 +21,7 @@ from app.core.database import get_db
 from app.core.deps import CurrentUser
 from app.core.security import DGI_ROLES
 from app.core.audit import record_event
+from app.routers.notifications import create_notification
 
 router = APIRouter(prefix="/api/risk", tags=["risk"])
 
@@ -278,7 +279,7 @@ async def check_risk_alerts(user: CurrentUser, db=Depends(get_db)):
     _require_write(user)
 
     rows = (await db.execute(text("""
-        SELECT r.id, r.code, r.name, rp.code AS probability_code
+        SELECT r.id, r.code, r.name, r.created_by_id, rp.code AS probability_code
         FROM core.risk r
         JOIN ref.category rp ON rp.id = r.probability_id
         JOIN ref.category rs ON rs.id = r.status_id
@@ -303,6 +304,20 @@ async def check_risk_alerts(user: CurrentUser, db=Depends(get_db)):
         )
         if alert_id:
             new_alerts += 1
+            if r["created_by_id"]:
+                try:
+                    await create_notification(
+                        db=db,
+                        user_id=r["created_by_id"],
+                        title=f"Riesgo alto detectado: {r['code']}",
+                        body=f"Riesgo {r['probability_code']}: {r['name'][:200]}",
+                        category="alerta",
+                        entity_type="core.risk",
+                        entity_id=r["id"],
+                        link=f"/riesgos/{r['id']}",
+                    )
+                except Exception:
+                    pass
         else:
             skipped += 1
 

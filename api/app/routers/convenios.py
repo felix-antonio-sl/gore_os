@@ -10,6 +10,7 @@ from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.core.audit import record_event
+from app.routers.notifications import create_notification
 from app.schemas.common import PaginatedResponse
 from app.schemas.convenio import (
     ConvenioListItem,
@@ -444,9 +445,11 @@ async def check_payment_slas(
     convenios = (await db.execute(
         text("""
             SELECT a.id, a.agreement_number, a.valid_from,
-                   st.code AS state_code
+                   st.code AS state_code,
+                   i.assignee_id AS ipr_assignee_id
             FROM core.agreement a
             JOIN ref.category st ON st.id = a.state_id
+            LEFT JOIN core.ipr i ON i.id = a.ipr_id
             WHERE a.deleted_at IS NULL
               AND st.code = 'VIGENTE'
               AND a.valid_from IS NOT NULL
@@ -511,6 +514,20 @@ async def check_payment_slas(
             },
         )
         created += 1
+        if conv["ipr_assignee_id"]:
+            try:
+                await create_notification(
+                    db=db,
+                    user_id=conv["ipr_assignee_id"],
+                    title=f"Cuota pendiente: Convenio {agr_num}",
+                    body=f"Convenio vigente sin pago de cuota hace {days_since} días (SLA: {default_sla}d)",
+                    category="sla",
+                    entity_type="core.agreement",
+                    entity_id=conv["id"],
+                    link=f"/convenios/{conv['id']}",
+                )
+            except Exception:
+                pass
 
     await db.commit()
     return {"checked": len(convenios), "alerts_created": created}

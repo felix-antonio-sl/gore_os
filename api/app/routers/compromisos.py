@@ -10,6 +10,7 @@ from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
 from app.core.audit import record_event
+from app.routers.notifications import create_notification
 from app.schemas.compromiso import CompromisoCreate, CompromisoListItem, CompromisoDetail, HistoryEntry, StateChangeRequest, CompromisoUpdate
 
 router = APIRouter(prefix="/api/compromisos", tags=["compromisos"])
@@ -344,6 +345,21 @@ async def create_compromiso(
             actor_id=user["id"],
             data={"code": row["code"]},
         )
+        # Notify the responsible person about the new commitment
+        if data.responsible_id and str(data.responsible_id) != str(user["id"]):
+            try:
+                await create_notification(
+                    db=db,
+                    user_id=data.responsible_id,
+                    title=f"Nuevo compromiso asignado: {row['code']}",
+                    body=data.description[:200] if data.description else None,
+                    category="compromiso",
+                    entity_type="core.operational_commitment",
+                    entity_id=row["id"],
+                    link="/compromisos",
+                )
+            except Exception:
+                pass
         await db.commit()
         return {"id": str(row["id"]), "code": row["code"]}
     except IntegrityError:
@@ -458,6 +474,24 @@ async def completar(
         actor_id=user["id"],
         data={"from": row["state"], "to": "COMPLETADO"},
     )
+    # Notify the creator that the commitment has been completed
+    try:
+        creator_row = (await db.execute(
+            text('SELECT created_by_id FROM core.operational_commitment WHERE id = CAST(:id AS uuid)'),
+            {"id": str(compromiso_id)},
+        )).mappings().first()
+        if creator_row and creator_row["created_by_id"] and str(creator_row["created_by_id"]) != str(user["id"]):
+            await create_notification(
+                db=db,
+                user_id=creator_row["created_by_id"],
+                title=f"Compromiso completado: {row['code']}",
+                category="compromiso",
+                entity_type="core.operational_commitment",
+                entity_id=compromiso_id,
+                link="/compromisos",
+            )
+    except Exception:
+        pass
     await db.commit()
     return {"message": "Compromiso marcado como completado"}
 
@@ -518,6 +552,20 @@ async def verificar(
         actor_id=user["id"],
         data={"from": "COMPLETADO", "to": "VERIFICADO"},
     )
+    # Notify the responsible person that their commitment has been verified
+    if row.get("responsible_id") and str(row["responsible_id"]) != str(user["id"]):
+        try:
+            await create_notification(
+                db=db,
+                user_id=row["responsible_id"],
+                title=f"Compromiso verificado: {row['code']}",
+                category="compromiso",
+                entity_type="core.operational_commitment",
+                entity_id=compromiso_id,
+                link="/compromisos",
+            )
+        except Exception:
+            pass
     await db.commit()
     return {"message": "Compromiso verificado"}
 

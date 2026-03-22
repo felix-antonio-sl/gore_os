@@ -23,6 +23,7 @@ from app.schemas.kinship import KinshipDeclarationCreate, KinshipDeclarationItem
 from app.schemas.ipr_modification import IprModificationCreate, IprModificationUpdate, IprModificationItem
 from app.schemas.common import PaginatedResponse
 from app.routers.presupuesto import check_glosa_rules, check_glosa07_transfer_limits
+from app.routers.notifications import create_notification
 
 router = APIRouter(prefix="/api/ipr", tags=["ipr"])
 
@@ -2805,10 +2806,11 @@ async def update_ipr(
 
     # Verify IPR exists
     check = await db.execute(
-        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        text("SELECT id, assignee_id, codigo_bip FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
         {"id": str(ipr_id)},
     )
-    if not check.first():
+    _ipr_row = check.mappings().first()
+    if not _ipr_row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="IPR no encontrado")
 
     updates = body.model_dump(exclude_none=True)
@@ -2826,6 +2828,7 @@ async def update_ipr(
 
     # --- Fiber derivation: auto-compute mcd_phase on status change ---
     _old_status_id = None  # Track for audit event
+    _target_status_code = None  # Track for notification
     if "status_id" in updates and updates["status_id"] is not None:
         new_status_id = str(updates["status_id"])
 
@@ -2847,6 +2850,7 @@ async def update_ipr(
             current_code = codes["current_code"]
             target_code = codes["target_code"]
             _old_status_id = codes["old_status_id"]
+            _target_status_code = target_code
 
             # --- Boundary permission check ---
             boundary_key = _get_boundary_key(current_code, target_code)
@@ -2976,6 +2980,22 @@ async def update_ipr(
             )
         if _old_status_id is None:
             await record_event(db, "MODIFICACION", "core.ipr", ipr_id, user["id"])
+        # --- Notify assignee on status change ---
+        if _old_status_id and "status_id" in updates and _ipr_row["assignee_id"]:
+            try:
+                _codigo = _ipr_row["codigo_bip"] or str(ipr_id)[:8]
+                await create_notification(
+                    db=db,
+                    user_id=_ipr_row["assignee_id"],
+                    title=f"IPR {_codigo}: cambio de estado",
+                    body=f"Nuevo estado: {_target_status_code}" if _target_status_code else None,
+                    category="sistema",
+                    entity_type="core.ipr",
+                    entity_id=ipr_id,
+                    link=f"/ipr/{ipr_id}",
+                )
+            except Exception:
+                pass  # Never break main flow
         await db.commit()
     except DBAPIError as e:
         await db.rollback()
@@ -5293,6 +5313,7 @@ async def check_evaluation_slas(
     iprs = (await db.execute(
         text("""
             SELECT i.id, i.codigo_bip, i.name, i.phase_entered_at,
+                   i.assignee_id,
                    s.code AS status_code, ft.sla_days, ft.label AS track_label
             FROM core.ipr i
             JOIN ref.category s ON s.id = i.status_id
@@ -5360,6 +5381,20 @@ async def check_evaluation_slas(
             },
         )
         created += 1
+        if ipr["assignee_id"]:
+            try:
+                await create_notification(
+                    db=db,
+                    user_id=ipr["assignee_id"],
+                    title=f"Evaluación pendiente: {ipr['codigo_bip']}",
+                    body=f"Evaluación excede plazo SLA: {days_in} días (máx {max_days}d)",
+                    category="sla",
+                    entity_type="core.ipr",
+                    entity_id=ipr["id"],
+                    link=f"/ipr/{ipr['id']}?tab=evaluaciones",
+                )
+            except Exception:
+                pass
 
     await db.commit()
     return {"checked": len(iprs), "alerts_created": created}
@@ -5380,6 +5415,7 @@ async def check_admissibility_slas(
     iprs = (await db.execute(
         text("""
             SELECT i.id, i.codigo_bip, i.name, i.phase_entered_at,
+                   i.assignee_id,
                    ft.sla_days, ft.label AS track_label
             FROM core.ipr i
             JOIN ref.category s ON s.id = i.status_id
@@ -5447,6 +5483,20 @@ async def check_admissibility_slas(
             },
         )
         created += 1
+        if ipr["assignee_id"]:
+            try:
+                await create_notification(
+                    db=db,
+                    user_id=ipr["assignee_id"],
+                    title=f"Admisibilidad pendiente: {ipr['codigo_bip']}",
+                    body=f"Admisibilidad excede plazo SLA: {days_in} días (máx {max_days}d)",
+                    category="sla",
+                    entity_type="core.ipr",
+                    entity_id=ipr["id"],
+                    link=f"/ipr/{ipr['id']}?tab=admisibilidad",
+                )
+            except Exception:
+                pass
 
     await db.commit()
     return {"checked": len(iprs), "alerts_created": created}
@@ -5467,6 +5517,7 @@ async def check_track_phase_slas(
     iprs = (await db.execute(
         text("""
             SELECT i.id, i.codigo_bip, i.name, i.phase_entered_at,
+                   i.assignee_id,
                    s.code AS status_code, mcd.code AS mcd_phase,
                    ft.sla_days, ft.label AS track_label
             FROM core.ipr i
@@ -5542,6 +5593,20 @@ async def check_track_phase_slas(
             },
         )
         created += 1
+        if ipr["assignee_id"]:
+            try:
+                await create_notification(
+                    db=db,
+                    user_id=ipr["assignee_id"],
+                    title=f"Fase excedida: {ipr['codigo_bip']}",
+                    body=f"Fase {phase} excede plazo SLA: {days_in} días (máx {max_days}d)",
+                    category="sla",
+                    entity_type="core.ipr",
+                    entity_id=ipr["id"],
+                    link=f"/ipr/{ipr['id']}",
+                )
+            except Exception:
+                pass
 
     await db.commit()
     return {"checked": len(iprs), "alerts_created": created}

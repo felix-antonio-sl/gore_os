@@ -18,6 +18,7 @@ from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
 from app.core.audit import record_event
+from app.routers.notifications import create_notification
 
 from app.schemas.dgi import (
     EscalationCreate,
@@ -442,6 +443,29 @@ async def create_escalation(
 
     await record_event(db, "ESCALATION_CREATED", "core.dgi_escalation", new_id, user["id"],
                        {"code": code, "level": level_code})
+    # Notify JEFE_DGI about the new escalation
+    try:
+        jefe_row = (await db.execute(
+            text("""
+                SELECT u.id FROM core."user" u
+                JOIN ref.category c ON u.system_role_id = c.id
+                WHERE c.code = 'JEFE_DGI' AND u.deleted_at IS NULL
+                LIMIT 1
+            """),
+        )).mappings().first()
+        if jefe_row and str(jefe_row["id"]) != str(user["id"]):
+            await create_notification(
+                db=db,
+                user_id=jefe_row["id"],
+                title=f"Nuevo escalamiento: {code}",
+                body=body.situation[:200] if body.situation else None,
+                category="escalamiento",
+                entity_type="core.dgi_escalation",
+                entity_id=new_id,
+                link=f"/escalamiento/{new_id}",
+            )
+    except Exception:
+        pass
     try:
         await db.commit()
     except IntegrityError as e:
