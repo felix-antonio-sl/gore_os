@@ -55,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await api.login(email, password);
     api.setToken(data.access_token);
     localStorage.setItem("goreos_user", JSON.stringify(data.user));
+    localStorage.removeItem("goreos_dev_mode");
     setUser(data.user);
     router.push("/dashboard");
   };

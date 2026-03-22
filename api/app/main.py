@@ -7,7 +7,7 @@ from app.routers import dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports
 from app.routers import presupuesto, convenios, admin, reuniones
 from app.routers import search, actos, core_sessions, dgi_cartera, dgi_bottleneck, dgi_processes
 from app.routers import dgi_coordination, dgi_escalation, dgi_services, dgi_td_sessions
-from app.routers import risk, command_center, notifications
+from app.routers import risk, command_center, notifications, dev
 
 settings = get_settings()
 
@@ -58,6 +58,7 @@ def create_app() -> FastAPI:
     app.include_router(risk.router)
     app.include_router(command_center.router)
     app.include_router(notifications.router)
+    app.include_router(dev.router)
 
     @app.get("/api/health")
     async def health():

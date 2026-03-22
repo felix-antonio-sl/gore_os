@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -29,6 +30,7 @@ import {
   ShieldAlert,
   ClipboardCheck,
   Scale,
+  FlaskConical,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -138,6 +140,11 @@ interface SidebarProps {
 export function Sidebar({ onNavClick }: SidebarProps = {}) {
   const { user } = useAuth();
   const pathname = usePathname();
+  const [devMode, setDevMode] = useState(false);
+
+  useEffect(() => {
+    setDevMode(localStorage.getItem("goreos_dev_mode") === "true");
+  }, []);
 
   if (!user) return null;
 
@@ -288,6 +295,17 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
           </>
         )}
       </div>
+
+      {/* Dev testing — only visible in dev mode */}
+      {devMode && (
+        <div className="mt-auto border-t border-sidebar-border pt-2 px-2 pb-1">
+          <NavLink
+            item={{ label: "Testing", href: "/dev/testing", icon: <FlaskConical className="size-4" /> }}
+            isActive={isActive("/dev/testing")}
+            onClick={onNavClick}
+          />
+        </div>
+      )}
     </nav>
   );
 }
