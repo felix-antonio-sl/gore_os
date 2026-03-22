@@ -52,8 +52,8 @@ Key files:
 - `core/deps.py` — `CurrentUser` dependency (user dict from JWT)
 - `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT
 - `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
-- `core/audit.py` — `record_event()` → txn.event (10 event_type codes, 15 integration points across 5 routers)
-- `routers/` — 28 routers, ~282 endpoints. Notable: actos (7-step FSM), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints)
+- `core/audit.py` — `record_event()` → txn.event (13 event_type codes, 82 integration points across 22 routers)
+- `routers/` — 28 routers, ~294 endpoints (150 GET, 84 POST, 44 PATCH, 16 DELETE). Notable: actos (7-step FSM), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -66,6 +66,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 - `lib/format.ts` — `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency` (es-CL). **All files import from here — never define local format functions.**
 - `types/index.ts` — all interfaces. `User.population` (`"operativa"|"dgi"`) drives routing.
 - `components/sidebar.tsx` — 5-7 collapsible `NavSection` per population (localStorage-persisted). Cross-population: Servicios visible in operativa.
+- `components/filter-bar.tsx` — shared filter bar with local-state debounced search (300ms). **Search input uses `localSearch` state for instant feedback + debounced propagation.** Used by 10+ list pages.
 - `components/combobox-async.tsx` — server-side searchable select (debounce 300ms, `shouldFilter={false}`). **Use for 500+ option fields.** Props: `value`, `onChange`, `searchFn`, `placeholder`.
 - `components/page-header.tsx` — shared header (`title`, `description?`, `actions?`, `breadcrumbs?`, `accentColor?`). **All list pages must use this.** Domain accents: indigo(IPR), amber(compromisos), emerald(finanzas), violet(institucional), rose(riesgos), cyan(DGI), teal(servicios).
 - `components/empty-state.tsx` — `compact` for tabs/inline, normal for full-page. **All empty states must use this.**
@@ -126,7 +127,7 @@ All passwords: `admin123`. All `@goreos.cl`.
 
 ## Testing
 
-**610 integration tests (47 modules)** against real PostgreSQL (`goreos_test`). No mocks.
+**730 integration tests (55 modules)** against real PostgreSQL (`goreos_test`). No mocks.
 
 ```bash
 ./scripts/setup_test_db.sh                                          # Setup test DB
