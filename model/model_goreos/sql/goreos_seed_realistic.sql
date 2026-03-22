@@ -2780,6 +2780,501 @@ INSERT INTO txn.event (event_type_id, subject_type, subject_id, actor_id, occurr
 ON CONFLICT DO NOTHING;
 
 
+-- =============================================================================
+-- TIER 5C: ENRIQUECIMIENTO CADENAS IPR↔CONVENIO↔RESOLUCIÓN + PROBLEMAS + RIESGOS
+-- =============================================================================
+-- Cierra 3 brechas críticas de cobertura:
+--   1. Resoluciones F3+ (12% → 85%+)
+--   2. Problemas F4+ (50% → 70%+)
+--   3. Riesgos por mecanismo (11% → 25%+)
+-- Prerequisito: TIERs 1-11 ya ejecutados.
+
+-- 5C.0: CONVENIOS FALTANTES — 7 IPRs F3+ héroe sin agreement
+-- Lógica: F3→BORRADOR/EN_REVISION_JURIDICA, F4→VIGENTE, F5→TERMINADO
+INSERT INTO core.agreement (agreement_number, agreement_type_id, state_id, ipr_id, giver_id, receiver_id, total_amount, signed_at, valid_from, valid_to) VALUES
+('DEMO-R-AGR-050',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='MANDATO'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='TERMINADO'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-C33-004'),
+ (SELECT id FROM core.organization WHERE code='DIT'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-MOP-NUBLE'),
+ 290000000, '2025-03-01', '2025-03-01', '2025-12-31'),
+('DEMO-R-AGR-051',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='TRANSFERENCIA'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='BORRADOR'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-004'),
+ (SELECT id FROM core.organization WHERE code='DIPIR'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-PINTO'),
+ 45000000, NULL, NULL, NULL),
+('DEMO-R-AGR-052',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='MANDATO'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-006'),
+ (SELECT id FROM core.organization WHERE code='DIPIR'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-BULNES'),
+ 78000000, CURRENT_TIMESTAMP - INTERVAL '60 days', CURRENT_TIMESTAMP - INTERVAL '60 days', CURRENT_TIMESTAMP + INTERVAL '180 days'),
+('DEMO-R-AGR-053',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='EJECUCION'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-002'),
+ (SELECT id FROM core.organization WHERE code='DIT'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-COELEMU'),
+ 95000000, CURRENT_TIMESTAMP - INTERVAL '30 days', CURRENT_TIMESTAMP - INTERVAL '30 days', CURRENT_TIMESTAMP + INTERVAL '240 days'),
+('DEMO-R-AGR-054',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='MANDATO'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRPD-003'),
+ (SELECT id FROM core.organization WHERE code='DAF'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-ING-NUBLE'),
+ 380000000, CURRENT_TIMESTAMP - INTERVAL '28 days', CURRENT_TIMESTAMP - INTERVAL '28 days', CURRENT_TIMESTAMP + INTERVAL '300 days'),
+('DEMO-R-AGR-055',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='COLABORACION'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='EN_REVISION_JURIDICA'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-003'),
+ (SELECT id FROM core.organization WHERE code='DIDESO'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-FUND-NUBLE'),
+ 95000000, NULL, NULL, NULL),
+('DEMO-R-AGR-056',
+ (SELECT id FROM ref.category WHERE scheme='agreement_type' AND code='TRANSFERENCIA'),
+ (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='TERMINADO'),
+ (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-005'),
+ (SELECT id FROM core.organization WHERE code='DIDESO'),
+ (SELECT id FROM core.organization WHERE code='DEMO-R-MUNI-QUIRIHUE'),
+ 60000000, '2025-05-01', '2025-05-01', '2025-11-30')
+ON CONFLICT DO NOTHING;
+
+-- 5C.0b: CUOTAS para los 7 convenios nuevos (3 cuotas c/u = 21 registros)
+DO $$
+DECLARE
+    v_agr RECORD;
+    v_pendiente UUID; v_pagado UUID;
+    v_cuota NUMERIC;
+BEGIN
+    SELECT id INTO v_pendiente FROM ref.category WHERE scheme='payment_status' AND code='PENDIENTE';
+    SELECT id INTO v_pagado FROM ref.category WHERE scheme='payment_status' AND code='PAGADO';
+
+    FOR v_agr IN
+        SELECT a.id, a.total_amount, a.agreement_number, s.code AS state_code
+        FROM core.agreement a
+        JOIN ref.category s ON a.state_id = s.id
+        WHERE a.agreement_number IN ('DEMO-R-AGR-050','DEMO-R-AGR-051','DEMO-R-AGR-052','DEMO-R-AGR-053','DEMO-R-AGR-054','DEMO-R-AGR-055','DEMO-R-AGR-056')
+        ORDER BY a.agreement_number
+    LOOP
+        v_cuota := ROUND(v_agr.total_amount / 3, 2);
+
+        -- Cuota 1: pagada si convenio VIGENTE o TERMINADO
+        INSERT INTO core.agreement_installment (agreement_id, installment_number, amount, due_date, payment_status_id, paid_at, paid_amount)
+        VALUES (v_agr.id, 1, v_cuota,
+                CURRENT_DATE - INTERVAL '45 days',
+                CASE WHEN v_agr.state_code IN ('VIGENTE','TERMINADO') THEN v_pagado ELSE v_pendiente END,
+                CASE WHEN v_agr.state_code IN ('VIGENTE','TERMINADO') THEN CURRENT_TIMESTAMP - INTERVAL '40 days' ELSE NULL END,
+                CASE WHEN v_agr.state_code IN ('VIGENTE','TERMINADO') THEN v_cuota ELSE NULL END)
+        ON CONFLICT DO NOTHING;
+
+        -- Cuota 2
+        INSERT INTO core.agreement_installment (agreement_id, installment_number, amount, due_date, payment_status_id, paid_at, paid_amount)
+        VALUES (v_agr.id, 2, v_cuota,
+                CURRENT_DATE + INTERVAL '30 days',
+                CASE WHEN v_agr.state_code = 'TERMINADO' THEN v_pagado ELSE v_pendiente END,
+                CASE WHEN v_agr.state_code = 'TERMINADO' THEN CURRENT_TIMESTAMP - INTERVAL '20 days' ELSE NULL END,
+                CASE WHEN v_agr.state_code = 'TERMINADO' THEN v_cuota ELSE NULL END)
+        ON CONFLICT DO NOTHING;
+
+        -- Cuota 3
+        INSERT INTO core.agreement_installment (agreement_id, installment_number, amount, due_date, payment_status_id, paid_at, paid_amount)
+        VALUES (v_agr.id, 3, v_agr.total_amount - (2 * v_cuota),
+                CURRENT_DATE + INTERVAL '90 days',
+                CASE WHEN v_agr.state_code = 'TERMINADO' THEN v_pagado ELSE v_pendiente END,
+                CASE WHEN v_agr.state_code = 'TERMINADO' THEN CURRENT_TIMESTAMP - INTERVAL '5 days' ELSE NULL END,
+                CASE WHEN v_agr.state_code = 'TERMINADO' THEN v_agr.total_amount - (2 * v_cuota) ELSE NULL END)
+        ON CONFLICT DO NOTHING;
+    END LOOP;
+END $$;
+
+-- 5C.1: ACTOS ADMINISTRATIVOS + RESOLUCIONES — cierra brecha CRÍTICA (12% → 85%+)
+-- Itera sobre TODOS los IPRs F3+ DEMO-R que no tienen resolución vinculada.
+-- Para cada uno: crea un acto + resolución ligada al IPR (y agreement si existe).
+DO $$
+DECLARE
+    v_ipr RECORD;
+    v_aprobatoria UUID; v_modificatoria UUID;
+    v_sub_convenio UUID; v_sub_pago UUID; v_sub_modifica UUID;
+    v_resolucion_type UUID; v_decreto_type UUID;
+    v_firmado UUID; v_tomado_razon UUID; v_tramitado UUID;
+    v_admin UUID;
+    v_act_id UUID;
+    v_agr_id UUID;
+    v_idx INTEGER := 0;
+    v_act_number TEXT;
+    v_act_prefix TEXT;
+    v_subjects TEXT[] := ARRAY[
+        'Aprueba convenio mandato para ejecución de obras',
+        'Autoriza transferencia de recursos para programa regional',
+        'Aprueba pago estado de avance obra pública',
+        'Resuelve aprobación bases de licitación pública',
+        'Autoriza contrato de obras complementarias',
+        'Aprueba rendición de cuentas trimestral',
+        'Autoriza adquisición de equipamiento especializado',
+        'Aprueba informe técnico evaluación de obra',
+        'Resuelve asignación presupuestaria FNDR',
+        'Autoriza prórroga convenio de ejecución',
+        'Aprueba cierre administrativo de proyecto',
+        'Resuelve modificación presupuestaria por variación IPC',
+        'Autoriza pago cuota final convenio mandato',
+        'Aprueba recepción provisoria de obras',
+        'Autoriza suscripción de convenio colaboración',
+        'Resuelve adjudicación licitación equipamiento',
+        'Aprueba programa de trabajo anual',
+        'Autoriza inicio de obras según contrato',
+        'Resuelve aprobación plan de mitigación',
+        'Aprueba informe final de cierre proyecto'
+    ];
+    v_budget NUMERIC;
+BEGIN
+    SELECT id INTO v_aprobatoria FROM ref.category WHERE scheme='resolution_type' AND code='APROBATORIA';
+    SELECT id INTO v_modificatoria FROM ref.category WHERE scheme='resolution_type' AND code='MODIFICATORIA';
+    SELECT id INTO v_sub_convenio FROM ref.category WHERE scheme='resolution_subtype' AND code='APRUEBA_CONVENIO';
+    SELECT id INTO v_sub_pago FROM ref.category WHERE scheme='resolution_subtype' AND code='APRUEBA_PAGO';
+    SELECT id INTO v_sub_modifica FROM ref.category WHERE scheme='resolution_subtype' AND code='MODIFICA_PRESUPUESTO';
+    SELECT id INTO v_resolucion_type FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION';
+    SELECT id INTO v_decreto_type FROM ref.category WHERE scheme='act_type' AND code='DECRETO';
+    SELECT id INTO v_firmado FROM ref.category WHERE scheme='act_state' AND code='FIRMADO';
+    SELECT id INTO v_tomado_razon FROM ref.category WHERE scheme='act_state' AND code='TOMADO_RAZON';
+    SELECT id INTO v_tramitado FROM ref.category WHERE scheme='act_state' AND code='TRAMITADO';
+    SELECT id INTO v_admin FROM core."user" WHERE email='admin@goreos.cl';
+
+    FOR v_ipr IN
+        SELECT i.id, i.codigo_bip, i.sponsor_division_id, p.code AS phase_code,
+               COALESCE((i.metadata->>'monto_total')::numeric, 500000000) AS monto
+        FROM core.ipr i
+        JOIN ref.category p ON i.mcd_phase_id = p.id
+        WHERE i.codigo_bip LIKE 'DEMO-R-%'
+          AND p.code IN ('F3','F4','F5')
+          AND i.deleted_at IS NULL
+          AND NOT EXISTS (
+              SELECT 1 FROM core.resolution r WHERE r.ipr_id = i.id
+          )
+        ORDER BY i.codigo_bip
+    LOOP
+        v_idx := v_idx + 1;
+
+        -- Decidir tipo de acto: 75% RESOLUCION, 25% DECRETO
+        IF v_idx % 4 = 0 THEN
+            v_act_prefix := 'DEMO-R-DEC-';
+        ELSE
+            v_act_prefix := 'DEMO-R-RES-';
+        END IF;
+        v_act_number := v_act_prefix || LPAD((199 + v_idx)::text, 3, '0');
+
+        -- Crear acto administrativo (WHERE NOT EXISTS porque act_number no tiene UNIQUE)
+        INSERT INTO core.administrative_act (
+            act_number, act_type_id, subject, issuer_id, issued_at, state_id, requires_cgr
+        )
+        SELECT
+            v_act_number,
+            CASE WHEN v_idx % 4 = 0 THEN v_decreto_type ELSE v_resolucion_type END,
+            v_subjects[1 + ((v_idx - 1) % 20)] || ' — ' || v_ipr.codigo_bip,
+            v_ipr.sponsor_division_id,
+            CURRENT_TIMESTAMP - ((v_idx * 3 + 10) * INTERVAL '1 day'),
+            CASE
+                WHEN v_idx % 4 = 0 THEN v_tomado_razon  -- DECRETO → TOMADO_RAZON
+                WHEN v_idx % 5 = 0 THEN v_tramitado      -- ~20% TRAMITADO
+                ELSE v_firmado                             -- Default FIRMADO
+            END,
+            (v_idx % 4 = 0)  -- DECRETO requires_cgr=true
+        WHERE NOT EXISTS (
+            SELECT 1 FROM core.administrative_act WHERE act_number = v_act_number
+        );
+
+        -- Recuperar id del acto recién creado
+        SELECT id INTO v_act_id FROM core.administrative_act WHERE act_number = v_act_number;
+
+        IF v_act_id IS NULL THEN
+            CONTINUE;
+        END IF;
+
+        -- Buscar agreement vinculado al IPR (si existe)
+        SELECT a.id INTO v_agr_id
+        FROM core.agreement a
+        WHERE a.ipr_id = v_ipr.id AND a.deleted_at IS NULL
+        ORDER BY a.created_at DESC LIMIT 1;
+
+        -- Budget amount: 60-100% del monto total del IPR
+        v_budget := ROUND(v_ipr.monto * (0.6 + (v_idx % 5) * 0.1), 0);
+
+        -- Crear resolución vinculada
+        INSERT INTO core.resolution (
+            administrative_act_id, resolution_type_id, resolution_subtype_id,
+            ipr_id, agreement_id, budget_amount, created_by_id
+        ) VALUES (
+            v_act_id,
+            CASE WHEN v_idx % 10 = 0 THEN v_modificatoria ELSE v_aprobatoria END,
+            CASE
+                WHEN v_agr_id IS NOT NULL THEN v_sub_convenio
+                WHEN v_idx % 7 = 0 THEN v_sub_modifica
+                ELSE v_sub_pago
+            END,
+            v_ipr.id,
+            v_agr_id,
+            v_budget,
+            v_admin
+        ) ON CONFLICT DO NOTHING;
+    END LOOP;
+
+    RAISE NOTICE 'TIER 5C.1: Created % admin_acts + resolutions for F3+ IPRs', v_idx;
+END $$;
+
+-- 5C.2: UPDATE CDPs → vincular a resoluciones recién creadas
+-- Busca CDPs DEMO-R sin resolution_id y los vincula a la resolución del mismo IPR
+DO $$
+DECLARE
+    v_cdp RECORD;
+    v_res_id UUID;
+BEGIN
+    FOR v_cdp IN
+        SELECT bc.id, bc.commitment_number, bc.ipr_id
+        FROM core.budget_commitment bc
+        WHERE bc.commitment_number LIKE 'DEMO-R-CDP-%'
+          AND bc.resolution_id IS NULL
+          AND bc.ipr_id IS NOT NULL
+    LOOP
+        SELECT r.id INTO v_res_id
+        FROM core.resolution r
+        WHERE r.ipr_id = v_cdp.ipr_id
+        ORDER BY r.created_at DESC LIMIT 1;
+
+        IF v_res_id IS NOT NULL THEN
+            UPDATE core.budget_commitment
+            SET resolution_id = v_res_id
+            WHERE id = v_cdp.id;
+        END IF;
+    END LOOP;
+END $$;
+
+-- 5C.3: PROBLEMAS ADICIONALES — F4+ IPRs con 0 problemas (15 nuevos)
+DO $$
+DECLARE
+    v_ipr RECORD;
+    v_types TEXT[] := ARRAY['TECNICO','FINANCIERO','ADMINISTRATIVO','LEGAL','COORDINACION','EXTERNO','TECNICO','FINANCIERO','ADMINISTRATIVO','LEGAL','COORDINACION','EXTERNO','TECNICO','FINANCIERO','ADMINISTRATIVO'];
+    v_states TEXT[] := ARRAY['ABIERTO','ABIERTO','ABIERTO','EN_GESTION','EN_GESTION','EN_GESTION','ABIERTO','EN_GESTION','RESUELTO','RESUELTO','ABIERTO','EN_GESTION','CERRADO_SIN_RESOLVER','RESUELTO','ABIERTO'];
+    v_descs TEXT[] := ARRAY[
+        'Falla estructural detectada en cimientos — requiere refuerzo sísmico',
+        'Sobrecosto 18% por variación tipo de cambio en importación de equipos',
+        'Documentación CGR incompleta — faltan 3 certificados de recepción',
+        'Recurso de protección interpuesto por comunidad aledaña',
+        'Municipalidad no designa contraparte técnica — actividades paralizadas',
+        'Proveedor internacional en quiebra — buscar alternativa local',
+        'Infiltración detectada en estructura techado — reparación urgente',
+        'Desfase entre presupuesto aprobado y cotizaciones actuales (+22%)',
+        'Demora en visación de resolución — resuelta tras escalamiento',
+        'Conflicto de competencia jurisdiccional resuelto por dictamen CGR',
+        'Contraparte SERVIU no responde requerimientos hace 20 días',
+        'Inundación en bodega de materiales — pérdida parcial de stock',
+        'Incumplimiento reiterado de plazos por contratista — sin resolución',
+        'Diferencia en rendición subsanada con documentación complementaria',
+        'Defecto en especificación técnica de licitación — requiere corrección'
+    ];
+    v_impacts TEXT[] := ARRAY[
+        'Retraso estimado 30 días en obra principal',
+        'Posible déficit presupuestario requiere modificación de CDP',
+        'Bloquea envío de rendición trimestral a CGR',
+        'Paralización temporal de actividades en terreno',
+        'Ejecución del programa no puede avanzar sin contraparte',
+        'Atraso 45 días en entrega de equipamiento',
+        'Obra debe suspenderse hasta completar reparación',
+        'Requiere solicitud de fondos adicionales o reducción de alcance',
+        'Sin impacto — demora fue menor a 5 días',
+        'Sin impacto residual — dictamen favorable obtenido',
+        'Cronograma de inspecciones atrasado 15 días',
+        'Reposición de materiales estimada en M$8',
+        'Motivó inicio de proceso de multa contractual',
+        'Rendición regularizada — observación CGR resuelta',
+        'Proceso de licitación debe reiniciarse parcialmente'
+    ];
+    v_users TEXT[] := ARRAY['jefe.dit@goreos.cl','jefe.daf@goreos.cl','rtf.daf@goreos.cl','juridico@goreos.cl','jefe.difoi@goreos.cl','jefe.dideso@goreos.cl','jefe.dit@goreos.cl','jefe.daf@goreos.cl','rtf.daf@goreos.cl','juridico@goreos.cl','jefe.dit@goreos.cl','jefe.dideso@goreos.cl','jefe.difoi@goreos.cl','rtf.daf@goreos.cl','analista.dipir@goreos.cl'];
+    v_idx INTEGER := 0;
+BEGIN
+    FOR v_ipr IN
+        SELECT i.id, i.codigo_bip
+        FROM core.ipr i
+        JOIN ref.category p ON i.mcd_phase_id = p.id
+        WHERE i.codigo_bip LIKE 'DEMO-R-%'
+          AND p.code IN ('F4','F5')
+          AND i.deleted_at IS NULL
+          AND NOT EXISTS (
+              SELECT 1 FROM core.ipr_problem pr WHERE pr.ipr_id = i.id
+          )
+        ORDER BY i.codigo_bip
+        LIMIT 15
+    LOOP
+        v_idx := v_idx + 1;
+
+        INSERT INTO core.ipr_problem (
+            code, ipr_id, problem_type_id, description, state_id,
+            detected_by_id, impact_description, created_by_id
+        ) VALUES (
+            'DEMO-R-PRB-' || LPAD((200 + v_idx)::text, 3, '0'),
+            v_ipr.id,
+            (SELECT id FROM ref.category WHERE scheme='problem_type' AND code=v_types[v_idx]),
+            v_descs[v_idx] || ' — ' || v_ipr.codigo_bip,
+            (SELECT id FROM ref.category WHERE scheme='problem_state' AND code=v_states[v_idx]),
+            (SELECT id FROM core."user" WHERE email=v_users[v_idx]),
+            v_impacts[v_idx],
+            (SELECT id FROM core."user" WHERE email=v_users[v_idx])
+        ) ON CONFLICT (code) DO NOTHING;
+    END LOOP;
+
+    RAISE NOTICE 'TIER 5C.3: Created % problems for F4+ IPRs', v_idx;
+END $$;
+
+-- 5C.4: RIESGOS ADICIONALES — mecanismos sin cobertura (15 nuevos)
+-- Distribución: C33(+2), FRIL(+2), TRANSFER(+2), GLOSA06(+2), SUBV8(+2), SNI(+3), FRPD(+2)
+INSERT INTO core.risk (code, name, risk_type_id, probability_id, impact_id, status_id, subject_type, subject_id, mitigation_plan, identified_at, created_by_id) VALUES
+-- C33 (+2)
+('DEMO-R-RSK-0201', 'Incumplimiento certificación ambiental obra conservación',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='LEGAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MEDIA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='INCUMPLIMIENTO_PLAZO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_EVALUACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-C33-003' LIMIT 1),
+ 'Solicitar informe ambiental complementario a SEREMI Medio Ambiente',
+ CURRENT_DATE - INTERVAL '8 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+('DEMO-R-RSK-0202', 'Deterioro estructural no previsto en conservación vial',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='TECNICO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='ALTA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RETRASA_OBRA'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='IDENTIFICADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-C33-004' LIMIT 1),
+ NULL,
+ CURRENT_DATE - INTERVAL '4 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+-- FRIL (+2)
+('DEMO-R-RSK-0203', 'Riesgo de fraccionamiento en proyecto FRIL Ñiquén',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='FINANCIERO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='BAJA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='BLOQUEA_PAGO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_MITIGACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-004' LIMIT 1),
+ 'Consolidar componentes en licitación única para evitar fraccionamiento',
+ CURRENT_DATE - INTERVAL '12 days',
+ (SELECT id FROM core."user" WHERE email='analista.dipir@goreos.cl')),
+('DEMO-R-RSK-0204', 'Rendición observada podría escalar a reparo CGR',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='LEGAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MEDIA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RIESGO_RENDICION'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_EVALUACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRIL-006' LIMIT 1),
+ 'Preparar respuesta fundamentada con documentación de respaldo',
+ CURRENT_DATE - INTERVAL '6 days',
+ (SELECT id FROM core."user" WHERE email='rtf.daf@goreos.cl')),
+-- TRANSFER (+2)
+('DEMO-R-RSK-0205', 'Contraparte no cumple compromisos de cofinanciamiento',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='FINANCIERO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='ALTA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RETRASA_CONVENIO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_MITIGACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-003' LIMIT 1),
+ 'Activar cláusula de incumplimiento y evaluar resciliación',
+ CURRENT_DATE - INTERVAL '15 days',
+ (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl')),
+('DEMO-R-RSK-0206', 'Pérdida de resultados por término anticipado de programa',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='OPERACIONAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MUY_ALTA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='OTRO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='ACEPTADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-TRF-004' LIMIT 1),
+ 'Riesgo aceptado — programa terminado anticipadamente, lecciones documentadas',
+ CURRENT_DATE - INTERVAL '10 days',
+ (SELECT id FROM core."user" WHERE email='jefe.difoi@goreos.cl')),
+-- GLOSA06 (+2)
+('DEMO-R-RSK-0207', 'Estudio desactualizado por cambio normativo sectorial',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='LEGAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MEDIA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='INCUMPLIMIENTO_PLAZO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='IDENTIFICADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-G06-003' LIMIT 1),
+ NULL,
+ CURRENT_DATE - INTERVAL '7 days',
+ (SELECT id FROM core."user" WHERE email='analista.diplade@goreos.cl')),
+('DEMO-R-RSK-0208', 'Consultora incumple plazo de entrega informe final',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='OPERACIONAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='BAJA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RETRASA_CONVENIO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='MITIGADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-G06-004' LIMIT 1),
+ 'Informe entregado con 10 días de retraso — multa aplicada',
+ CURRENT_DATE - INTERVAL '30 days',
+ (SELECT id FROM core."user" WHERE email='analista.diplade@goreos.cl')),
+-- SUBV8 (+2)
+('DEMO-R-RSK-0209', 'Beneficiarios no cumplen requisitos de elegibilidad',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='OPERACIONAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MEDIA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RIESGO_RENDICION'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_MITIGACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-003' LIMIT 1),
+ 'Verificación cruzada con registro social de hogares en curso',
+ CURRENT_DATE - INTERVAL '9 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dideso@goreos.cl')),
+('DEMO-R-RSK-0210', 'Ejecutor con morosidad en rendiciones anteriores',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='FINANCIERO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='ALTA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='BLOQUEA_PAGO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_EVALUACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SUBV8-005' LIMIT 1),
+ 'Evaluar bloqueo de transferencias hasta regularización',
+ CURRENT_DATE - INTERVAL '3 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dideso@goreos.cl')),
+-- SNI (+3)
+('DEMO-R-RSK-0211', 'Retraso en obtención de permisos municipales',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='OPERACIONAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MEDIA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RETRASA_OBRA'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_MITIGACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-006' LIMIT 1),
+ 'Gestión directa con DOM Coihueco para acelerar permisos',
+ CURRENT_DATE - INTERVAL '11 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+('DEMO-R-RSK-0212', 'Hallazgo arqueológico en zona de excavación',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='OPERACIONAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MUY_BAJA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RETRASA_OBRA'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='CERRADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-SNI-005' LIMIT 1),
+ 'Protocolo CMN aplicado — zona liberada tras evaluación',
+ CURRENT_DATE - INTERVAL '45 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dit@goreos.cl')),
+('DEMO-R-RSK-0213', 'Variación de precios en acero y cemento (+15%)',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='FINANCIERO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='ALTA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='BLOQUEA_PAGO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='IDENTIFICADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-EXT-004' LIMIT 1),
+ NULL,
+ CURRENT_DATE - INTERVAL '2 days',
+ (SELECT id FROM core."user" WHERE email='jefe.daf@goreos.cl')),
+-- FRPD (+2)
+('DEMO-R-RSK-0214', 'Especificaciones técnicas de equipamiento obsoletas',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='TECNICO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='BAJA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='INCUMPLIMIENTO_PLAZO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='EN_EVALUACION'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRPD-001' LIMIT 1),
+ 'Actualizar especificaciones con catálogo vigente antes de licitar',
+ CURRENT_DATE - INTERVAL '5 days',
+ (SELECT id FROM core."user" WHERE email='jefe.dideso@goreos.cl')),
+('DEMO-R-RSK-0215', 'Licitación podría declararse desierta por falta de oferentes',
+ (SELECT id FROM ref.category WHERE scheme='risk_type' AND code='OPERACIONAL'),
+ (SELECT id FROM ref.category WHERE scheme='risk_probability' AND code='MEDIA'),
+ (SELECT id FROM ref.category WHERE scheme='problem_impact' AND code='RETRASA_CONVENIO'),
+ (SELECT id FROM ref.category WHERE scheme='risk_status' AND code='IDENTIFICADO'),
+ 'core.ipr', (SELECT id FROM core.ipr WHERE codigo_bip='DEMO-R-FRPD-003' LIMIT 1),
+ NULL,
+ CURRENT_DATE - INTERVAL '14 days',
+ (SELECT id FROM core."user" WHERE email='jefe.daf@goreos.cl'))
+ON CONFLICT (code) DO NOTHING;
+
+
 COMMIT;
 
 -- =============================================================================
