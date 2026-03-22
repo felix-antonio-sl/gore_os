@@ -466,7 +466,7 @@ async def _ai_pending_signatures(db: AsyncSession, user: dict) -> list[ActionIte
     sql = text("""
         SELECT id::text, act_number AS ref_code, subject, 'acto' AS item_type
         FROM core.administrative_act
-        WHERE state_id IN (SELECT id FROM ref.category WHERE scheme = 'administrative_act_step' AND code = 'VISADO')
+        WHERE state_id IN (SELECT id FROM ref.category WHERE scheme = 'act_state' AND code = 'VISADO')
           AND deleted_at IS NULL
         UNION ALL
         SELECT a.id::text, a.agreement_number AS ref_code,
@@ -702,13 +702,34 @@ async def _dashboard_personal(user: dict, db: AsyncSession) -> DashboardResponse
     alert_sql = text("""
         SELECT
             a.id,
+            at_cat.label    AS alert_type_label,
             sev.code        AS severity,
             a.message,
             a.subject_type,
             a.subject_id,
-            a.triggered_at
+            CASE a.subject_type
+                WHEN 'core.ipr' THEN (
+                    SELECT i.codigo_bip || ' - ' || i.name
+                    FROM core.ipr i WHERE i.id = a.subject_id
+                )
+                WHEN 'core.operational_commitment' THEN (
+                    SELECT oc2.code || ': ' || oc2.description
+                    FROM core.operational_commitment oc2 WHERE oc2.id = a.subject_id
+                )
+                WHEN 'core.ipr_problem' THEN (
+                    SELECT pr.code || ': ' || pr.description
+                    FROM core.ipr_problem pr WHERE pr.id = a.subject_id
+                )
+                WHEN 'core.organization' THEN (
+                    SELECT org.name FROM core.organization org WHERE org.id = a.subject_id
+                )
+                ELSE NULL
+            END AS subject_label,
+            a.triggered_at,
+            a.attended_at
         FROM core.alert a
         LEFT JOIN ref.category sev ON sev.id = a.severity_id
+        LEFT JOIN ref.category at_cat ON at_cat.id = a.alert_type_id
         WHERE a.subject_type = 'core.ipr'
           AND a.subject_id IN (
               SELECT id FROM core.ipr
@@ -724,11 +745,14 @@ async def _dashboard_personal(user: dict, db: AsyncSession) -> DashboardResponse
     alerts = [
         DashboardAlert(
             id=r["id"],
+            alert_type_label=r["alert_type_label"],
             severity=r["severity"],
             message=r["message"],
             subject_type=r["subject_type"],
             subject_id=r["subject_id"],
+            subject_label=r["subject_label"],
             triggered_at=r["triggered_at"],
+            attended_at=r["attended_at"],
         )
         for r in alert_rows
     ]
@@ -1007,13 +1031,34 @@ async def _dashboard_admin_regional(user: dict, db: AsyncSession) -> DashboardRe
     alert_sql = text("""
         SELECT
             a.id,
+            at_cat.label    AS alert_type_label,
             sev.code        AS severity,
             a.message,
             a.subject_type,
             a.subject_id,
-            a.triggered_at
+            CASE a.subject_type
+                WHEN 'core.ipr' THEN (
+                    SELECT i.codigo_bip || ' - ' || i.name
+                    FROM core.ipr i WHERE i.id = a.subject_id
+                )
+                WHEN 'core.operational_commitment' THEN (
+                    SELECT oc2.code || ': ' || oc2.description
+                    FROM core.operational_commitment oc2 WHERE oc2.id = a.subject_id
+                )
+                WHEN 'core.ipr_problem' THEN (
+                    SELECT pr.code || ': ' || pr.description
+                    FROM core.ipr_problem pr WHERE pr.id = a.subject_id
+                )
+                WHEN 'core.organization' THEN (
+                    SELECT org.name FROM core.organization org WHERE org.id = a.subject_id
+                )
+                ELSE NULL
+            END AS subject_label,
+            a.triggered_at,
+            a.attended_at
         FROM core.alert a
         LEFT JOIN ref.category sev ON sev.id = a.severity_id
+        LEFT JOIN ref.category at_cat ON at_cat.id = a.alert_type_id
         WHERE a.attended_at IS NULL
           AND a.resolved_at IS NULL
           AND a.deleted_at IS NULL
@@ -1033,11 +1078,14 @@ async def _dashboard_admin_regional(user: dict, db: AsyncSession) -> DashboardRe
     alerts = [
         DashboardAlert(
             id=r["id"],
+            alert_type_label=r["alert_type_label"],
             severity=r["severity"],
             message=r["message"],
             subject_type=r["subject_type"],
             subject_id=r["subject_id"],
+            subject_label=r["subject_label"],
             triggered_at=r["triggered_at"],
+            attended_at=r["attended_at"],
         )
         for r in alert_rows
     ]

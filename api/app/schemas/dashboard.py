@@ -22,11 +22,14 @@ class DashboardCommitment(BaseModel):
 
 class DashboardAlert(BaseModel):
     id: UUID
+    alert_type_label: str | None = None
     severity: str | None
     message: str
     subject_type: str
     subject_id: UUID
+    subject_label: str | None = None
     triggered_at: datetime
+    attended_at: datetime | None = None
 
 
 class DashboardProblem(BaseModel):

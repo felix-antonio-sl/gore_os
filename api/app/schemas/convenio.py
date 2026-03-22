@@ -55,6 +55,8 @@ class ConvenioDetail(ConvenioListItem):
     installments: list[InstallmentItem]
     history: list[AgreementHistoryEntry] = []
     renditions: list["RenditionSummaryItem"] = []
+    pending_renditions: int = 0
+    blocked_renditions: int = 0
 
 
 class ConvenioCreate(BaseModel):

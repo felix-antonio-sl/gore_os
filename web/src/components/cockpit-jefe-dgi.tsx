@@ -119,13 +119,13 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                     tabIndex={0}
                     onClick={() => {
                       if (item.source === "alert") router.push("/alertas");
-                      else if (item.source === "rendition") router.push("/rendiciones");
+                      else if (item.source === "rendition") router.push("/datos?dominio=rendiciones");
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
                         if (item.source === "alert") router.push("/alertas");
-                        else if (item.source === "rendition") router.push("/rendiciones");
+                        else if (item.source === "rendition") router.push("/datos?dominio=rendiciones");
                       }
                     }}
                   >
@@ -370,7 +370,7 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                 {rendition_summary.by_state.find((s) => s.code === "PENDIENTE")?.count ?? 0} pendientes
               </Badge>
             )}
-            <Button size="sm" variant="outline" className="ml-auto h-7 text-xs" onClick={() => router.push("/rendiciones")}>
+            <Button size="sm" variant="outline" className="ml-auto h-7 text-xs" onClick={() => router.push("/datos?dominio=rendiciones")}>
               Ver rendiciones
             </Button>
           </h2>

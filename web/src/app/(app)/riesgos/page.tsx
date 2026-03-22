@@ -79,9 +79,9 @@ export default function RiesgosPage() {
 
   // Load categories
   useEffect(() => {
-    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories?scheme=risk_type").then(setRiskTypes).catch(() => {});
-    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories?scheme=risk_probability").then(setProbabilities).catch(() => {});
-    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories?scheme=problem_impact").then(setImpacts).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/risk_type").then(setRiskTypes).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/risk_probability").then(setProbabilities).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/problem_impact").then(setImpacts).catch(() => {});
   }, []);
 
   const fetchData = () => {

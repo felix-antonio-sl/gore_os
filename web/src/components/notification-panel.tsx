@@ -57,7 +57,7 @@ const CATEGORY_CONFIG: Record<
   rendicion: {
     icon: Receipt,
     color: "text-violet-500",
-    label: "Rendicion",
+    label: "Rendición",
   },
   firma: {
     icon: FileSignature,
@@ -195,7 +195,7 @@ export function NotificationPanel() {
               onClick={handleMarkAllRead}
             >
               <CheckCheck className="size-3.5" />
-              Marcar todo como leido
+              Marcar todo como leído
             </Button>
           )}
         </div>
@@ -210,7 +210,7 @@ export function NotificationPanel() {
             <div className="flex flex-col items-center gap-2 py-10 text-muted-foreground">
               <BellOff className="size-8 stroke-1" />
               <p className="text-sm font-medium">Sin notificaciones</p>
-              <p className="text-xs">Cuando haya novedades, apareceran aqui.</p>
+              <p className="text-xs">Cuando haya novedades, aparecerán aquí.</p>
             </div>
           ) : (
             notifications.map((n) => {
@@ -225,7 +225,7 @@ export function NotificationPanel() {
                   tabIndex={0}
                   className={cn(
                     "flex items-start gap-3 px-4 py-3 border-b last:border-0 cursor-pointer transition-colors",
-                    "hover:bg-muted/50 focus:outline-none focus:bg-muted/50",
+                    "group hover:bg-muted/50 focus:outline-none focus:bg-muted/50",
                     isUnread && "bg-primary/5"
                   )}
                   onClick={() => handleClick(n)}
@@ -272,7 +272,7 @@ export function NotificationPanel() {
                     size="icon"
                     className="h-6 w-6 shrink-0 opacity-0 group-hover:opacity-100 hover:opacity-100 focus:opacity-100 text-muted-foreground hover:text-destructive"
                     onClick={(e) => handleDelete(e, n.id)}
-                    aria-label="Eliminar notificacion"
+                    aria-label="Eliminar notificación"
                   >
                     <Trash2 className="size-3" />
                   </Button>

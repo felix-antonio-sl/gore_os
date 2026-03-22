@@ -63,7 +63,7 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
     }
     setPwdLoading(true);
     try {
-      await api.post("/auth/change-password", {
+      await api.post("/api/auth/change-password", {
         current_password: pwdForm.current,
         new_password: pwdForm.next,
       });
