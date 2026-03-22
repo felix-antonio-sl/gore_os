@@ -17,7 +17,11 @@ docker compose --profile standalone up -d           # With standalone PostgreSQL
 curl http://localhost:8000/api/health               # Verify API
 curl -I http://localhost:3000                       # Verify Web (307→/login)
 
-# Demo data (DEMO- prefix)
+# Realistic seed (~2,200 records, 110 IPRs, DEMO-R- prefix)
+docker exec -i goreos_db psql -U goreos -d goreos_model < model/model_goreos/sql/goreos_seed_realistic.sql      # Load
+docker exec -i goreos_db psql -U goreos -d goreos_model < model/model_goreos/sql/goreos_unseed_realistic.sql    # Remove
+
+# Demo data (DEMO- prefix, smaller — ~50 records)
 docker exec -i goreos_db psql -U goreos -d goreos_model < model/model_goreos/sql/goreos_seed_demo_ciclo2.sql    # Load
 docker exec -i goreos_db psql -U goreos -d goreos_model < model/model_goreos/sql/goreos_unseed_demo_ciclo2.sql  # Remove
 
@@ -175,7 +179,9 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## Demo Data
 
-`DEMO-` prefix in all codes. Seeds: `goreos_seed_demo_ciclo2.sql`, `goreos_seed_demo_wave_b.sql`, `goreos_seed_demo_wave_e.sql`. Unseed scripts remove DEMO- only. FKs use subqueries (not hardcoded UUIDs).
+**Realistic seed** (`DEMO-R-` prefix, ~2,200 records): `goreos_seed_realistic.sql` / `goreos_unseed_realistic.sql`. 110 IPRs across 7 mechanisms × F0-F5, all 32 states covered. Dense satellite chains: 827 milestones (phase-aware, with actual_date), 348 parties (11 roles), 111 progress reports, 63 agreements + 189 installments + 61 renditions, 62 resolutions linking admin_acts↔IPRs↔agreements, 87 commitments, 37 problems, 27 risks, 58 CDPs, 71 admin acts. Must unseed before re-seeding. Coexists with DEMO- seeds (non-overlapping code ranges).
+
+**Smaller seeds** (`DEMO-` prefix): `goreos_seed_demo_ciclo2.sql`, `goreos_seed_demo_wave_b.sql`, `goreos_seed_demo_wave_e.sql`. ~50 records in 7 tables. Unseed scripts remove DEMO- only. FKs use subqueries (not hardcoded UUIDs).
 
 ## ETL Pipeline
 
