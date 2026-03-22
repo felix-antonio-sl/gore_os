@@ -49,11 +49,12 @@ FastAPI + uvicorn (hot-reload). SQLAlchemy async + asyncpg — **raw SQL via `te
 
 Key files:
 - `main.py` — app factory, router registration, middleware
-- `core/deps.py` — `CurrentUser` dependency (user dict from JWT)
-- `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT
+- `core/deps.py` — `CurrentUser` dependency (user dict from JWT, validates iss/aud)
+- `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT (iss=goreos-api, aud=goreos-web)
+- `core/scope.py` — `check_ipr_access(db, user, ipr_id)` 3-tier IDOR guard (GLOBAL/DIVISION/PERSONAL). Applied to 39 IPR detail+satellite endpoints.
 - `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
 - `core/audit.py` — `record_event()` → txn.event (13 event_type codes, 82 integration points across 22 routers)
-- `routers/` — 29 routers, ~299 endpoints (155 GET, 85 POST, 44 PATCH, 17 DELETE). Notable: actos (7-step FSM), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals), notifications (5 endpoints + `create_notification()` helper)
+- `routers/` — 29 routers, ~299 endpoints (155 GET, 85 POST, 44 PATCH, 17 DELETE). Notable: actos (8-step FSM incl. ENVIADO_CGR+OBSERVADO), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals), notifications (5 endpoints + `create_notification()` helper, 10 auto-wiring points)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -158,12 +159,12 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 - **ipr_problem**: ABIERTO→EN_GESTION→RESUELTO|CERRADO_SIN_RESOLVER. Typed (TECNICO, FINANCIERO, LEGAL…).
 - **alert**: Severity CRITICO/ALTO/ATENCION/INFO. `subject_type` polymorphic (`core.ipr`, `core.operational_commitment`, `core.ipr_problem`, `core.agreement`).
 - **budget_program**: Per division, fiscal year. Execution chain: initial→current→committed→accrued→paid. Related: `budget_carryover`, `budget_commitment` (CDPs). CDPs by IPR: `GET /api/presupuesto/cdps-por-ipr/{ipr_id}`.
-- **agreement**: 13-state FSM (BORRADOR→…→VIGENTE/TDR_PENDIENTE→VENCIDO/TERMINADO/RESCILIADO). `agreement_installment` (CRUD inline). Orphan filter: `?orphan=true`.
+- **agreement**: 14-state FSM (BORRADOR→…→TDR_PENDIENTE→FORMALIZADO→VIGENTE→VENCIDO/TERMINADO/RESCILIADO). `agreement_installment` (CRUD inline). Orphan filter: `?orphan=true`.
 - **progress_report**: Per IPR. `POST/GET /api/ipr/{id}/avances`. Auto-incremented `report_number`.
 - **ipr_party**: 9 roles. UNIQUE `uq_ipr_party_role`. NO `person_id` — uses `organization_id` + `party_role_id` + `contact_person`.
 - **ipr_territory**: 4 impact types. UNIQUE `uq_ipr_territory_impact`. `territory_type_id` FK (NOT `territory_level`).
 - **ipr_milestone**: 13 types, planned/actual dates, auto `deviation_days` (GENERATED).
-- **administrative_act**: DECRETO/RESOLUCION/DECRETO_ALCALDICIO. 7-step FSM. `signer_id` FK→`meta.role` (NOT `core.person`). Split PATCH allowlist. DB trigger validates transitions.
+- **administrative_act**: DECRETO/RESOLUCION/DECRETO_ALCALDICIO/OFICIO/CERTIFICADO/INFORME. 9-state FSM (BORRADOR→EN_REVISION→VISADO→FIRMADO→ENVIADO_CGR→TOMADO_RAZON|OBSERVADO|RECHAZADO_CGR|ANULADO). OBSERVADO→ENVIADO_CGR (resubmit). `signer_id` FK→`meta.role` (NOT `core.person`). Split PATCH allowlist. DB trigger validates transitions.
 - **crisis_meeting**: `core.committee`+`core.session`+`core.crisis_meeting`+`core.minute`+`core.session_agreement`. FSM: PROGRAMADA→EN_CURSO→FINALIZADA. Crisis committee `COMITE-CRISIS` auto-created.
 
 ### Cross-entity Navigation
@@ -173,11 +174,11 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ### DGI Layer
 
-- **SISREC renditions**: 8-state FSM. SLA: RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d. `phase_entered_at` for SLA clock. NO `code` column — use `LEFT(r.id::text, 8)`. `COALESCE(phase_entered_at, updated_at)` in queries. Art. 18: `convenios.py` checks renditions on cuota payments.
+- **SISREC renditions**: 9-state FSM (incl. APROBADA_PARCIALMENTE). SLA: RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d. `phase_entered_at` for SLA clock. NO `code` column — use `LEFT(r.id::text, 8)`. `COALESCE(phase_entered_at, updated_at)` in queries. Art. 18: `convenios.py` checks renditions on cuota payments.
 - **DGI Data**: `dgi_indicator` (5 dimensions, lifecycle VIGENTE/DEPRECADO/ARCHIVADO/PROPUESTO, refresh idempotent), `dgi_cartera` (IPR portfolio + health VERDE/AMARILLO/ROJO), `dgi_report` (4 types, atomic `jsonb_set`), `dgi_decree` (DS7-DS12, Ley 21.180).
 - **DGI Improvement**: `dgi_initiative` (Kanban, WIP EN_CURSO:5/REVISION:2, `sort_order` @dnd-kit, DMAIC `jsonb_set`, **5th phase=VERIFY not CONTROL**, `trg_initiative_timing`), `dgi_process` (hub + 6 satellites, bridges Process→Opportunity→Initiative), `dgi_bottleneck_investigation` (6-state, 3 detection queries).
 - **DGI Coordination**: `dgi_ar_decision` (4 types, `source_session_id` crisis bridge), `dgi_escalation` (4 levels, auto-code ESC-YYYY-NNNN, auto-alert), `dgi_service`+`dgi_service_request`+`dgi_sla` (catalog visible all populations, any user creates requests, DGI manages), `dgi_td_sessions` (COMITE-TD, no voting), `calendar` (UNION ALL 5 sources).
-- **Cross-cutting**: `risk` (6-state FSM, RSK-NNNN, auto-alert ALTA/MUY_ALTA, role scoping: ANALISTA/RTF/JURIDICO→own, JEFE→division, ADMIN→all), `command_center` (6 parallel queries + timeline, 4 admin/exec roles), `notification` (per-user, 7 categories, `create_notification()` helper for other routers, bell icon dropdown with unread badge polling 60s).
+- **Cross-cutting**: `risk` (6-state FSM, RSK-NNNN, auto-alert ALTA/MUY_ALTA, role scoping: ANALISTA/RTF/JURIDICO→own, JEFE→division, ADMIN→all), `command_center` (6 parallel queries + timeline, 4 admin/exec roles), `notification` (per-user, 7 categories, `create_notification()` helper, bell icon dropdown polling 60s, **10 auto-wiring points**: compromisos create/complete/verify, IPR transition, 4 SLA batch, risk, escalation).
 
 ## Demo Data
 
@@ -238,7 +239,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 ### CORE Sessions & Governance
 
 26. **CORE sessions**: Committee `CONSEJO-REGIONAL`. Quorum: SIMPLE=9/16, CALIFICADA=11/16. Gate F3→F4: IPRs >7,000 UTM require CORE approval.
-27. **Security**: SecurityHeadersMiddleware (4 headers), brute-force lockout (5 attempts→15 min, 429), JWT secret rejects default key when `ENV != "development"`.
+27. **Security**: SecurityHeadersMiddleware (4 headers), brute-force lockout (5 attempts→15 min, 429), JWT (iss/aud validated, rejects default secret in non-dev), DB_PASSWORD rejects default in non-dev. **IDOR scope**: `core/scope.py` `check_ipr_access()` on 39 IPR endpoints — GLOBAL (admin/DGI/gobernador/consejero) unrestricted, DIVISION (jefe) by `sponsor_division_id`, PERSONAL (analista/rtf/juridico) by `assignee_id`/`formulator_id`. Search scoped per entity type. Password min_length=8 on create+reset. Cuota PATCH field allowlist.
 
 ### Financing Tracks & Gates
 
