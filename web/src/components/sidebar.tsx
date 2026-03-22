@@ -173,6 +173,33 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
   const showAprobaciones = user.role_code === "JEFE_DEPARTAMENTO";
   const showAdmin = user.role_code === "ADMIN_SISTEMA";
 
+  // ─── Role-aware section defaults ─────────────────────────────────────────────
+  // Essential sections per role — these default open, rest collapsed.
+  // NavSection persists user's collapse state in localStorage, so defaultOpen
+  // only affects the FIRST visit.
+  const ROLE_SECTIONS: Record<string, string[]> = {
+    ANALISTA: ["op-gestion", "op-mi-trabajo"],
+    RTF: ["op-mi-trabajo"],
+    ASESOR_JURIDICO: ["op-institucional", "op-mi-trabajo"],
+    JEFE_DIVISION: ["op-gestion", "op-finanzas", "op-mi-trabajo"],
+    JEFE_DEPARTAMENTO: ["op-gestion", "op-finanzas", "op-mi-trabajo"],
+    JEFE_UNIDAD: ["op-gestion", "op-mi-trabajo"],
+    ADMIN_REGIONAL: ["op-comando", "op-gestion", "op-finanzas"],
+    ADMIN_SISTEMA: ["op-comando", "op-gestion", "op-admin"],
+    // Oversight roles: all sections open (Art. 36 LOC — fiscalización)
+    GOBERNADOR: ["op-comando", "op-gestion", "op-finanzas", "op-institucional"],
+    CONSEJERO_REGIONAL: ["op-gestion", "op-finanzas", "op-institucional"],
+    SECRETARIO_EJECUTIVO: ["op-institucional"],
+    // DGI roles
+    JEFE_DGI: ["dgi-monitoreo", "dgi-mejora", "dgi-coord", "dgi-analisis"],
+    ESP_CONTROL_GESTION: ["dgi-monitoreo", "dgi-analisis"],
+    ESP_PROCESOS: ["dgi-mejora", "dgi-monitoreo"],
+    ESP_TD: ["dgi-mejora"],
+  };
+
+  const sectionOpen = (id: string) =>
+    ROLE_SECTIONS[user.role_code]?.includes(id) ?? false;
+
   return (
     <nav className="w-56 h-full flex flex-col bg-sidebar pt-3 pb-4">
       {/* Brand */}
@@ -197,7 +224,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
             {/* Pinned */}
             {link(NAV.home)}
 
-            <NavSection id="dgi-monitoreo" label="Monitoreo" defaultOpen>
+            <NavSection id="dgi-monitoreo" label="Monitoreo" defaultOpen={sectionOpen("dgi-monitoreo")}>
               {link(NAV.centroMando)}
               {link(NAV.cartera)}
               {link(NAV.carteraDiv)}
@@ -206,14 +233,14 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               {link(NAV.riesgos)}
             </NavSection>
 
-            <NavSection id="dgi-mejora" label="Mejora Continua" defaultOpen>
+            <NavSection id="dgi-mejora" label="Mejora Continua" defaultOpen={sectionOpen("dgi-mejora")}>
               {link(NAV.tablero)}
               {link(NAV.procesos)}
               {link(NAV.progreso)}
               {link(NAV.cuellosBotella)}
             </NavSection>
 
-            <NavSection id="dgi-coord" label="Coordinación" defaultOpen={false}>
+            <NavSection id="dgi-coord" label="Coordinación" defaultOpen={sectionOpen("dgi-coord")}>
               {link(NAV.coordinacion)}
               {link(NAV.escalamiento)}
               {link(NAV.servicios)}
@@ -221,7 +248,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               {link(NAV.calendario)}
             </NavSection>
 
-            <NavSection id="dgi-analisis" label="Análisis" defaultOpen={false}>
+            <NavSection id="dgi-analisis" label="Análisis" defaultOpen={sectionOpen("dgi-analisis")}>
               {link(NAV.datos)}
               {link(NAV.informes)}
             </NavSection>
@@ -232,13 +259,13 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
             {link(NAV.inicio)}
 
             {showComando && (
-              <NavSection id="op-comando" label="Comando" defaultOpen>
+              <NavSection id="op-comando" label="Comando" defaultOpen={sectionOpen("op-comando")}>
                 {link(NAV.centroMando)}
                 {link(NAV.riesgos)}
               </NavSection>
             )}
 
-            <NavSection id="op-gestion" label="Gestión IPR" defaultOpen>
+            <NavSection id="op-gestion" label="Gestión IPR" defaultOpen={sectionOpen("op-gestion")}>
               {link(NAV.ipr)}
               {showCarteraDiv && link(NAV.carteraDiv)}
               {link(NAV.compromisos)}
@@ -246,13 +273,13 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
               {link(NAV.alertas)}
             </NavSection>
 
-            <NavSection id="op-finanzas" label="Finanzas" defaultOpen={false}>
+            <NavSection id="op-finanzas" label="Finanzas" defaultOpen={sectionOpen("op-finanzas")}>
               {link(NAV.presupuesto)}
               {link(NAV.cicloPpto)}
               {link(NAV.convenios)}
             </NavSection>
 
-            <NavSection id="op-institucional" label="Institucional" defaultOpen={false}>
+            <NavSection id="op-institucional" label="Institucional" defaultOpen={sectionOpen("op-institucional")}>
               {link(NAV.actos)}
               {link(NAV.reuniones)}
               {link(NAV.sesionesCore)}
@@ -260,7 +287,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
             </NavSection>
 
             {(showMiDivision || showMisCompromisos || showMisRendiciones || showPendientesVB || showAprobaciones) && (
-              <NavSection id="op-mi-trabajo" label="Mi Trabajo" defaultOpen>
+              <NavSection id="op-mi-trabajo" label="Mi Trabajo" defaultOpen={sectionOpen("op-mi-trabajo")}>
                 {showMiDivision && link(NAV.miDivision)}
                 {showMisCompromisos && link(NAV.misCompromisos)}
                 {showMisRendiciones && link(NAV.misRendiciones)}
@@ -270,7 +297,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
             )}
 
             {showAdmin && (
-              <NavSection id="op-admin" label="Administración" defaultOpen={false}>
+              <NavSection id="op-admin" label="Administración" defaultOpen={sectionOpen("op-admin")}>
                 {link(NAV.usuarios)}
                 {link(NAV.divisiones)}
                 {link(NAV.umbrales)}
