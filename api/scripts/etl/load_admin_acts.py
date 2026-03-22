@@ -161,8 +161,8 @@ def map_resolution_type(subject: str) -> str:
 
 def map_act_state(raw_state: str) -> str:
     s = normalize_text(raw_state)
-    if "tramite" in s:
-        return "TRAMITADO"
+    if "tramite" in s or "enviado" in s or "cgr" in s:
+        return "ENVIADO_CGR"
     if "revision" in s:
         return "EN_REVISION"
     if "visado" in s:

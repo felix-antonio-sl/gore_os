@@ -254,10 +254,11 @@ INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('act_state', 'EN_REVISION', 'En Revisión', 2),
 ('act_state', 'VISADO', 'Visado', 3),
 ('act_state', 'FIRMADO', 'Firmado', 4),
-('act_state', 'TRAMITADO', 'Tramitado', 5),
-('act_state', 'TOMADO_RAZON', 'Toma de Razón', 6),
-('act_state', 'RECHAZADO_CGR', 'Rechazado CGR', 7),
-('act_state', 'ANULADO', 'Anulado', 8)
+('act_state', 'ENVIADO_CGR', 'Enviado a CGR', 5),
+('act_state', 'OBSERVADO', 'Observado por CGR', 6),
+('act_state', 'TOMADO_RAZON', 'Toma de Razón', 7),
+('act_state', 'RECHAZADO_CGR', 'Rechazado CGR', 8),
+('act_state', 'ANULADO', 'Anulado', 9)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     sort_order = EXCLUDED.sort_order;
@@ -393,11 +394,12 @@ INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('agreement_state', 'EN_REVISION_JURIDICA', 'En Revisión Jurídica', 3),
 ('agreement_state', 'FIRMADO_GORE', 'Firmado GORE', 4),
 ('agreement_state', 'FIRMADO_CONTRAPARTE', 'Firmado Contraparte', 5),
-('agreement_state', 'VIGENTE', 'Vigente', 6),
-('agreement_state', 'EN_MODIFICACION', 'En Modificación', 7),
-('agreement_state', 'VENCIDO', 'Vencido', 8),
-('agreement_state', 'TERMINADO', 'Terminado', 9),
-('agreement_state', 'RESCILIADO', 'Resciliado', 10)
+('agreement_state', 'FORMALIZADO', 'Formalizado', 6),
+('agreement_state', 'VIGENTE', 'Vigente', 7),
+('agreement_state', 'EN_MODIFICACION', 'En Modificación', 8),
+('agreement_state', 'VENCIDO', 'Vencido', 9),
+('agreement_state', 'TERMINADO', 'Terminado', 10),
+('agreement_state', 'RESCILIADO', 'Resciliado', 11)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     sort_order = EXCLUDED.sort_order;
@@ -424,7 +426,8 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('rendition_state', 'EN_REVISION', 'En Revisión', 'gnubd:_AccountabilityState_InReview - En proceso de revisión técnica', 2),
 ('rendition_state', 'OBSERVADA', 'Observada', 'gnubd:_AccountabilityState_Observed - Con observaciones a subsanar', 3),
 ('rendition_state', 'APROBADA', 'Aprobada', 'gnubd:_AccountabilityState_Approved - Rendición aprobada', 4),
-('rendition_state', 'RECHAZADA', 'Rechazada', 'gnubd:_AccountabilityState_Rejected - Rendición rechazada', 5)
+('rendition_state', 'APROBADA_PARCIALMENTE', 'Aprobada Parcialmente', 'Rendición con aprobación parcial - requiere complemento', 5),
+('rendition_state', 'RECHAZADA', 'Rechazada', 'gnubd:_AccountabilityState_Rejected - Rendición rechazada', 6)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -1048,8 +1051,14 @@ WHERE scheme = 'agreement_state' AND code = 'EN_REVISION_JURIDICA';
 UPDATE ref.category SET valid_transitions = '["FIRMADO_CONTRAPARTE"]'::jsonb
 WHERE scheme = 'agreement_state' AND code = 'FIRMADO_GORE';
 
-UPDATE ref.category SET valid_transitions = '["VIGENTE"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["VIGENTE", "TDR_PENDIENTE"]'::jsonb
 WHERE scheme = 'agreement_state' AND code = 'FIRMADO_CONTRAPARTE';
+
+UPDATE ref.category SET valid_transitions = '["FORMALIZADO"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'TDR_PENDIENTE';
+
+UPDATE ref.category SET valid_transitions = '["VIGENTE"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'FORMALIZADO';
 
 UPDATE ref.category SET valid_transitions = '["EN_MODIFICACION", "VENCIDO", "TERMINADO", "RESCILIADO"]'::jsonb
 WHERE scheme = 'agreement_state' AND code = 'VIGENTE';
@@ -1059,6 +1068,31 @@ WHERE scheme = 'agreement_state' AND code = 'EN_MODIFICACION';
 
 UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'agreement_state' AND code IN ('VENCIDO', 'TERMINADO', 'RESCILIADO');
+
+-- Transiciones de rendition_state (8-phase SISREC + APROBADA_PARCIALMENTE)
+UPDATE ref.category SET valid_transitions = '["EN_REVISION_RTF"]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'PENDIENTE';
+
+UPDATE ref.category SET valid_transitions = '["OBSERVADA", "VISADA_RTF"]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'EN_REVISION_RTF';
+
+UPDATE ref.category SET valid_transitions = '["EN_REVISION_UCR"]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'VISADA_RTF';
+
+UPDATE ref.category SET valid_transitions = '["OBSERVADA", "APROBADA", "APROBADA_PARCIALMENTE", "RECHAZADA"]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'EN_REVISION_UCR';
+
+UPDATE ref.category SET valid_transitions = '["EN_REVISION_RTF"]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'OBSERVADA';
+
+UPDATE ref.category SET valid_transitions = '["EN_REVISION_RTF"]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'APROBADA_PARCIALMENTE';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'rendition_state' AND code IN ('APROBADA', 'RECHAZADA');
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'rendition_state' AND code = 'EN_REVISION';
 
 -- Transiciones de act_state
 UPDATE ref.category SET valid_transitions = '["EN_REVISION"]'::jsonb
@@ -1070,11 +1104,14 @@ WHERE scheme = 'act_state' AND code = 'EN_REVISION';
 UPDATE ref.category SET valid_transitions = '["FIRMADO"]'::jsonb
 WHERE scheme = 'act_state' AND code = 'VISADO';
 
-UPDATE ref.category SET valid_transitions = '["TRAMITADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["ENVIADO_CGR"]'::jsonb
 WHERE scheme = 'act_state' AND code = 'FIRMADO';
 
-UPDATE ref.category SET valid_transitions = '["TOMADO_RAZON", "RECHAZADO_CGR"]'::jsonb
-WHERE scheme = 'act_state' AND code = 'TRAMITADO';
+UPDATE ref.category SET valid_transitions = '["TOMADO_RAZON", "RECHAZADO_CGR", "OBSERVADO", "ANULADO"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'ENVIADO_CGR';
+
+UPDATE ref.category SET valid_transitions = '["ENVIADO_CGR", "ANULADO"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'OBSERVADO';
 
 UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'act_state' AND code IN ('TOMADO_RAZON', 'RECHAZADO_CGR', 'ANULADO');

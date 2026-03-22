@@ -14,7 +14,8 @@ const ACTO_STATE_CONFIG: Record<string, { label: string; className: string }> = 
   BORRADOR: { label: "Borrador", className: "border-gray-400 text-gray-700 bg-gray-50" },
   VISADO: { label: "Visado", className: "border-violet-400 text-violet-700 bg-violet-50" },
   FIRMADO: { label: "Firmado", className: "border-green-400 text-green-700 bg-green-50" },
-  TRAMITADO: { label: "Tramitado", className: "border-green-500 text-green-800 bg-green-50" },
+  ENVIADO_CGR: { label: "Enviado a CGR", className: "border-green-500 text-green-800 bg-green-50" },
+  OBSERVADO: { label: "Observado por CGR", className: "border-amber-500 text-amber-800 bg-amber-50" },
   TOMADO_RAZON: { label: "Toma de Razón", className: "border-emerald-500 text-emerald-800 bg-emerald-50" },
   RECHAZADO_CGR: { label: "Rechazado CGR", className: "border-red-500 text-red-700 bg-red-50" },
 };
@@ -177,6 +178,12 @@ export function StatusBadge({ status, size = "default" }: StatusBadgeProps) {
         <Badge variant="default" className={cn("bg-green-600", sizeClass)}>
           <CheckIcon className="size-3" />
           Aprobada
+        </Badge>
+      );
+    case "APROBADA_PARCIALMENTE":
+      return (
+        <Badge variant="outline" className={cn("border-lime-500 text-lime-800 bg-lime-50", sizeClass)}>
+          Aprobada Parcialmente
         </Badge>
       );
     case "RECHAZADA":

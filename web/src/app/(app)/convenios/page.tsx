@@ -48,6 +48,7 @@ const CSV_COLUMNS = [
 
 const STATE_OPTIONS = [
   { value: "VIGENTE", label: "Vigente" },
+  { value: "FORMALIZADO", label: "Formalizado" },
   { value: "EN_MODIFICACION", label: "En Modificación" },
   { value: "FIRMADO_CONTRAPARTE", label: "Firmado Contraparte" },
   { value: "FIRMADO_GORE", label: "Firmado GORE" },

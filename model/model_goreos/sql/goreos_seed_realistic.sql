@@ -1995,7 +1995,7 @@ INSERT INTO core.administrative_act (act_number, act_type_id, subject, issuer_id
 ('DEMO-R-RES-002', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Aprueba bases licitación Parque Urbano Ribera Chillán', (SELECT id FROM core.organization WHERE code='DIT'), CURRENT_TIMESTAMP - INTERVAL '10 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='EN_REVISION'), false),
 ('DEMO-R-RES-003', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Autoriza transferencia programa turismo Punilla', (SELECT id FROM core.organization WHERE code='DIFOI'), CURRENT_TIMESTAMP - INTERVAL '15 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='VISADO'), false),
 ('DEMO-R-DEC-001', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='DECRETO'), 'Decreto aprobación CDP Centro de Salud Chillán Viejo', (SELECT id FROM core.organization WHERE code='DIPIR'), CURRENT_TIMESTAMP - INTERVAL '20 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='FIRMADO'), true),
-('DEMO-R-DEC-002', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='DECRETO'), 'Decreto modificación presupuestaria programa DIDESO', (SELECT id FROM core.organization WHERE code='DIDESO'), CURRENT_TIMESTAMP - INTERVAL '30 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='TRAMITADO'), true),
+('DEMO-R-DEC-002', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='DECRETO'), 'Decreto modificación presupuestaria programa DIDESO', (SELECT id FROM core.organization WHERE code='DIDESO'), CURRENT_TIMESTAMP - INTERVAL '30 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='ENVIADO_CGR'), true),
 ('DEMO-R-DEC-003', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='DECRETO'), 'Decreto asignación FNDR multicancha Yungay', (SELECT id FROM core.organization WHERE code='DIPIR'), CURRENT_TIMESTAMP - INTERVAL '60 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='TOMADO_RAZON'), true),
 ('DEMO-R-RES-004', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Aprueba programa apícola comunas rurales', (SELECT id FROM core.organization WHERE code='DIFOI'), CURRENT_TIMESTAMP - INTERVAL '90 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='TOMADO_RAZON'), false),
 ('DEMO-R-RES-005', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Aprueba estudio plan regulador Chillán', (SELECT id FROM core.organization WHERE code='DIPLADE'), CURRENT_TIMESTAMP - INTERVAL '40 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='RECHAZADO_CGR'), true),
@@ -2005,7 +2005,7 @@ INSERT INTO core.administrative_act (act_number, act_type_id, subject, issuer_id
 ('DEMO-R-OFI-002', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='OFICIO'), 'Oficio requerimiento información SERVIU', (SELECT id FROM core.organization WHERE code='DIT'), CURRENT_TIMESTAMP - INTERVAL '8 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='BORRADOR'), false),
 ('DEMO-R-RES-007', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Aprueba bases licitación equipamiento seguridad', (SELECT id FROM core.organization WHERE code='DAF'), CURRENT_TIMESTAMP - INTERVAL '28 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='VISADO'), false),
 ('DEMO-R-DEC-004', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='DECRETO'), 'Decreto convenio marco UBB', (SELECT id FROM core.organization WHERE code='DIPLADE'), CURRENT_TIMESTAMP - INTERVAL '180 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='TOMADO_RAZON'), true),
-('DEMO-R-RES-008', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Aprueba adquisición ambulancias SAMU', (SELECT id FROM core.organization WHERE code='DIDESO'), CURRENT_TIMESTAMP - INTERVAL '58 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='TRAMITADO'), false),
+('DEMO-R-RES-008', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Aprueba adquisición ambulancias SAMU', (SELECT id FROM core.organization WHERE code='DIDESO'), CURRENT_TIMESTAMP - INTERVAL '58 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='ENVIADO_CGR'), false),
 ('DEMO-R-RES-009', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='RESOLUCION'), 'Cierre administrativo multicancha techada Yungay', (SELECT id FROM core.organization WHERE code='DIPIR'), CURRENT_TIMESTAMP - INTERVAL '35 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='FIRMADO'), false),
 ('DEMO-R-CER-001', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='CERTIFICADO'), 'Certificado disponibilidad presupuestaria FNDR Q2', (SELECT id FROM core.organization WHERE code='DAF'), CURRENT_TIMESTAMP - INTERVAL '12 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='FIRMADO'), false),
 ('DEMO-R-INF-001', (SELECT id FROM ref.category WHERE scheme='act_type' AND code='INFORME'), 'Informe técnico evaluación FRIL Pemuco', (SELECT id FROM core.organization WHERE code='DIPIR'), CURRENT_TIMESTAMP - INTERVAL '22 days', (SELECT id FROM ref.category WHERE scheme='act_state' AND code='VISADO'), false),
@@ -2900,7 +2900,7 @@ DECLARE
     v_aprobatoria UUID; v_modificatoria UUID;
     v_sub_convenio UUID; v_sub_pago UUID; v_sub_modifica UUID;
     v_resolucion_type UUID; v_decreto_type UUID;
-    v_firmado UUID; v_tomado_razon UUID; v_tramitado UUID;
+    v_firmado UUID; v_tomado_razon UUID; v_enviado_cgr UUID;
     v_admin UUID;
     v_act_id UUID;
     v_agr_id UUID;
@@ -2940,7 +2940,7 @@ BEGIN
     SELECT id INTO v_decreto_type FROM ref.category WHERE scheme='act_type' AND code='DECRETO';
     SELECT id INTO v_firmado FROM ref.category WHERE scheme='act_state' AND code='FIRMADO';
     SELECT id INTO v_tomado_razon FROM ref.category WHERE scheme='act_state' AND code='TOMADO_RAZON';
-    SELECT id INTO v_tramitado FROM ref.category WHERE scheme='act_state' AND code='TRAMITADO';
+    SELECT id INTO v_enviado_cgr FROM ref.category WHERE scheme='act_state' AND code='ENVIADO_CGR';
     SELECT id INTO v_admin FROM core."user" WHERE email='admin@goreos.cl';
 
     FOR v_ipr IN
@@ -2978,7 +2978,7 @@ BEGIN
             CURRENT_TIMESTAMP - ((v_idx * 3 + 10) * INTERVAL '1 day'),
             CASE
                 WHEN v_idx % 4 = 0 THEN v_tomado_razon  -- DECRETO → TOMADO_RAZON
-                WHEN v_idx % 5 = 0 THEN v_tramitado      -- ~20% TRAMITADO
+                WHEN v_idx % 5 = 0 THEN v_enviado_cgr     -- ~20% ENVIADO_CGR
                 ELSE v_firmado                             -- Default FIRMADO
             END,
             (v_idx % 4 = 0)  -- DECRETO requires_cgr=true

@@ -517,7 +517,7 @@ async def update_acto(
                 warnings.append(cgr_warning)
 
         # CGR tracking: auto-set timestamps on relevant transitions
-        if new_code == "TRAMITADO":
+        if new_code == "ENVIADO_CGR":
             # Check if requires_cgr and set cgr_submitted_at
             check = await db.execute(
                 text("SELECT requires_cgr FROM core.administrative_act WHERE id = :id"),

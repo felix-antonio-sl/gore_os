@@ -738,12 +738,12 @@ async def _validate_amount_thresholds(
             detail=f"Convenios >{int(garantia_utm):,} UTM requieren Visado Interno del AR antes de pasar a Firmado GORE",
         )
 
-    # CGR_TOMA_RAZON threshold: >2.500 UTM → requiere TDR_PENDIENTE antes de VIGENTE
+    # CGR_TOMA_RAZON threshold: >2.500 UTM → requiere TDR_PENDIENTE/FORMALIZADO antes de VIGENTE
     cgr_utm = await _get_threshold_value("CGR_TOMA_RAZON", db) or 2500
-    if new_code == "VIGENTE" and current_code != "TDR_PENDIENTE" and total_amount > cgr_utm * utm:
+    if new_code == "VIGENTE" and current_code not in ("TDR_PENDIENTE", "FORMALIZADO") and total_amount > cgr_utm * utm:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail=f"Convenios >{int(cgr_utm):,} UTM requieren Toma de Razón CGR (TdR Pendiente) antes de pasar a Vigente",
+            detail=f"Convenios >{int(cgr_utm):,} UTM requieren Toma de Razón CGR (TdR Pendiente → Formalizado) antes de pasar a Vigente",
         )
 
 

@@ -1861,11 +1861,12 @@ async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSe
 
 # Rendition state machine (code → allowed target codes)
 _RENDICION_TRANSITIONS = {
-    "PENDIENTE":       {"EN_REVISION_RTF"},
-    "EN_REVISION_RTF": {"OBSERVADA", "VISADA_RTF"},
-    "VISADA_RTF":      {"EN_REVISION_UCR"},
-    "EN_REVISION_UCR": {"OBSERVADA", "APROBADA", "RECHAZADA"},
-    "OBSERVADA":       {"EN_REVISION_RTF"},
+    "PENDIENTE":              {"EN_REVISION_RTF"},
+    "EN_REVISION_RTF":        {"OBSERVADA", "VISADA_RTF"},
+    "VISADA_RTF":             {"EN_REVISION_UCR"},
+    "EN_REVISION_UCR":        {"OBSERVADA", "APROBADA", "APROBADA_PARCIALMENTE", "RECHAZADA"},
+    "APROBADA_PARCIALMENTE":  {"EN_REVISION_RTF"},
+    "OBSERVADA":              {"EN_REVISION_RTF"},
     # APROBADA and RECHAZADA are terminal — no transitions
 }
 
@@ -1874,14 +1875,16 @@ _RENDICION_TRANSITIONS = {
 _RTF_REVIEW_ROLES = DGI_ROLES | {"RTF"}
 
 _RENDICION_TRANSITION_ROLES: dict[tuple[str, str], set[str]] = {
-    ("PENDIENTE", "EN_REVISION_RTF"):       _RENDICION_WRITE_ROLES,
-    ("EN_REVISION_RTF", "OBSERVADA"):       _RTF_REVIEW_ROLES,
-    ("EN_REVISION_RTF", "VISADA_RTF"):      _RTF_REVIEW_ROLES,
-    ("VISADA_RTF", "EN_REVISION_UCR"):      DGI_ROLES,
-    ("EN_REVISION_UCR", "OBSERVADA"):       DGI_ROLES,
-    ("EN_REVISION_UCR", "APROBADA"):        DGI_ROLES,
-    ("EN_REVISION_UCR", "RECHAZADA"):       DGI_ROLES,
-    ("OBSERVADA", "EN_REVISION_RTF"):       _RENDICION_WRITE_ROLES,
+    ("PENDIENTE", "EN_REVISION_RTF"):              _RENDICION_WRITE_ROLES,
+    ("EN_REVISION_RTF", "OBSERVADA"):              _RTF_REVIEW_ROLES,
+    ("EN_REVISION_RTF", "VISADA_RTF"):             _RTF_REVIEW_ROLES,
+    ("VISADA_RTF", "EN_REVISION_UCR"):             DGI_ROLES,
+    ("EN_REVISION_UCR", "OBSERVADA"):              DGI_ROLES,
+    ("EN_REVISION_UCR", "APROBADA"):               DGI_ROLES,
+    ("EN_REVISION_UCR", "APROBADA_PARCIALMENTE"):  DGI_ROLES,
+    ("EN_REVISION_UCR", "RECHAZADA"):              DGI_ROLES,
+    ("APROBADA_PARCIALMENTE", "EN_REVISION_RTF"):  _RENDICION_WRITE_ROLES,
+    ("OBSERVADA", "EN_REVISION_RTF"):              _RENDICION_WRITE_ROLES,
 }
 
 # SLA days per reviewable state (CGR normative)

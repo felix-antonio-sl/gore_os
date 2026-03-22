@@ -74,8 +74,12 @@ const STATE_ACTIONS: Record<string, StateAction[]> = {
   ],
   EN_REVISION_UCR: [
     { label: "Aprobar", target: "APROBADA", variant: "default", population: "dgi" },
+    { label: "Aprobar Parcialmente", target: "APROBADA_PARCIALMENTE", variant: "outline", population: "dgi" },
     { label: "Observar", target: "OBSERVADA", variant: "outline", population: "dgi" },
     { label: "Rechazar", target: "RECHAZADA", variant: "destructive", population: "dgi" },
+  ],
+  APROBADA_PARCIALMENTE: [
+    { label: "Re-enviar a Revisión RTF", target: "EN_REVISION_RTF", variant: "default", population: "any" },
   ],
   OBSERVADA: [
     { label: "Re-enviar a Revisión RTF", target: "EN_REVISION_RTF", variant: "default", population: "any" },
@@ -376,6 +380,7 @@ export const rendicionesConfig: DomainConfig = {
         { value: "EN_REVISION_UCR", label: "En Revisión UCR" },
         { value: "OBSERVADA", label: "Observada" },
         { value: "APROBADA", label: "Aprobada" },
+        { value: "APROBADA_PARCIALMENTE", label: "Aprobada Parcialmente" },
         { value: "RECHAZADA", label: "Rechazada" },
         { value: "VENCIDAS", label: "\u26A0 Vencidas (SLA)" },
       ],
