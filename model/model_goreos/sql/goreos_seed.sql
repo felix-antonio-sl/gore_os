@@ -241,7 +241,8 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('act_type', 'DECRETO', 'Decreto', 'gnub:Decree - Acto decreto', 2),
 ('act_type', 'OFICIO', 'Oficio', 'Comunicación oficial', 3),
 ('act_type', 'CERTIFICADO', 'Certificado', 'Certificación oficial', 4),
-('act_type', 'INFORME', 'Informe', 'Informe técnico o administrativo', 5)
+('act_type', 'INFORME', 'Informe', 'Informe técnico o administrativo', 5),
+('act_type', 'DECRETO_ALCALDICIO', 'Decreto Alcaldicio', 'gnub:MunicipalDecree - Acto alcaldicio por mandato', 6)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -442,7 +443,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('evaluation_result', 'OT', 'Observaciones Técnicas', 'gnubd:_EvalResult_OT - Subsanar aspectos técnicos del proyecto', 3),
 ('evaluation_result', 'RF', 'Recomendado Favorable', 'gnubd:_EvalResult_RF - DIPRES recomienda favorablemente (Glosa06)', 4),
 ('evaluation_result', 'ITF', 'Informe Técnico Favorable', 'gnubd:_EvalResult_ITF - GORE emite ITF (programas)', 5),
-('evaluation_result', 'AD', 'Admisible', 'gnubd:_EvalResult_AD - Elegible para FRIL (<5k UTM)', 6)
+('evaluation_result', 'AD', 'Admisible', 'gnubd:_EvalResult_AD - Elegible para FRIL (<5k UTM)', 6),
+('evaluation_result', 'ELEGIBLE', 'Elegible', 'Elegible para financiamiento FRPD/CTCI', 7),
+('evaluation_result', 'NV', 'No Viable', 'Proyecto no viable técnica o financieramente', 8),
+('evaluation_result', 'PUNTAJE', 'Puntaje', 'Evaluación por puntaje (ranking competitivo)', 9),
+('evaluation_result', 'AT', 'Aprobación Técnica', 'Aprobación técnica sin cálculo de RS', 10)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
