@@ -10,8 +10,10 @@ from app.core.config import get_settings
 
 router = APIRouter(prefix="/api/dev", tags=["dev"])
 
-_CHECKLIST_PATH = Path(__file__).resolve().parents[3] / "docs" / "test-checklist-state.json"
-_BUGS_PATH = Path(__file__).resolve().parents[3] / "docs" / "test-bugs.json"
+# Persist inside the mounted volume (/app → ./api on host)
+_DEV_DATA_DIR = Path(__file__).resolve().parents[2] / "dev-data"
+_CHECKLIST_PATH = _DEV_DATA_DIR / "test-checklist-state.json"
+_BUGS_PATH = _DEV_DATA_DIR / "test-bugs.json"
 
 
 class ChecklistState(BaseModel):
