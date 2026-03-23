@@ -48,11 +48,15 @@ function BugReportDrawer({ open, onClose }: { open: boolean; onClose: () => void
   useEffect(() => {
     if (open) {
       setScreenshot(null);
-      import("html2canvas").then(({ default: html2canvas }) => {
-        html2canvas(document.body, { scale: 0.5, logging: false }).then((canvas) => {
-          setScreenshot(canvas.toDataURL("image/png"));
+      import(/* webpackIgnore: true */ "html2canvas")
+        .then(({ default: h2c }) => {
+          h2c(document.body, { scale: 0.5, logging: false }).then((canvas: HTMLCanvasElement) => {
+            setScreenshot(canvas.toDataURL("image/png"));
+          });
+        })
+        .catch(() => {
+          // html2canvas not available — skip screenshot
         });
-      });
     }
   }, [open]);
 
