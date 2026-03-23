@@ -4,6 +4,11 @@ import { useAuth } from "@/lib/auth";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/page-header";
 import { api } from "@/lib/api";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTabParam } from "@/hooks/use-tab-param";
+import { EmptyState } from "@/components/empty-state";
+import { Button } from "@/components/ui/button";
+import { formatRelativeTime } from "@/lib/format";
 
 // ---------------------------------------------------------------------------
 // Checklist definitions per role
@@ -390,6 +395,88 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
 };
 
 // ---------------------------------------------------------------------------
+// Bug types
+// ---------------------------------------------------------------------------
+
+interface BugReport {
+  id: string;
+  title: string;
+  description?: string;
+  severity: string;
+  url: string;
+  user_email: string;
+  role_code: string;
+  viewport: string;
+  checklist_item?: string;
+  screenshot?: string;
+  created_at: string;
+}
+
+// ---------------------------------------------------------------------------
+// BugCard component
+// ---------------------------------------------------------------------------
+
+/* eslint-disable @next/next/no-img-element */
+function BugCard({ bug, onDelete }: { bug: BugReport; onDelete: (id: string) => void }) {
+  const [expanded, setExpanded] = useState(false);
+  const severityColors: Record<string, string> = {
+    CRITICO: "border-l-red-500",
+    ALTO: "border-l-amber-500",
+    MEDIO: "border-l-blue-500",
+    BAJO: "border-l-green-500",
+  };
+  const severityBadge: Record<string, string> = {
+    CRITICO: "bg-red-100 text-red-800",
+    ALTO: "bg-amber-100 text-amber-800",
+    MEDIO: "bg-blue-100 text-blue-800",
+    BAJO: "bg-green-100 text-green-800",
+  };
+
+  return (
+    <div
+      className={`bg-card border border-l-4 ${severityColors[bug.severity] || "border-l-muted"} rounded-lg p-3 cursor-pointer hover:bg-muted/30 transition-colors`}
+      onClick={() => setExpanded(!expanded)}
+    >
+      <div className="flex items-start justify-between">
+        <div>
+          <div className="font-medium text-sm">{bug.title}</div>
+          <div className="text-xs text-muted-foreground mt-1">
+            {bug.user_email?.split("@")[0]} · {bug.url} · {formatRelativeTime(bug.created_at)}
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${severityBadge[bug.severity] || ""}`}>
+            {bug.severity}
+          </span>
+          <button
+            onClick={(e) => { e.stopPropagation(); onDelete(bug.id); }}
+            className="text-muted-foreground hover:text-destructive text-xs"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+      {expanded && (
+        <div className="mt-3 pt-3 border-t space-y-2">
+          {bug.description && <p className="text-sm text-muted-foreground">{bug.description}</p>}
+          {bug.checklist_item && (
+            <div className="text-xs text-muted-foreground">
+              <span className="font-medium">Checklist:</span> {bug.checklist_item}
+            </div>
+          )}
+          {bug.screenshot && (
+            <img src={bug.screenshot} alt="Screenshot" className="rounded border max-h-48 w-auto" />
+          )}
+          <div className="text-[10px] text-muted-foreground">
+            Rol: {bug.role_code} · Viewport: {bug.viewport}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Page component
 // ---------------------------------------------------------------------------
 
@@ -397,6 +484,8 @@ export default function TestingPage() {
   const { user } = useAuth();
   const [state, setState] = useState<Record<string, boolean>>({});
   const [allState, setAllState] = useState<Record<string, Record<string, boolean>>>({});
+  const [tab, setTab] = useTabParam("tab", "checklist");
+  const [bugs, setBugs] = useState<BugReport[]>([]);
 
   // Load checklist state on mount
   useEffect(() => {
@@ -412,15 +501,39 @@ export default function TestingPage() {
       .catch(() => {});
   }, [user?.email]);
 
+  // Fetch bugs
+  useEffect(() => {
+    api.get<BugReport[]>("/api/dev/bugs").then(setBugs).catch(() => {});
+  }, [tab]);
+
   // Toggle a check item and persist
-  const toggle = async (key: string) => {
+  const toggle = async (key: string, itemLabel: string) => {
     if (!user) return;
     const newState = { ...state, [key]: !state[key] };
     setState(newState);
     const newAll = { ...allState, [user.email]: newState };
     setAllState(newAll);
+    localStorage.setItem("goreos_active_checklist_item", itemLabel);
     await api.post("/api/dev/checklist", { state: newAll }).catch(() => {});
   };
+
+  // Delete a bug
+  function handleDeleteBug(id: string) {
+    api.delete(`/api/dev/bugs/${id}`).then(() => {
+      setBugs((prev) => prev.filter((b) => b.id !== id));
+    });
+  }
+
+  // Export bugs as JSON
+  function handleExport() {
+    const blob = new Blob([JSON.stringify(bugs, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `goreos-bugs-${new Date().toISOString().split("T")[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   const roleChecklist = ROLE_CHECKLISTS[user?.role_code || ""] || [];
   const allItems: CheckCategory[] = [
@@ -439,81 +552,136 @@ export default function TestingPage() {
         accentColor="amber"
       />
 
-      {/* Progress bar */}
-      <div className="mx-6">
-        <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-          <span>Progreso</span>
-          <span>{pct}%</span>
-        </div>
-        <div className="h-2 bg-muted rounded-full overflow-hidden">
-          <div
-            className="h-full bg-amber-500 transition-all duration-300"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
-      </div>
+      <div className="px-6">
+        <Tabs value={tab} onValueChange={setTab}>
+          <TabsList>
+            <TabsTrigger value="checklist">Checklist</TabsTrigger>
+            <TabsTrigger value="bugs">Bugs ({bugs.length})</TabsTrigger>
+          </TabsList>
 
-      {/* Checklist */}
-      <div className="px-6 space-y-6">
-        {allItems.map((cat) => (
-          <div key={cat.category}>
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-              {cat.category}
-            </h3>
-            <div className="space-y-1">
-              {cat.items.map((item) => (
-                <label
-                  key={item.key}
-                  className="flex items-center gap-3 py-1.5 px-3 rounded hover:bg-muted/50 cursor-pointer select-none"
-                >
-                  <input
-                    type="checkbox"
-                    checked={!!state[item.key]}
-                    onChange={() => toggle(item.key)}
-                    className="rounded border-input h-4 w-4 accent-amber-500"
-                  />
-                  <span
-                    className={
-                      state[item.key]
-                        ? "line-through text-muted-foreground"
-                        : ""
-                    }
-                  >
-                    {item.label}
-                  </span>
-                </label>
-              ))}
+          {/* ---- Checklist tab ---- */}
+          <TabsContent value="checklist" className="space-y-6 mt-4">
+            {/* Progress bar */}
+            <div>
+              <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+                <span>Progreso</span>
+                <span>{pct}%</span>
+              </div>
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-amber-500 transition-all duration-300"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
 
-      {/* Summary table: all users progress */}
-      {Object.keys(allState).length > 0 && (
-        <div className="px-6 pb-8">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">
-            Progreso Global
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            {Object.entries(allState).map(([email, checks]) => {
-              const done = Object.values(checks).filter(Boolean).length;
-              const total = Object.keys(checks).length;
-              const userPct =
-                total > 0 ? Math.round((done / total) * 100) : 0;
-              return (
-                <div key={email} className="text-xs p-2 rounded border">
-                  <div className="font-medium truncate">
-                    {email.split("@")[0]}
-                  </div>
-                  <div className="text-muted-foreground">
-                    {done}/{total} ({userPct}%)
+            {/* Checklist */}
+            <div className="space-y-6">
+              {allItems.map((cat) => (
+                <div key={cat.category}>
+                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                    {cat.category}
+                  </h3>
+                  <div className="space-y-1">
+                    {cat.items.map((item) => (
+                      <label
+                        key={item.key}
+                        className="flex items-center gap-3 py-1.5 px-3 rounded hover:bg-muted/50 cursor-pointer select-none"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!!state[item.key]}
+                          onChange={() => toggle(item.key, item.label)}
+                          className="rounded border-input h-4 w-4 accent-amber-500"
+                        />
+                        <span
+                          className={
+                            state[item.key]
+                              ? "line-through text-muted-foreground"
+                              : ""
+                          }
+                        >
+                          {item.label}
+                        </span>
+                      </label>
+                    ))}
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+              ))}
+            </div>
+
+            {/* Summary table: all users progress */}
+            {Object.keys(allState).length > 0 && (
+              <div className="pb-8">
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">
+                  Progreso Global
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                  {Object.entries(allState).map(([email, checks]) => {
+                    const done = Object.values(checks).filter(Boolean).length;
+                    const total = Object.keys(checks).length;
+                    const userPct =
+                      total > 0 ? Math.round((done / total) * 100) : 0;
+                    return (
+                      <div key={email} className="text-xs p-2 rounded border">
+                        <div className="font-medium truncate">
+                          {email.split("@")[0]}
+                        </div>
+                        <div className="text-muted-foreground">
+                          {done}/{total} ({userPct}%)
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </TabsContent>
+
+          {/* ---- Bugs tab ---- */}
+          <TabsContent value="bugs" className="mt-4">
+            {/* KPI strip */}
+            <div className="grid grid-cols-4 gap-3 mb-6">
+              {[
+                { label: "Critico", color: "text-red-500", count: bugs.filter((b) => b.severity === "CRITICO").length },
+                { label: "Alto", color: "text-amber-500", count: bugs.filter((b) => b.severity === "ALTO").length },
+                { label: "Medio", color: "text-blue-500", count: bugs.filter((b) => b.severity === "MEDIO").length },
+                { label: "Bajo", color: "text-green-500", count: bugs.filter((b) => b.severity === "BAJO").length },
+              ].map((k) => (
+                <div key={k.label} className="bg-muted/50 rounded-lg p-3 text-center">
+                  <div className={`text-2xl font-bold ${k.color}`}>{k.count}</div>
+                  <div className="text-xs text-muted-foreground">{k.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bug list */}
+            {bugs.length === 0 ? (
+              <EmptyState
+                title="Sin bugs reportados"
+                description="Usa el boton de bug para capturar bugs durante el testing"
+              />
+            ) : (
+              <div className="space-y-2">
+                {bugs
+                  .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                  .map((bug) => (
+                    <BugCard key={bug.id} bug={bug} onDelete={handleDeleteBug} />
+                  ))}
+              </div>
+            )}
+
+            {/* Export button */}
+            {bugs.length > 0 && (
+              <div className="mt-4 flex justify-end">
+                <Button variant="outline" size="sm" onClick={handleExport}>
+                  Exportar JSON
+                </Button>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
