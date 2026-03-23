@@ -11,7 +11,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -135,7 +135,7 @@ async def _create_alert(db: AsyncSession, escalation_id: str, level_code: str,
     severity_code = "CRITICO" if level_code in ("NIVEL_3", "NIVEL_4") else "ALTO"
 
     sev_row = (await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'alert_severity' AND code = :code"),
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = :code"),
         {"code": severity_code},
     )).mappings().first()
     if not sev_row:
@@ -151,10 +151,10 @@ async def _create_alert(db: AsyncSession, escalation_id: str, level_code: str,
         text("""
             INSERT INTO core.alert
                 (alert_type_id, severity_id, subject_type, subject_id,
-                 message, triggered_by_id)
+                 message, created_by_id)
             VALUES
                 (:type_id, :sev_id, 'core.dgi_escalation', :subject_id,
-                 :message, :triggered_by_id)
+                 :message, :created_by_id)
             RETURNING id
         """),
         {
@@ -162,7 +162,7 @@ async def _create_alert(db: AsyncSession, escalation_id: str, level_code: str,
             "sev_id": str(sev_row["id"]),
             "subject_id": escalation_id,
             "message": f"Escalamiento {level_code}: {situation[:200]}",
-            "triggered_by_id": user_id,
+            "created_by_id": user_id,
         },
     )
     return str(result.scalar())
@@ -464,7 +464,7 @@ async def create_escalation(
                 entity_id=new_id,
                 link=f"/escalamiento/{new_id}",
             )
-    except Exception:
+    except (IntegrityError, DBAPIError):
         pass
     try:
         await db.commit()

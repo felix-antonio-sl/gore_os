@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
 import { Plus } from "lucide-react";
 import { EmptyState } from "@/components/empty-state";
+import { formatCLP } from "@/lib/format";
 import type { PaginatedResponse, ConvenioListItem } from "@/types";
 
 interface TabConveniosProps {
@@ -53,14 +54,7 @@ export function TabConvenios({ iprId, canCreate }: TabConveniosProps) {
       label: "Monto",
       render: (v: unknown) => (
         <span className="font-mono text-xs tabular-nums">
-          {v != null
-            ? new Intl.NumberFormat("es-CL", {
-                style: "currency",
-                currency: "CLP",
-                notation: "compact",
-                maximumFractionDigits: 1,
-              }).format(Number(v))
-            : "-"}
+          {v != null ? formatCLP(Number(v)) : "-"}
         </span>
       ),
     },

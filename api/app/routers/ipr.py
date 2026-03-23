@@ -2550,7 +2550,7 @@ async def get_track_info(
                 {"id": str(ipr_id)},
             )).mappings().all()
             evaluations = [dict(e) for e in eval_rows]
-        except Exception:
+        except DBAPIError:
             await db.rollback()
             evaluations = []
 
@@ -2994,7 +2994,7 @@ async def update_ipr(
                     entity_id=ipr_id,
                     link=f"/ipr/{ipr_id}",
                 )
-            except Exception:
+            except (IntegrityError, DBAPIError):
                 pass  # Never break main flow
         await db.commit()
     except DBAPIError as e:
@@ -3086,7 +3086,7 @@ async def get_ipr_readiness(
             SELECT
                 (SELECT COUNT(*) FROM core.ipr_party WHERE ipr_id = :id AND deleted_at IS NULL) AS partes,
                 (SELECT COUNT(*) FROM core.ipr_party WHERE ipr_id = :id AND deleted_at IS NULL
-                    AND party_role_id IN (SELECT id FROM ref.category WHERE scheme = 'party_role' AND code = 'ITO')) AS has_ito,
+                    AND party_role_id IN (SELECT id FROM ref.category WHERE scheme = 'ipr_party_role' AND code = 'ITO')) AS has_ito,
                 (SELECT COUNT(*) FROM core.ipr_territory WHERE ipr_id = :id AND deleted_at IS NULL) AS territorio,
                 (SELECT COUNT(*) FROM core.ipr_milestone WHERE ipr_id = :id AND deleted_at IS NULL) AS hitos_total,
                 (SELECT COUNT(*) FROM core.ipr_milestone WHERE ipr_id = :id AND deleted_at IS NULL AND actual_date IS NOT NULL) AS hitos_completados,
@@ -3607,7 +3607,7 @@ async def create_ipr_party(
         await record_event(db, "CREACION", "core.ipr_party", row["id"], user["id"], {"ipr_id": str(ipr_id)})
         await db.commit()
         return {"id": str(row["id"])}
-    except Exception as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         err_str = str(e)
         if "uq_ipr_party_role" in err_str or "ipr_party" in err_str and "unique" in err_str.lower():
@@ -3732,7 +3732,7 @@ async def create_ipr_territory(
         await record_event(db, "CREACION", "core.ipr_territory", row["id"], user["id"], {"ipr_id": str(ipr_id)})
         await db.commit()
         return {"id": str(row["id"])}
-    except Exception as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         err_str = str(e)
         if "uq_ipr_territory_impact" in err_str or "ipr_territory" in err_str and "unique" in err_str.lower():
@@ -4250,7 +4250,7 @@ async def create_kinship_declaration(
             },
         )).mappings().first()
         await db.commit()
-    except Exception as exc:
+    except (IntegrityError, DBAPIError) as exc:
         await db.rollback()
         if "uq_kinship_decl" in str(exc):
             raise HTTPException(
@@ -5393,7 +5393,7 @@ async def check_evaluation_slas(
                     entity_id=ipr["id"],
                     link=f"/ipr/{ipr['id']}?tab=evaluaciones",
                 )
-            except Exception:
+            except (IntegrityError, DBAPIError):
                 pass
 
     await db.commit()
@@ -5495,7 +5495,7 @@ async def check_admissibility_slas(
                     entity_id=ipr["id"],
                     link=f"/ipr/{ipr['id']}?tab=admisibilidad",
                 )
-            except Exception:
+            except (IntegrityError, DBAPIError):
                 pass
 
     await db.commit()
@@ -5605,7 +5605,7 @@ async def check_track_phase_slas(
                     entity_id=ipr["id"],
                     link=f"/ipr/{ipr['id']}",
                 )
-            except Exception:
+            except (IntegrityError, DBAPIError):
                 pass
 
     await db.commit()

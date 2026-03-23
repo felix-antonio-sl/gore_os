@@ -14,7 +14,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import Response
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
@@ -316,7 +316,7 @@ async def check_risk_alerts(user: CurrentUser, db=Depends(get_db)):
                         entity_id=r["id"],
                         link=f"/riesgos/{r['id']}",
                     )
-                except Exception:
+                except (IntegrityError, DBAPIError):
                     pass
         else:
             skipped += 1

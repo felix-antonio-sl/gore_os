@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -471,7 +472,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
     from app.routers.dgi_bottleneck import fetch_bottleneck_summary
     try:
         bottleneck_summary = await fetch_bottleneck_summary(db)
-    except Exception:
+    except DBAPIError:
         bottleneck_summary = None
 
     return CockpitControlGestion(

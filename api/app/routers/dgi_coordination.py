@@ -15,6 +15,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from app.core.audit import record_event
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -365,7 +366,7 @@ async def update_ar_decision(
                                decision_id, user["id"],
                                {"old_status": existing["current_status"], "new_status": body.status.upper()})
         await db.commit()
-    except Exception as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         err = str(e)
         if "Transición inválida" in err:

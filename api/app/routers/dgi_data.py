@@ -1,6 +1,7 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -175,7 +176,7 @@ async def refresh_indicators(
 
         await db.commit()
         return {"status": "ok", "dimensions": results}
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -1341,8 +1342,16 @@ async def check_escalations(
     phase_map = {p["code"]: {"id": str(p["id"]), "sla_days": p["sla_days"]} for p in phase_rows}
 
     severity_id = (await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'alert_severity' AND code = 'ALTO'")
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = 'ALTO'")
     )).scalar()
+
+    alert_type_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_type' AND code = 'PLAZO_LEGAL'")
+    )).scalar()
+    if not alert_type_id:
+        alert_type_id = (await db.execute(
+            text("SELECT id FROM ref.category WHERE scheme = 'alert_type' LIMIT 1")
+        )).scalar()
 
     checked = 0
     new_escalations = 0
@@ -1376,24 +1385,25 @@ async def check_escalations(
                 continue
 
             alert_id = None
-            if severity_id:
+            if severity_id and alert_type_id:
                 alert_row = (await db.execute(
                     text("""
                         INSERT INTO core.alert (
-                            title, description, severity_id, subject_type, subject_id,
-                            created_at, updated_at
+                            alert_type_id, severity_id, subject_type, subject_id,
+                            message
                         ) VALUES (
-                            :title, :desc, :sev, 'core.rendition', :sid,
-                            NOW(), NOW()
+                            :type_id, :sev, 'core.rendition', :sid,
+                            :message
                         ) RETURNING id
                     """),
                     {
-                        "title": f"Escalamiento N{level}: rendición vencida en {phase_code}",
-                        "desc": f"Rendición {r.get('agreement_number') or str(r['id'])[:8]} "
-                                f"lleva {round(days, 1)}d en {r['state_code']} (SLA: {sla}d, "
-                                f"umbral N{level}: {threshold}d)",
+                        "type_id": str(alert_type_id),
                         "sev": str(severity_id),
                         "sid": str(r["id"]),
+                        "message": f"Escalamiento N{level}: rendición "
+                                   f"{r.get('agreement_number') or str(r['id'])[:8]} "
+                                   f"lleva {round(days, 1)}d en {r['state_code']} "
+                                   f"(SLA: {sla}d, umbral N{level}: {threshold}d)",
                     },
                 )).mappings().first()
                 if alert_row:

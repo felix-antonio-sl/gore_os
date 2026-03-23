@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -526,7 +526,7 @@ async def check_payment_slas(
                     entity_id=conv["id"],
                     link=f"/convenios/{conv['id']}",
                 )
-            except Exception:
+            except (IntegrityError, DBAPIError):
                 pass
 
     await db.commit()
@@ -617,7 +617,7 @@ async def create_convenio(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un convenio con ese número")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 

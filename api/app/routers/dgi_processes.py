@@ -2,6 +2,7 @@ import math
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -669,7 +670,7 @@ async def create_rule(
         r = result.mappings().first()
         await record_event(db, "CREACION", "core.dgi_process_rule", r["id"], user["id"], {"process_id": str(process_id)})
         await db.commit()
-    except Exception as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         error_str = str(e)
         if "unique" in error_str.lower() or "duplicate" in error_str.lower():

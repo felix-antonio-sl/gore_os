@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/catalogs", tags=["catalogs"])
 @router.get("/categories/{scheme}")
 async def get_categories(scheme: str, user: CurrentUser, db: AsyncSession = Depends(get_db)):
     result = await db.execute(
-        text("SELECT id, code, label, description FROM ref.category WHERE scheme = :s ORDER BY sort_order"),
+        text("SELECT id, code, label, description FROM ref.category WHERE scheme = :s AND deleted_at IS NULL ORDER BY sort_order"),
         {"s": scheme},
     )
     return [dict(r) for r in result.mappings().all()]

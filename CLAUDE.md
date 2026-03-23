@@ -53,8 +53,8 @@ Key files:
 - `core/deps.py` — `CurrentUser` dependency (user dict from JWT, validates iss/aud)
 - `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT (iss=goreos-api, aud=goreos-web)
 - `core/scope.py` — `check_ipr_access(db, user, ipr_id)` 3-tier IDOR guard (GLOBAL/DIVISION/PERSONAL). Applied to 39 IPR detail+satellite endpoints.
-- `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
-- `core/audit.py` — `record_event()` → txn.event (13 event_type codes, 82 integration points across 22 routers)
+- `middleware/security.py` — `SecurityHeadersMiddleware` (7 headers: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Content-Security-Policy, Strict-Transport-Security, Permissions-Policy)
+- `core/audit.py` — `record_event()` → txn.event (13 event_type codes, 85 integration points across 23 routers)
 - `routers/` — 29 routers, ~299 endpoints (155 GET, 85 POST, 44 PATCH, 17 DELETE). Notable: actos (8-step FSM incl. ENVIADO_CGR+OBSERVADO), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals), notifications (5 endpoints + `create_notification()` helper, 10 auto-wiring points)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
@@ -242,7 +242,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 ### CORE Sessions & Governance
 
 26. **CORE sessions**: Committee `CONSEJO-REGIONAL`. Quorum: SIMPLE=9/16, CALIFICADA=11/16. Gate F3→F4: IPRs >7,000 UTM require CORE approval.
-27. **Security**: SecurityHeadersMiddleware (4 headers), brute-force lockout (5 attempts→15 min, 429), JWT (iss/aud validated, rejects default secret in non-dev), DB_PASSWORD rejects default in non-dev. **IDOR scope**: `core/scope.py` `check_ipr_access()` on 39 IPR endpoints — GLOBAL (admin/DGI/gobernador/consejero) unrestricted, DIVISION (jefe) by `sponsor_division_id`, PERSONAL (analista/rtf/juridico) by `assignee_id`/`formulator_id`. Search scoped per entity type. Password min_length=8 on create+reset. Cuota PATCH field allowlist.
+27. **Security**: SecurityHeadersMiddleware (7 headers incl. CSP, HSTS, Permissions-Policy), CORS whitelisted methods/headers, brute-force lockout (5 attempts→15 min, 429), JWT (iss/aud validated, rejects default secret in non-dev), DB_PASSWORD rejects default in non-dev. **IDOR scope**: `core/scope.py` `check_ipr_access()` on 39 IPR endpoints — GLOBAL (admin/DGI/gobernador/consejero) unrestricted, DIVISION (jefe) by `sponsor_division_id`, PERSONAL (analista/rtf/juridico) by `assignee_id`/`formulator_id`. Search scoped per entity type. Password min_length=8 on create+reset. Cuota PATCH field allowlist. CSRF mitigated by SPA/JWT architecture. Rate limiting at reverse proxy level.
 
 ### Financing Tracks & Gates
 

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from pydantic import BaseModel, Field
 
 from app.core.deps import CurrentUser
@@ -233,7 +233,7 @@ async def create_usuario(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un usuario con ese email")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -562,7 +562,7 @@ async def create_financing_track(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=409, detail="Ya existe un track con ese código")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -784,7 +784,7 @@ async def create_threshold(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=409, detail="Ya existe un umbral con ese código")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -904,7 +904,7 @@ async def create_sni_level(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=409, detail="Ya existe un nivel con ese número")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -1018,7 +1018,7 @@ async def create_subv8_fund(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=409, detail="Ya existe un fondo con ese código")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -1140,7 +1140,7 @@ async def create_fund_ceiling(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=409, detail="Ya existe un tope para esa combinación fondo/tipo/área")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -1303,7 +1303,7 @@ async def create_fril_category(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=409, detail="Ya existe una categoría con ese código")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 

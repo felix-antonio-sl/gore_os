@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -358,14 +358,14 @@ async def create_compromiso(
                     entity_id=row["id"],
                     link="/compromisos",
                 )
-            except Exception:
+            except (IntegrityError, DBAPIError):
                 pass
         await db.commit()
         return {"id": str(row["id"]), "code": row["code"]}
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un compromiso con datos duplicados")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 
@@ -490,7 +490,7 @@ async def completar(
                 entity_id=compromiso_id,
                 link="/compromisos",
             )
-    except Exception:
+    except (IntegrityError, DBAPIError):
         pass
     await db.commit()
     return {"message": "Compromiso marcado como completado"}
@@ -564,7 +564,7 @@ async def verificar(
                 entity_id=compromiso_id,
                 link="/compromisos",
             )
-        except Exception:
+        except (IntegrityError, DBAPIError):
             pass
     await db.commit()
     return {"message": "Compromiso verificado"}

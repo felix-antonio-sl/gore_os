@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Link2, AlertCircle } from "lucide-react";
+import { formatCLP } from "@/lib/format";
 import type { CategoryRef, ConvenioListItem, PaginatedResponse } from "@/types";
 
 interface Props {
@@ -153,15 +154,7 @@ export function IprConvenioDrawer({ open, onClose, iprId, onCreated }: Props) {
     }
   };
 
-  const formatAmount = (v: number | null) => {
-    if (v == null) return "-";
-    return new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-      notation: "compact",
-      maximumFractionDigits: 1,
-    }).format(v);
-  };
+  const formatAmount = (v: number | null) => v == null ? "-" : formatCLP(v);
 
   return (
     <DrawerPanel open={open} onClose={handleClose} title="Agregar Convenio">

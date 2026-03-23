@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -311,7 +311,7 @@ async def create_core_session(
         return {"id": session_id, "session_number": session_number}
     except HTTPException:
         raise
-    except Exception:
+    except (IntegrityError, DBAPIError):
         await db.rollback()
         raise
 
@@ -681,7 +681,7 @@ async def cast_vote(
             status_code=status.HTTP_409_CONFLICT,
             detail="Ya registró su voto para este tema",
         )
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 

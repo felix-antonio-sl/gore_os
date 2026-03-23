@@ -5,7 +5,7 @@ from uuid import UUID
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -477,7 +477,7 @@ async def create_acto(
     except IntegrityError:
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un acto con ese número")
-    except Exception:
+    except DBAPIError:
         await db.rollback()
         raise
 

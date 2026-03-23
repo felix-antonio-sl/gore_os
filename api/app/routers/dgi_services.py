@@ -11,6 +11,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -530,7 +531,7 @@ async def update_request(
         if "status" in body_data:
             await record_event(db, "STATE_TRANSITION", "core.dgi_service_request", request_id, user["id"], {"from": existing["current_status"], "to": body_data["status"].upper()})
         await db.commit()
-    except Exception as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         err = str(e)
         if "Transición inválida" in err:
@@ -807,7 +808,7 @@ async def create_sla(
         new_id = str(result.scalar())
         await record_event(db, "CREACION", "core.dgi_sla", new_id, user["id"], {"service_id": str(service_id)})
         await db.commit()
-    except Exception as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         if "unique" in str(e).lower() or "duplicate" in str(e).lower():
             raise HTTPException(

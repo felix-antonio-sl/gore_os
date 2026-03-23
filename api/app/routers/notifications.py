@@ -6,6 +6,7 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.audit import record_event
 from app.schemas.notification import NotificationItem, NotificationUnreadCount
 
 router = APIRouter(prefix="/api/notifications", tags=["notifications"])
@@ -155,6 +156,14 @@ async def mark_as_read(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Notificacion no encontrada o ya leida",
         )
+    try:
+        await record_event(
+            db, "MODIFICACION", "core.notification", notification_id,
+            actor_id=user["id"],
+            data={"action": "mark_read"},
+        )
+    except Exception:
+        pass
     await db.commit()
     return {"ok": True}
 
@@ -178,6 +187,14 @@ async def mark_all_read(
         """),
         {"user_id": str(user["id"])},
     )
+    try:
+        await record_event(
+            db, "MODIFICACION", "core.notification", user["id"],
+            actor_id=user["id"],
+            data={"action": "mark_all_read", "count": result.rowcount},
+        )
+    except Exception:
+        pass
     await db.commit()
     return {"updated": result.rowcount}
 
@@ -209,4 +226,11 @@ async def delete_notification(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Notificacion no encontrada",
         )
+    try:
+        await record_event(
+            db, "ELIMINACION", "core.notification", notification_id,
+            actor_id=user["id"],
+        )
+    except Exception:
+        pass
     await db.commit()
