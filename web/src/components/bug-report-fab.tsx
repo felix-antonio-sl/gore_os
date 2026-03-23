@@ -7,7 +7,7 @@ import { useAuth } from "@/lib/auth";
 import { api } from "@/lib/api";
 
 const SEVERITY_OPTIONS = [
-  { value: "CRITICO", label: "Cr\u00edtico", color: "bg-red-500", activeRing: "ring-red-500" },
+  { value: "CRITICO", label: "Crítico", color: "bg-red-500", activeRing: "ring-red-500" },
   { value: "ALTO", label: "Alto", color: "bg-amber-500", activeRing: "ring-amber-500" },
   { value: "MEDIO", label: "Medio", color: "bg-blue-500", activeRing: "ring-blue-500" },
   { value: "BAJO", label: "Bajo", color: "bg-green-500", activeRing: "ring-green-500" },
@@ -48,15 +48,21 @@ function BugReportDrawer({ open, onClose }: { open: boolean; onClose: () => void
   useEffect(() => {
     if (open) {
       setScreenshot(null);
-      import(/* webpackIgnore: true */ "html2canvas")
-        .then(({ default: h2c }) => {
-          h2c(document.body, { scale: 0.5, logging: false }).then((canvas: HTMLCanvasElement) => {
+      // Load html2canvas from CDN to avoid Turbopack bundling issues
+      const script = document.createElement("script");
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+      script.onload = () => {
+        const h2c = (window as unknown as Record<string, unknown>).html2canvas as (
+          el: HTMLElement, opts: Record<string, unknown>
+        ) => Promise<HTMLCanvasElement>;
+        if (h2c) {
+          h2c(document.body, { scale: 0.5, logging: false }).then((canvas) => {
             setScreenshot(canvas.toDataURL("image/png"));
           });
-        })
-        .catch(() => {
-          // html2canvas not available — skip screenshot
-        });
+        }
+      };
+      script.onerror = () => { /* skip screenshot */ };
+      document.head.appendChild(script);
     }
   }, [open]);
 
@@ -116,14 +122,14 @@ function BugReportDrawer({ open, onClose }: { open: boolean; onClose: () => void
         {/* Title */}
         <div>
           <label htmlFor="bug-title" className="text-sm font-medium">
-            T\u00edtulo <span className="text-red-500">*</span>
+            Título <span className="text-red-500">*</span>
           </label>
           <input
             id="bug-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Qu\u00e9 sali\u00f3 mal..."
+            placeholder="Qué salió mal..."
             className="mt-1 w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
@@ -152,7 +158,7 @@ function BugReportDrawer({ open, onClose }: { open: boolean; onClose: () => void
         {/* Description */}
         <div>
           <label htmlFor="bug-description" className="text-sm font-medium">
-            Descripci\u00f3n
+            Descripción
           </label>
           <textarea
             id="bug-description"
