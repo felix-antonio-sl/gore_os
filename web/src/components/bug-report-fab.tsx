@@ -45,26 +45,36 @@ function BugReportDrawer({ open, onClose }: { open: boolean; onClose: () => void
   const [description, setDescription] = useState("");
   const [saving, setSaving] = useState(false);
 
+  // Handle image paste from clipboard
   useEffect(() => {
-    if (open) {
-      setScreenshot(null);
-      // Load html2canvas from CDN to avoid Turbopack bundling issues
-      const script = document.createElement("script");
-      script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-      script.onload = () => {
-        const h2c = (window as unknown as Record<string, unknown>).html2canvas as (
-          el: HTMLElement, opts: Record<string, unknown>
-        ) => Promise<HTMLCanvasElement>;
-        if (h2c) {
-          h2c(document.body, { scale: 0.5, logging: false }).then((canvas) => {
-            setScreenshot(canvas.toDataURL("image/png"));
-          });
+    if (!open) return;
+    const handlePaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (const item of items) {
+        if (item.type.startsWith("image/")) {
+          const file = item.getAsFile();
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => setScreenshot(reader.result as string);
+            reader.readAsDataURL(file);
+          }
+          break;
         }
-      };
-      script.onerror = () => { /* skip screenshot */ };
-      document.head.appendChild(script);
-    }
+      }
+    };
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
   }, [open]);
+
+  // Handle file input
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setScreenshot(reader.result as string);
+    reader.readAsDataURL(file);
+  }
 
   const context = {
     user_email: user?.email ?? "",
@@ -170,21 +180,36 @@ function BugReportDrawer({ open, onClose }: { open: boolean; onClose: () => void
           />
         </div>
 
-        {/* Screenshot preview */}
+        {/* Screenshot upload */}
         <div>
           <label className="text-sm font-medium">Captura</label>
           <div className="mt-1">
             {screenshot ? (
-              <img
-                src={screenshot}
-                alt="Captura de pantalla"
-                className="w-full rounded-md border"
-              />
-            ) : (
-              <div className="flex items-center gap-2 rounded-md border border-dashed p-3 text-xs text-muted-foreground">
-                <div className="size-4 rounded-full border-2 border-muted-foreground border-t-transparent animate-spin" />
-                Capturando...
+              <div className="relative">
+                <img
+                  src={screenshot}
+                  alt="Captura de pantalla"
+                  className="w-full rounded-md border"
+                />
+                <button
+                  type="button"
+                  onClick={() => setScreenshot(null)}
+                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full size-5 flex items-center justify-center text-xs hover:bg-black/80"
+                >
+                  ✕
+                </button>
               </div>
+            ) : (
+              <label className="flex flex-col items-center gap-1.5 rounded-md border border-dashed p-4 text-xs text-muted-foreground cursor-pointer hover:bg-muted/30 transition-colors">
+                <span>📋 Pegar imagen (Ctrl+V / ⌘V)</span>
+                <span className="text-[10px]">o click para seleccionar archivo</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
+              </label>
             )}
           </div>
         </div>
