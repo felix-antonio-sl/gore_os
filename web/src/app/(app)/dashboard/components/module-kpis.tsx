@@ -33,8 +33,9 @@ export function ModuleKpis({ kpis, semaforo, divisions }: ModuleKpisProps) {
               key={k.label}
               className={`rounded-lg border border-l-4 bg-card p-3 ${KPI_COLOR_MAP[k.color] ?? "border-l-slate-400"}`}
             >
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{k.label}</p>
               <p className="text-lg font-bold tabular-nums">{k.value.toLocaleString("es-CL")}</p>
-              <p className="text-xs text-muted-foreground">{k.sublabel || k.label}</p>
+              {k.sublabel && <p className="text-xs text-muted-foreground">{k.sublabel}</p>}
             </div>
           ))}
         </div>
@@ -81,7 +82,7 @@ export function ModuleKpis({ kpis, semaforo, divisions }: ModuleKpisProps) {
                   )} />
                   <span className="flex-1 truncate">{d.division_name}</span>
                   {d.vencidos > 0 && (
-                    <span className="text-red-600 font-medium tabular-nums">{d.vencidos} vencidos</span>
+                    <span className="text-red-600 font-medium tabular-nums">{d.vencidos} {d.vencidos === 1 ? "vencido" : "vencidos"}</span>
                   )}
                   <span className="text-muted-foreground tabular-nums">{d.total_compromisos} comp.</span>
                 </div>

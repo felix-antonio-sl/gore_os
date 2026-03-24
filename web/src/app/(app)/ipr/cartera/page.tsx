@@ -65,7 +65,7 @@ export default function CarteraDivisionPage() {
           {data.map((d) => (
             <button
               key={d.division_id}
-              onClick={() => router.push(`/ipr?sponsor_division_id=${d.division_id}`)}
+              onClick={() => router.push(`/ipr?division=${d.division_id}`)}
               className="rounded-xl border bg-card p-4 text-left hover:border-primary/40 transition-colors"
             >
               <div className="flex items-center justify-between mb-3">

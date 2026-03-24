@@ -23,16 +23,20 @@ export function NavSection({
   children,
 }: NavSectionProps) {
   const storageKey = `goreos_nav_${id}`;
+  const isDevMode = typeof window !== "undefined" && localStorage.getItem("goreos_dev_mode") === "true";
 
   const [isOpen, setIsOpen] = useState(() => {
     if (typeof window === "undefined") return defaultOpen;
+    if (isDevMode) return defaultOpen;
     const saved = localStorage.getItem(storageKey);
     return saved !== null ? saved === "true" : defaultOpen;
   });
 
   useEffect(() => {
-    localStorage.setItem(storageKey, String(isOpen));
-  }, [storageKey, isOpen]);
+    if (!isDevMode) {
+      localStorage.setItem(storageKey, String(isOpen));
+    }
+  }, [storageKey, isOpen, isDevMode]);
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>

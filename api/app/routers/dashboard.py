@@ -227,18 +227,22 @@ async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
         where_scope = "AND al.code IN ('CRITICO', 'ALTO')"
 
     sql = text(f"""
-        SELECT
-            a.id::text AS id,
-            al.code AS alert_code,
-            a.message,
-            a.subject_type,
-            a.subject_id::text AS subject_id
-        FROM core.alert a
-        JOIN ref.category al ON a.severity_id = al.id
-        WHERE a.deleted_at IS NULL
-          AND a.resolved_at IS NULL
-          {where_scope}
-        ORDER BY a.triggered_at DESC
+        SELECT * FROM (
+            SELECT DISTINCT ON (a.message)
+                a.id::text AS id,
+                al.code AS alert_code,
+                a.message,
+                a.subject_type,
+                a.subject_id::text AS subject_id,
+                a.triggered_at
+            FROM core.alert a
+            JOIN ref.category al ON a.severity_id = al.id
+            WHERE a.deleted_at IS NULL
+              AND a.resolved_at IS NULL
+              {where_scope}
+            ORDER BY a.message, a.triggered_at DESC
+        ) deduped
+        ORDER BY deduped.triggered_at DESC
         LIMIT 10
     """)
     rows = (await db.execute(sql, params)).mappings().all()

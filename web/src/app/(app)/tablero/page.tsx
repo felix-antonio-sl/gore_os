@@ -53,8 +53,8 @@ type WipColumn = "BACKLOG" | "EN_CURSO" | "REVISION" | "COMPLETADO";
 
 const COLUMNS: { key: WipColumn; label: string; wipLimit?: number }[] = [
   { key: "BACKLOG", label: "Backlog" },
-  { key: "EN_CURSO", label: "En Curso", wipLimit: 5 },
-  { key: "REVISION", label: "Revisión", wipLimit: 2 },
+  { key: "EN_CURSO", label: "En Curso" },
+  { key: "REVISION", label: "Revisión" },
   { key: "COMPLETADO", label: "Completado" },
 ];
 

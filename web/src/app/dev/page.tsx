@@ -133,6 +133,10 @@ export default function DevLoginPage() {
       localStorage.setItem("goreos_token", data.access_token);
       localStorage.setItem("goreos_user", JSON.stringify(data.user));
       localStorage.setItem("goreos_dev_mode", "true");
+      // Clear sidebar nav state so defaultOpen applies fresh for new role
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith("goreos_nav_"))
+        .forEach((k) => localStorage.removeItem(k));
       window.location.href = "/dashboard";
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Error al iniciar sesion";

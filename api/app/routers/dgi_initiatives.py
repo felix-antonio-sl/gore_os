@@ -3,7 +3,7 @@ import math
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -19,13 +19,6 @@ def _require_dgi(user: dict):
 
 router = APIRouter(prefix="/api/dgi/initiatives", tags=["dgi"])
 
-# ---------------------------------------------------------------------------
-# WIP limits per column
-# ---------------------------------------------------------------------------
-_WIP_LIMITS: dict[str, int] = {
-    "EN_CURSO": 5,
-    "REVISION": 2,
-}
 
 # ---------------------------------------------------------------------------
 # Helper: fetch a single initiative row by id
@@ -341,10 +334,6 @@ async def move_initiative(
     """
     Move a DGI initiative to a new Kanban column (status).
 
-    WIP limits enforced:
-    - EN_CURSO: max 5
-    - REVISION: max 2
-
     Allowed status values: BACKLOG, EN_CURSO, REVISION, COMPLETADO
     """
     initiative_id_str = str(initiative_id)
@@ -394,36 +383,6 @@ async def move_initiative(
             wip_column=existing["wip_column"],
         )
 
-    # ── Check WIP limit for target column ────────────────────────────────
-    if target_status in _WIP_LIMITS:
-        # Serialize concurrent WIP checks for the same column
-        await db.execute(
-            text("SELECT pg_advisory_xact_lock(hashtext(:col))"),
-            {"col": f"wip_{target_status}"},
-        )
-        wip_count_result = await db.execute(
-            text("""
-                SELECT COUNT(*) AS current_wip
-                FROM core.dgi_initiative ini
-                JOIN ref.category st ON st.id = ini.status_id
-                WHERE st.code = :target_status
-                  AND ini.id != :initiative_id
-                  AND ini.deleted_at IS NULL
-            """),
-            {"target_status": target_status, "initiative_id": initiative_id_str},
-        )
-        wip_count = wip_count_result.scalar() or 0
-        limit = _WIP_LIMITS[target_status]
-        if wip_count >= limit:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail=(
-                    f"Límite WIP alcanzado para '{target_status}': "
-                    f"{wip_count}/{limit} iniciativas activas. "
-                    "Mueve o completa una iniciativa existente antes de agregar otra."
-                ),
-            )
-
     # ── Assign sort_order = max+1 in target column ──────────────────────
     max_order = (await db.execute(
         text("""
@@ -452,7 +411,7 @@ async def move_initiative(
     await record_event(db, "STATE_TRANSITION", "core.dgi_initiative", initiative_id, user["id"], {"from": existing["status"], "to": target_status})
     try:
         await db.commit()
-    except IntegrityError as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         error_msg = str(e.orig) if e.orig else str(e)
         if "Transición de estado inválida" in error_msg:

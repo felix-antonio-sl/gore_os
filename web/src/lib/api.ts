@@ -38,7 +38,16 @@ class ApiClient {
     if (!res.ok) {
       const text = await res.text();
       let message = text;
-      try { message = JSON.parse(text).detail ?? text; } catch { /* not JSON */ }
+      try {
+        const detail = JSON.parse(text).detail ?? text;
+        if (typeof detail === "string") {
+          message = detail;
+        } else if (Array.isArray(detail)) {
+          message = detail.map((e: { msg?: string }) => e.msg ?? JSON.stringify(e)).join(". ");
+        } else {
+          message = JSON.stringify(detail);
+        }
+      } catch { /* not JSON */ }
       throw new Error(message || `Error ${res.status}`);
     }
     return res.json();
@@ -71,7 +80,16 @@ class ApiClient {
     if (!res.ok && res.status !== 204) {
       const text = await res.text();
       let message = text;
-      try { message = JSON.parse(text).detail ?? text; } catch { /* not JSON */ }
+      try {
+        const detail = JSON.parse(text).detail ?? text;
+        if (typeof detail === "string") {
+          message = detail;
+        } else if (Array.isArray(detail)) {
+          message = detail.map((e: { msg?: string }) => e.msg ?? JSON.stringify(e)).join(". ");
+        } else {
+          message = JSON.stringify(detail);
+        }
+      } catch { /* not JSON */ }
       throw new Error(message || `Error ${res.status}`);
     }
   }

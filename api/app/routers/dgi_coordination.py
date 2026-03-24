@@ -40,13 +40,14 @@ router = APIRouter(prefix="/api/dgi/coordination", tags=["dgi"])
 # ---------------------------------------------------------------------------
 
 _DGI_WRITE_ROLES = {"JEFE_DGI", "ESP_CONTROL_GESTION"}
+_READ_ROLES = {*DGI_ROLES, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"}
 
 
-def _require_dgi(user: dict) -> None:
-    if user.get("role_code") not in DGI_ROLES:
+def _require_dgi_read(user: dict) -> None:
+    if user.get("role_code") not in _READ_ROLES:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Solo roles DGI pueden acceder a coordinación",
+            detail="Acceso de lectura restringido a roles DGI y ejecutivos",
         )
 
 
@@ -130,7 +131,7 @@ async def get_ar_prep(
     Preparation view for AR meeting: active initiatives, top alerts,
     pending decisions.
     """
-    _require_dgi(user)
+    _require_dgi_read(user)
 
     # Active initiatives (EN_CURSO + REVISION)
     ini_rows = (await db.execute(text("""
@@ -214,7 +215,7 @@ async def list_ar_decisions(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
 ):
-    _require_dgi(user)
+    _require_dgi_read(user)
 
     conditions = ["d.deleted_at IS NULL"]
     params: dict = {}
@@ -460,7 +461,7 @@ async def list_interactions(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
 ):
-    _require_dgi(user)
+    _require_dgi_read(user)
 
     conditions = ["i.deleted_at IS NULL"]
     params: dict = {}
@@ -650,7 +651,7 @@ async def get_interaction_matrix(
     """
     Matrix view: divisions × last interaction × next planned × counts.
     """
-    _require_dgi(user)
+    _require_dgi_read(user)
 
     rows = (await db.execute(text("""
         WITH division_stats AS (
@@ -718,7 +719,7 @@ async def get_consolidated_calendar(
     Consolidated DGI calendar: sessions, interactions, decision deadlines,
     escalation deadlines, SLA breach estimates.
     """
-    _require_dgi(user)
+    _require_dgi_read(user)
 
     if not from_date:
         from_date = date.today()

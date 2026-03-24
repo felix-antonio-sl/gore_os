@@ -129,8 +129,16 @@ export default function AlertasPage() {
   };
 
   const handleViewSubject = (type: string, subjectId: string) => {
-    if (type === "ipr" || type === "IPR" || type === "core.ipr") {
+    if (type === "core.ipr" || type === "ipr" || type === "IPR") {
       router.push(`/ipr/${subjectId}`);
+    } else if (type === "core.risk") {
+      router.push(`/riesgos/${subjectId}`);
+    } else if (type === "core.operational_commitment") {
+      router.push(`/compromisos`);
+    } else if (type === "core.agreement") {
+      router.push(`/convenios`);
+    } else if (type === "core.ipr_problem") {
+      router.push(`/problemas`);
     }
   };
 
