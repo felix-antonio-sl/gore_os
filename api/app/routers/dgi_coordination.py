@@ -9,7 +9,7 @@ Cadena 5: Calendar — UNION ALL across 5 DGI event sources.
 
 import json
 import math
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
@@ -834,16 +834,18 @@ async def get_consolidated_calendar(
 
     rows = (await db.execute(text(full_query), params)).mappings().all()
 
-    today = datetime.now()
+    now = datetime.now(timezone.utc)
     events = []
     for r in rows:
         ed = r["event_date"]
         if ed is None:
             continue
-        # Compute severity by proximity
+        # Normalize to timezone-aware for comparison
         if isinstance(ed, date) and not isinstance(ed, datetime):
-            ed = datetime.combine(ed, datetime.min.time())
-        delta_days = (ed - today).days
+            ed = datetime.combine(ed, datetime.min.time(), tzinfo=timezone.utc)
+        elif not ed.tzinfo:
+            ed = ed.replace(tzinfo=timezone.utc)
+        delta_days = (ed - now).days
         if delta_days < 0:
             severity = "rojo"
         elif delta_days <= 3:

@@ -6,7 +6,7 @@ FSM transitions (DB trigger), and deadline tracking.
 """
 
 import math
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
@@ -244,19 +244,16 @@ async def get_active_escalations(
         ORDER BY e.deadline ASC NULLS LAST
     """))).mappings().all()
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     items = []
     for r in rows:
         item = _row_to_item(dict(r)).model_dump()
         # Compute deadline semaphore
         if r["deadline"]:
             dl = r["deadline"]
-            if dl.tzinfo:
-                from datetime import timezone
-                now_aware = datetime.now(timezone.utc)
-                hours_left = (dl - now_aware).total_seconds() / 3600
-            else:
-                hours_left = (dl - now).total_seconds() / 3600
+            if not dl.tzinfo:
+                dl = dl.replace(tzinfo=timezone.utc)
+            hours_left = (dl - now).total_seconds() / 3600
             if hours_left < 0:
                 item["deadline_signal"] = "VENCIDO"
             elif hours_left < 4:
@@ -399,7 +396,7 @@ async def create_escalation(
     deadline = body.deadline
     if not deadline:
         hours = _LEVEL_DEFAULT_HOURS.get(level_code, 24)
-        deadline = datetime.utcnow() + timedelta(hours=hours)
+        deadline = datetime.now(timezone.utc) + timedelta(hours=hours)
 
     import json as _json
     options_json = _json.dumps(body.options) if body.options else "[]"

@@ -206,7 +206,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 2. **Column naming traps**: Person: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`). Org: `org_type_id` (NOT `organization_type_id`), NO `is_active` → `deleted_at IS NULL`. ipr_party: NO `person_id` → uses `organization_id` + `party_role_id` + `contact_person`. ITO via code `ITO`.
 3. **Alerts**: `subject_type` fully-qualified (`'core.ipr'`, etc.). `alert_type_id` NOT NULL (scheme `alert_type`, 13 codes).
 4. **UNIQUE constraints**: `ipr_party`→`uq_ipr_party_role`, `ipr_territory`→`uq_ipr_territory_impact`.
-5. **asyncpg**: NO `:param::jsonb` → `CAST(:param AS jsonb)`. Rejects date strings → parse with `date.fromisoformat()`. Use `datetime` for `timestamptz`.
+5. **asyncpg**: NO `:param::jsonb` → `CAST(:param AS jsonb)`. Rejects date strings → parse with `date.fromisoformat()`. Use `datetime` for `timestamptz`. **Always `datetime.now(timezone.utc)`** — never `datetime.utcnow()` (deprecated, naive) or `datetime.now()` (naive). DB `timestamptz` columns return timezone-aware datetimes via asyncpg; mixing with naive causes `TypeError`.
 6. **Advisory locks**: All code generators: `pg_advisory_xact_lock(hashtext('entity_code'))` before `SELECT MAX(...)`.
 7. **DDL**: Never apply `goreos_ddl.sql` to fresh DB — `pg_dump --schema-only` from `goreos_model`.
 8. **DB trigger errors → HTTP 409**: Catch `DBAPIError`, check `"Transición de estado inválida"`, `await db.rollback()`, return 409.
