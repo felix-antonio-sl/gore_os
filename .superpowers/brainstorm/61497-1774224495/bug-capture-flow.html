@@ -1,0 +1,159 @@
+<h2>Bug Capturer — Flujo de Captura</h2>
+<p class="subtitle">Botón flotante → Formulario lateral → Auto-contexto</p>
+
+<div class="cards">
+  <!-- Step 1: FAB -->
+  <div class="card" data-choice="fab" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="position:relative; background:#1e1e2e; border-radius:8px; padding:20px; min-height:200px; overflow:hidden;">
+        <!-- Simulated app -->
+        <div style="background:#2a2a3e; border-radius:6px; padding:12px; margin-bottom:10px;">
+          <div style="color:#94a3b8; font-size:11px;">Dashboard — ANALISTA DIPIR</div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div style="background:#2a2a3e; border-radius:4px; height:60px;"></div>
+          <div style="background:#2a2a3e; border-radius:4px; height:60px;"></div>
+        </div>
+        <!-- FAB -->
+        <div style="position:absolute; bottom:16px; right:16px; width:48px; height:48px; background:#f59e0b; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(245,158,11,0.4); cursor:pointer;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <!-- Dev mode badge -->
+        <div style="position:absolute; top:8px; right:8px; background:#f59e0b; color:#000; font-size:9px; font-weight:700; padding:2px 6px; border-radius:4px;">DEV</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>1. Botón Flotante (FAB)</h3>
+      <p>Siempre visible en esquina inferior derecha. Badge "DEV" en header. Solo en devMode.</p>
+    </div>
+  </div>
+
+  <!-- Step 2: Form -->
+  <div class="card" data-choice="form" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="position:relative; background:#1e1e2e; border-radius:8px; padding:0; min-height:200px; overflow:hidden; display:flex;">
+        <!-- App (dimmed) -->
+        <div style="flex:1; opacity:0.3; padding:12px;">
+          <div style="background:#2a2a3e; border-radius:4px; height:100%;"></div>
+        </div>
+        <!-- Side panel -->
+        <div style="width:55%; background:#1a1a2e; border-left:1px solid #333; padding:12px; display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="color:#f59e0b; font-weight:700; font-size:12px;">🐛 Reportar Bug</span>
+            <span style="color:#666; font-size:10px;">✕</span>
+          </div>
+          <!-- Auto context -->
+          <div style="background:#2a2a3e; border-radius:4px; padding:6px 8px; font-size:9px; color:#64748b;">
+            <div>👤 analista.dipir — ANALISTA</div>
+            <div>📍 /ipr/abc-123?tab=partes</div>
+            <div>✅ Checklist: "IPR detalle muestra 18 tabs"</div>
+          </div>
+          <!-- Form fields -->
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <input style="background:#2a2a3e; border:1px solid #444; border-radius:4px; padding:6px; color:#e2e8f0; font-size:10px;" placeholder="Título del bug..." value="Solo muestra 16 tabs">
+            <div style="display:flex; gap:4px;">
+              <span style="background:#ef4444; color:white; font-size:8px; padding:2px 6px; border-radius:10px;">CRITICO</span>
+              <span style="background:#333; color:#999; font-size:8px; padding:2px 6px; border-radius:10px;">ALTO</span>
+              <span style="background:#333; color:#999; font-size:8px; padding:2px 6px; border-radius:10px;">MEDIO</span>
+              <span style="background:#333; color:#999; font-size:8px; padding:2px 6px; border-radius:10px;">BAJO</span>
+            </div>
+            <textarea style="background:#2a2a3e; border:1px solid #444; border-radius:4px; padding:6px; color:#e2e8f0; font-size:9px; height:40px; resize:none;" placeholder="Descripción...">Esperaba 18 tabs pero solo aparecen 16. Faltan Rendiciones y Ex-Post.</textarea>
+            <!-- Screenshot preview -->
+            <div style="background:#2a2a3e; border:1px dashed #444; border-radius:4px; padding:8px; text-align:center;">
+              <div style="color:#64748b; font-size:9px;">📸 Screenshot capturado</div>
+              <div style="background:#333; height:30px; border-radius:2px; margin-top:4px;"></div>
+            </div>
+            <button style="background:#f59e0b; color:#000; border:none; border-radius:4px; padding:6px; font-size:10px; font-weight:600; cursor:pointer;">Guardar Bug</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>2. Formulario Lateral</h3>
+      <p>Auto-captura contexto (usuario, URL, checklist item). Título + severidad + descripción + screenshot automático.</p>
+    </div>
+  </div>
+
+  <!-- Step 3: Bug list -->
+  <div class="card" data-choice="list" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1e1e2e; border-radius:8px; padding:12px; min-height:200px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="color:#f59e0b; font-weight:700; font-size:12px;">Bugs Capturados (3)</span>
+          <span style="background:#2a2a3e; color:#94a3b8; font-size:9px; padding:2px 8px; border-radius:4px;">Exportar JSON</span>
+        </div>
+        <!-- Bug items -->
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="background:#2a2a3e; border-left:3px solid #ef4444; border-radius:4px; padding:8px;">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:#e2e8f0; font-size:10px; font-weight:600;">Solo muestra 16 tabs</span>
+              <span style="color:#ef4444; font-size:8px;">CRITICO</span>
+            </div>
+            <div style="color:#64748b; font-size:8px; margin-top:2px;">analista.dipir · /ipr/{id} · hace 5 min</div>
+          </div>
+          <div style="background:#2a2a3e; border-left:3px solid #f59e0b; border-radius:4px; padding:8px;">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:#e2e8f0; font-size:10px; font-weight:600;">Sidebar muestra sección Admin</span>
+              <span style="color:#f59e0b; font-size:8px;">ALTO</span>
+            </div>
+            <div style="color:#64748b; font-size:8px; margin-top:2px;">rtf.daf · /dashboard · hace 12 min</div>
+          </div>
+          <div style="background:#2a2a3e; border-left:3px solid #3b82f6; border-radius:4px; padding:8px;">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:#e2e8f0; font-size:10px; font-weight:600;">KPI no carga para DGI</span>
+              <span style="color:#3b82f6; font-size:8px;">MEDIO</span>
+            </div>
+            <div style="color:#64748b; font-size:8px; margin-top:2px;">jefe.dgi · /dashboard · hace 20 min</div>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <div style="background:#2a2a3e; border-radius:4px; padding:6px; text-align:center; flex:1;">
+            <div style="color:#ef4444; font-size:14px; font-weight:700;">1</div>
+            <div style="color:#64748b; font-size:8px;">Crítico</div>
+          </div>
+          <div style="background:#2a2a3e; border-radius:4px; padding:6px; text-align:center; flex:1;">
+            <div style="color:#f59e0b; font-size:14px; font-weight:700;">1</div>
+            <div style="color:#64748b; font-size:8px;">Alto</div>
+          </div>
+          <div style="background:#2a2a3e; border-radius:4px; padding:6px; text-align:center; flex:1;">
+            <div style="color:#3b82f6; font-size:14px; font-weight:700;">1</div>
+            <div style="color:#64748b; font-size:8px;">Medio</div>
+          </div>
+          <div style="background:#2a2a3e; border-radius:4px; padding:6px; text-align:center; flex:1;">
+            <div style="color:#22c55e; font-size:14px; font-weight:700;">0</div>
+            <div style="color:#64748b; font-size:8px;">Bajo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3. Panel de Bugs</h3>
+      <p>Tab "Bugs" en /dev/testing. Lista con severidad, contexto, timestamp. KPI strip de conteo. Exportar JSON.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>Contexto Auto-Capturado</h3>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+    <div>
+      <div class="label">Siempre</div>
+      <ul style="font-size:13px; color:#94a3b8; margin:4px 0;">
+        <li>Usuario (email + rol)</li>
+        <li>URL actual (pathname + query)</li>
+        <li>Timestamp</li>
+        <li>Screenshot (html2canvas)</li>
+      </ul>
+    </div>
+    <div>
+      <div class="label">Si disponible</div>
+      <ul style="font-size:13px; color:#94a3b8; margin:4px 0;">
+        <li>Checklist item activo</li>
+        <li>División del usuario</li>
+        <li>Población (op/dgi)</li>
+        <li>Viewport size</li>
+      </ul>
+    </div>
+  </div>
+</div>

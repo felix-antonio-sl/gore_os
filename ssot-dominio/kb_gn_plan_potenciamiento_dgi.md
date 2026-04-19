@@ -1,0 +1,1 @@
+/Users/felixsanhueza/Developer/kora/KNOWLEDGE/gn/kb/kb_gn_plan_potenciamiento_dgi.md
