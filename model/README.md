@@ -1,15 +1,19 @@
-# Modelo de Datos GORE_OS
+# Modelo Semántico GORE_OS
+
+> Para arquitectura, comandos y convenciones: ver [../CLAUDE.md](../CLAUDE.md)
 
 ## Estructura
 
 ```text
 model/
-├── stories/    # 819 historias de usuario
-├── roles/      # 410 roles institucionales
-├── entities/   # 139 entidades del modelo de datos
-├── processes/  # 84 procesos BPMN
-├── GLOSARIO.yml    # Terminología autorizada
-└── README.md       # Este archivo
+├── stories/          # 820 historias de usuario (YAML, fuente de verdad)
+├── entities/         # 141 entidades aceptadas (YAML)
+├── processes/        # 92 procesos del dominio (YAML)
+├── omega/            # 12 definiciones ontológicas (YAML)
+├── model_goreos/     # DDL PostgreSQL ejecutable (121 tablas, 4 schemas)
+│   ├── sql/          # DDL, seeds, migraciones, triggers, indexes
+│   └── docs/         # ERD, modelo conceptual, decisiones de diseño
+└── GLOSARIO.yml      # 244 términos institucionales
 ```
 
 ## Regla de Derivación Estructural
@@ -19,14 +23,9 @@ model/
 > **A3**: Los Módulos emergen de la agrupación de Stories.
 > **A4**: Derivación unidireccional: Stories → Entities → Artefactos → Módulos.
 
-## Ciudadanos de Primera Clase
-
-1. **Story**: Punto de partida; especifica el valor y los requerimientos
-2. **Entity**: Modelo de datos; esquemas de información del sistema
-3. **Role**: Actor que ejecuta las stories
-4. **Process**: Perspectiva temporal/dinámica de las stories
-
 ## Referencia
 
-- Ver [MANIFESTO.md](../MANIFESTO.md) para identidad y principios
-- Ver [architecture/](../architecture/) para stack tecnológico
+- [MANIFESTO.md](../MANIFESTO.md) — Identidad y principios
+- [CLAUDE.md](../CLAUDE.md) — Arquitectura y convenciones completas
+- [model_goreos/README.md](model_goreos/README.md) — Guía del modelo PostgreSQL
+- [model_goreos/docs/GOREOS_ERD_v3.md](model_goreos/docs/GOREOS_ERD_v3.md) — ERD + diccionario

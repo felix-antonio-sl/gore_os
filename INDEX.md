@@ -1,44 +1,19 @@
-# GORE_OS - Sistema Operativo Institucional del Gobierno Regional de Ñuble
+# GORE_OS — Mapa del Repositorio
 
-> **Version 3.2** | **Story-First & Radical Minimalism**
-
----
-
-## La Base: Modelo de Datos PostgreSQL
-
-El corazon del sistema es el modelo PostgreSQL en `/model/model_goreos`:
-- **71 tablas** en 4 schemas semanticos (`meta`, `ref`, `core`, `txn`)
-- **78+ vocabularios** controlados (Category Pattern, Gist 14.0)
-- **100% trazable** a 820 User Stories validadas
-- **Event Sourcing** hibrido con particionamiento
-
-**Documentacion del modelo**:
-- [model/model_goreos/README.md](model/model_goreos/README.md) - Guia del modelo
-- [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) - ERD + Data Dictionary
-- [architecture/decisions/ADR-003-modelo-como-base.md](architecture/decisions/ADR-003-modelo-como-base.md) - Decision arquitectonica
+> **v3.2.0** | **Story-First & Minimalismo Radical** | Fuente de verdad: [CLAUDE.md](CLAUDE.md)
 
 ---
 
-## Por donde empezar?
+## Por donde empezar
 
-### Para Nuevos Desarrolladores
-
-1. **[README.md](README.md)** - Introduccion general al proyecto
-2. **[MANIFESTO.md](MANIFESTO.md)** - Filosofia Story-First y las 5 Funciones Motoras
-3. **[CLAUDE.md](CLAUDE.md)** - Guia para Claude Code (arquitectura, modelo, comandos)
-
-### Para Arquitectos y Disenadores de Datos
-
-1. **[model/model_goreos/README.md](model/model_goreos/README.md)** - Modelo de datos v3.2 ejecutable
-2. **[architecture/Omega_GORE_OS_Definition_v3.0.0.md](architecture/Omega_GORE_OS_Definition_v3.0.0.md)** - Definicion omega del sistema
-3. **[model/GLOSARIO.yml](model/GLOSARIO.yml)** - Glosario autoritativo de 244 terminos
-4. **[docs/AUDITORIA_CATEGORIAL_v3.0.md](docs/AUDITORIA_CATEGORIAL_v3.0.md)** - Auditoria categorial completa
-
-### Para Product Owners y Analistas
-
-1. **[model/stories/](model/stories/)** - 820+ historias de usuario validadas (fuente de verdad)
-2. **[model/entities/aceptadas/](model/entities/aceptadas/)** - 141 entidades aceptadas
-3. **[model/processes/](model/processes/)** - 92 procesos del dominio
+| Audiencia | Documento | Contenido |
+|-----------|-----------|-----------|
+| Todos | [CLAUDE.md](CLAUDE.md) | Arquitectura, comandos, convenciones, reglas, modelo de datos |
+| Todos | [MANIFESTO.md](MANIFESTO.md) | Identidad, génesis, filosofía Story-First, 5 funciones motoras |
+| Nuevos devs | [docs/ONBOARDING.md](docs/ONBOARDING.md) | Setup local, patrones clave, flujo de nueva feature |
+| Modeladores | [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos (121 tablas, 4 schemas) |
+| Modeladores | [model/GLOSARIO.yml](model/GLOSARIO.yml) | Glosario autoritativo (244 términos) |
+| Testers | [docs/GORE_OS_Testing_Ciclo3.md](docs/GORE_OS_Testing_Ciclo3.md) | Guía de testing integral (ciclos 1-6 + SISREC + paramétricas) |
 
 ---
 
@@ -46,86 +21,101 @@ El corazon del sistema es el modelo PostgreSQL en `/model/model_goreos`:
 
 ```
 goreos/
-├── model/                     # EL CORAZON - Modelo semantico del dominio
-│   ├── stories/               # 820 historias YAML (fuente de verdad)
-│   ├── entities/aceptadas/    # 141 entidades aceptadas
-│   ├── processes/             # 92 procesos
-│   ├── model_goreos/          # Modelo ejecutable v3.2 (DDL PostgreSQL)
-│   │   ├── sql/               # DDL, indexes, seed, triggers
-│   │   └── docs/              # ERD, Design Decisions
-│   ├── omega/                 # Definiciones ontologicas
-│   └── GLOSARIO.yml           # 244 terminos (Gist 14.0 + GNUB + TDE)
-├── architecture/
-│   ├── decisions/             # ADRs (Architecture Decision Records)
-│   ├── Omega_GORE_OS_Definition_v3.0.0.md
-│   └── legacy/                # Docs del stack anterior (frozen)
+├── model/                         # Modelo semántico (corazón del sistema)
+│   ├── stories/                   # 820 historias de usuario (YAML)
+│   ├── entities/aceptadas/        # 141 entidades validadas (YAML)
+│   ├── processes/                 # 92 procesos del dominio (YAML)
+│   ├── omega/                     # 12 definiciones ontológicas (YAML)
+│   ├── model_goreos/              # DDL PostgreSQL ejecutable
+│   │   ├── sql/                   # DDL, seeds, migraciones, triggers
+│   │   └── docs/                  # ERD, modelo conceptual, decisiones de diseño
+│   └── GLOSARIO.yml               # 244 términos institucionales
+├── api/                           # Backend FastAPI (:8000)
+│   ├── app/routers/               # 29 routers, ~299 endpoints
+│   ├── app/schemas/               # Pydantic v2
+│   ├── app/core/                  # deps, security, scope, audit, config
+│   ├── tests/                     # 730 tests de integración (55 módulos)
+│   └── scripts/etl/               # 6 scripts ETL
+├── web/                           # Frontend Next.js 16 (:3000)
+│   └── src/                       # app/, components/, lib/, types/, hooks/
 ├── docs/
-│   ├── AUDITORIA_CATEGORIAL_v3.0.md
-│   ├── PLAN_NORMALIZACION_JSONB_v2.0.md
-│   └── legacy/                # ETL sources, migration SQL, docs historicos
-├── docker-compose.yml         # PostgreSQL + PgAdmin
-├── .env.example               # Variables de entorno
-├── CLAUDE.md                  # Guia para Claude Code
-├── INDEX.md                   # Este archivo
-├── MANIFESTO.md               # Identidad y genesis
-└── README.md                  # Introduccion general
+│   ├── adr/                       # 8 Architecture Decision Records
+│   ├── plans/                     # 23 planes de implementación + diseños
+│   ├── superpowers/               # 11 planes avanzados + 5 specs
+│   ├── archive/                   # Material histórico (feb2026, legacy-model-tel)
+│   └── *.md                       # Specs, auditorías, auditorías UX, journeys
+├── scripts/                       # Scripts operativos (migraciones, test DB, ETL)
+├── CLAUDE.md                      # Fuente de verdad documental (SSOT)
+├── INDEX.md                       # Este archivo
+├── MANIFESTO.md                   # Identidad y génesis del proyecto
+└── docker-compose.yml
 ```
+
+---
+
+## Decisiones de Arquitectura
+
+Todas las ADRs vigentes están en [`docs/adr/`](docs/adr/):
+
+| ADR | Tema | Estado |
+|-----|------|--------|
+| [ADR-001](docs/adr/ADR-001-meta-schema.md) | Retención del schema meta | Accepted |
+| [ADR-002](docs/adr/ADR-002-raw-sql.md) | Raw SQL via text() (sin ORM) | Accepted |
+| [ADR-003](docs/adr/ADR-003-advisory-locks.md) | Advisory locks para generadores secuenciales | Accepted |
+| [ADR-004](docs/adr/ADR-004-category-pattern.md) | Category Pattern (univocidad categorial) | Accepted |
+| [ADR-005](docs/adr/ADR-005-test-strategy.md) | Tests contra PostgreSQL real (sin mocks) | Accepted |
+| [ADR-006](docs/adr/ADR-006-jwt-cookie-migration.md) | Migración JWT → cookies | Proposed |
+| [ADR-007](docs/adr/ADR-007-categorical-univocity.md) | Univocidad categorial en todos los schemas | Accepted |
+| [ADR-008](docs/adr/008-create-pattern-drawer-vs-page.md) | Drawer vs página /nuevo | Accepted |
+
+---
+
+## Especificaciones y Auditorías
+
+| Documento | Contenido |
+|-----------|-----------|
+| [GORE_OS_Specification_v1.0.md](docs/GORE_OS_Specification_v1.0.md) | Especificación funcional y técnica completa |
+| [GORE_OS_Audit_v3.0.md](docs/GORE_OS_Audit_v3.0.md) | Auditoría institucional (4 fuentes de verdad) |
+| [GORE_OS_Role_Surface_Spec_v1.0.md](docs/GORE_OS_Role_Surface_Spec_v1.0.md) | Mapeo rol→superficie (15 roles, 38 rutas) |
+| [GORE_OS_User_Journeys_v3.0.md](docs/GORE_OS_User_Journeys_v3.0.md) | 8 arquetipos, 17 journeys, 8 principios UX |
+| [GORE_OS_User_Action_Trees_v1.0.md](docs/GORE_OS_User_Action_Trees_v1.0.md) | Árboles de acción por usuario (24 usuarios, 304 endpoints) |
+| [AUDITORIA_CATEGORIAL_v3.0.md](docs/AUDITORIA_CATEGORIAL_v3.0.md) | Auditoría categorial exhaustiva |
+| [PLAN_NORMALIZACION_JSONB_v2.0.md](docs/PLAN_NORMALIZACION_JSONB_v2.0.md) | Plan de normalización JSONB→relacional |
+| [ETL_ARCHITECTURE_v1.0.md](docs/ETL_ARCHITECTURE_v1.0.md) | Arquitectura ETL para datos legacy |
 
 ---
 
 ## Principios Fundamentales
 
-### Story-First Development
-
+### Story-First
 > **"Si no hay Historia, no existe el requerimiento."**
 
-La derivacion es unidireccional: **Stories → Entities → Artifacts → Modules**
-
-### Minimalismo Radical
-
-Solo 4 atomos fundamentales:
-1. **Story** (Historia de Usuario) - Origen absoluto del valor
-2. **Entity** (Entidad) - Estructura de informacion
-3. **Role** (Rol) - Agente activo (humano o algoritmico)
-4. **Process** (Proceso) - Perspectiva dinamica
+Derivación unidireccional: **Stories → Entities → Artefactos → Módulos**
 
 ### Las 5 Funciones Motoras
-
-El GORE ejecuta 5 funciones esenciales que GORE_OS soporta:
-1. **PLANIFICAR** - ERD, PROT, ARI
-2. **FINANCIAR** - FNDR, FRIL, fondos regionales
-3. **EJECUTAR** - Convenios, obras, programas
-4. **COORDINAR** - Municipios, servicios, gabinete
-5. **NORMAR** - Resoluciones, reglamentos
+1. **PLANIFICAR** — ERD, PROT, ARI
+2. **FINANCIAR** — FNDR, FRIL, fondos regionales
+3. **EJECUTAR** — Convenios, obras, programas
+4. **COORDINAR** — Municipios, servicios, gabinete
+5. **NORMAR** — Resoluciones, reglamentos
 
 ---
 
-## Modelo de Datos v3.2
+## Estado del Modelo de Datos
 
-El sistema se centra en **IPR (Intervencion Publica Regional)** como entidad abstracta polimorfica:
+**121 tablas** en 4 schemas semánticos:
 
-- **Tipos**: PROYECTO (inversion capital) vs PROGRAMA (gasto corriente)
-- **Fondos**: FNDR, FRIL, FRPD, ISAR
-- **Evaluacion**: SNI, C33, FRIL, Glosa 06, 8% FNDR
-- **Estados**: 31 estados del ciclo de vida
+| Schema | Tablas | Propósito |
+|--------|--------|-----------|
+| `meta` | 5 | Átomos: Role, Process, Entity, Story |
+| `ref` | 3 | Vocabularios controlados (105 schemes) |
+| `core` | 80+ | Entidades de negocio |
+| `txn` | 20+ | Event sourcing (particionado) |
 
-DDL ejecutable en: [model/model_goreos/sql/](model/model_goreos/sql/)
-
----
-
-## Integraciones TDE (Transformacion Digital del Estado)
-
-GORE_OS se integra con sistemas nacionales chilenos:
-- **ClaveUnica** - Autenticacion ciudadana
-- **PISEE** - Interoperabilidad (Once-Only Principle)
-- **DocDigital** - Firma electronica
-- **SIGFE/DIPRES** - Integracion presupuestaria
-- **SIAPER/CGR** - Toma de razon CGR
+- **100% univocidad categorial**: 98 CHECK constraints + 19 triggers de transición
+- **820 user stories** validadas como fuente de verdad
+- **DDL ejecutable**: `model/model_goreos/sql/`
 
 ---
 
-## Licencia y Contacto
-
-GORE_OS es desarrollado por el Gobierno Regional de Nuble, Chile.
-
-Para consultas tecnicas, ver [CLAUDE.md](CLAUDE.md) o contactar al equipo de desarrollo.
+*Para arquitectura, comandos, convenciones y reglas: ver [CLAUDE.md](CLAUDE.md)*

@@ -5,8 +5,7 @@ This directory contains hooks that run automatically at key lifecycle events in 
 ## Quick Start
 
 1. **Read the documentation**:
-   - `AGENTS.md` - Complete reference (for any AI agent)
-   - `CLAUDE.md` - Same content (Claude Code looks for this filename)
+   - `CLAUDE.md` — Complete project reference (architecture, commands, conventions, rules)
 
 2. **Check examples**:
    - `examples/` directory contains starter templates
@@ -41,7 +40,7 @@ This directory contains hooks that run automatically at key lifecycle events in 
 
 ## Documentation
 
-See `AGENTS.md` or `CLAUDE.md` for complete documentation including:
+See `CLAUDE.md` for complete project documentation including:
 - Environment variables
 - HTTP callback API
 - Common patterns

@@ -15,4 +15,4 @@ Stage inputs from canonical sources:
 ./scripts/stage_etl_data.sh all
 ```
 
-Canonical source-of-truth is under `docs/legacy/etl/sources/`.
+Canonical source-of-truth is under `docs/archive/legacy-model-tel/etl/sources/`.

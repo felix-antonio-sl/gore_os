@@ -1,536 +1,72 @@
-# GORE_OS v3.4 - Modelo de Datos
+# Modelo de Datos GORE_OS
 
-**Estado**: ✅ Ejecutable y Auditado
-**Última actualización**: 2026-01-30
-**PostgreSQL**: 16+ (requiere PostGIS para funcionalidad territorial futura)
+> Para arquitectura completa, comandos y convenciones: ver [../../CLAUDE.md](../../CLAUDE.md)
 
----
-
-## Descripción
-
-Modelo de datos relacional para GORE_OS, el sistema operativo institucional del Gobierno Regional de Ñuble, Chile. Diseñado bajo principios de **Teoría de Categorías** aplicada a dominios de datos, con enfoque **Story-First** (819+ historias de usuario validadas).
-
-### Características Principales
-
-- **52 tablas lógicas** organizadas en 4 schemas semánticos (+5 en v3.4)
-- **UUID universal** como PK en todas las entidades
-- **Auditoría completa** (created/updated/deleted_at/by_id)
-- **Category Pattern** (Gist 14.0) para vocabularios controlados (83+ schemes)
-- **Event Sourcing** opcional con particionamiento mensual/trimestral
-- **Soft Delete** en todas las entidades
-- **Validación semántica** enforced a nivel DB
-- **Máquinas de estado** con transiciones validadas
-- **Univocidad Categorial** 100% enforced (cada FK → 1 scheme exacto)
+**Estado**: Ejecutable y auditado
+**PostgreSQL**: 16+
+**Tablas**: 121 en 4 schemas (meta, ref, core, txn)
+**Schemes**: 105 vocabularios controlados (Category Pattern)
+**CHECK constraints**: 98 + 19 triggers de transición + 6 triggers de timing
+**Univocidad categorial**: 100% (0 FK→ref.category sin protección)
 
 ---
 
-## Arquitectura
+## Schemas
 
-### Schemas
+| Schema | Tablas | Propósito |
+|--------|--------|-----------|
+| `meta` | 5 | Átomos fundamentales (Role, Process, Entity, Story, Story-Entity) |
+| `ref` | 3 | Vocabularios controlados: `ref.category(scheme, code, label)` + `ref.actor` + `ref.operational_commitment_type` |
+| `core` | 80+ | Entidades de negocio (IPR, agreements, budget, work items, etc.) |
+| `txn` | 20+ | Event sourcing particionado |
 
-| Schema | Tablas | Propósito                                                         |
-| ------ | ------ | ----------------------------------------------------------------- |
-| `meta` | 5      | Átomos fundamentales (Role, Process, Entity, Story, Story-Entity) |
-| `ref`  | 3      | Vocabularios controlados (Category, Actor, Commitment Types)      |
-| `core` | 42     | Entidades de negocio (IPR, Agreements, Budget, Work Items, etc.)  |
-| `txn`  | 2      | Event Sourcing (Event, Magnitude) - Particionadas                 |
+## Entidad Central: IPR
 
-### Entidades Centrales
+**Intervención Pública Regional** — polimórfica (8 tipos: INFRAESTRUCTURA, EQUIPAMIENTO, CONSERVACION, TRANSFERENCIA, SUBSIDIO, ESTUDIO, PROGRAMA_SOCIAL, PROGRAMA_8PCT).
 
-**IPR (Intervención Pública Regional)**: Polimorfismo de inversiones
+- 32 estados + fase derivada (STATUS_PHASE_FIBER)
+- Nature-aware: PROYECTO vs PROGRAMA bifurcan flujos
+- 16 tabs satélite (compromisos, problemas, alertas, convenios, CDPs, avances, partes, territorio, hitos, resoluciones, evaluación, parentesco, admisibilidad, modificaciones, cierre, ex-post)
 
-- Tipos: PROYECTO, PROGRAMA, PROGRAMA_INVERSION, ESTUDIO_BASICO, ANF
-- Funding: FNDR, FRIL, FRPD, ISAR
-- Evaluation: SNI, C33, FRIL, Glosa 06, 8% FNDR, Transferencias
+## Category Pattern
 
-**Work Item**: Átomo de gestión operativa unificado
+Cada FK → exactamente UN scheme de `ref.category`. Verificar schemes existentes antes de crear:
 
-- Origen: Stories, Commitments, Problems, Alerts
-- Estados: 6 estados con transiciones validadas
-- Trazabilidad: IPR, Agreement, Resolution, Commitment
-
-**Person & Position**: Actores institucionales normalizados
-
-- RUT normalizado con validación (XX.XXX.XXX-X)
-- Cargo categorizado (position_id → position_category scheme)
-- Relación empleador (organization_id → core.organization)
-- Contacto normalizado (email, phone)
-
-**Category Pattern**: 83+ schemes de vocabularios controlados
-
-- Estados operativos (ipr_state: 31, work_item_status: 6, ...)
-- Tipos de entidades (agreement_type, mechanism, ...)
-- Roles y clasificaciones (org_type, position_category, ...)
-- Máquinas de estado con `valid_transitions` JSONB
-
----
-
-## Instalación
-
-### Prerrequisitos
-
-- PostgreSQL 16+
-- Usuario con privilegios `CREATE DATABASE`, `CREATE SCHEMA`
-- `psql` client instalado
-
-### Ejecución (Orden Crítico)
-
-```bash
-# 0. Crear base de datos
-createdb -U postgres goreos
-
-# 1. Estructura base (schemas, tablas, funciones, ENUMs, particiones)
-psql -U postgres -d goreos -f goreos_ddl.sql
-
-# 2. Datos semilla - Vocabularios controlados (75+ schemes, 350+ categorías)
-psql -U postgres -d goreos -f goreos_seed.sql
-
-# 3. Datos semilla - Agentes KODA con HAIC constraint
-psql -U postgres -d goreos -f goreos_seed_agents.sql
-
-# 4. Datos semilla - Territorio Región de Ñuble (3 provincias, 21 comunas)
-psql -U postgres -d goreos -f goreos_seed_territory.sql
-
-# 5. Triggers de negocio (core, siempre activo)
-psql -U postgres -d goreos -f goreos_triggers.sql
-
-# 6. Triggers de remediación categorial (validación + sincronización)
-psql -U postgres -d goreos -f goreos_triggers_remediation.sql
-
-# 7. Índices de optimización (basados en CQs)
-psql -U postgres -d goreos -f goreos_indexes.sql
-
-# 8. Remediación Ontológica v3.1 (relaciones N:M, patrón hasParty) ✨ NUEVO
-psql -U postgres -d goreos -f goreos_remediation_ontological.sql
+```sql
+SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;
 ```
 
-### Verificación
+## Archivos SQL
 
-```bash
-# Contar tablas por schema
-psql -U postgres -d goreos -c "
-    SELECT schemaname, COUNT(*) AS tables
-    FROM pg_tables
-    WHERE schemaname IN ('meta', 'ref', 'core', 'txn')
-    GROUP BY schemaname
-    ORDER BY schemaname;
-"
-# Esperado: meta=5, ref=3, core=42, txn=2 (sin particiones) o 68 (con particiones)
+| Archivo | Propósito |
+|---------|-----------|
+| `sql/goreos_ddl.sql` | Estructura completa (schemas, tablas, funciones, particiones) |
+| `sql/goreos_seed.sql` | Vocabularios controlados (105 schemes) |
+| `sql/goreos_seed_territory.sql` | Territorio Región de Ñuble (3 provincias, 21 comunas) |
+| `sql/goreos_triggers.sql` | Triggers de negocio |
+| `sql/goreos_indexes.sql` | Índices de optimización |
+| `sql/goreos_seed_realistic.sql` | Seed realista (~2,200 registros, prefijo DEMO-R-) |
+| `sql/goreos_seed_demo_ciclo2.sql` | Seed demo (~50 registros, prefijo DEMO-) |
+| `sql/goreos_migration_*.sql` | Migraciones incrementales |
+| `sql/goreos_rollback_*.sql` | Rollbacks correspondientes |
 
-# Verificar triggers activos
-psql -U postgres -d goreos -c "
-    SELECT schemaname, tablename, COUNT(*) AS triggers
-    FROM pg_trigger t
-    JOIN pg_class c ON c.oid = t.tgrelid
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname IN ('meta', 'ref', 'core', 'txn')
-      AND NOT t.tgisinternal
-    GROUP BY schemaname, tablename
-    HAVING COUNT(*) > 0
-    ORDER BY schemaname, tablename;
-"
+**Importante**: No aplicar `goreos_ddl.sql` a DB fresca. Usar `pg_dump --schema-only` desde `goreos_model`.
 
-# Ejecutar smoke tests (opcional)
-psql -U postgres -d goreos -f docs/SMOKE_TESTS.sql
-```
+## Documentación del Modelo
 
----
-
-## Documentación
-
-### Documentos Principales
-
-| Documento                                            | Propósito                                                                |
-| ---------------------------------------------------- | ------------------------------------------------------------------------ |
-| `docs/GOREOS_ERD_v3.md`                              | Diagramas ER (Mermaid), Data Dictionary, Relaciones                      |
-| `docs/AUDITORIA_CONSOLIDADA_v3_2026-01-27.md`        | Auditoría técnica + categorial integrada                                 |
-| `docs/DESIGN_DECISIONS.md`                           | Decisiones de diseño explicadas (ENUM vs Category, Event Sourcing, etc.) |
-| `docs/GOREOS_CONCEPTUAL_MODEL.md`                    | Modelo conceptual de negocio                                             |
-| `docs/AUDITORIA_GORE_OS_v3_2026-01-27.md`            | Auditoría técnica exhaustiva (21 hallazgos)                              |
-| `docs/AUDITORIA_CATEGORIAL_GORE_OS_v3_2026-01-27.md` | Auditoría categorial (preservación estructural)                          |
-
-### Diagramas
-
-- **ERD Completo**: 50 tablas, 4 schemas → Ver `docs/GOREOS_ERD_v3.md:20-526`
-- **ERD por Dominio**: Meta, IPR, Convenios, Gobernanza, Work Items → Ver `docs/GOREOS_ERD_v3.md:530-983`
-
----
+| Documento | Contenido |
+|-----------|-----------|
+| [docs/GOREOS_ERD_v3.md](docs/GOREOS_ERD_v3.md) | Diagramas ER + diccionario de datos completo |
+| [docs/GOREOS_CONCEPTUAL_MODEL.md](docs/GOREOS_CONCEPTUAL_MODEL.md) | Modelo conceptual de negocio |
+| [docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md) | Decisiones de diseño (ENUM vs Category, JSONB, indexing, particionamiento) |
+| [docs/GOREOS_NORMALIZATION_ANALYSIS.md](docs/GOREOS_NORMALIZATION_ANALYSIS.md) | Análisis de normalización (50 tablas) |
 
 ## Principios de Diseño
 
-### 1. Story-First
-
-```text
-Stories (819+) → Entities (139+) → Artifacts (DDL) → Modules (Flask Blueprints)
-```
-
-Todo deriva de historias de usuario validadas. No hay código sin story correspondiente.
-
-### 2. Category Pattern (Gist 14.0)
-
-Taxonomías flexibles sin DDL:
-
-- 83+ schemes (mcd_phase, ipr_state, mechanism, org_type, position_category, ...)
-- 400+ categorías
-- Jerarquía vía `parent_id`
-- Transiciones de estado vía `valid_transitions` JSONB
-- Univocidad categorial enforced (cada FK → 1 scheme)
-
-### 3. Auditoría Universal
-
-Todas las tablas tienen:
-
-```sql
-created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-created_by_id UUID REFERENCES core.user(id),
-updated_by_id UUID REFERENCES core.user(id),
-deleted_at TIMESTAMPTZ,
-deleted_by_id UUID REFERENCES core.user(id),
-metadata JSONB DEFAULT '{}'::jsonb
-```
-
-### 4. Soft Delete por Defecto
-
-Borrado lógico en aplicación (no triggers DB):
-
-```python
-entity.deleted_at = datetime.utcnow()
-entity.deleted_by_id = g.current_user.id
-db.session.commit()
-```
-
-Queries siempre filtran: `WHERE deleted_at IS NULL`
-
-### 5. Integridad Semántica Enforced
-
-Validaciones a nivel DB:
-
-- **Scheme validation**: FKs a `ref.category` validan scheme correcto
-- **State transitions**: `valid_transitions` enforced por triggers
-- **Self-reference prevention**: CHECKs básicos en jerarquías
-- **Parent sync**: `parent_code` → `parent_id` automático
-
----
-
-## Patrones Clave
-
-### Category Pattern
-
-```sql
--- Definir vocabulario
-INSERT INTO ref.category (scheme, code, label) VALUES
-('mechanism', 'SNI', 'Track A: SNI General'),
-('mechanism', 'C33', 'Track B: Circular 33'),
-('mechanism', 'FRIL', 'Track C: FRIL');
-
--- Usar en entidad
-CREATE TABLE core.ipr (
-    mechanism_id UUID REFERENCES ref.category(id),
-    -- Validado por trigger: debe ser scheme='mechanism'
-    ...
-);
-```
-
-### Event Sourcing (Opcional)
-
-```sql
--- Historia específica (siempre activo)
-core.work_item → core.work_item_history (trigger automático)
-
--- Event sourcing genérico (opt-in)
-core.ipr → txn.event (trigger comentado, descomentar si se requiere)
-```
-
-### Máquinas de Estado
-
-```sql
--- Definir transiciones válidas
-UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "CANCELADO"]'::jsonb
-WHERE scheme = 'work_item_status' AND code = 'PENDIENTE';
-
--- Enforced por trigger
-CREATE TRIGGER trg_work_item_state_transition
-    BEFORE UPDATE OF status_id ON core.work_item
-    FOR EACH ROW EXECUTE FUNCTION fn_validate_state_transition();
-```
-
-### Funtor Story → WorkItem
-
-Preservación de semántica Story-First:
-
-```sql
-meta.story.role_id → core.work_item.required_role_id  -- Capacidad requerida
-                   → core.work_item.assignee_id        -- Usuario asignado
-```
-
----
-
-## Integración con Aplicación
-
-### Contexto de Usuario
-
-```python
-# Flask: Establecer usuario al inicio del request
-from goreos.db import db
-
-@app.before_request
-def set_db_user():
-    if current_user.is_authenticated:
-        db.session.execute(
-            "SELECT set_current_user(:user_id)",
-            {'user_id': current_user.id}
-        )
-```
-
-```sql
--- PostgreSQL: Obtener usuario en triggers
-v_user_id := get_current_user_safe();  -- Versión defensiva con validación
-```
-
-### Queries Comunes
-
-```sql
--- IPRs en fase F4 con problemas abiertos
-SELECT i.codigo_bip, i.name, p.code AS phase
-FROM core.ipr i
-JOIN ref.category p ON p.id = i.mcd_phase_id
-WHERE p.code = 'F4'
-  AND i.has_open_problems = TRUE
-  AND i.deleted_at IS NULL;
-
--- Work items asignados a usuario X pendientes
-SELECT wi.code, wi.title, wi.due_date
-FROM core.work_item wi
-JOIN ref.category s ON s.id = wi.status_id
-WHERE wi.assignee_id = :user_id
-  AND s.code = 'PENDIENTE'
-  AND wi.deleted_at IS NULL
-ORDER BY wi.due_date ASC NULLS LAST;
-
--- Transiciones válidas desde estado actual
-SELECT c_new.code, c_new.label
-FROM ref.category c_current
-CROSS JOIN LATERAL jsonb_array_elements_text(c_current.valid_transitions) AS valid_code
-JOIN ref.category c_new ON c_new.code = valid_code AND c_new.scheme = c_current.scheme
-WHERE c_current.id = :current_status_id;
-```
-
----
-
-## Mantenimiento
-
-### Particiones Anuales
-
-```sql
--- Crear particiones para nuevo año (ejecutar Q4 de cada año)
--- txn.event (mensual)
-DO $$
-DECLARE
-    v_year INTEGER := 2027;
-    v_month INTEGER;
-BEGIN
-    FOR v_month IN 1..12 LOOP
-        EXECUTE format('
-            CREATE TABLE IF NOT EXISTS txn.event_%s_%s PARTITION OF txn.event
-            FOR VALUES FROM (%L) TO (%L)',
-            v_year, LPAD(v_month::TEXT, 2, '0'),
-            v_year || '-' || LPAD(v_month::TEXT, 2, '0') || '-01',
-            (v_year + CASE WHEN v_month = 12 THEN 1 ELSE 0 END) || '-' ||
-            LPAD((v_month % 12 + 1)::TEXT, 2, '0') || '-01'
-        );
-    END LOOP;
-END $$;
-
--- txn.magnitude (trimestral) - Similar pero con quarters
-```
-
-### Auditoría de Índices
-
-```sql
--- Listar FKs sin índice (potencial problema de performance)
-SELECT
-    tc.table_schema,
-    tc.table_name,
-    kcu.column_name,
-    ccu.table_name AS foreign_table_name
-FROM information_schema.table_constraints AS tc
-JOIN information_schema.key_column_usage AS kcu
-    ON tc.constraint_name = kcu.constraint_name
-    AND tc.table_schema = kcu.table_schema
-JOIN information_schema.constraint_column_usage AS ccu
-    ON ccu.constraint_name = tc.constraint_name
-WHERE tc.constraint_type = 'FOREIGN KEY'
-  AND tc.table_schema IN ('meta', 'ref', 'core', 'txn')
-  AND NOT EXISTS (
-      SELECT 1 FROM pg_indexes
-      WHERE schemaname = tc.table_schema
-        AND tablename = tc.table_name
-        AND indexdef LIKE '%' || kcu.column_name || '%'
-  )
-ORDER BY tc.table_schema, tc.table_name;
-```
-
----
-
-## Troubleshooting
-
-### Error: "mcd_phase_id debe pertenecer al scheme 'mcd_phase'"
-
-**Causa**: FK a `ref.category` con scheme incorrecto (integridad semántica).
-**Solución**: Verificar scheme:
-
-```sql
-SELECT scheme, code, label FROM ref.category WHERE id = :category_id;
-```
-
-### Error: "Transición de estado inválida: X -> Y"
-
-**Causa**: Transición no definida en `valid_transitions`.
-**Solución**: Verificar transiciones válidas:
-
-```sql
-SELECT valid_transitions
-FROM ref.category
-WHERE scheme = :scheme AND code = :current_state;
-```
-
-### Warning: "app.current_user_id contiene valor no-UUID"
-
-**Causa**: Contexto de usuario mal configurado.
-**Solución**: Verificar `set_current_user()` en aplicación:
-
-```python
-# Correcto
-db.session.execute("SELECT set_current_user(:user_id)", {'user_id': str(user.id)})
-
-# Incorrecto
-db.session.execute("SELECT set_current_user(:user_id)", {'user_id': user.email})
-```
-
----
-
-## Changelog
-
-### v3.4 (2026-01-30) - Normalización JSONB Fase 1
-
-**Nuevas Tablas**:
-
-- ✅ `core.position` - Cargos laborales categorizados (gnub:Position)
-
-**Nuevas Columnas Normalizadas**:
-
-- ✅ `core.person.rut` - RUT normalizado desde metadata (VARCHAR(12) UNIQUE)
-- ✅ `core.person.position_id` - Cargo del funcionario (FK a ref.category scheme='position_category')
-- ✅ `core.person.organization_id` - Organización empleadora (FK a core.organization)
-- ✅ `core.person.email` - Email de contacto
-- ✅ `core.person.phone` - Teléfono de contacto
-- ✅ `core.user_account.rut` - RUT normalizado desde metadata (VARCHAR(12) UNIQUE)
-- ✅ `core.organization.rut` - RUT normalizado desde metadata (VARCHAR(12) UNIQUE)
-
-**Nuevos Schemes** (5 total):
-
-- ✅ `position_category` - Categorías de cargos (14 categorías: ALCALDE, CONCEJAL, CONSEJERO_REGIONAL, etc.)
-- ✅ `person_source` - Fuentes de datos (3 categorías: SIRH, CORE, SIAPER)
-- ✅ `org_source` - Fuentes de datos (3 categorías: CONVENIO, IDIS, EXTERNAL)
-- ✅ `contract_type` - Tipos de contrato (6 categorías: PLANTA, CONTRATA, HONORARIOS, etc.)
-- ✅ `org_legal_status` - Estados legales (4 categorías: ACTIVA, INACTIVA, EN_LIQUIDACION, DISUELTA)
-
-**Índices** (17 nuevos):
-
-- ✅ Índices UNIQUE en RUT (person, user_account, organization)
-- ✅ Índices de búsqueda (lower(email), lower(phone))
-- ✅ Índices compuestos para queries frecuentes
-- ✅ Índices parciales (WHERE deleted_at IS NULL)
-
-**Principios Aplicados**:
-
-- ✅ Univocidad Categorial 100% mantenida
-- ✅ Normalización relacional > JSONB metadata
-- ✅ Compatibilidad retroactiva (metadata preservado como audit trail)
-- ✅ RUT validado con CHECK constraint (formato XX.XXX.XXX-X)
-
-**Estado de Integridad**:
-
-- ✅ 0 violaciones de Categorical Univocity
-- ✅ 100% schemes validados con fn_validate_category_scheme
-- ✅ JSONB metadata reducido a audit trail
-
----
-
-### v3.1 (2026-01-27) - Remediación Ontológica
-
-**Nuevas Tablas (Relaciones N:M categóricamente correctas)**:
-
-- ✅ `core.ipr_territory` - IPR↔Territory N:M con tipo de impacto (gnub:isLocatedIn)
-- ✅ `core.ipr_milestone` - Hitos de proyecto con planned/actual (gnub:ProjectMilestone)
-- ✅ `core.ipr_party` - Partes de IPR con roles (gist:hasParty)
-- ✅ `core.installment_milestone` - Cuota↔Hito N:M (gnub:triggersPayment)
-
-**Nuevos Schemes**:
-
-- ✅ `territory_impact` - Tipos de impacto territorial (4 categorías)
-- ✅ `milestone_type` - Tipos de hito (13 categorías)
-- ✅ `ipr_party_role` - Roles de parte (9 categorías)
-- ✅ Aspectos planificados: `PLANNED_PHYSICAL_PROGRESS`, `PLANNED_FINANCIAL_PROGRESS`
-
-**Vistas de Compatibilidad**:
-
-- ✅ `vw_ipr_executor`, `vw_ipr_applicant`, `vw_ipr_formulator`
-- ✅ `vw_ipr_parties` - Vista consolidada de todas las partes
-- ✅ `vw_budget_modification` - Vista sobre txn.event
-
-**Principios Gist 14.0 Aplicados**:
-
-- N:M sobre FK simples (cuando ontología permite múltiples valores)
-- Patrón gist:hasParty (partes con roles categorizados)
-- Event Sourcing (budget_modification como Event, no entidad)
-
----
-
-### v3.0 (2026-01-27)
-
-**Estructura**:
-
-- ✅ 50 tablas con UUID universal
-- ✅ 4 schemas semánticos (meta, ref, core, txn)
-- ✅ Auditoría completa en todas las entidades
-- ✅ 6 ENUMs ontológicos + 78 schemes Category
-
-**Integridad**:
-
-- ✅ Validación de scheme en FKs a `ref.category` (16 triggers)
-- ✅ Validación de transiciones de estado (7 triggers)
-- ✅ Sincronización `parent_code` → `parent_id` (1 trigger)
-- ✅ CHECKs anti-ciclos básicos (3 constraints)
-
-**Semántica**:
-
-- ✅ Funtor Story→WorkItem preservado (`required_role_id`)
-- ✅ `valid_transitions` 100% pobladas (7 schemes)
-- ✅ Event sourcing híbrido (history tables + txn.event)
-
-**Documentación**:
-
-- ✅ Decisiones de diseño explícitas (`DESIGN_DECISIONS.md`)
-- ✅ Auditoría consolidada técnica + categorial
-- ✅ Smoke tests definidos
-
-### v2.0 (2026-01-26)
-
-- Baseline inicial con auditoría exhaustiva
-- 21 hallazgos corregidos
-
----
-
-## Soporte
-
-**Documentación**: Ver carpeta `docs/`
-**Issues**: Reportar en repositorio del proyecto
-**Contacto**: Equipo GORE Ñuble - División de Planificación
-
----
-
-**Última actualización**: 2026-01-30
-**Versión**: 3.4 (Normalización JSONB Fase 1)
-**Estado**: ✅ Producción Ready
+1. **Story-First**: 820 historias → 141 entidades → 121 tablas → módulos
+2. **Categorical Univocity**: Cada FK a ref.category usa exactamente 1 scheme
+3. **Auditoría universal**: `created_at/by_id`, `updated_at/by_id`, `deleted_at/by_id` en todas las entidades
+4. **Soft delete**: `WHERE deleted_at IS NULL` (no triggers DB)
+5. **Integridad semántica**: CHECK constraints + triggers de transición enforced a nivel DB
+6. **UUID universal**: PK UUID en todas las entidades
+7. **Advisory locks**: `pg_advisory_xact_lock(hashtext('entity_code'))` antes de `SELECT MAX(...)`

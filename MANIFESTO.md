@@ -110,4 +110,4 @@ El conocimiento formal del dominio se mantiene centralizado:
 
 ### Versión
 
-*GORE_OS v3.0.0 — Diciembre 2025*
+*GORE_OS v3.2.0 — Junio 2026*

@@ -2,12 +2,14 @@
 
 ## Project Overview
 
-GORE_OS: institutional OS for GORE Ñuble (Chile). Two populations on shared PostgreSQL:
+**GORE_OS v3.2.0** — Sistema operativo institucional del Gobierno Regional de Ñuble (Chile). Modelo integrado de datos, procesos y capacidades construido sobre PostgreSQL, con frontend Next.js y backend FastAPI. Filosofía Story-First: 820 user stories → 121 tablas → capacidades operativas.
 
-- **Operativa** (ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ANALISTA, RTF, ASESOR_JURIDICO): IPR crisis — commitments, problems, alerts, budgets, agreements.
-- **DGI** (JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD): Indicators, data analysis, auto-reports, improvement initiatives.
+Dos poblaciones sobre la misma base de datos:
 
-Single login → role detection → routing to appropriate sidebar/dashboard.
+- **Operativa** (ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ANALISTA, RTF, ASESOR_JURIDICO): IPR crisis — compromisos, problemas, alertas, presupuestos, convenios, actos administrativos.
+- **DGI** (JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD): Indicadores, análisis de datos, reportes automáticos, iniciativas de mejora.
+
+Single login → detección de rol → routing a sidebar/dashboard correspondiente.
 
 ## Quick Start
 
@@ -34,8 +36,10 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" http://localhost:8000/api/dgi/
 
 docker exec goreos_db psql -U goreos -d goreos_model    # DB shell
 docker compose logs -f api                               # Logs
-cd web && npx next build                                 # Frontend build
-cd web && npx eslint src/                                # Frontend lint
+cd web && npm run dev                                    # Frontend dev server
+cd web && npm run lint                                   # Frontend lint
+cd web && npm run build                                  # Frontend production build
+./scripts/stage_etl_data.sh all                          # Stage ETL input files into api/data/
 ./scripts/run_migrations.sh [container] [db]             # Migrations (default: goreos_db goreos_model)
 open http://localhost:8000/api/docs                       # Swagger UI
 ```
@@ -144,6 +148,8 @@ docker compose exec api pip install pytest pytest-asyncio httpx     # Install de
 
 **conftest.py**: fresh `AsyncSession` per test, overrides `get_db`, real JWT for 15 roles (admin, regional, gobernador, secretario, jefe, jefe_departamento, jefe_unidad, dgi, esp_control, esp_procesos, esp_td, consejero, analista, rtf, juridico). `catalog` fixture pre-fetches common IDs.
 
+**Expectativa mínima**: Ejecutar módulos de test impactados antes de commit; suite completa `pytest` para cambios de routers/schemas. Preferir tests determinísticos con fixtures de `conftest.py`.
+
 **Known issues** (test data pollution):
 - `test_initiatives::test_move_to_en_curso` — WIP limit. Clean: `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL;`
 - `test_sisrec::test_vencidas_endpoint` — stale renditions. Clean: `DELETE FROM core.rendition WHERE created_at > '2026-01-01';`
@@ -189,14 +195,54 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## ETL Pipeline
 
-6 scripts in `api/scripts/etl/`: `enrich_persons`, `load_documents`, `load_admin_acts`, `enrich_agreements`, `load_fril`, `load_modifications`, `load_idis`. All `--dry-run`, `--limit N`, `--verbose`. Idempotent. Run inside API container after `docker cp` CSVs.
+7 scripts in `api/scripts/etl/`: `enrich_persons`, `load_documents`, `load_admin_acts`, `enrich_agreements`, `load_fril`, `load_modifications`, `load_idis`. All `--dry-run`, `--limit N`, `--verbose`. Idempotent. Run inside API container after `docker cp` CSVs.
 
 ## Key References
 
-- **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md`, `model/GLOSARIO.yml` (244 terms)
-- **Spec**: `architecture/Omega_GORE_OS_Definition_v3.0.0.md`, `docs/GORE_OS_Audit_v2.0.md` (472 CQs, 15 HΩ)
+- **Navigación**: `INDEX.md` (índice del repositorio), `MANIFESTO.md` (visión política y estratégica)
+- **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md`, `model/GLOSARIO.yml` (244 términos)
+- **Spec**: `model/omega/` (12 definiciones ontológicas YAML), `docs/GORE_OS_Audit_v3.0.md` (472 CQs, 15 HΩ)
 - **Migrations**: `goreos_migration_*.sql` + `goreos_rollback_*.sql`. Tracked in `core.schema_migration`. Runner: `scripts/run_migrations.sh`.
 - **Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (8 ADRs), `docs/GORE_OS_User_Journeys_v3.0.md` (8 arquetipos, 17 journeys, 8 principios UX)
+- **Plans**: `docs/plans/` (23 planes de implementación), `docs/superpowers/` (11 planes avanzados + 5 specs), `docs/archive/` (material histórico)
+
+## Repository Conventions
+
+### Communication & Workflow
+
+- **Idioma**: Hablar con el usuario en español.
+- **Git**: No trabajar con árboles de branches; commits directos a la rama principal.
+- **Commits**: Conventional Commits — `feat(...)`, `fix(...)`, `docs(...)`, `test(...)`, `chore(...)`. Usar scope cuando sea útil (ej: `feat(etl): add load_documents.py`).
+- **PRs**: Incluir resumen, paths afectados, evidencia de verificación (tests, queries, screenshots), notas de migración si hay cambios DB.
+- **Seguridad**: No commitear secrets; usar `.env.example` como plantilla. ETL sources en `docs/archive/legacy-model-tel/etl/sources/`; `api/data/` solo staging local.
+
+### Project Structure
+
+```
+goreos/
+├── model/                    # Modelo semántico (corazón del sistema)
+│   ├── stories/              # 820 historias de usuario
+│   ├── entities/aceptadas/   # 141 entidades validadas
+│   ├── processes/            # 92 procesos
+│   ├── omega/                # Definiciones ontológicas
+│   ├── model_goreos/         # DDL PostgreSQL ejecutable (sql/, docs/)
+│   └── GLOSARIO.yml          # 244 términos
+├── api/                      # Backend FastAPI
+│   ├── api/app/              # Routers, schemas, services, config
+│   ├── api/tests/            # pytest suite (test_*.py)
+│   └── api/scripts/etl/      # ETL utilities y loaders
+├── web/                      # Frontend Next.js 16 (src/app, src/components, src/lib)
+├── docs/                     # Specs, auditorías, ADRs, planes
+├── scripts/                  # Scripts operativos (migraciones, test DB, ETL staging)
+└── docker-compose.yml
+```
+
+### Coding Style
+
+- **Python**: PEP 8, 4-space indent, `snake_case` funciones/archivos, typing explícito cuando sea práctico.
+- **TypeScript/React**: 2-space indent, `PascalCase` componentes, `camelCase` variables/funciones.
+- **Tests**: Archivos `test_*.py`, funciones `test_*` (forzado por `api/pytest.ini`).
+- **SQL**: Idempotente donde sea posible (`ON CONFLICT DO NOTHING`), queries parametrizadas.
 
 ## Critical Rules
 
@@ -241,30 +287,30 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ### CORE Sessions & Governance
 
-26. **CORE sessions**: Committee `CONSEJO-REGIONAL`. Quorum: SIMPLE=9/16, CALIFICADA=11/16. Gate F3→F4: IPRs >7,000 UTM require CORE approval.
-27. **Security**: SecurityHeadersMiddleware (7 headers incl. CSP, HSTS, Permissions-Policy), CORS whitelisted methods/headers, brute-force lockout (5 attempts→15 min, 429), JWT (iss/aud validated, rejects default secret in non-dev), DB_PASSWORD rejects default in non-dev. **IDOR scope**: `core/scope.py` `check_ipr_access()` on 39 IPR endpoints — GLOBAL (admin/DGI/gobernador/consejero) unrestricted, DIVISION (jefe) by `sponsor_division_id`, PERSONAL (analista/rtf/juridico) by `assignee_id`/`formulator_id`. Search scoped per entity type. Password min_length=8 on create+reset. Cuota PATCH field allowlist. CSRF mitigated by SPA/JWT architecture. Rate limiting at reverse proxy level.
+28. **CORE sessions**: Committee `CONSEJO-REGIONAL`. Quorum: SIMPLE=9/16, CALIFICADA=11/16. Gate F3→F4: IPRs >7,000 UTM require CORE approval.
+29. **Security**: SecurityHeadersMiddleware (7 headers incl. CSP, HSTS, Permissions-Policy), CORS whitelisted methods/headers, brute-force lockout (5 attempts→15 min, 429), JWT (iss/aud validated, rejects default secret in non-dev), DB_PASSWORD rejects default in non-dev. **IDOR scope**: `core/scope.py` `check_ipr_access()` on 39 IPR endpoints — GLOBAL (admin/DGI/gobernador/consejero) unrestricted, DIVISION (jefe) by `sponsor_division_id`, PERSONAL (analista/rtf/juridico) by `assignee_id`/`formulator_id`. Search scoped per entity type. Password min_length=8 on create+reset. Cuota PATCH field allowlist. CSRF mitigated by SPA/JWT architecture. Rate limiting at reverse proxy level.
 
 ### Financing Tracks & Gates
 
-28. **Track system**: `core.financing_track` (DB-parametric via `thresholds` JSONB, `.get("key", fallback)`). Admin CRUD `/api/admin/financing-tracks`. `core.financial_threshold` (10 rows: 4 UTM + 5 glosa% + UTM_VALUE). Use `_get_utm_value(db)`, never hardcode. Budget classifier: 6 levels, level 3 via `budget_program_code` scheme.
-29. **31 gate functions** (all in `ipr.py` via `_evaluate_phase_gates()`): FRIL (max/comuna, fraccionamiento, tender), SNI (proporcionalidad, RS vigencia), C33 (conservation, certification), SUBV8 (pagaré, directorio, morosos, ranking), TRANSFER (glosa07 5% caps), ALL (evaluation match, glosa06 single-purpose/executor, kinship). Glosa rules: `check_glosa_rules()` at F3→F4.
+30. **Track system**: `core.financing_track` (DB-parametric via `thresholds` JSONB, `.get("key", fallback)`). Admin CRUD `/api/admin/financing-tracks`. `core.financial_threshold` (10 rows: 4 UTM + 5 glosa% + UTM_VALUE). Use `_get_utm_value(db)`, never hardcode. Budget classifier: 6 levels, level 3 via `budget_program_code` scheme.
+31. **31 gate functions** (all in `ipr.py` via `_evaluate_phase_gates()`): FRIL (max/comuna, fraccionamiento, tender), SNI (proporcionalidad, RS vigencia), C33 (conservation, certification), SUBV8 (pagaré, directorio, morosos, ranking), TRANSFER (glosa07 5% caps), ALL (evaluation match, glosa06 single-purpose/executor, kinship). Glosa rules: `check_glosa_rules()` at F3→F4.
 
 ### Evaluation & Compliance
 
-30. **Evaluation**: `numeric_score` NUMERIC(5,2) on `evaluation_assignment`. `_EVAL_LABELS` dict maps eval-result codes (RS→"Rec. Satisfactoria", etc.) for display. `core.sni_level_config` (4 levels, admin CRUD).
-31. **Admissibility**: PRE_ADMISIBLE→ADMISIBLE gate requires all `admissibility_check` verified. **`admissibility_check` has NO `deleted_at`**. Kinship gate at F1→F2 for SUBV8 only. C33 certification blocks F1→F2.
-32. **Parametric tables**: `subv8_fund` (7), `subv8_fund_ceiling` (~22, functional UNIQUE via `COALESCE(area, '')`), `fril_category` (12, A2/A3 exempt), `budget_cycle_milestone` (17), `rendition_phase` (8). Admin CRUD for all. Routing: `GET /financing-tracks/routing?ipr_id=X`.
-33. **SISREC CGR**: 8 phases. External phases 1-3 as metadata JSONB. Escalation: 3 levels (1x/1.5x/2x SLA). `POST /rendiciones/check-escalations` batch → alerts.
+32. **Evaluation**: `numeric_score` NUMERIC(5,2) on `evaluation_assignment`. `_EVAL_LABELS` dict maps eval-result codes (RS→"Rec. Satisfactoria", etc.) for display. `core.sni_level_config` (4 levels, admin CRUD).
+33. **Admissibility**: PRE_ADMISIBLE→ADMISIBLE gate requires all `admissibility_check` verified. **`admissibility_check` has NO `deleted_at`**. Kinship gate at F1→F2 for SUBV8 only. C33 certification blocks F1→F2.
+34. **Parametric tables**: `subv8_fund` (7), `subv8_fund_ceiling` (~22, functional UNIQUE via `COALESCE(area, '')`), `fril_category` (12, A2/A3 exempt), `budget_cycle_milestone` (17), `rendition_phase` (8). Admin CRUD for all. Routing: `GET /financing-tracks/routing?ipr_id=X`.
+35. **SISREC CGR**: 8 phases. External phases 1-3 as metadata JSONB. Escalation: 3 levels (1x/1.5x/2x SLA). `POST /rendiciones/check-escalations` batch → alerts.
 
 ### UI Conventions
 
-34. **Mandatory components**: All list pages → `PageHeader` (with `accentColor`). All empty states → `EmptyState`. All destructive actions → `ConfirmDialog`. All 500+ option selects → `ComboboxAsync`.
-35. **Identity**: OKLCH palette (GOREAZUL #031B5F, GORECELESTE #196AB0). 3 fonts: Plus Jakarta Sans, Roboto Slab, JetBrains Mono. Dark sidebar. CSS-only fade-ins via tw-animate-css. `prefers-reduced-motion` in globals.css.
-36. **IPR detail**: 16 tabs in `tab-*.tsx` (self-contained, grouped in 4 categories via TAB_GROUPS). Main: IprHeroCard, IprPhaseStepper, IprHistorySection, IprTransitionPanel (inline gate overview + feedforward effects). No ReadinessCard — gates live in TransitionPanel. `StatusBadge` 32 states, phase-based colors.
-37. **Component API**: `DrawerPanel` uses `onClose` (not `onOpenChange`). `EmptyState` uses `title` (not `message`). `api.patch` requires 2 args. `PageGuard`: `allowedRoles?`, `allowedPopulations?`. `use-tab-param.ts` syncs tabs with `?tab=` URL param.
+36. **Mandatory components**: All list pages → `PageHeader` (with `accentColor`). All empty states → `EmptyState`. All destructive actions → `ConfirmDialog`. All 500+ option selects → `ComboboxAsync`.
+37. **Identity**: OKLCH palette (GOREAZUL #031B5F, GORECELESTE #196AB0). 3 fonts: Plus Jakarta Sans, Roboto Slab, JetBrains Mono. Dark sidebar. CSS-only fade-ins via tw-animate-css. `prefers-reduced-motion` in globals.css.
+38. **IPR detail**: 16 tabs in `tab-*.tsx` (self-contained, grouped in 4 categories via TAB_GROUPS). Main: IprHeroCard, IprPhaseStepper, IprHistorySection, IprTransitionPanel (inline gate overview + feedforward effects). No ReadinessCard — gates live in TransitionPanel. `StatusBadge` 32 states, phase-based colors.
+39. **Component API**: `DrawerPanel` uses `onClose` (not `onOpenChange`). `EmptyState` uses `title` (not `message`). `api.patch` requires 2 args. `PageGuard`: `allowedRoles?`, `allowedPopulations?`. `use-tab-param.ts` syncs tabs with `?tab=` URL param.
 
 ### IPR Lifecycle
 
-38. **32 states + derived phase**: `STATUS_PHASE_FIBER` maps all states to phases. The `GET /api/ipr/{id}` endpoint returns `mcd_phase` **derived from status** (not from stored `mcd_phase_id`) to prevent data inconsistencies. Frontend MUST use `ipr.mcd_phase` as-is — never re-derive or read stored phase. Nature-aware: PROYECTO bifurcates EN_FORMALIZACION→licitación→obra; PROGRAMA→formalizado→ejecución. `_EVAL_LABELS` enriches F2 eval-result codes for display. **Labels must be human-readable Spanish — no raw codes or acronyms in UI.**
-39. **IPR modifications + closure**: `ipr_modification` (MOD-YYYY-NNNN, trigger-enforced FSM). `ipr_closure` (UNIQUE per IPR, signed closure gate). `ipr_expost_evaluation` (post-CERRADO, 4 dimensions).
-40. **ITO gate + SLAs**: Blocks EN_LICITACION→ADJUDICADO for PROYECTO without ITO. `phase_entered_at` auto-updates via trigger. Readiness endpoint (`/readiness`) evaluates all gates + same-phase custom gates. Batch: `check-report-compliance`, `check-evaluation-slas`.
+40. **32 states + derived phase**: `STATUS_PHASE_FIBER` maps all states to phases. The `GET /api/ipr/{id}` endpoint returns `mcd_phase` **derived from status** (not from stored `mcd_phase_id`) to prevent data inconsistencies. Frontend MUST use `ipr.mcd_phase` as-is — never re-derive or read stored phase. Nature-aware: PROYECTO bifurcates EN_FORMALIZACION→licitación→obra; PROGRAMA→formalizado→ejecución. `_EVAL_LABELS` enriches F2 eval-result codes for display. **Labels must be human-readable Spanish — no raw codes or acronyms in UI.**
+41. **IPR modifications + closure**: `ipr_modification` (MOD-YYYY-NNNN, trigger-enforced FSM). `ipr_closure` (UNIQUE per IPR, signed closure gate). `ipr_expost_evaluation` (post-CERRADO, 4 dimensions).
+42. **ITO gate + SLAs**: Blocks EN_LICITACION→ADJUDICADO for PROYECTO without ITO. `phase_entered_at` auto-updates via trigger. Readiness endpoint (`/readiness`) evaluates all gates + same-phase custom gates. Batch: `check-report-compliance`, `check-evaluation-slas`.

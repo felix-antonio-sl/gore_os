@@ -1,1 +1,0 @@
-/Users/felixsanhueza/Developer/kora/KNOWLEDGE/gn/kb/kb_gn_ecosistema_instituciones.md
