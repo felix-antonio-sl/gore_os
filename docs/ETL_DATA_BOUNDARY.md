@@ -4,7 +4,7 @@
 Keep repository code and canonical source data separated from runtime staging copies.
 
 ## Rules
-- Canonical ETL sources live in `docs/legacy/etl/sources/`.
+- Canonical ETL sources live in `docs/archive/legacy-model-tel/etl/sources/`.
 - Runtime staging data lives in `api/data/` and is local-only (ignored by git).
 - ETL scripts read from `/app/data/etl/...` inside the API container.
 - Before running ETL, stage required sources with `./scripts/stage_etl_data.sh`.

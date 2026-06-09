@@ -1,5 +1,7 @@
 # Auditoría Categorial: Plan de Normalización JSONB v1.0
 
+> **HISTORICAL**: This audit reviewed the v1.0 normalization plan, rejected it, and led to the corrected v2.0 plan (PLAN_NORMALIZACION_JSONB_v2.0.md). Normalization is now **complete** (100% categorical univocity).
+
 **Auditor**: Arquitecto-GORE (KODA Agent v0.1.0)
 **Fecha**: 2026-01-30
 **Documento auditado**: `PLAN_NORMALIZACION_JSONB_v1.md`

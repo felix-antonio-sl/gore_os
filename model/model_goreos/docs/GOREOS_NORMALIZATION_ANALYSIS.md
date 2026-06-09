@@ -1,4 +1,6 @@
-# Análisis de Normalización: GORE_OS v3.0
+# Análisis de Normalización: GORE_OS
+
+> **Note**: This analysis was performed on the v3.0 schema (50 tables). The current system has 121 tables. All normalizations identified here have been applied. See [CLAUDE.md](../../../CLAUDE.md) for current state.
 
 **Sistema**: GORE_OS - Gestión Institucional para Gobiernos Regionales
 **Fecha**: 2026-01-27

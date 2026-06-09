@@ -1,8 +1,14 @@
-# ADR-006: JWT Cookie Migration (PROPOSED)
+# ADR-006: JWT Cookie Migration
 
-**Status**: PROPOSED — for future cycle
-**Date**: 2026-03-03
+**Status**: DEFERRED — acknowledged as a future security improvement, but not scheduled for implementation
+**Date**: 2026-03-03 (proposed) | 2026-06-09 (deferred)
 **Deciders**: GORE_OS development team
+
+## Current State (2026-06-09)
+
+The system uses JWT tokens stored in `localStorage` (key: `goreos_token`). The `ApiClient` singleton reads the token on every request and attaches it as an `Authorization: Bearer` header. This is the pattern documented in [CLAUDE.md](../../CLAUDE.md) §Security and implemented in `web/src/lib/api.ts`.
+
+**Why deferred**: The migration to httpOnly cookies requires CORS credentials changes, CSRF protection on all state-changing endpoints, and a dual-acceptance transition period. The SPA/JWT architecture with SecurityHeadersMiddleware provides adequate protection given the current deployment model (same-origin API + frontend behind reverse proxy). If the deployment model changes (e.g., mobile clients, third-party integrations), this ADR should be revisited.
 
 ## Context
 

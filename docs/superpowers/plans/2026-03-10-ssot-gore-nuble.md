@@ -1,5 +1,7 @@
 # SSOT GORE Ñuble — Implementation Plan
 
+> **⛔ OBSOLETE for this repo**: This plan targets the external `gorenuble` knowledge repository (KORA/MD artifacts), not the `gore_os` application codebase. No `knowledge/domains/gn/` directory exists in this repo. Retained for reference only.
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Create 10 KORA/MD artifacts (1 master + 9 satellites) that reconcile the 4 documentary layers of GORE Ñuble into a Single Source of Truth for LLM agents and GORE_OS design.

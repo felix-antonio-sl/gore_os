@@ -1,5 +1,7 @@
 # GORE_OS — Cobertura de User Stories DGI v1.0
 
+> **Relación**: Este documento es un snapshot de cobertura (C60) del catálogo de 185 historias DGI. Para el detalle completo de cada historia (descripción, prioridad, fuente), ver [DGI_USER_STORIES_v1.0.md](DGI_USER_STORIES_v1.0.md) (C58).
+
 Fecha: 2026-03-22 | Sesion: C60
 
 ## Resumen

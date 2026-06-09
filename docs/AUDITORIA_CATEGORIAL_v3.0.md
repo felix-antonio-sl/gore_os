@@ -1,5 +1,7 @@
 # AUDITORIA CATEGORIAL v3.0
 
+> **COMPLETED**: The 13 critical and 16 medium normalizations identified here have been executed. Categorical univocity is now 100% (98 CHECK constraints). This document is kept as a historical reference of the audit findings.
+
 **Fecha**: 2026-01-30
 **Agente**: arquitecto-gore
 **Scope**: Análisis exhaustivo de campos JSONB en todas las tablas core/txn

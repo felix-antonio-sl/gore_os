@@ -1,4 +1,6 @@
-# Modelo Conceptual: GORE_OS v3.4
+# Modelo Conceptual: GORE_OS v3.2
+
+> **Note**: This document describes the conceptual model. The ERD in [GOREOS_ERD_v3.md](GOREOS_ERD_v3.md) tracks normalization milestones through v3.4. The system version is v3.2.0 per [CLAUDE.md](../../../CLAUDE.md).
 
 **Sistema**: Gestión Institucional para Gobiernos Regionales
 **Nivel**: Conceptual (Business View)

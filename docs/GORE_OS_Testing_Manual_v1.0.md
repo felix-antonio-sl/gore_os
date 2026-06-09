@@ -1,5 +1,7 @@
 # GORE_OS — Plan de Pruebas Manual / Visual
 
+> **SCOPE**: This is a session-specific (C59) walkthrough test plan. For the comprehensive testing guide, see [GORE_OS_Testing_Ciclo3.md](GORE_OS_Testing_Ciclo3.md).
+
 **Fecha**: 2026-03-22 | **Version**: 1.0 | **Sesion**: C59
 **Entorno**: `http://localhost:3000` (web) / `http://localhost:8000` (API)
 **Credenciales**: Password `admin123` para todos. Dominio `@goreos.cl`.

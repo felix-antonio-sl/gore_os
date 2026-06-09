@@ -1,6 +1,8 @@
-# GORE_OS v3.0 - Entity-Relationship Diagrams
+# GORE_OS v3.2 - Entity-Relationship Diagrams
 
-**Modelo**: GORE_OS v3.0 - Sistema de Gestión Institucional para Gobiernos Regionales
+> **Note**: The "v3.0"/"v3.4" version numbers below refer to ERD normalization milestones (schema evolution), not the application version (v3.2.0). The system version is tracked in [CLAUDE.md](../../../CLAUDE.md).
+
+**Modelo**: GORE_OS - Sistema de Gestión Institucional para Gobiernos Regionales
 **Fecha**: 2026-01-30 (Actualizado con Normalizaciones v3.4 MEDIA)
 **Total Entidades**: 52 tablas en 4 schemas
 

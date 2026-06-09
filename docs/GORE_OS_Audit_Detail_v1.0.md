@@ -1,5 +1,7 @@
 # GORE_OS Auditoría Detallada v1.0
 
+> **SUPERSEEDED by**: [GORE_OS_Audit_v3.0.md](GORE_OS_Audit_v3.0.md) — this v1.0 detail is preserved for historical per-story coverage data but the v3.0 audit contains updated metrics.
+
 > **Fecha**: 2026-02-27
 > **Complemento de**: `docs/GORE_OS_Audit_v1.0.md` (documento ejecutivo)
 > **Metodología**: Cruce exhaustivo de 4 fuentes de verdad contra implementación actual

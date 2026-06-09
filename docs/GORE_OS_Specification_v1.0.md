@@ -1,7 +1,15 @@
 # GORE_OS — Especificacion Funcional y Tecnica v1.0
 
-> Documento generado: 2026-02-25
-> Ultima revision: Ciclo 12 (Post-Wave 5: CORE Governance + Doc Sync)
+> **SUPERSEDED by [CLAUDE.md](../CLAUDE.md)** — CLAUDE.md is the canonical source of truth. This document is kept for historical reference only.
+>
+> **Known inaccuracies vs current system** (see CLAUDE.md for current state):
+> - **ENCARGADO role collapsed**: The `ENCARGADO` role listed in §1.1 no longer exists as a system role. "Encargado" is now a dynamic assignment (`responsible_id`), not a role. Current roles: 15 (see CLAUDE.md §System roles).
+> - **System roles**: `CONSEJERO_REGIONAL`, `SECRETARIO_EJECUTIVO`, `JEFE_DEPARTAMENTO`, `JEFE_UNIDAD` added since this spec.
+> - **API endpoint count**: ~160 in this spec vs ~299 current.
+> - **DDL tables**: ~90 in this spec vs 121 current.
+> - **Feature gaps**: This spec predates SISREC 8-phase, budget classifier L5, parametric tables, notifications, risk module, command center, DGI coordination, IPR modifications/closure/ex-post evaluation.
+
+Documento generado: 2026-02-25 | Ultima revision: Ciclo 12
 
 ---
 

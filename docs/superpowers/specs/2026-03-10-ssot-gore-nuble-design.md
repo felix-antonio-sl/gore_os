@@ -1,5 +1,7 @@
 # SSOT GORE Ñuble — Design Spec
 
+> **⛔ OBSOLETE for this repo**: This spec targets the external `gorenuble` knowledge repository, not the `gore_os` application codebase. Retained for reference only.
+
 ## Contexto
 
 La auditoría de consistencia v2.0 entre las 4 capas documentales del dominio GORE Ñuble reveló ~15 conflictos entre fuentes. Se requiere un documento SSOT que reconcilie las inconsistencias y sirva como referencia canónica.

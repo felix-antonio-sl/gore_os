@@ -1,6 +1,7 @@
-# GORE_OS v3.0 - Decisiones de Diseño
+# GORE_OS — Decisiones de Diseño
 
-**Fecha**: 2026-01-27
+> **Living Document**: These design decisions remain current. Application version: v3.2.0 (see [CLAUDE.md](../../../CLAUDE.md)).
+
 **Estado**: Living Document
 **Audiencia**: Arquitectos, Desarrolladores, DBA
 
