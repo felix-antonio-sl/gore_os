@@ -70,7 +70,7 @@
 
 | Documento | Contenido |
 |-----------|-----------|
-| [../model/model_goreos/docs/GOREOS_ERD_v3.md](../model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos — **parcial**: documenta 42/89 tablas core (modelo base v3.0); el schema vigente está en `goreos_ddl.sql` |
+| [../model/model_goreos/docs/GOREOS_ERD_v3.md](../model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos **completo** (110 tablas) — generado desde `goreos_ddl.sql` vía `scripts/gen_erd.py` |
 | [../model/model_goreos/docs/GOREOS_CONCEPTUAL_MODEL.md](../model/model_goreos/docs/GOREOS_CONCEPTUAL_MODEL.md) | Modelo conceptual de negocio (6 áreas de dominio) |
 | [../model/model_goreos/docs/DESIGN_DECISIONS.md](../model/model_goreos/docs/DESIGN_DECISIONS.md) | Razonamiento de diseño DB: ENUM vs category, JSONB, particionamiento (el "por qué" de las reglas) |
 | [../model/model_goreos/docs/GOREOS_NORMALIZATION_ANALYSIS.md](../model/model_goreos/docs/GOREOS_NORMALIZATION_ANALYSIS.md) | Verificación de formas normales (retrospectivo, baseline v3.0) |

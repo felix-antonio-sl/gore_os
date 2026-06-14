@@ -12,7 +12,7 @@
 | Todos | [MANIFESTO.md](MANIFESTO.md) | Identidad, génesis, filosofía Story-First, 5 funciones motoras |
 | Nuevos devs | [docs/ONBOARDING.md](docs/ONBOARDING.md) | Setup local, patrones clave, flujo de nueva feature |
 | Exploradores | [docs/README.md](docs/README.md) | Catálogo de toda la documentación secundaria (con estado/vigencia) |
-| Modeladores | [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos (parcial: modelo base) |
+| Modeladores | [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos (completo, generado desde el DDL) |
 | Modeladores | [model/GLOSARIO.yml](model/GLOSARIO.yml) | Glosario autoritativo (57 términos) |
 
 ---

@@ -201,7 +201,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 ## Key References
 
 - **Navegación**: `INDEX.md` (mapa del repositorio), `docs/README.md` (catálogo de documentación con estado/vigencia), `MANIFESTO.md` (visión política y estratégica)
-- **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md` (ERD parcial: 42/89 tablas core del modelo base — el schema vigente está en el DDL), `model/model_goreos/docs/DESIGN_DECISIONS.md` (el "por qué" de las reglas de schema), `model/GLOSARIO.yml` (57 términos)
+- **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md` (ERD + diccionario de datos completo — 110 tablas, generado desde el DDL vía `scripts/gen_erd.py`), `model/model_goreos/docs/DESIGN_DECISIONS.md` (el "por qué" de las reglas de schema), `model/GLOSARIO.yml` (57 términos)
 - **Spec**: `model/omega/` (12 definiciones ontológicas YAML), `docs/GORE_OS_Audit_v3.0.md` (auditoría institucional — snapshot 2026-03-08: 472 CQs, 15 HΩ)
 - **Migrations**: `goreos_migration_*.sql` + `goreos_rollback_*.sql`. Tracked in `core.schema_migration`. Runner: `scripts/run_migrations.sh`.
 - **Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_DATA_BOUNDARY.md`, `docs/adr/` (8 ADRs), `docs/GORE_OS_User_Journeys_v3.0.md` (8 arquetipos, 16 journeys + IPR 360 transversal, 8 principios UX), `docs/GORE_OS_User_Action_Trees_v1.0.md` (mapa rol→acción→endpoint), `docs/GORE_OS_Role_Surface_Spec_v1.0.md` (matriz rol×página), `docs/DGI_USER_STORIES_v1.0.md` (185 historias DGI), `docs/AUDITORIA_RELACIONAL_v1.0.md` (mapa de FKs/hubs y cadenas de navegación)
