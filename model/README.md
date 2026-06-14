@@ -6,14 +6,14 @@
 
 ```text
 model/
-├── stories/          # 820 historias de usuario (YAML, fuente de verdad)
+├── stories/          # 818 historias de usuario (YAML, fuente de verdad)
 ├── entities/         # 141 entidades aceptadas (YAML)
-├── processes/        # 92 procesos del dominio (YAML)
+├── processes/        # 81 procesos del dominio (YAML)
 ├── omega/            # 12 definiciones ontológicas (YAML)
-├── model_goreos/     # DDL PostgreSQL ejecutable (121 tablas, 4 schemas)
+├── model_goreos/     # DDL PostgreSQL ejecutable (128 tablas, 5 schemas)
 │   ├── sql/          # DDL, seeds, migraciones, triggers, indexes
 │   └── docs/         # ERD, modelo conceptual, decisiones de diseño
-└── GLOSARIO.yml      # 244 términos institucionales
+└── GLOSARIO.yml      # 57 términos institucionales
 ```
 
 ## Regla de Derivación Estructural

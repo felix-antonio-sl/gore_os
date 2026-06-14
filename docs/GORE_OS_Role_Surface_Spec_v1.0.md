@@ -4,6 +4,8 @@
 **Objetivo**: Mapear cada rol a su superficie real de uso para fundamentar poda UX.
 **Fuentes**: User Journeys v3.2, sidebar.tsx, command-center.tsx, security.py, scope.py, PageGuard en 60 page.tsx
 
+> **Estado:** las recomendaciones de poda R2-R7 siguen ABIERTAS — no implementadas en código a la fecha de esta auditoría. La superficie viva es ~60 rutas.
+
 ---
 
 ## Inventario de Paginas

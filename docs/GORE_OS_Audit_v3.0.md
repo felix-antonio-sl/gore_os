@@ -1,5 +1,7 @@
 # GORE_OS Auditoría Institucional v3.0
 
+> **Snapshot 2026-03-08.** Los conteos de infraestructura (tablas, endpoints, tests, schemes, gate functions) están congelados a esa fecha; el estado vigente vive en CLAUDE.md.
+
 > **Fecha**: 2026-03-08
 > **Alcance**: Estado actual de GORE_OS vs 4 Fuentes de Verdad institucionales
 > **Fuentes**: 818 historias de usuario, 472 Competency Questions (20 dominios), 198 OWL classes, Modelo Omega v2.6.0 (reglas de negocio operativas), Auditoría v2.0 (2026-03-03)
@@ -828,16 +830,16 @@ La frontera de valor se ha desplazado desde "compliance como codigo" y "tablas p
 
 ## 10. Referencias
 
-- `docs/GORE_OS_Audit_v1.0.md` -- Auditoria v1.0 (2026-02-27)
-- `docs/GORE_OS_Audit_v2.0.md` -- Auditoria v2.0 (2026-03-03)
-- `docs/GORE_OS_Audit_Detail_v1.0.md` -- Detalle stories x impl
+- `docs/GORE_OS_Audit_v1.0.md` -- Auditoria v1.0 (2026-02-27) (referencia externa/histórica no resoluble en este repo)
+- `docs/GORE_OS_Audit_v2.0.md` -- Auditoria v2.0 (2026-03-03) (referencia externa/histórica no resoluble en este repo)
+- `docs/GORE_OS_Audit_Detail_v1.0.md` -- Detalle stories x impl (referencia externa/histórica no resoluble en este repo)
 - `model/stories/` -- 818 historias de usuario (16 dominios)
-- `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleCQs_Master.yml` -- 472 CQs (20 dominios)
-- `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleOntology.ttl` -- 198 OWL classes
-- `gorenuble/knowledge/ontologies/onto_gorenuble/omega_gore_nuble_mermaid.md` -- Modelo Omega v2.6.0 (111KB, reglas de negocio operativas)
+- `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleCQs_Master.yml` -- 472 CQs (20 dominios) (referencia externa/histórica no resoluble en este repo)
+- `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleOntology.ttl` -- 198 OWL classes (referencia externa/histórica no resoluble en este repo)
+- `gorenuble/knowledge/ontologies/onto_gorenuble/omega_gore_nuble_mermaid.md` -- Modelo Omega v2.6.0 (111KB, reglas de negocio operativas) (referencia externa/histórica no resoluble en este repo)
 - `model/model_goreos/sql/goreos_ddl.sql` -- DDL (92 tablas)
 - `model/model_goreos/sql/goreos_migration_*.sql` -- 25 archivos migracion (18 tracked en schema_migration)
 - `CLAUDE.md` -- Project conventions (actualizado Ciclo 25)
 - `docs/GORE_OS_Testing_Ciclo3.md` -- Testing documentation
-- `docs/adr/` -- 6 Architecture Decision Records
+- `docs/adr/` -- 8 Architecture Decision Records
 - `docs/ETL_ARCHITECTURE_v1.0.md` -- ETL pipeline architecture

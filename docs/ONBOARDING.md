@@ -8,7 +8,7 @@
 ┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
 │   Next.js 16          │────▶│   FastAPI             │────▶│   PostgreSQL 16      │
 │   :3000  (web/)       │     │   :8000  (api/)       │     │   goreos_db          │
-│   App Router + TS     │     │   SQLAlchemy async    │     │   121 tablas, 4 schemas│
+│   App Router + TS     │     │   SQLAlchemy async    │     │   128 tablas, 5 schemas│
 └──────────────────────┘     └──────────────────────┘     └──────────────────────┘
 ```
 
@@ -110,4 +110,4 @@ docker compose exec api pytest tests/test_compromisos.py -v         # Un módulo
 docker compose exec api pytest tests/test_auth.py::test_login_success -v  # Un test
 ```
 
-**730 tests de integración (55 módulos)** contra PostgreSQL real (`goreos_test`). Sin mocks. Ver [ADR-005](adr/ADR-005-test-strategy.md).
+**~730 tests de integración (54 módulos)** contra PostgreSQL real (`goreos_test`). Sin mocks. Ver [ADR-005](adr/ADR-005-test-strategy.md).

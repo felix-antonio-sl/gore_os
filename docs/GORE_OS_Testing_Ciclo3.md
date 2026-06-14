@@ -43,7 +43,9 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | `admin@goreos.cl` | ADMIN_SISTEMA | operativa | Admin usuarios/divisiones, acceso total |
 | `regional@goreos.cl` | ADMIN_REGIONAL | operativa | Dashboard ejecutivo, acceso global |
 | `jefe.daf@goreos.cl` | JEFE_DIVISION | operativa | Mi Division, verificar compromisos de su div |
-| `encargado.daf@goreos.cl` | ENCARGADO | operativa | Mis Compromisos, completar compromisos propios |
+| `analista.dipir@goreos.cl` | ANALISTA | operativa | Mis Compromisos, completar compromisos propios (assignee dinámico) |
+
+> **Nota — rol ENCARGADO colapsado**: El rol ENCARGADO (id 4) fue colapsado. "Encargado" no es un rol de sistema sino una asignación dinámica (`responsible_id`/assignee). Los flujos antes atribuidos a ENCARGADO los ejerce ahora un ANALISTA (ej. `analista.dipir@goreos.cl`) en tanto persona asignada. El sistema tiene **15 roles de sistema**; no existe el usuario `encargado.daf@goreos.cl`.
 
 #### Usuarios DGI
 
@@ -62,7 +64,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 
 | Modulo | Estado | Ciclo | Descripcion |
 |--------|--------|-------|-------------|
-| Login/Auth | Completo | C1 | JWT + 8 roles (4 op + 4 DGI) |
+| Login/Auth | Completo | C1 | JWT + 15 roles de sistema |
 | Dashboard operativo | Completo | C1+C3+C4 | Role-aware con KPIs, desglose por division, charts recharts |
 | IPR lista + detalle | Completo | C1+C6 | Paginado, filtros (incl. assignee_id), 6 tabs: compromisos/problemas/alertas/convenios/CDPs/avances |
 | IPR crear | Completo | C3 | Form completo con auto-generacion de codigo BIP |
@@ -189,7 +191,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 
 **Adicional segun rol**:
 - **JEFE_DIVISION**: + Mi Division
-- **ENCARGADO**: + Mis Compromisos
+- **ANALISTA** (assignee dinámico, antes ENCARGADO): + Mis Compromisos
 - **ADMIN_SISTEMA**: + Usuarios, + Divisiones
 
 ### 3.2 Barra Lateral — Usuarios DGI
@@ -220,7 +222,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
    - Observaciones: texto libre (opcional)
 6. Click "Crear Compromiso"
 7. **Esperado**: Redirect a `/compromisos`, nuevo compromiso visible en lista
-8. **Verificar**: Login como `encargado.daf@goreos.cl` → NO debe ver boton "Nuevo Compromiso"
+8. **Verificar**: Login como `analista.dipir@goreos.cl` (ANALISTA, assignee dinámico) → NO debe ver boton "Nuevo Compromiso"
 
 #### TC-02: Crear Problema
 1. Login como `regional@goreos.cl`
@@ -265,7 +267,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
    - Descripcion: texto libre
 5. Click "Crear IPR"
 6. **Esperado**: Redirect a `/ipr`, nueva IPR visible
-7. **Verificar**: Login como `encargado.daf@goreos.cl` → NO debe ver boton "Nueva IPR"
+7. **Verificar**: Login como `analista.dipir@goreos.cl` (ANALISTA, assignee dinámico) → NO debe ver boton "Nueva IPR"
 
 #### TC-06: Asignar Responsable IPR
 1. Login como `regional@goreos.cl`
@@ -303,7 +305,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
    - Apellido paterno: "Ciclo3"
    - Email: "test.ciclo3@goreos.cl"
    - Password: "test123"
-   - Rol: ENCARGADO
+   - Rol: ANALISTA (el rol ENCARGADO fue colapsado)
    - Division: seleccionar
 6. Crear → volver a lista → verificar que aparece
 7. Click en usuario → drawer con detalle
@@ -332,17 +334,17 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
    - 4 KPIs: Vencidos, Pendientes, Por Verificar, Activos
    - Seccion "Carga por Persona": tabla con badges por cada miembro del equipo
    - Seccion "Compromisos Vencidos": lista de compromisos pasados de fecha
-5. **Verificar**: Login como `encargado.daf@goreos.cl` → NO ve "Mi Division" en sidebar
+5. **Verificar**: Login como `analista.dipir@goreos.cl` (ANALISTA, assignee dinámico) → NO ve "Mi Division" en sidebar
 
-#### TC-11: Mis Compromisos (ENCARGADO)
-1. Login como `encargado.daf@goreos.cl`
+#### TC-11: Mis Compromisos (ANALISTA / assignee dinámico, antes ENCARGADO)
+1. Login como `analista.dipir@goreos.cl`
 2. Verificar que aparece "Mis Compromisos" en sidebar
 3. Click → `/mis-compromisos`
 4. **Esperado**:
    - 4 KPIs: Vencidos, Pendientes, En Progreso, Completados (este mes)
    - Grupos: "Vencidos" (rojo), "Esta Semana" (ambar), "Pendientes" (azul)
    - Cada grupo muestra tabla con urgencia, descripcion, BIP, estado
-5. **Verificar**: Login como `jefe.daf@goreos.cl` → NO ve "Mis Compromisos"
+5. **Verificar**: Login como `jefe.daf@goreos.cl` (JEFE_DIVISION) → NO ve "Mis Compromisos"
 
 #### TC-12: Dashboard Ejecutivo (ADMIN_REGIONAL)
 1. Login como `regional@goreos.cl`
@@ -408,7 +410,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 ### 4.6 Pruebas Transversales
 
 #### TC-18: Verificacion de Permisos por Rol
-| Funcionalidad | ADMIN_SISTEMA | ADMIN_REGIONAL | JEFE_DIVISION | ENCARGADO |
+| Funcionalidad | ADMIN_SISTEMA | ADMIN_REGIONAL | JEFE_DIVISION | ANALISTA (assignee, antes ENCARGADO) |
 |---------------|:---:|:---:|:---:|:---:|
 | Crear compromiso | Si | Si | Si | No |
 | Crear problema | Si | Si | Si | Si |
@@ -431,7 +433,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 
 #### TC-20: Ciclo Completo de Crisis
 1. Login ADMIN_REGIONAL → crear IPR → asignar responsable
-2. Login ENCARGADO → crear compromiso vinculado a IPR
+2. Login ANALISTA (assignee dinámico, antes ENCARGADO) → crear compromiso vinculado a IPR
 3. Login ADMIN_REGIONAL → crear problema en IPR
 4. Login JEFE_DIVISION → crear reunion → preparar (ver sugerencias del paso 2-3)
 5. Conducir reunion → agregar temas → revisar → finalizar
@@ -508,11 +510,11 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 6. **Esperado**: Nombre actualizado exitosamente
 7. **Verificar**: Login como `admin@goreos.cl` → tambien debe ver boton "Editar"
 
-#### TC-28: IPR Edit — Role Gating (ENCARGADO no puede)
-1. Login como `encargado.daf@goreos.cl` (ENCARGADO)
+#### TC-28: IPR Edit — Role Gating (ANALISTA / assignee dinámico no puede)
+1. Login como `analista.dipir@goreos.cl` (ANALISTA, assignee dinámico, antes ENCARGADO)
 2. Ir a `/ipr/{id}` (detalle de cualquier IPR)
 3. **Esperado**: Boton "Editar" NO visible. Solo vista de lectura.
-4. **Verificar API**: `PATCH /api/ipr/{id}` con token ENCARGADO retorna 403 "Sin permisos suficientes"
+4. **Verificar API**: `PATCH /api/ipr/{id}` con token ANALISTA retorna 403 "Sin permisos suficientes"
 
 #### TC-29: Presupuesto Edit Montos
 1. Login como `regional@goreos.cl` (ADMIN_REGIONAL)
@@ -784,7 +786,7 @@ Pasos:
 Verificar:
 - Statuses validos: PENDIENTE, EN_CURSO, COMPLETADO, OMITIDO
 - COMPLETADO auto-establece completed_at y completed_by_id
-- ENCARGADO no puede modificar (403)
+- ANALISTA / assignee dinámico (antes ENCARGADO) no puede modificar (403)
 
 Frontend: /presupuesto/ciclo → Timeline agrupada por fase
 ```
@@ -1014,7 +1016,7 @@ POST   /api/alertas/{id}/atender Atender alerta
 ```
 GET    /api/dashboard                   Dashboard role-aware
 GET    /api/dashboard/mi-division       Stats equipo (JEFE_DIVISION)
-GET    /api/dashboard/mis-compromisos   Compromisos agrupados (ENCARGADO)
+GET    /api/dashboard/mis-compromisos   Compromisos agrupados (ANALISTA / assignee dinámico, antes ENCARGADO)
 GET    /api/dashboard/ejecutivo         Dashboard con desglose divisiones
 GET    /api/dashboard/chart-data        Datos para charts (commitments_by_state, alerts_by_severity, budget_by_division)
 ```
@@ -1183,7 +1185,7 @@ POST   /api/dgi/data/rendiciones/check-escalations  Deteccion batch SLA breaches
 | Ciclo 3 | Migracion para_titi: forms CRUD, IPR escritura, admin, dashboards, reuniones | Completado |
 | Ciclo 4 | UX Polish (CSV export, Bell notif, ⌘K search), Charts (recharts dashboard, DGI gauges), CRUD (IPR/Presupuesto/Convenios edit) | Completado |
 | Ciclo 5 | ComboboxAsync, Initiative CRUD, divisions filter, spec v1.0 | Completado |
-| Tests  | 374 integration tests (31 modulos, 369 pass + 5 skip), test DB setup, security readonly suite | Completado |
+| Tests  | ~730 integration tests (54 modulos) contra PostgreSQL real, test DB setup, security readonly suite | Completado |
 | Confrontacion | Migracion datos: org_type(+2), jerarquia 3 niveles, agreement_state(+3), roles(+5) | Completado |
 | Ciclo 6 | Auditoria ontologica: navegacion bidireccional (7), filtros API (3), CRUD completions (4) | Completado |
 | Ciclo 19 | SISREC multi-role: 8-state machine RTF→UCR, audit trail, SLA, Art. 18 fix, 18 tests | Completado |
@@ -1198,7 +1200,7 @@ POST   /api/dgi/data/rendiciones/check-escalations  Deteccion batch SLA breaches
 
 | Item | Prioridad | Descripcion |
 |------|-----------|-------------|
-| Tests automatizados | ~~Alta~~ | ~~374 tests backend (31 modulos, 369 pass + 5 skip)~~ — Pendiente: E2E frontend |
+| Tests automatizados | ~~Alta~~ | ~~~730 tests backend (54 modulos)~~ — Pendiente: E2E frontend |
 | Exportar a PDF | Media | Exportar reportes e informes DGI a PDF |
 | Auditoria de acciones | Media | Log de acciones de usuario (quien hizo que, cuando) |
 | Notificaciones email | Media | Notificaciones por email para alertas criticas y compromisos vencidos |
@@ -1277,7 +1279,7 @@ Esquemas frecuentes para pruebas:
 | `ipr_type` | INFRAESTRUCTURA, EQUIPAMIENTO, TRANSFERENCIA, PROGRAMA_SOCIAL, PROGRAMA_8PCT, CONSERVACION, ESTUDIO | Tipo IPR |
 | `ipr_state` | EN_FORMULACION, EN_EJECUCION, TERMINADO, CERRADO | Estado IPR |
 | `alert_level` | CRITICO, ALTO, ATENCION, INFO | Severidad alerta |
-| `system_role` | ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ENCARGADO, JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD | Roles del sistema |
+| `system_role` | GOBERNADOR, ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO, JEFE_DEPARTAMENTO, JEFE_UNIDAD, ANALISTA, RTF, ASESOR_JURIDICO | 15 roles del sistema (ENCARGADO colapsado — es asignación dinámica) |
 | `rendition_state` | PENDIENTE, EN_REVISION_RTF, VISADA_RTF, EN_REVISION_UCR, OBSERVADA, APROBADA, RECHAZADA (+EN_REVISION legacy) | Estado rendiciones SISREC |
 | `budget_program_code` | 01, 02, ... (codigos DIPRES) | Clasificador nivel 5 |
 | `session_type` | ORDINARIA, EXTRAORDINARIA | Tipo sesion CORE |

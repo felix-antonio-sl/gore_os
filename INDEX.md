@@ -4,17 +4,16 @@
 
 ---
 
-## Por donde empezar
+## Por dónde empezar
 
 | Audiencia | Documento | Contenido |
 |-----------|-----------|-----------|
-| Todos | [CLAUDE.md](CLAUDE.md) | Arquitectura, comandos, convenciones, reglas, modelo de datos |
+| Todos | [CLAUDE.md](CLAUDE.md) | Arquitectura, comandos, convenciones, reglas, modelo de datos (SSOT) |
 | Todos | [MANIFESTO.md](MANIFESTO.md) | Identidad, génesis, filosofía Story-First, 5 funciones motoras |
 | Nuevos devs | [docs/ONBOARDING.md](docs/ONBOARDING.md) | Setup local, patrones clave, flujo de nueva feature |
-| Exploradores | [docs/README.md](docs/README.md) | Índice completo de toda la documentación técnica |
-| Modeladores | [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos |
-| Modeladores | [model/GLOSARIO.yml](model/GLOSARIO.yml) | Glosario autoritativo (244 términos) |
-| Testers | [docs/GORE_OS_Testing_Ciclo3.md](docs/GORE_OS_Testing_Ciclo3.md) | Guía de testing integral |
+| Exploradores | [docs/README.md](docs/README.md) | Catálogo de toda la documentación secundaria (con estado/vigencia) |
+| Modeladores | [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) | ERD + diccionario de datos (parcial: modelo base) |
+| Modeladores | [model/GLOSARIO.yml](model/GLOSARIO.yml) | Glosario autoritativo (57 términos) |
 
 ---
 
@@ -23,32 +22,30 @@
 ```
 goreos/
 ├── model/                         # Modelo semántico (corazón del sistema)
-│   ├── stories/                   # 820 historias de usuario (YAML)
+│   ├── stories/                   # 818 historias de usuario (YAML)
 │   ├── entities/aceptadas/        # 141 entidades validadas (YAML)
-│   ├── processes/                 # 92 procesos del dominio (YAML)
+│   ├── processes/                 # 81 procesos del dominio (YAML)
 │   ├── omega/                     # 12 definiciones ontológicas (YAML)
 │   ├── model_goreos/              # DDL PostgreSQL ejecutable
 │   │   ├── sql/                   # DDL, seeds, migraciones, triggers
 │   │   └── docs/                  # ERD, modelo conceptual, decisiones de diseño
-│   └── GLOSARIO.yml               # 244 términos institucionales
+│   └── GLOSARIO.yml               # 57 términos institucionales
 ├── api/                           # Backend FastAPI (:8000)
-│   ├── app/routers/               # 29 routers, ~299 endpoints
+│   ├── app/routers/               # 29 routers, 304 endpoints
 │   ├── app/schemas/               # Pydantic v2
 │   ├── app/core/                  # deps, security, scope, audit, config
-│   ├── tests/                     # 730 tests de integración (55 módulos)
-│   └── scripts/etl/               # 6 scripts ETL
+│   ├── tests/                     # ~730 tests de integración (54 módulos)
+│   └── scripts/etl/               # 8 loaders/enrichers + helpers
 ├── web/                           # Frontend Next.js 16 (:3000)
 │   └── src/                       # app/, components/, lib/, types/, hooks/
 ├── docs/
-│   ├── README.md                  # Índice de documentación (empieza aquí)
+│   ├── README.md                  # Catálogo de documentación (empieza aquí)
 │   ├── adr/                       # 8 Architecture Decision Records
-│   ├── plans/                     # Planes de implementación + diseños (indexados)
-│   ├── superpowers/               # Feature avanzadas: plans + specs (indexados)
-│   ├── archive/                   # Material histórico (feb2026, legacy-model-tel)
-│   └── *.md                       # Specs, auditorías, journeys (ver docs/README.md)
+│   ├── archive/                   # Material histórico (planes implementados, auditorías cerradas, normalización, legacy)
+│   └── *.md                       # Specs y referencias vigentes (ver docs/README.md)
 ├── scripts/                       # Scripts operativos (migraciones, test DB, ETL)
 ├── CLAUDE.md                      # Fuente de verdad documental (SSOT)
-├── INDEX.md                       # Este archivo
+├── INDEX.md                       # Este archivo (mapa del repo)
 └── MANIFESTO.md                   # Identidad y génesis del proyecto
 ```
 
@@ -56,37 +53,27 @@ goreos/
 
 ## Decisiones de Arquitectura
 
-Todas las ADRs vigentes están en [`docs/adr/`](docs/adr/):
-
-| ADR | Tema | Estado |
-|-----|------|--------|
-| [ADR-001](docs/adr/ADR-001-meta-schema.md) | Retención del schema meta | Accepted |
-| [ADR-002](docs/adr/ADR-002-raw-sql.md) | Raw SQL via text() (sin ORM) | Accepted |
-| [ADR-003](docs/adr/ADR-003-advisory-locks.md) | Advisory locks para generadores secuenciales | Accepted |
-| [ADR-004](docs/adr/ADR-004-category-pattern.md) | Category Pattern (univocidad categorial) | Accepted |
-| [ADR-005](docs/adr/ADR-005-test-strategy.md) | Tests contra PostgreSQL real (sin mocks) | Accepted |
-| [ADR-006](docs/adr/ADR-006-jwt-cookie-migration.md) | Migración JWT → cookies | Deferred |
-| [ADR-007](docs/adr/ADR-007-categorical-univocity.md) | Univocidad categorial en todos los schemas | Accepted |
-| [ADR-008](docs/adr/008-create-pattern-drawer-vs-page.md) | Drawer vs página /nuevo | Accepted |
+Las 8 ADRs vigentes están catalogadas con su estado en **[docs/README.md › Decisiones de arquitectura](docs/README.md#decisiones-de-arquitectura-adrs)** (ADR-006 *Deferred*, el resto *Accepted*). Los archivos viven en [`docs/adr/`](docs/adr/).
 
 ---
 
 ## Estado del Modelo de Datos
 
-**121 tablas** en 4 schemas semánticos:
+**128 tablas físicas** en 5 schemas:
 
 | Schema | Tablas | Propósito |
 |--------|--------|-----------|
-| `meta` | 5 | Átomos: Role, Process, Entity, Story |
-| `ref` | 3 | Vocabularios controlados (105 schemes) |
-| `core` | 80+ | Entidades de negocio |
-| `txn` | 20+ | Event sourcing (particionado) |
+| `core`   | 89 | Entidades de negocio |
+| `txn`    | 20 | Event sourcing (`event` + `magnitude`, 18 particiones) |
+| `public` | 11 | Capa de modelado Story-First (`dim_*`, `fact_user_story`, `bridge_*`) |
+| `meta`   | 5  | Átomos: Role, Process, Entity, Story |
+| `ref`    | 3  | Vocabularios controlados (105 schemes) |
 
-- **100% univocidad categorial**: 98 CHECK constraints + 19 triggers de transición
-- **820 user stories** validadas como fuente de verdad
+- **100% univocidad categorial**: 159 CHECK constraints (`fn_validate_category_scheme`) + triggers de transición
+- **818 user stories** validadas como fuente de verdad
 - **DDL ejecutable**: `model/model_goreos/sql/`
 
 ---
 
 *Para arquitectura, comandos, convenciones y reglas: ver [CLAUDE.md](CLAUDE.md)*
-*Para índice de documentación: ver [docs/README.md](docs/README.md)*
+*Para el catálogo completo de documentación: ver [docs/README.md](docs/README.md)*

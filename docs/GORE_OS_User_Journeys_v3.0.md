@@ -1,6 +1,6 @@
-# GORE_OS — Especificación de Usuarios y Journeys v3.2
+# GORE_OS — Especificación de Usuarios y Journeys v3.0
 
-**Versión**: 3.2
+**Versión**: 3.0
 **Fecha**: 2026-03-15
 **Estado**: Vigente
 **Fuentes**: SSOT Bundle v1.5.0, Omega v3.0.0, DGI User Stories v1.0, User Stories (818), Procesos (81), GORE_OS codebase
@@ -13,8 +13,8 @@
 Este documento es la especificación autoritativa de los usuarios del sistema GORE_OS, sus arquetipos, journeys y principios de diseño UX. Integra:
 
 - La estructura orgánica de GORE Ñuble (SSOT `ssot-organica.md`)
-- Los 16 roles del sistema mapeados a 8 arquetipos de usuario
-- Los 17 journeys individuales + 1 transversal (Ciclo IPR 360°)
+- Los 15 roles del sistema mapeados a 8 arquetipos de usuario (ENCARGADO colapsado — es asignación dinámica, no rol)
+- Los 16 journeys individuales (J1–J16) + 1 transversal (Ciclo IPR 360°)
 - Los 8 principios de diseño UX que gobiernan decisiones de interfaz
 - El estado de implementación y gaps abiertos
 
@@ -81,7 +81,7 @@ GORE_OS sirve a dos poblaciones sobre PostgreSQL compartido:
 
 | Población | Roles | Dominio |
 |-----------|-------|---------|
-| **Operativa** | GOBERNADOR, ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, JEFE_DEPARTAMENTO, JEFE_UNIDAD, ENCARGADO, ANALISTA, RTF, ASESOR_JURIDICO, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO | IPR, compromisos, problemas, alertas, presupuesto, convenios, actos |
+| **Operativa** | GOBERNADOR, ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, JEFE_DEPARTAMENTO, JEFE_UNIDAD, ANALISTA, RTF, ASESOR_JURIDICO, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO | IPR, compromisos, problemas, alertas, presupuesto, convenios, actos |
 | **DGI** | JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD | Indicadores, procesos, iniciativas, reportes, cartera, coordinación |
 
 Login único → detección de rol → routing a sidebar/dashboard apropiado.
@@ -98,7 +98,6 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 | 1 | ADMIN_SISTEMA | Administrador del Sistema | Operativa | Configurador + Estratega | — |
 | 2 | ADMIN_REGIONAL | Administrador Regional | Operativa | Estratega + Firmante | — |
 | 3 | JEFE_DIVISION | Jefe de División | Operativa | Supervisor | Su división |
-| 4 | ENCARGADO | Encargado operativo | Operativa | Ejecutor | Su división |
 | 5 | JEFE_DGI | Jefe DGI | DGI | Coordinador DGI | DGI |
 | 6 | ESP_CONTROL_GESTION | Especialista Control de Gestión | DGI | Especialista DGI | DGI |
 | 7 | ESP_PROCESOS | Especialista Procesos | DGI | Especialista DGI | DGI |
@@ -111,11 +110,13 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 | 14 | RTF | Revisor Técnico Financiero | Operativa | Ejecutor | DAF |
 | 15 | ASESOR_JURIDICO | Asesor Jurídico | Operativa | Ejecutor | — |
 
+> **Nota sobre ENCARGADO (rol 4 colapsado)**: "encargado" NO es un rol de sistema con login propio. Es una **asignación dinámica** (`responsible_id`) sobre compromisos e IPRs: cualquier usuario operativo (típicamente un ANALISTA) puede quedar designado como encargado de un compromiso. Por eso el sistema tiene 15 roles, no 16, y no existe usuario de prueba `encargado.*@goreos.cl`. Donde este documento describe el arquetipo "Ejecutor en su día de trabajo", el login real es un ANALISTA (p. ej. `analista.dipir@goreos.cl`) actuando como responsable.
+
 ### 3.2 Permisos por Contexto
 
 | Acción | Roles permitidos |
 |--------|------------------|
-| Crear compromisos | ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, JEFE_DEPARTAMENTO, ANALISTA, ENCARGADO |
+| Crear compromisos | ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, JEFE_DEPARTAMENTO, ANALISTA |
 | Verificar compromisos | JEFE_DIVISION (su división), ADMIN_REGIONAL, ADMIN_SISTEMA |
 | Crear IPR | ADMIN_SISTEMA, ADMIN_REGIONAL, GOBERNADOR, ANALISTA |
 | Firmar actos (VISADO→FIRMADO) | GOBERNADOR, ADMIN_REGIONAL, ADMIN_SISTEMA |
@@ -132,7 +133,7 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 
 ### 4.1 Ejecutor — "¿Qué tengo que hacer hoy?"
 
-**Roles**: ENCARGADO, ANALISTA, RTF, ASESOR_JURIDICO
+**Roles**: ANALISTA, RTF, ASESOR_JURIDICO (y cualquier usuario operativo actuando como "encargado" — asignación dinámica `responsible_id`, no un login)
 **Frecuencia**: Diaria
 **Necesidad central**: Bandeja de trabajo clara, plazos visibles, acciones de 1 clic
 **Métrica de éxito**: < 10 segundos desde login hasta primera acción
@@ -141,7 +142,7 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 
 | Sub-perfil | Campo de acción | Presión temporal |
 |------------|----------------|------------------|
-| ENCARGADO | Compromisos y alertas sobre sus IPRs | Alta — plazos diarios |
+| ANALISTA (como encargado) | Compromisos y alertas sobre sus IPRs | Alta — plazos diarios |
 | ANALISTA | Formulación IPR F0–F3, satélites | Media — ciclos semanales |
 | RTF | Revisión rendiciones EN_REVISION_RTF | Alta — SLA 7 días |
 | ASESOR_JURIDICO | V.B. legalidad actos y convenios | Media — cola de revisión |
@@ -149,11 +150,11 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 **Dolores**: No saber qué está pendiente. Buscar información que debería ser visible. Pasos innecesarios.
 
 **Implementación GORE_OS**:
-- Dashboard: `ModuleMyWork` (ENCARGADO) — task list agrupada por IPR, urgentes auto-expandidos [IMPLEMENTADO]
+- Dashboard: `ModuleMyWork` (ANALISTA como encargado / responsable) — task list agrupada por IPR, urgentes auto-expandidos [IMPLEMENTADO]
 - Dashboard: `ModuleFormulacion` (ANALISTA) — pipeline F0→F2 con checklists por fase [IMPLEMENTADO]
 - Dashboard: `ModuleJuridico` (ASESOR_JURIDICO) — cola V.B. pendientes (actos/convenios) [IMPLEMENTADO]
 - Dashboard: KPIs + AttentionStrip (RTF) — sin módulo dedicado, items via action-items [IMPLEMENTADO]
-- `/compromisos`: `CompromisosWorkView` — vista de trabajo sin filtros, items propios por diseño [IMPLEMENTADO]
+- `/compromisos`: `CompromisosWorkView` — vista de trabajo sin filtros, items propios por diseño (auto-scope `responsible_id = user.id`) [IMPLEMENTADO]
 - `/actos`: `PendingQueue` EN_REVISION para ASESOR_JURIDICO [IMPLEMENTADO]
 
 ### 4.2 Supervisor — "¿Cómo está mi equipo/división?"
@@ -258,7 +259,7 @@ Login único → detección de rol → routing a sidebar/dashboard apropiado.
 
 ### 5.1 Journeys del Ejecutor
 
-#### J1: "Mi día de trabajo" (ENCARGADO) [IMPLEMENTADO]
+#### J1: "Mi día de trabajo" (ANALISTA como encargado / responsable) [IMPLEMENTADO]
 
 ```
 Login → Centro de Comando
@@ -270,12 +271,12 @@ Login → Centro de Comando
 ```
 
 **Página `/compromisos`** (journey-first):
-- ENCARGADO ve `CompromisosWorkView`: sus items agrupados por IPR, sin toggle "solo míos"
+- El responsable (típicamente un ANALISTA) ve `CompromisosWorkView`: sus items agrupados por IPR, sin toggle "solo míos"
 - Grupos urgentes auto-expandidos, no-urgentes colapsados
 - Acción "Completar" inline (botón ✓) sin abrir drawer
 - Click en item → drawer con detalle completo + historial
 
-**Fuente de datos**: Backend auto-scopa `responsible_id = user.id` para ENCARGADO.
+**Fuente de datos**: Backend auto-scopa `responsible_id = user.id` para el usuario asignado como encargado.
 
 **Stories**: D-EJEC | **Procesos**: PROC-EJEC-P2
 
@@ -538,12 +539,12 @@ Centro de Mando → ModuleMyTeam
 | F1 Admisibilidad | ANALISTA verifica | JEFE_DIVISION aprueba | Evaluador externo |
 | F2 Evaluación | Externo (MDSF, GORE, ANID) | ANALISTA registra | JEFE + JEFE_FINANZAS |
 | F3 Priorización | JEFE_FINANZAS (CDP) | GOBERNADOR + CORE (>7K UTM) | ASESOR_JURIDICO + GOBERNADOR |
-| F4 Formalización y Ejecución | ENCARGADO ejecuta | ITO/ITP supervisa | RTF (rendición) |
+| F4 Formalización y Ejecución | ANALISTA/responsable ejecuta | ITO/ITP supervisa | RTF (rendición) |
 | F5 Cierre | RTF revisa | JEFE_DAF firma | UCR contabiliza |
 
 *\*F0: SSOT canónico = "Postulación"; GORE_OS UI = "Formulación" (ver reconciliación en §2.1).*
 
-**Matriz de participación**: 16 roles × 6 fases con acciones definidas por fase. IPR detail: 18 tabs en 4 grupos (Operación, Finanzas, Requisitos, Ciclo) + Resumen.
+**Matriz de participación**: 15 roles × 6 fases con acciones definidas por fase. IPR detail: 18 tabs en 4 grupos (Operación, Finanzas, Requisitos, Ciclo) + Resumen.
 
 #### Track Routing (F2 Evaluación)
 
@@ -621,7 +622,7 @@ Las IPRs cruzan múltiples dominios durante su ciclo de vida. Los handoffs clave
 
 | Journey | Dominios Stories | Procesos Relacionados |
 |---------|-----------------|----------------------|
-| J1 ENCARGADO día | D-EJEC | PROC-EJEC-P2 (ejecución), PROC-EJEC-P3 (supervisión) |
+| J1 Día del responsable (ANALISTA como encargado) | D-EJEC | PROC-EJEC-P2 (ejecución), PROC-EJEC-P3 (supervisión) |
 | J2 Formular IPR | D-FIN-IPR_CORE | PROC-FIN-IPR_CORE-P1 (ingreso), P2 (admisibilidad), P3 (evaluación) |
 | J3 Revisar rendición | D-FIN-EJECUTORES, D-FIN-IPR_CORE | PROC-FIN-REND-P1 |
 | J4 Visación jurídica | D-NORM | PROC-NORM-P1 (resoluciones), PROC-NORM-P2 (convenios) |
@@ -647,7 +648,7 @@ Las IPRs cruzan múltiples dominios durante su ciclo de vida. Los handoffs clave
 
 El Ejecutor (80% del uso) NO navega — ejecuta desde una cola. El dashboard es una **bandeja de trabajo**, no un panorama.
 
-**Implementación**: Centro de Comando + AttentionStrip + deep links a tabs específicos. `/compromisos` muestra task list para ENCARGADO, no DataTable genérico.
+**Implementación**: Centro de Comando + AttentionStrip + deep links a tabs específicos. `/compromisos` muestra task list para el responsable (ANALISTA como encargado), no DataTable genérico.
 
 ### P2: Nivel de Agregación = Rol
 
@@ -658,7 +659,7 @@ El Ejecutor (80% del uso) NO navega — ejecuta desde una cola. El dashboard es 
 | Estratega | TODA LA INSTITUCIÓN | 6 divisiones |
 | DGI | TRANSVERSAL | Observa sin controlar |
 
-**Implementación**: Auto-scope en páginas de lista. ENCARGADO ve solo sus compromisos. JEFE ve su división. ADMIN ve todo.
+**Implementación**: Auto-scope en páginas de lista. El responsable (ANALISTA como encargado) ve solo sus compromisos. JEFE ve su división. ADMIN ve todo.
 
 ### P3: La Transición es el Momento de Verdad
 
@@ -671,7 +672,7 @@ La transición de fase en IPR es el momento crítico. El usuario necesita saber:
 
 ### P4: El Supervisor No Ejecuta — Delega
 
-JEFE_DIVISION no actualiza compromisos, los crea para ENCARGADO. Necesita ESTADO AGREGADO, no detalle granular.
+JEFE_DIVISION no actualiza compromisos, los crea para un responsable (ANALISTA como encargado). Necesita ESTADO AGREGADO, no detalle granular.
 
 **Implementación**: `CompromisosTeamView` con barras de carga y "Verificar" inline. No drill-down a formularios.
 
@@ -712,7 +713,7 @@ Resumen consolidado. Los detalles de cada vista journey-first están documentado
 
 | Página | Vista Journey-First | Estado | Journey |
 |--------|--------------------|---------:|---------|
-| Dashboard | `ModuleMyWork` (ENCARGADO) | [I] | J1 |
+| Dashboard | `ModuleMyWork` (ANALISTA como encargado) | [I] | J1 |
 | Dashboard | `ModuleFormulacion` (ANALISTA) | [I] | J2 |
 | Dashboard | KPIs + AttentionStrip (RTF) | [I] | J3 |
 | Dashboard | `ModuleJuridico` (ASESOR_JURIDICO) | [I] | J4 |
@@ -811,7 +812,6 @@ Todos con password `admin123`, dominio `@goreos.cl`.
 | jefe.daf | JEFE_DIVISION | Supervisor | DAF |
 | jefe.dipir | JEFE_DIVISION | Supervisor | DIPIR |
 | jefe.diplade | JEFE_DIVISION | Supervisor | DIPLADE |
-| encargado.daf | ENCARGADO | Ejecutor | DAF |
 | analista.dipir | ANALISTA | Ejecutor | DIPIR |
 | rtf.daf | RTF | Ejecutor | DAF |
 | juridico | ASESOR_JURIDICO | Ejecutor | — |
@@ -828,8 +828,8 @@ Para validar el journey-first redesign (todos los journeys):
 
 | Journey | Test | Usuario | Verificar |
 |---------|------|---------|-----------|
-| J1 | ENCARGADO ve task list | encargado.daf | `/compromisos` → CompromisosWorkView, agrupado por IPR, sin toggle manual |
-| J1 | Deep links funcionan | encargado.daf | Dashboard ModuleMyWork → click item → `/ipr/{id}?tab=compromisos` |
+| J1 | Responsable ve task list | analista.dipir | `/compromisos` → CompromisosWorkView, agrupado por IPR, sin toggle manual |
+| J1 | Deep links funcionan | analista.dipir | Dashboard ModuleMyWork → click item → `/ipr/{id}?tab=compromisos` |
 | J2 | ANALISTA ve pipeline | analista.dipir | Dashboard → ModuleFormulacion con checklists F0/F1/F2 |
 | J2 | Post-create redirect | analista.dipir | `/ipr/nuevo` → crear → redirect a `/ipr/{id}?tab=partes` |
 | J3 | RTF ve rendiciones | rtf.daf | `/datos?tab=rendiciones` auto-filtrado EN_REVISION_RTF, columna SLA visible |
@@ -858,13 +858,13 @@ Para validar el journey-first redesign (todos los journeys):
 
 | Documento | Ubicación |
 |-----------|----------|
-| SSOT Bundle v1.5.0 (15 artefactos) | `/Users/felixsanhueza/Developer/kora/KNOWLEDGE/gn/ssot/` |
+| SSOT Bundle v1.5.0 (15 artefactos) | (bundle SSOT externo, no versionado en este repo) |
 | Omega v3.0.0 | `architecture/Omega_GORE_OS_Definition_v3.0.0.md` |
 | User Stories (818, 16 dominios) | `model/stories/_index.yml` |
 | Procesos (81, 15 dominios) | `model/processes/_index.yml` |
 | DGI User Stories v1.0 | `docs/DGI_USER_STORIES_v1.0.md` |
-| Ejecutor Journey-First Spec | `docs/superpowers/specs/2026-03-15-ejecutor-journey-first-design.md` |
-| Visual Refresh Spec | `docs/superpowers/specs/2026-03-12-visual-refresh-capas-progresivas-design.md` |
-| IPR Detail Redesign Spec | `docs/superpowers/specs/2026-03-15-ipr-detail-redesign-design.md` |
-| Glosario dominio (244 términos) | `model/GLOSARIO.yml` |
+| Ejecutor Journey-First Spec | `docs/archive/plans-implemented/superpowers/specs/2026-03-15-ejecutor-journey-first-design.md` |
+| Visual Refresh Spec | `docs/archive/plans-implemented/superpowers/specs/2026-03-12-visual-refresh-capas-progresivas-design.md` |
+| IPR Detail Redesign Spec | `docs/archive/plans-implemented/superpowers/specs/2026-03-15-ipr-detail-redesign-design.md` |
+| Glosario dominio (57 términos) | `model/GLOSARIO.yml` |
 | CLAUDE.md (convenciones técnicas) | `CLAUDE.md` |

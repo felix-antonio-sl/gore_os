@@ -4,9 +4,9 @@
 
 **Estado**: Ejecutable y auditado
 **PostgreSQL**: 16+
-**Tablas**: 121 en 4 schemas (meta, ref, core, txn)
+**Tablas**: 128 en 5 schemas (core, txn, public, meta, ref)
 **Schemes**: 105 vocabularios controlados (Category Pattern)
-**CHECK constraints**: 98 + 19 triggers de transición + 6 triggers de timing
+**CHECK constraints**: 159 (`fn_validate_category_scheme`) + triggers de transición/timing (76 totales)
 **Univocidad categorial**: 100% (0 FK→ref.category sin protección)
 
 ---
@@ -17,8 +17,9 @@
 |--------|--------|-----------|
 | `meta` | 5 | Átomos fundamentales (Role, Process, Entity, Story, Story-Entity) |
 | `ref` | 3 | Vocabularios controlados: `ref.category(scheme, code, label)` + `ref.actor` + `ref.operational_commitment_type` |
-| `core` | 80+ | Entidades de negocio (IPR, agreements, budget, work items, etc.) |
-| `txn` | 20+ | Event sourcing particionado |
+| `core` | 89 | Entidades de negocio (IPR, agreements, budget, work items, etc.) |
+| `txn` | 20 | Event sourcing particionado (`event` + `magnitude`, 18 particiones) |
+| `public` | 11 | Capa de modelado Story-First (`dim_*`, `fact_user_story`, `bridge_*`) |
 
 ## Entidad Central: IPR
 
@@ -26,7 +27,7 @@
 
 - 32 estados + fase derivada (STATUS_PHASE_FIBER)
 - Nature-aware: PROYECTO vs PROGRAMA bifurcan flujos
-- 16 tabs satélite (compromisos, problemas, alertas, convenios, CDPs, avances, partes, territorio, hitos, resoluciones, evaluación, parentesco, admisibilidad, modificaciones, cierre, ex-post)
+- 18 tabs (Resumen + 17 satélites: compromisos, problemas, hitos, avances, alertas, CDPs, convenios, rendiciones, resoluciones, partes, territorio, evaluación, parentesco, admisibilidad, modificaciones, cierre, ex-post)
 
 ## Category Pattern
 
@@ -63,7 +64,7 @@ SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;
 
 ## Principios de Diseño
 
-1. **Story-First**: 820 historias → 141 entidades → 121 tablas → módulos
+1. **Story-First**: 818 historias → 141 entidades → 128 tablas → módulos
 2. **Categorical Univocity**: Cada FK a ref.category usa exactamente 1 scheme
 3. **Auditoría universal**: `created_at/by_id`, `updated_at/by_id`, `deleted_at/by_id` en todas las entidades
 4. **Soft delete**: `WHERE deleted_at IS NULL` (no triggers DB)

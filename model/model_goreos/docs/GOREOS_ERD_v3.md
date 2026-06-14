@@ -1,10 +1,12 @@
 # GORE_OS v3.2 - Entity-Relationship Diagrams
 
+> **⚠️ ERD PARCIAL.** Documenta 42/89 tablas core del modelo base; el schema VIGENTE (128 tablas en 5 schemas) está en model/model_goreos/sql/goreos_ddl.sql y CLAUDE.md. No usar como referencia completa del esquema actual.
+
 > **Note**: The "v3.0"/"v3.4" version numbers below refer to ERD normalization milestones (schema evolution), not the application version (v3.2.0). The system version is tracked in [CLAUDE.md](../../../CLAUDE.md).
 
 **Modelo**: GORE_OS - Sistema de Gestión Institucional para Gobiernos Regionales
 **Fecha**: 2026-01-30 (Actualizado con Normalizaciones v3.4 MEDIA)
-**Total Entidades**: 52 tablas en 4 schemas
+**Total Entidades documentadas**: 52 (modelo base v3.0); schema vigente: 128 — ver goreos_ddl.sql
 
 ---
 
@@ -12,9 +14,9 @@
 
 | Version | Fecha | Cambios Principales |
 |---------|-------|---------------------|
-| v3.4 | 2026-01-30 | **Normalizaciones v3.4 MEDIA**: 18 campos normalizados (100%)<br/>- Nueva tabla: `core.position` (70 cargos únicos)<br/>- core.person: columnas `position_id`, `qualification_id`<br/>- core.agreement: columna `cgr_outcome_id`<br/>- core.ipr_party: columna `sponsor_division_id`, `is_municipal_origin`<br/>- Nuevos schemes: `professional_qualification` (14), `cgr_outcome` (7)<br/>- 17 nuevos índices, univocidad 100% mantenida<br/>Referencia: `docs/AUDITORIA_CATEGORIAL_v3.0.md` (MEDIA) |
-| v3.0 | 2026-01-30 | **Normalizaciones v3.0 CRÍTICAS**: 13 críticas<br/>- core.organization: columna `rut`<br/>- core.person: columna `estamento_id`<br/>- core.agreement: columna `technical_referent_id`<br/>- core.ipr_party: columna `agreement_id`<br/>- core.budget_program: columnas `item_id`, `allocation_id`, `fndr_amount`, `sectorial_amount`<br/>- Nueva tabla: `core.budget_carryover`<br/>- Nuevos schemes: `estamento`, `budget_item`, `budget_allocation`, `magnitude_aspect`, `currency`<br/>- Sincronización EJECUTOR en ipr_party<br/>Referencia: `docs/AUDITORIA_CATEGORIAL_v3.0.md` (CRÍTICAS) |
-| v3.2 | 2026-01-27 | **Normalizaciones v2.0**: Univocidad Categorial 100%<br/>- core.ipr: columnas `investment_sector_id`, `fund_category_id`<br/>- Nuevos schemes: `investment_sector`, `fondo_8pct`<br/>Referencia: `etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md` |
+| v3.4 | 2026-01-30 | **Normalizaciones v3.4 MEDIA**: 18 campos normalizados (100%)<br/>- Nueva tabla: `core.position` (70 cargos únicos)<br/>- core.person: columnas `position_id`, `qualification_id`<br/>- core.agreement: columna `cgr_outcome_id`<br/>- core.ipr_party: columna `sponsor_division_id`, `is_municipal_origin`<br/>- Nuevos schemes: `professional_qualification` (14), `cgr_outcome` (7)<br/>- 17 nuevos índices, univocidad 100% mantenida<br/>Referencia: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md` (MEDIA) |
+| v3.0 | 2026-01-30 | **Normalizaciones v3.0 CRÍTICAS**: 13 críticas<br/>- core.organization: columna `rut`<br/>- core.person: columna `estamento_id`<br/>- core.agreement: columna `technical_referent_id`<br/>- core.ipr_party: columna `agreement_id`<br/>- core.budget_program: columnas `item_id`, `allocation_id`, `fndr_amount`, `sectorial_amount`<br/>- Nueva tabla: `core.budget_carryover`<br/>- Nuevos schemes: `estamento`, `budget_item`, `budget_allocation`, `magnitude_aspect`, `currency`<br/>- Sincronización EJECUTOR en ipr_party<br/>Referencia: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md` (CRÍTICAS) |
+| v3.2 | 2026-01-27 | **Normalizaciones v2.0**: Univocidad Categorial 100%<br/>- core.ipr: columnas `investment_sector_id`, `fund_category_id`<br/>- Nuevos schemes: `investment_sector`, `fondo_8pct`<br/>Referencia (histórica): `docs/archive/legacy-model-tel/etl/migration-docs/NORMALIZACION_v2.0_REPORTE_FINAL.md` |
 | v3.0 | 2026-01-20 | Modelo base: 50 tablas, 4 schemas, Category Pattern (Gist 14.0) |
 
 ---
@@ -1562,7 +1564,7 @@ Normalizar campos JSONB a columnas relacionales siguiendo principios de:
 - **Alineación Ontológica**: Gist 14.0 + GNUB (199 términos) + TDE (19 términos)
 - **Integridad Referencial**: CHECK constraints para validación de schemes
 
-**Fuente**: `docs/AUDITORIA_CATEGORIAL_v3.0.md`
+**Fuente**: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md`
 
 ### 7.2 Scope del Análisis
 
@@ -1671,7 +1673,7 @@ Normalizar campos JSONB a columnas relacionales siguiendo principios de:
 4. `core.ipr_party.division` → FK `sponsor_division_id` (37 ocurrencias)
 5. `core.ipr.origen` → Boolean `is_municipal_origin` (2 valores)
 
-**Referencia Completa**: `docs/AUDITORIA_CATEGORIAL_v3.0.md` (sección CRÍTICAS)
+**Referencia Completa**: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md` (sección CRÍTICAS)
 
 ---
 
@@ -1681,7 +1683,7 @@ Normalizar campos JSONB a columnas relacionales siguiendo principios de:
 
 Completar normalizaciones de prioridad MEDIA identificadas en auditoría categorial v3.0, eliminando todos los campos JSONB normalizables y alcanzando 100% de normalización estructural.
 
-**Fuente**: `docs/AUDITORIA_CATEGORIAL_v3.0.md` (sección MEDIA)
+**Fuente**: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md` (sección MEDIA)
 
 ### 8.2 Normalizaciones Ejecutadas
 
@@ -1813,7 +1815,7 @@ WHERE qual.code = 'INGENIERO';
 
 **Conclusión**: Todas las normalizaciones identificadas en auditoría v3.0 han sido completadas. El 100% de campos JSONB normalizables han sido migrados a estructuras relacionales. Los 69 campos restantes en JSONB corresponden exclusivamente a audit trail y metadatos históricos no estructurados.
 
-**Referencia Completa**: `docs/AUDITORIA_CATEGORIAL_v3.0.md` (sección MEDIA)
+**Referencia Completa**: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md` (sección MEDIA)
 
 ---
 

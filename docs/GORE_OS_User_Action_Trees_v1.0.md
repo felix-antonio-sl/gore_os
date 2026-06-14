@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-03-23 | **Sesion**: C61
 **Fuentes**: sidebar.tsx (ROLE_SECTIONS), 60 page.tsx, 29 routers (304 endpoints), security.py, scope.py, types/index.ts
-**Cobertura**: 24 usuarios de prueba, 15 roles, 38 rutas navegables, 304 endpoints API
+**Cobertura**: 24 usuarios de prueba, 15 roles, ~60 rutas navegables (60 archivos page.tsx bajo `web/src/app/(app)/`; la poda C60 planificada a 38 rutas aun NO esta aplicada en codigo), 304 endpoints API
 
 ---
 
@@ -1830,4 +1830,4 @@ Solo cuando localStorage.goreos_dev_mode === "true" (activado via /dev login):
 
 ---
 
-*Generado: 2026-03-23 | Sesion C61 | 24 usuarios, 15 roles, 38 rutas, 304 endpoints, 13 FSMs*
+*Generado: 2026-03-23 | Sesion C61 | 24 usuarios, 15 roles, ~60 rutas (60 page.tsx; poda C60 a 38 no aplicada en codigo), 304 endpoints, 13 FSMs*

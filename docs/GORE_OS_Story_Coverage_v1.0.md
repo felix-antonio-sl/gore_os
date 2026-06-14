@@ -2,6 +2,8 @@
 
 > **Relación**: Este documento es un snapshot de cobertura (C60) del catálogo de 185 historias DGI. Para el detalle completo de cada historia (descripción, prioridad, fuente), ver [DGI_USER_STORIES_v1.0.md](DGI_USER_STORIES_v1.0.md) (C58).
 
+> **Snapshot C60 (parcialmente desactualizado).** Varias páginas DGI marcadas 'NUEVO/no construido' (cuellos-de-botella, escalamiento, servicios, calendario, coordinación) YA EXISTEN — la cobertura efectiva es mayor que la aquí reportada. Residual válido: /stakeholders, /nps, /plan-trabajo siguen sin construir.
+
 Fecha: 2026-03-22 | Sesion: C60
 
 ## Resumen

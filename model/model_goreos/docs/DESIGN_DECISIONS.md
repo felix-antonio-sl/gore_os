@@ -592,8 +592,8 @@ investment_sector_id → 1 scheme only
 **Documentation**:
 - Full report: `/etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md`
 - Data dictionary: `/etl/migration/IPR_NEW_COLUMNS_DATA_DICT_v2.md`
-- Categorical audit: `/docs/AUDITORIA_CATEGORIAL_NORMALIZACION_JSONB.md` (v1.0 rejected)
-- Plan: `/docs/PLAN_NORMALIZACION_JSONB_v2.0.md`
+- Categorical audit: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_NORMALIZACION_JSONB.md` (v1.0 rejected)
+- Plan: `docs/archive/normalization-completed/PLAN_NORMALIZACION_JSONB_v2.0.md`
 
 **Status**: ✓ TESTED in dev (goreos_model_test) | ⏳ PENDING production deployment
 
@@ -603,7 +603,7 @@ investment_sector_id → 1 scheme only
 
 **Context**: Categorical Audit v3.0 analyzed 98 JSONB fields across 10 tables, identifying 13 CRITICAL and 16 MEDIUM priority normalizations. This section documents key architectural decisions made during the v3.0/v3.4 normalization phases.
 
-**Audit Reference**: `/docs/AUDITORIA_CATEGORIAL_v3.0.md` (2026-01-30)
+**Audit Reference**: `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md` (2026-01-30)
 
 ---
 
@@ -901,7 +901,7 @@ is_municipal_origin              | N/A     | (boolean)                  ✓
 
 - Auditoría Categorial Consolidada (2026-01-27)
 - GORE_OS ERD v3.0 (`docs/GOREOS_ERD_v3.md`)
-- Auditoría Exhaustiva v3.0 (`docs/AUDITORIA_GORE_OS_v3_2026-01-27.md`)
+- Auditoría Exhaustiva v3.0 (`AUDITORIA_GORE_OS_v3_2026-01-27.md` — histórica, no versionada en este repo)
 
 ---
 

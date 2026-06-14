@@ -2,7 +2,7 @@
 
 **Version**: 1.0
 **Date**: 2026-02-26
-**Status**: Design (no implementation yet)
+**Status**: Implementado en api/scripts/etl/ (8 loaders) — este documento registra el diseño original; el roster final divergió de él.
 
 ## Overview
 
@@ -45,17 +45,20 @@ Scripts run inside the API container for network access to `goreos_db`. Each scr
 
 ### Directory Structure
 
+**Roster real (implementado)**: 8 loaders/enrichers + 2 helpers. Los scripts `load_resolutions.py` y `load_renditions.py` previstos en el diseño NUNCA se construyeron — fueron absorbidos en `load_admin_acts.py` y `generate_rendition_crosswalk.py` respectivamente.
+
 ```
 api/scripts/etl/
-  common.py          # DB connection, logging, dry-run, CSV reader
-  load_documents.py  # PARTES -> core.document
-  load_resolutions.py # PARTES -> core.resolution + core.administrative_act
-  load_renditions.py  # PARTES + PROGS -> core.rendition
-  enrich_agreements.py # CONVENIOS -> core.agreement (update existing)
-  load_fril.py        # FRIL -> core.ipr_territory + core.ipr_milestone
-  load_modifications.py # MODIFICACIONES -> txn.event
-  enrich_persons.py   # FUNCIONARIOS -> core.person (update existing)
-  load_idis.py        # IDIS -> core.ipr_party + core.ipr_territory
+  common.py                       # helper: DB connection, logging, dry-run, CSV reader
+  generate_rendition_crosswalk.py # helper: PARTES + PROGS -> crosswalk de rendiciones (absorbe load_renditions.py previsto)
+  enrich_persons.py               # FUNCIONARIOS -> core.person (update existing)
+  enrich_person_emails.py         # FUNCIONARIOS -> core.person.email (enrich)
+  load_documents.py               # PARTES -> core.document
+  load_admin_acts.py              # PARTES -> core.administrative_act + core.resolution (absorbe load_resolutions.py previsto)
+  enrich_agreements.py            # CONVENIOS -> core.agreement (update existing)
+  load_fril.py                    # FRIL -> core.ipr_territory + core.ipr_milestone
+  load_modifications.py           # MODIFICACIONES -> txn.event
+  load_idis.py                    # IDIS -> core.ipr_party + core.ipr_territory
 ```
 
 ### Shared Module: `common.py`

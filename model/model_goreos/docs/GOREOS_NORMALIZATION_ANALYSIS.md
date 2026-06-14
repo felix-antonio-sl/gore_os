@@ -1,6 +1,6 @@
 # Análisis de Normalización: GORE_OS
 
-> **Note**: This analysis was performed on the v3.0 schema (50 tables). The current system has 121 tables. All normalizations identified here have been applied. See [CLAUDE.md](../../../CLAUDE.md) for current state.
+> **Note**: This analysis was performed on the v3.0 schema (50 tables). The current system has 128 tables. All normalizations identified here have been applied. See [CLAUDE.md](../../../CLAUDE.md) for current state.
 
 **Sistema**: GORE_OS - Gestión Institucional para Gobiernos Regionales
 **Fecha**: 2026-01-27
@@ -524,7 +524,7 @@ Las desnormalizaciones presentes son:
 **Executed**: 2026-01-27
 **Phase**: CRITICAL Priority (13 fields)
 
-Documented in `docs/AUDITORIA_CATEGORIAL_v3.0.md`
+Documented in `docs/archive/normalization-completed/AUDITORIA_CATEGORIAL_v3.0.md`
 
 **Metrics**:
 - Categorical Univocity: Maintained

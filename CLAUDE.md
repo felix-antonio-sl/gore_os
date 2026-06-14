@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**GORE_OS v3.2.0** — Sistema operativo institucional del Gobierno Regional de Ñuble (Chile). Modelo integrado de datos, procesos y capacidades construido sobre PostgreSQL, con frontend Next.js y backend FastAPI. Filosofía Story-First: 820 user stories → 121 tablas → capacidades operativas.
+**GORE_OS v3.2.0** — Sistema operativo institucional del Gobierno Regional de Ñuble (Chile). Modelo integrado de datos, procesos y capacidades construido sobre PostgreSQL, con frontend Next.js y backend FastAPI. Filosofía Story-First: 818 user stories → 128 tablas → capacidades operativas.
 
 Dos poblaciones sobre la misma base de datos:
 
@@ -59,7 +59,7 @@ Key files:
 - `core/scope.py` — `check_ipr_access(db, user, ipr_id)` 3-tier IDOR guard (GLOBAL/DIVISION/PERSONAL). Applied to 39 IPR detail+satellite endpoints.
 - `middleware/security.py` — `SecurityHeadersMiddleware` (7 headers: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Content-Security-Policy, Strict-Transport-Security, Permissions-Policy)
 - `core/audit.py` — `record_event()` → txn.event (13 event_type codes, 85 integration points across 23 routers)
-- `routers/` — 29 routers, ~299 endpoints (155 GET, 85 POST, 44 PATCH, 17 DELETE). Notable: actos (8-step FSM incl. ENVIADO_CGR+OBSERVADO), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals), notifications (5 endpoints + `create_notification()` helper, 10 auto-wiring points)
+- `routers/` — 29 routers, 304 endpoints (154 GET, 87 POST, 45 PATCH, 18 DELETE). Notable: actos (8-step FSM incl. ENVIADO_CGR+OBSERVADO), core_sessions (voting + F3→F4), dgi_services (12 endpoints, static paths BEFORE `/{service_id}`), risk (8 endpoints), command_center (2 endpoints), dashboard (action-items + dgi-kpis + pending-approvals), notifications (5 endpoints + `create_notification()` helper, 10 auto-wiring points)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -87,16 +87,17 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 
 ### Database
 
-**121 tables across 4 schemas** (93 core + 5 meta + 3 ref + 20 txn partitions):
+**128 tablas físicas en 5 schemas** (`core` 89 · `txn` 20 · `public` 11 · `meta` 5 · `ref` 3):
 
 | Schema | Purpose |
 |--------|---------|
 | `meta` | Role/Process/Entity/Story atoms (5) |
-| `ref`  | Controlled vocabularies: `ref.category(scheme, code, label)` — 105 schemes + `ref.operational_commitment_type` |
-| `core` | Business entities — 80 tables |
-| `txn`  | Event sourcing (partitioned) |
+| `ref`  | Controlled vocabularies: `ref.category(scheme, code, label)` — 105 schemes + `ref.operational_commitment_type` (3) |
+| `core` | Business entities (89) |
+| `txn`  | Event sourcing — `event` + `magnitude`, particionadas en 18 (20 CREATE TABLE) |
+| `public` | Capa de modelado Story-First: `dim_*`, `fact_user_story`, `bridge_*`, `acceptance_criteria` (11) |
 
-**Category Pattern**: each FK → exactly ONE scheme (Categorical Univocity). **100% coverage**: 98 CHECK constraints + 19 state transition triggers + 6 history/timing triggers. 0 unprotected FK→ref.category. Check before creating: `SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;`
+**Category Pattern**: each FK → exactly ONE scheme (Categorical Univocity). **100% coverage**: 159 CHECK constraints (`fn_validate_category_scheme`) + state-transition & history/timing triggers (76 triggers totales). 0 unprotected FK→ref.category. Check before creating: `SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;`
 
 **Org types** (14): Internal: GORE(1), DIVISION(8), DEPARTAMENTO(6), UNIDAD(8), STAFF_UNIT(7), ADVISORY_BODY(3). External: MUNICIPALIDAD, SERVICIO, MINISTERIO, UNIVERSIDAD, ONG, EMPRESA, ORG_COMUNITARIA, COMUNITARIA. Hierarchy 3-level via `parent_id`.
 
@@ -134,7 +135,7 @@ All passwords: `admin123`. All `@goreos.cl`.
 
 ## Testing
 
-**730 integration tests (55 modules)** against real PostgreSQL (`goreos_test`). No mocks.
+**~730 integration tests (54 modules)** against real PostgreSQL (`goreos_test`). No mocks.
 
 ```bash
 ./scripts/setup_test_db.sh                                          # Setup test DB
@@ -176,7 +177,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ### Cross-entity Navigation
 
-- **IPR → satellites**: 16 tabs in `tab-*.tsx` (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones, Evaluación, Parentesco, Admisibilidad, Modificaciones, Cierre, Ex-Post).
+- **IPR → satellites**: 18 tabs in `tab-*.tsx` = `Resumen` + 17 satélites en 4 grupos (`TAB_GROUPS`): **Operación** (Compromisos, Problemas, Hitos, Avances, Alertas) · **Finanzas** (CDPs, Convenios, Rendiciones, Resoluciones) · **Requisitos** (Partes, Territorio, Evaluación, Parentesco) · **Ciclo** (Admisibilidad, Modificaciones, Cierre, Ex-Post).
 - **Satellites → IPR**: Drawers show clickable `ipr_codigo_bip` → `/ipr/{id}`. Pattern: include `ipr_id` in schema+SQL, `text-blue-600 hover:underline`, close drawer before navigating.
 
 ### DGI Layer
@@ -195,21 +196,23 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## ETL Pipeline
 
-7 scripts in `api/scripts/etl/`: `enrich_persons`, `load_documents`, `load_admin_acts`, `enrich_agreements`, `load_fril`, `load_modifications`, `load_idis`. All `--dry-run`, `--limit N`, `--verbose`. Idempotent. Run inside API container after `docker cp` CSVs.
+8 loaders/enrichers en `api/scripts/etl/` (por fase): `enrich_persons`, `enrich_person_emails`, `load_documents`, `load_admin_acts`, `enrich_agreements`, `load_fril`, `load_modifications`, `load_idis` — más `common.py` (utilidades compartidas) y `generate_rendition_crosswalk.py` (crosswalk auxiliar). All `--dry-run`, `--limit N`, `--verbose`. Idempotent. Run inside API container after `docker cp` CSVs. Frontera de datos (fuentes canónicas vs staging runtime): `docs/ETL_DATA_BOUNDARY.md`.
 
 ## Key References
 
-- **Navigación**: `INDEX.md` (índice del repositorio), `MANIFESTO.md` (visión política y estratégica)
-- **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md`, `model/GLOSARIO.yml` (244 términos)
-- **Spec**: `model/omega/` (12 definiciones ontológicas YAML), `docs/GORE_OS_Audit_v3.0.md` (472 CQs, 15 HΩ)
+- **Navegación**: `INDEX.md` (mapa del repositorio), `docs/README.md` (catálogo de documentación con estado/vigencia), `MANIFESTO.md` (visión política y estratégica)
+- **Schema**: `model/model_goreos/sql/goreos_ddl.sql`, `goreos_seed.sql`, `model/model_goreos/docs/GOREOS_ERD_v3.md` (ERD parcial: 42/89 tablas core del modelo base — el schema vigente está en el DDL), `model/model_goreos/docs/DESIGN_DECISIONS.md` (el "por qué" de las reglas de schema), `model/GLOSARIO.yml` (57 términos)
+- **Spec**: `model/omega/` (12 definiciones ontológicas YAML), `docs/GORE_OS_Audit_v3.0.md` (auditoría institucional — snapshot 2026-03-08: 472 CQs, 15 HΩ)
 - **Migrations**: `goreos_migration_*.sql` + `goreos_rollback_*.sql`. Tracked in `core.schema_migration`. Runner: `scripts/run_migrations.sh`.
-- **Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (8 ADRs), `docs/GORE_OS_User_Journeys_v3.0.md` (8 arquetipos, 17 journeys, 8 principios UX)
-- **Plans**: `docs/plans/` (23 planes de implementación), `docs/superpowers/` (11 planes avanzados + 5 specs), `docs/archive/` (material histórico)
+- **Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_DATA_BOUNDARY.md`, `docs/adr/` (8 ADRs), `docs/GORE_OS_User_Journeys_v3.0.md` (8 arquetipos, 16 journeys + IPR 360 transversal, 8 principios UX), `docs/GORE_OS_User_Action_Trees_v1.0.md` (mapa rol→acción→endpoint), `docs/GORE_OS_Role_Surface_Spec_v1.0.md` (matriz rol×página), `docs/DGI_USER_STORIES_v1.0.md` (185 historias DGI), `docs/AUDITORIA_RELACIONAL_v1.0.md` (mapa de FKs/hubs y cadenas de navegación)
+- **Principios → ADR**: Raw SQL sin ORM → ADR-002 · Advisory locks → ADR-003 · Category Pattern → ADR-004 · Tests contra PostgreSQL real → ADR-005 · Univocidad categorial → ADR-007 · Drawer vs página `/nuevo` → ADR-008 · retención schema `meta` → ADR-001 · JWT→cookie (diferido) → ADR-006
+- **Plans (histórico)**: planes ya implementados archivados en `docs/archive/plans-implemented/` (23 de `docs/plans/` + 6 planes/5 specs de `docs/superpowers/`); diseño superado por el código, conservado solo por trazabilidad. `docs/archive/` general: normalización JSONB completada, auditorías cerradas (C59, UX v2.0, Specification v1.0), planning feb-2026.
 
 ## Repository Conventions
 
 ### Communication & Workflow
 
+- **Story-First**: Todo cambio de código traza a una historia de usuario en `model/stories/`. Si no existe, créala primero. Derivación unidireccional: Stories → Entities → Artefactos → Módulos (ver `MANIFESTO.md` §3).
 - **Idioma**: Hablar con el usuario en español.
 - **Git**: No trabajar con árboles de branches; commits directos a la rama principal.
 - **Commits**: Conventional Commits — `feat(...)`, `fix(...)`, `docs(...)`, `test(...)`, `chore(...)`. Usar scope cuando sea útil (ej: `feat(etl): add load_documents.py`).
@@ -221,12 +224,12 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 ```
 goreos/
 ├── model/                    # Modelo semántico (corazón del sistema)
-│   ├── stories/              # 820 historias de usuario
+│   ├── stories/              # 818 historias de usuario
 │   ├── entities/aceptadas/   # 141 entidades validadas
-│   ├── processes/            # 92 procesos
-│   ├── omega/                # Definiciones ontológicas
+│   ├── processes/            # 81 procesos
+│   ├── omega/                # 12 definiciones ontológicas
 │   ├── model_goreos/         # DDL PostgreSQL ejecutable (sql/, docs/)
-│   └── GLOSARIO.yml          # 244 términos
+│   └── GLOSARIO.yml          # 57 términos
 ├── api/                      # Backend FastAPI
 │   ├── api/app/              # Routers, schemas, services, config
 │   ├── api/tests/            # pytest suite (test_*.py)
@@ -272,7 +275,7 @@ goreos/
 16. **Docker**: `goreos_db` on `visor_model_default` (external). Always `docker compose restart api` after code changes — hot-reload may miss new files.
 17. **Large datasets**: `core.ipr` 3,600+, `core.organization` 3,300+. Never use `<Select>` — use `ComboboxAsync`. Divisions catalog ~9 entries only.
 18. **Catalogs**: `organizations?search=TERM` (ComboboxAsync), `territories` (25, no search). Territory: `territory_type_id` (NOT `territory_level`).
-19. **ETL**: Scripts run inside API container. CSVs via `docker cp`. See `traps_and_patterns.md` for CSV quirks.
+19. **ETL**: Scripts run inside API container. CSVs via `docker cp`. See `docs/ETL_DATA_BOUNDARY.md` (frontera fuentes/staging) and `docs/ETL_ARCHITECTURE_v1.0.md` (diseño + quirks de CSV).
 
 ### Domain-specific Rules
 
@@ -280,9 +283,9 @@ goreos/
 21. **JSONB edits**: Atomic `jsonb_set` in `metadata` (not read-modify-write). Reports, DMAIC, decrees all use this pattern.
 22. **Reuniones**: Auto-created committees: `COMITE-CRISIS`, `CONSEJO-REGIONAL`, `COMITE-TD`.
 23. **Dashboard**: Unified Centro de Comando for ALL 16 roles. `GET /dashboard/action-items` (coproduct: 6 sources, role-scoped). Modules: MyProgress/MyTeam/DgiTeam/KPIs by role archetype.
-24. **Admin module**: Single `/admin` page with 5 tabs (Usuarios, Divisiones, Configuración, Monitoreo, Auditoría). Old 8 routes redirect with `?tab=`. ADMIN_SISTEMA only. Create forms in drawers.
+24. **Admin module** (ADMIN_SISTEMA only): `/admin` con tabs (Usuarios, Divisiones, Configuración, Monitoreo, Auditoría) **+ subpáginas CRUD dedicadas** que coexisten: `/admin/usuarios`, `/admin/divisiones`, `/admin/financing-tracks`, `/admin/niveles-sni`, `/admin/umbrales`, `/admin/slas`, `/admin/salud-datos`, `/admin/auditoria`. La consolidación total a un único `/admin?tab=` es objetivo de poda, aún no completado.
 25. **Dev tooling**: `/dev` quick login (24 test users, cards by archetype, auto-login). `/dev/testing` checklist+bugs tabs (15 roles, per-user progress). Bug capturer: FAB 🐛 (devMode only) → DrawerPanel with auto-context + paste/upload screenshot → POST `/api/dev/bugs`. All dev data persists to `api/dev-data/` (mounted volume, survives container recreation). `BugReportFabLoader` client wrapper for Next.js 16 SSR compatibility. `goreos_dev_mode` localStorage flag — cleared on normal login. Sidebar "Testing" link visible only in devMode.
-26. **UX Pruning (C60)**: 58→38 navigable routes (-34%). Sidebar items -55% average. ROLE_SECTIONS map in sidebar.tsx drives `defaultOpen` per role. 8 /nuevo pages→drawers (only /ipr/nuevo kept). /mi-division absorbed into ModuleMyTeam. /comite-td+/coordinacion/divisiones→tabs. /servicios consolidated with drawers. Old routes redirect for bookmarks.
+26. **UX Pruning (C60) — parcialmente aplicada**: La superficie navegable real es ~60 rutas (`page.tsx` bajo `web/src/app/(app)/`). Aplicado: `ROLE_SECTIONS` en `sidebar.tsx` controla `defaultOpen` por rol; los drawers de creación inline (p.ej. `IprCompromisoDrawer`) están en uso. **Pendiente** (recomendado por el plan C60, aún no en código): consolidar las 8 páginas `/nuevo` no-IPR en drawers (hoy `actos`, `compromisos`, `convenios`, `core-sessions`, `presupuesto`, `problemas`, `reuniones`, `admin/usuarios` siguen como páginas — sólo `/ipr/nuevo` es el patrón objetivo), absorber `/mi-division` en ModuleMyTeam y convertir `/comite-td` en tab (el sidebar todavía enlaza ambas). Detalle y matriz de poda: `docs/GORE_OS_Role_Surface_Spec_v1.0.md` (recomendaciones R2-R7 abiertas).
 27. **CDPs + Cuotas**: CDP creation advisory-locked `CDP-{year}-{seq:04d}`, validates `amount ≤ current - committed`. Cuota bulk via `POST /cuotas/bulk`. Installments require `installment_number`, `amount`, `due_date`, `payment_status_id`.
 
 ### CORE Sessions & Governance
@@ -306,7 +309,7 @@ goreos/
 
 36. **Mandatory components**: All list pages → `PageHeader` (with `accentColor`). All empty states → `EmptyState`. All destructive actions → `ConfirmDialog`. All 500+ option selects → `ComboboxAsync`.
 37. **Identity**: OKLCH palette (GOREAZUL #031B5F, GORECELESTE #196AB0). 3 fonts: Plus Jakarta Sans, Roboto Slab, JetBrains Mono. Dark sidebar. CSS-only fade-ins via tw-animate-css. `prefers-reduced-motion` in globals.css.
-38. **IPR detail**: 16 tabs in `tab-*.tsx` (self-contained, grouped in 4 categories via TAB_GROUPS). Main: IprHeroCard, IprPhaseStepper, IprHistorySection, IprTransitionPanel (inline gate overview + feedforward effects). No ReadinessCard — gates live in TransitionPanel. `StatusBadge` 32 states, phase-based colors.
+38. **IPR detail**: 18 tabs in `tab-*.tsx` (`Resumen` + 17 satélites auto-contenidos, agrupados en 4 categorías vía `TAB_GROUPS`). Main: IprHeroCard, IprPhaseStepper, IprHistorySection, IprTransitionPanel (inline gate overview + feedforward effects). No ReadinessCard — gates live in TransitionPanel. `StatusBadge` 32 states, phase-based colors.
 39. **Component API**: `DrawerPanel` uses `onClose` (not `onOpenChange`). `EmptyState` uses `title` (not `message`). `api.patch` requires 2 args. `PageGuard`: `allowedRoles?`, `allowedPopulations?`. `use-tab-param.ts` syncs tabs with `?tab=` URL param.
 
 ### IPR Lifecycle

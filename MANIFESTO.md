@@ -63,7 +63,7 @@ El **agente activo**. Define quién ejecuta la acción o toma la decisión.
 
 #### 3.4 El Proceso (Process)
 
-La **perspective dinámica**. Define cómo se orquestan las historias en el tiempo.
+La **perspectiva dinámica**. Define cómo se orquestan las historias en el tiempo.
 
 - Conecta múltiples historias en un flujo de valor coherente.
 
