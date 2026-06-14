@@ -2,7 +2,11 @@
 
 > **Relación**: Este documento es un snapshot de cobertura (C60) del catálogo de 185 historias DGI. Para el detalle completo de cada historia (descripción, prioridad, fuente), ver [DGI_USER_STORIES_v1.0.md](DGI_USER_STORIES_v1.0.md) (C58).
 
-> **Snapshot C60 (parcialmente desactualizado).** Varias páginas DGI marcadas 'NUEVO/no construido' (cuellos-de-botella, escalamiento, servicios, calendario, coordinación) YA EXISTEN — la cobertura efectiva es mayor que la aquí reportada. Residual válido: /stakeholders, /nps, /plan-trabajo siguen sin construir.
+> **Re-snapshot 2026-06-14 (verificación a nivel página/router).** Desde C60 la capa DGI ganó las páginas `cuellos-de-botella`, `escalamiento`, `servicios`, `calendario`, `coordinacion` (+ `comite-td` y `coordinacion/divisiones` como tabs), con sus routers (`dgi_bottleneck`, `dgi_escalation`, `dgi_services`, `dgi_coordination`, `dgi_td_sessions`). De las 127 historias `NUEVO` del baseline, **~67 apuntan a páginas hoy construidas** (pasan a implementadas/parciales) y solo **~30 corresponden a UI genuinamente no construida** — la cobertura efectiva supera holgadamente el 26.5% del baseline C60.
+>
+> **Residual real (7 dominios sin UI, verificados inexistentes):** `/stakeholders` (mapa poder-interés, ADKAR, influencia, campeones), `/nps`, `/plan-trabajo`, `/kb/salud` (disciplina 5S), `/capacitaciones`, `/cambios` (resistencias, adopción), `/dgi/estructura` (Building Blocks Meyer, matriz RACI).
+>
+> Las tablas y filas siguientes son el **baseline C60** (estados pre-C61), conservadas para trazabilidad; el estado vigente de la capa DGI vive en CLAUDE.md.
 
 Fecha: 2026-03-22 | Sesion: C60
 
@@ -18,7 +22,7 @@ Fecha: 2026-03-22 | Sesion: C60
 | D-DGI-POT — Potenciamiento | 30 | 4 | 3 | 23 | 0 |
 | **TOTAL** | **185** | **24** | **25** | **127** | **9** |
 
-**Cobertura efectiva**: 24 implementadas + 25 parciales = **49/185 (26.5%)**
+**Cobertura baseline C60**: 24 implementadas + 25 parciales = **49/185 (26.5%)**. *(Superada — ver Re-snapshot 2026-06-14 al inicio: ~67 de las 127 `NUEVO` ya tienen página construida.)*
 
 ### Por Rol
 
