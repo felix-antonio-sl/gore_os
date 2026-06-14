@@ -4,7 +4,7 @@
 **Objetivo**: Mapear cada rol a su superficie real de uso para fundamentar poda UX.
 **Fuentes**: User Journeys v3.2, sidebar.tsx, command-center.tsx, security.py, scope.py, PageGuard en 60 page.tsx
 
-> **Estado:** las recomendaciones de poda R2-R7 siguen ABIERTAS — no implementadas en código a la fecha de esta auditoría. La superficie viva es ~60 rutas.
+> **Estado (verificado 2026-06-14):** las recomendaciones R1-R7 están IMPLEMENTADAS en código. Las rutas legacy (`/nuevo`, `/mi-division`, `/comite-td`, `/coordinacion/divisiones`, `/admin/*`, `/servicios/*`) son redirect stubs de compatibilidad; la creación ocurre en drawers. De 60 `page.tsx`: 39 navegables + 21 redirect stubs.
 
 ---
 

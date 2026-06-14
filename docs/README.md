@@ -20,7 +20,7 @@
 |-----------|-----------|
 | [GORE_OS_User_Journeys_v3.0.md](GORE_OS_User_Journeys_v3.0.md) | 8 arquetipos, 16 journeys + IPR 360 transversal, 8 principios UX |
 | [GORE_OS_User_Action_Trees_v1.0.md](GORE_OS_User_Action_Trees_v1.0.md) | 24 usuarios × rutas → árboles de acción (lectura/escritura/destructiva) + endpoints + scoping IDOR |
-| [GORE_OS_Role_Surface_Spec_v1.0.md](GORE_OS_Role_Surface_Spec_v1.0.md) | Matriz 15 roles × páginas + recomendaciones de poda (R2-R7 abiertas) |
+| [GORE_OS_Role_Surface_Spec_v1.0.md](GORE_OS_Role_Surface_Spec_v1.0.md) | Matriz 15 roles × páginas + recomendaciones de poda R1-R7 (implementadas) |
 | [DGI_USER_STORIES_v1.0.md](DGI_USER_STORIES_v1.0.md) | 185 historias de usuario DGI (backlog de requisitos) |
 | [GORE_OS_Story_Coverage_v1.0.md](GORE_OS_Story_Coverage_v1.0.md) | Cobertura historia DGI→página (snapshot C60 — parcialmente desactualizado: varias páginas marcadas "NUEVO" ya existen) |
 | [AUDITORIA_RELACIONAL_v1.0.md](AUDITORIA_RELACIONAL_v1.0.md) | Mapa relacional: hubs de FKs, cadenas de navegación, queries reutilizables (cifras de cabecera = baseline 2026-01-30) |
