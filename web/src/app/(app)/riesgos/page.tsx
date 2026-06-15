@@ -43,6 +43,7 @@ export default function RiesgosPage() {
   const [data, setData] = useState<PaginatedResponse<RiskListItem> | null>(null);
   const [matrix, setMatrix] = useState<RiskMatrixCell[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [creating, setCreating] = useState(false);
   const [showMatrix, setShowMatrix] = useState(false);
@@ -86,13 +87,14 @@ export default function RiesgosPage() {
 
   const fetchData = () => {
     setLoading(true);
+    setLoadError(null);
     const statusParam = statusFilter && statusFilter !== "TODOS" ? `&status=${statusFilter}` : "";
     api
       .get<PaginatedResponse<RiskListItem>>(`/api/risk?page=${page}&page_size=20${statusParam}`)
-      .then(setData)
-      .catch(() => {
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
         setData(null);
-        toast.error("Error al cargar riesgos");
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los riesgos");
       })
       .finally(() => setLoading(false));
   };
@@ -136,7 +138,7 @@ export default function RiesgosPage() {
   const columns = [
     {
       key: "code",
-      label: "Codigo",
+      label: "Código",
       render: (v: unknown) => <span className="font-mono text-xs">{String(v ?? "-")}</span>,
     },
     {
@@ -307,6 +309,10 @@ export default function RiesgosPage() {
         onPageChange={(p) => router.push(buildUrl({ page: p }))}
         onRowClick={(row) => router.push(`/riesgos/${(row as RiskListItem).id}`)}
         isLoading={loading}
+        error={loadError}
+        onRetry={fetchData}
+        hasActiveFilters={Boolean(statusFilter && statusFilter !== "TODOS")}
+        onClearFilters={() => router.push(buildUrl({ status: "", page: 1 }))}
       />
 
       {/* Create drawer */}
@@ -392,11 +398,11 @@ export default function RiesgosPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Plan de Mitigacion</Label>
+              <Label>Plan de Mitigación</Label>
               <Textarea
                 value={form.mitigation_plan}
                 onChange={(e) => setForm({ ...form, mitigation_plan: e.target.value })}
-                placeholder="Descripcion del plan de mitigacion"
+                placeholder="Descripción del plan de mitigación"
                 rows={3}
               />
             </div>

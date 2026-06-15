@@ -49,7 +49,7 @@ export default function ProcesoProgresoPage() {
   })();
 
   const columns = [
-    { key: "division_name", label: "Division", className: "text-sm font-medium" },
+    { key: "division_name", label: "División", className: "text-sm font-medium" },
     { key: "total", label: "Total", className: "text-sm text-center font-bold" },
     ...["identificado", "en_levantamiento", "modelado", "validado", "publicado", "suspendido"].map(
       (status) => ({
@@ -87,7 +87,7 @@ export default function ProcesoProgresoPage() {
     <div className="p-6 space-y-6 animate-in fade-in duration-300">
       <PageHeader
         title="Progreso de Procesos"
-        description="Estado de procesos por division y pipeline DMAIC"
+        description="Estado de procesos por división y pipeline DMAIC"
       />
 
       {/* DMAIC Pipeline Summary */}
@@ -101,7 +101,7 @@ export default function ProcesoProgresoPage() {
           <div className="rounded-lg border bg-card p-4">
             <p className="text-xs text-muted-foreground">WIP Activo</p>
             <p className="text-2xl font-bold">{dmaicSummary.wip}</p>
-            <p className="text-[11px] text-muted-foreground">En Curso + Revision</p>
+            <p className="text-[11px] text-muted-foreground">En Curso + Revisión</p>
           </div>
           <div className="rounded-lg border bg-card p-4">
             <p className="text-xs text-muted-foreground">Lead Time</p>
@@ -111,14 +111,14 @@ export default function ProcesoProgresoPage() {
           <div className="rounded-lg border bg-card p-4">
             <p className="text-xs text-muted-foreground">Cycle Time</p>
             <p className="text-2xl font-bold">{dmaicSummary.cycleTime !== null ? `${dmaicSummary.cycleTime}d` : "\u2014"}</p>
-            <p className="text-[11px] text-muted-foreground">Promedio ejecucion</p>
+            <p className="text-[11px] text-muted-foreground">Promedio ejecución</p>
           </div>
         </div>
       )}
 
       {/* Process Status by Division */}
       <div className="rounded-xl border bg-card p-4">
-        <h3 className="text-sm font-medium mb-4">Estado por Division</h3>
+        <h3 className="text-sm font-medium mb-4">Estado por División</h3>
         {!loading && progress.length === 0 ? (
           <EmptyState compact title="Sin procesos registrados" />
         ) : (

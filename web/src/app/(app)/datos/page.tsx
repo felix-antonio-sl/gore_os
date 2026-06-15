@@ -67,6 +67,7 @@ export default function DatosPage() {
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<unknown | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -121,6 +122,7 @@ export default function DatosPage() {
   useEffect(() => {
     if (!config) return;
     setIsLoading(true);
+    setLoadError(null);
     setSelectedItem(null);
 
     config
@@ -129,11 +131,13 @@ export default function DatosPage() {
         setItems(newItems);
         setTotal(newTotal);
         setTotalPages(newTotalPages);
+        setLoadError(null);
       })
-      .catch(() => {
+      .catch((err: Error) => {
         setItems([]);
         setTotal(0);
         setTotalPages(1);
+        setLoadError(err?.message || "No se pudieron cargar los datos de este dominio.");
       })
       .finally(() => setIsLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,6 +154,13 @@ export default function DatosPage() {
   }, []);
 
   const hasDetailPanel = selectedItem !== null;
+
+  // Active filters: any domain filter set, or a non-empty search term.
+  const hasActiveFilters =
+    (searchParams.get("search") ?? "") !== "" ||
+    (config?.filters ?? []).some((f) => (searchParams.get(f.key) ?? "") !== "");
+
+  const triggerRefresh = () => setRefreshKey((k) => k + 1);
 
   return (
     <div className="h-full flex flex-col">
@@ -262,22 +273,22 @@ export default function DatosPage() {
                 </div>
               )}
               <div className="px-4 py-3 flex-1 overflow-auto">
-                {items.length === 0 && !isLoading ? (
-                  <div className="flex flex-col items-center justify-center h-48 text-muted-foreground gap-2">
-                    <p className="text-sm">Sin datos para este dominio.</p>
-                  </div>
-                ) : (
-                  <DataTable
-                    columns={config.columns}
-                    data={items}
-                    page={page}
-                    totalPages={totalPages}
-                    total={total}
-                    onPageChange={handlePageChange}
-                    onRowClick={(row) => setSelectedItem(row)}
-                    isLoading={isLoading}
-                  />
-                )}
+                <DataTable
+                  columns={config.columns}
+                  data={items}
+                  page={page}
+                  totalPages={totalPages}
+                  total={total}
+                  onPageChange={handlePageChange}
+                  onRowClick={(row) => setSelectedItem(row)}
+                  isLoading={isLoading}
+                  error={loadError}
+                  onRetry={triggerRefresh}
+                  hasActiveFilters={hasActiveFilters}
+                  onClearFilters={handleClear}
+                  emptyTitle="Sin datos para este dominio"
+                  emptyDescription="No hay registros disponibles en este dominio por ahora."
+                />
               </div>
             </div>
           ) : (

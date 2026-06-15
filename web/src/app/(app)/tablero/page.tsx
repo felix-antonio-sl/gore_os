@@ -6,6 +6,7 @@ import { KanbanCard } from "@/components/kanban-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +22,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Plus, BarChart3 } from "lucide-react";
+import { Plus, BarChart3, LayoutGrid } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
 import { LeanMetricsPanel } from "./components/lean-metrics-panel";
 import {
   DndContext,
@@ -398,6 +400,18 @@ export default function TableroPage() {
             </div>
           ))}
         </div>
+      ) : initiatives.length === 0 ? (
+        <EmptyState
+          icon={<LayoutGrid className="size-10 text-muted-foreground/50" />}
+          title="No hay iniciativas registradas"
+          description="Crea la primera iniciativa de mejora para comenzar a gestionarla en el tablero."
+          action={
+            <Button size="sm" onClick={openCreate}>
+              <Plus className="size-4 mr-1" />
+              Nueva Iniciativa
+            </Button>
+          }
+        />
       ) : (
         <DndContext
           sensors={sensors}
@@ -445,8 +459,8 @@ export default function TableroPage() {
                       strategy={verticalListSortingStrategy}
                     >
                       {colItems.length === 0 ? (
-                        <p className="text-xs text-muted-foreground text-center py-6 italic">
-                          Sin iniciativas
+                        <p className="text-xs text-muted-foreground/60 text-center py-6">
+                          —
                         </p>
                       ) : (
                         colItems.map((initiative) => (
@@ -489,17 +503,6 @@ export default function TableroPage() {
             ) : null}
           </DragOverlay>
         </DndContext>
-      )}
-
-      {!isLoading && initiatives.length === 0 && (
-        <div className="rounded-lg border border-dashed border-gray-300 p-12 text-center">
-          <p className="text-muted-foreground text-sm">
-            No hay iniciativas registradas.
-          </p>
-          <p className="text-muted-foreground text-xs mt-1">
-            Usa el botón &quot;Nueva Iniciativa&quot; para agregar la primera.
-          </p>
-        </div>
       )}
 
       {/* Create/Edit Dialog */}
@@ -549,11 +552,10 @@ export default function TableroPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="ini-target" className="text-sm font-medium">Fecha objetivo</label>
-                <Input
+                <DateField
                   id="ini-target"
-                  type="date"
                   value={formTargetDate}
-                  onChange={(e) => setFormTargetDate(e.target.value)}
+                  onChange={setFormTargetDate}
                 />
               </div>
               <div className="space-y-2">

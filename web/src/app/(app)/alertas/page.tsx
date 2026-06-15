@@ -6,9 +6,9 @@ import { api } from "@/lib/api";
 import { AlertCard } from "@/components/alert-card";
 import { FilterBar } from "@/components/filter-bar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import { toast } from "sonner";
-import { Download } from "lucide-react";
+import { AlertTriangle, Download, RotateCw } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
@@ -43,6 +43,8 @@ export default function AlertasPage() {
 
   const [data, setData] = useState<PaginatedResponse<AlertaListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const nivel = searchParams.get("nivel") ?? "";
   const tipo = searchParams.get("tipo") ?? "";
@@ -89,16 +91,19 @@ export default function AlertasPage() {
     if (dateTo) params.set("date_to", dateTo);
 
     queueMicrotask(() => {
-      if (active) setIsLoading(true);
+      if (active) { setIsLoading(true); setLoadError(null); }
     });
 
     api
       .get<PaginatedResponse<AlertaListItem>>(`/api/alertas?${params.toString()}`)
       .then((response) => {
-        if (active) setData(response);
+        if (active) { setData(response); setLoadError(null); }
       })
-      .catch(() => {
-        if (active) setData(null);
+      .catch((err) => {
+        if (active) {
+          setData(null);
+          setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las alertas");
+        }
       })
       .finally(() => {
         if (active) setIsLoading(false);
@@ -107,7 +112,7 @@ export default function AlertasPage() {
     return () => {
       active = false;
     };
-  }, [nivel, tipo, soloActivas, dateFrom, dateTo]);
+  }, [nivel, tipo, soloActivas, dateFrom, dateTo, refreshKey]);
 
   const handleAttend = async (id: string) => {
     try {
@@ -147,6 +152,7 @@ export default function AlertasPage() {
       <PageHeader
         title="Alertas"
         description="Alertas y notificaciones del sistema"
+        accentColor="amber"
         actions={
           <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "alertas")}>
             <Download className="size-4 mr-1" />CSV
@@ -166,9 +172,9 @@ export default function AlertasPage() {
 
       <div className="flex items-center gap-2">
         <span className="text-xs text-muted-foreground whitespace-nowrap">Fecha:</span>
-        <Input type="date" className="h-8 w-36 text-xs" value={dateFrom} onChange={(e) => router.push(buildUrl({ date_from: e.target.value }))} />
+        <DateField className="w-36" value={dateFrom} onChange={(v) => router.push(buildUrl({ date_from: v }))} />
         <span className="text-xs text-muted-foreground">—</span>
-        <Input type="date" className="h-8 w-36 text-xs" value={dateTo} onChange={(e) => router.push(buildUrl({ date_to: e.target.value }))} />
+        <DateField className="w-36" value={dateTo} min={dateFrom || undefined} onChange={(v) => router.push(buildUrl({ date_to: v }))} />
       </div>
 
       {isLoading ? (
@@ -176,6 +182,20 @@ export default function AlertasPage() {
           {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="h-20 rounded-lg bg-muted animate-pulse" />
           ))}
+        </div>
+      ) : loadError ? (
+        <div className="rounded-xl border bg-card p-8 text-center">
+          <EmptyState
+            icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+            title="No se pudieron cargar los datos"
+            description={loadError}
+            action={
+              <Button variant="outline" size="sm" onClick={() => setRefreshKey((k) => k + 1)}>
+                <RotateCw className="size-4 mr-1.5" />
+                Reintentar
+              </Button>
+            }
+          />
         </div>
       ) : !data || data.items.length === 0 ? (
         <div className="rounded-xl border bg-card p-8 text-center">

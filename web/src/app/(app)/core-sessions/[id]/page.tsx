@@ -170,7 +170,7 @@ export default function CoreSessionDetailPage() {
   }
 
   if (!session) {
-    return <div className="p-6"><p className="text-red-500">{error || "Sesion no encontrada"}</p></div>;
+    return <div className="p-6"><p className="text-red-500">{error || "Sesión no encontrada"}</p></div>;
   }
 
   return (
@@ -181,7 +181,7 @@ export default function CoreSessionDetailPage() {
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold">
-              Sesion {session.session_type === "EXTRAORDINARIA" ? "Extraordinaria" : "Ordinaria"} #{session.session_number}
+              Sesión {session.session_type === "EXTRAORDINARIA" ? "Extraordinaria" : "Ordinaria"} #{session.session_number}
             </h1>
             <StatusBadge status={session.status} />
           </div>
@@ -226,7 +226,7 @@ export default function CoreSessionDetailPage() {
       <Card>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">Temas para Votacion ({session.topics.length})</CardTitle>
+            <CardTitle className="text-lg">Temas para Votación ({session.topics.length})</CardTitle>
             {isManager && session.status !== "FINALIZADA" && (
               <Button size="sm" variant="outline" onClick={() => setShowTopicForm(!showTopicForm)}>
                 <Plus className="size-4 mr-1" />{showTopicForm ? "Cancelar" : "Agregar Tema"}
@@ -242,18 +242,18 @@ export default function CoreSessionDetailPage() {
                 <Input
                   value={topicSubject}
                   onChange={(e) => setTopicSubject(e.target.value)}
-                  placeholder="Descripcion del tema a votar..."
+                  placeholder="Descripción del tema a votar..."
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Tipo de Quorum</label>
+                <label className="text-sm font-medium">Tipo de Quórum</label>
                 <Select value={topicQuorum} onValueChange={setTopicQuorum}>
                   <SelectTrigger className="w-[250px]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="SIMPLE">Mayoria Simple (9/16)</SelectItem>
-                    <SelectItem value="CALIFICADA">Mayoria Calificada (11/16)</SelectItem>
+                    <SelectItem value="SIMPLE">Mayoría Simple (9/16)</SelectItem>
+                    <SelectItem value="CALIFICADA">Mayoría Calificada (11/16)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -348,7 +348,7 @@ function TopicCard({
             </button>
           )}
           <div className="text-xs text-muted-foreground">
-            {topic.quorum_type === "CALIFICADA" ? "Mayoria Calificada (11/16)" : "Mayoria Simple (9/16)"}
+            {topic.quorum_type === "CALIFICADA" ? "Mayoría Calificada (11/16)" : "Mayoría Simple (9/16)"}
           </div>
         </div>
         <VoteResultBadge result={topic.result} />
@@ -406,7 +406,7 @@ function TopicCard({
             onClick={() => onVote(topic.id, "ABSTENCION")}
             disabled={actionLoading}
           >
-            <MinusCircle className="size-3 mr-1" />Abstencion
+            <MinusCircle className="size-3 mr-1" />Abstención
           </Button>
         </div>
       )}

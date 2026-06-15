@@ -27,6 +27,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { formatDateLong, formatDate } from "@/lib/format";
+import { DateField } from "@/components/date-field";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import type { ReunionDetail, TopicItem, AutoSuggestion } from "@/types";
@@ -85,7 +86,7 @@ function SuggestionIcon({ type }: { type: string }) {
 function suggestionTypeLabel(type: string): string {
   switch (type) {
     case "alerta_critica":
-      return "Alerta Critica";
+      return "Alerta Crítica";
     case "compromiso_vencido":
       return "Compromiso Vencido";
     case "problema_abierto":
@@ -277,7 +278,7 @@ export default function ReunionDetailPage() {
           <ArrowLeft className="size-4 mr-1" />
           Volver
         </Button>
-        <p className="mt-4 text-muted-foreground">Reunion no encontrada.</p>
+        <p className="mt-4 text-muted-foreground">Reunión no encontrada.</p>
       </div>
     );
   }
@@ -300,7 +301,7 @@ export default function ReunionDetailPage() {
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <span className="font-mono text-sm text-muted-foreground">
-                Sesion #{reunion.session_number}
+                Sesión #{reunion.session_number}
               </span>
               <StatusBadgeReunion status={reunion.status} />
             </div>
@@ -309,7 +310,7 @@ export default function ReunionDetailPage() {
             </p>
             {reunion.location && (
               <p className="text-sm mt-0.5">
-                <span className="text-muted-foreground">Ubicacion: </span>
+                <span className="text-muted-foreground">Ubicación: </span>
                 {reunion.location}
               </p>
             )}
@@ -324,7 +325,7 @@ export default function ReunionDetailPage() {
             {isProgramada && canManage && (
               <Button onClick={handleStart} disabled={actionLoading}>
                 <Play className="size-4 mr-1" />
-                {actionLoading ? "Iniciando..." : "Iniciar Reunion"}
+                {actionLoading ? "Iniciando..." : "Iniciar Reunión"}
               </Button>
             )}
             {isEnCurso && canManage && (
@@ -334,7 +335,7 @@ export default function ReunionDetailPage() {
                 disabled={actionLoading}
               >
                 <Square className="size-4 mr-1" />
-                Finalizar Reunion
+                Finalizar Reunión
               </Button>
             )}
           </div>
@@ -356,7 +357,7 @@ export default function ReunionDetailPage() {
       {showFinalize && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Finalizar Reunion</CardTitle>
+            <CardTitle className="text-base">Finalizar Reunión</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="space-y-1.5">
@@ -365,12 +366,12 @@ export default function ReunionDetailPage() {
                 className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 value={finalizeSummary}
                 onChange={(e) => setFinalizeSummary(e.target.value)}
-                placeholder="Resumen de la reunion..."
+                placeholder="Resumen de la reunión..."
               />
             </div>
             <div className="flex gap-2">
               <Button onClick={handleFinalize} disabled={finalizeSubmitting} variant="destructive">
-                {finalizeSubmitting ? "Finalizando..." : "Confirmar Finalizacion"}
+                {finalizeSubmitting ? "Finalizando..." : "Confirmar Finalización"}
               </Button>
               <Button variant="outline" onClick={() => setShowFinalize(false)}>
                 Cancelar
@@ -387,7 +388,7 @@ export default function ReunionDetailPage() {
             <div className="flex items-center justify-between">
               <CardTitle className="text-base flex items-center gap-2">
                 <Lightbulb className="size-4" />
-                Preparar Reunion
+                Preparar Reunión
               </CardTitle>
               <Button size="sm" variant="outline" onClick={loadSuggestions} disabled={suggestionsLoading}>
                 {suggestionsLoading ? "Cargando..." : "Obtener Sugerencias"}
@@ -433,7 +434,7 @@ export default function ReunionDetailPage() {
           {suggestions && suggestions.length === 0 && (
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                No se encontraron sugerencias automaticas. Puede agregar temas manualmente.
+                No se encontraron sugerencias automáticas. Puede agregar temas manualmente.
               </p>
             </CardContent>
           )}
@@ -506,10 +507,9 @@ export default function ReunionDetailPage() {
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-sm font-medium">Plazo</label>
-                  <Input
-                    type="date"
+                  <DateField
                     value={topicDueDate}
-                    onChange={(e) => setTopicDueDate(e.target.value)}
+                    onChange={(v) => setTopicDueDate(v)}
                   />
                 </div>
               </div>
@@ -535,7 +535,7 @@ export default function ReunionDetailPage() {
           {/* Topic list */}
           {reunion.topics.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4 text-center">
-              No hay temas agregados. Use el boton &quot;Agregar Tema&quot; o las sugerencias automaticas.
+              No hay temas agregados. Use el botón &quot;Agregar Tema&quot; o las sugerencias automáticas.
             </p>
           ) : (
             reunion.topics.map((topic: TopicItem) => (
@@ -585,7 +585,7 @@ export default function ReunionDetailPage() {
                     <p className="text-sm font-medium">{topic.subject}</p>
                     {topic.decision && (
                       <div className="mt-1 p-2 rounded bg-green-50 border border-green-200">
-                        <p className="text-xs font-medium text-green-800">Decision:</p>
+                        <p className="text-xs font-medium text-green-800">Decisión:</p>
                         <p className="text-sm text-green-700">{topic.decision}</p>
                       </div>
                     )}
@@ -608,7 +608,7 @@ export default function ReunionDetailPage() {
                             className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             value={reviewDecision}
                             onChange={(e) => setReviewDecision(e.target.value)}
-                            placeholder="Decision o acuerdo tomado..."
+                            placeholder="Decisión o acuerdo tomado..."
                           />
                           <div className="flex gap-1">
                             <Button

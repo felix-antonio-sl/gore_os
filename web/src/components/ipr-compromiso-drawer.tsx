@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { DrawerPanel } from "@/components/drawer-panel";
+import { DateField } from "@/components/date-field";
+import { ComboboxAsync } from "@/components/combobox-async";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -37,21 +39,23 @@ interface Props {
 
 export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) {
   const [commitmentTypes, setCommitmentTypes] = useState<CommitmentType[]>([]);
-  const [users, setUsers] = useState<UserOption[]>([]);
 
   const [commitmentTypeId, setCommitmentTypeId] = useState("");
   const [description, setDescription] = useState("");
   const [responsibleId, setResponsibleId] = useState("");
+  const [responsibleLabel, setResponsibleLabel] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [observations, setObservations] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (!open) return;
-    api.get<CommitmentType[]>("/api/catalogs/commitment-types").then(setCommitmentTypes).catch(() => {});
-    api.get<UserOption[]>("/api/catalogs/users").then(setUsers).catch(() => {});
+    api
+      .get<CommitmentType[]>("/api/catalogs/commitment-types")
+      .then(setCommitmentTypes)
+      .catch(() => {});
   }, [open]);
 
   useEffect(() => {
@@ -65,13 +69,29 @@ export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) 
     }
   }, [commitmentTypeId, commitmentTypes, dueDate]);
 
+  const searchUsers = async (q: string) => {
+    const rows = await api.get<UserOption[]>(
+      `/api/catalogs/users?search=${encodeURIComponent(q)}`,
+    );
+    return rows.map((u) => ({
+      value: u.id,
+      label:
+        `${u.nombre} ${u.apellido_paterno}` +
+        (u.division_name ? ` (${u.division_name})` : ""),
+    }));
+  };
+
+  const isDirty =
+    !!description || !!commitmentTypeId || !!responsibleId || !!observations;
+
   const resetForm = () => {
     setCommitmentTypeId("");
     setDescription("");
     setResponsibleId("");
+    setResponsibleLabel("");
     setDueDate("");
     setObservations("");
-    setError(null);
+    setFieldErrors({});
   };
 
   const handleClose = () => {
@@ -79,14 +99,20 @@ export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) 
     onClose();
   };
 
+  const validate = () => {
+    const errors: Record<string, string> = {};
+    if (!commitmentTypeId) errors.commitmentTypeId = "Seleccione el tipo de compromiso.";
+    if (!description.trim()) errors.description = "Ingrese una descripción.";
+    if (!responsibleId) errors.responsibleId = "Seleccione un responsable.";
+    if (!dueDate) errors.dueDate = "Ingrese la fecha límite.";
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!description || !commitmentTypeId || !responsibleId || !dueDate) {
-      setError("Complete todos los campos requeridos.");
-      return;
-    }
+    if (!validate()) return;
     setSubmitting(true);
-    setError(null);
     try {
       await api.post("/api/compromisos", {
         description,
@@ -96,23 +122,30 @@ export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) 
         ipr_id: iprId,
         observations: observations || null,
       });
+      toast.success("Compromiso creado");
       resetForm();
       onClose();
       onCreated();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al crear compromiso");
+      toast.error(err instanceof Error ? err.message : "Error al crear compromiso");
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <DrawerPanel open={open} onClose={handleClose} title="Nuevo Compromiso">
+    <DrawerPanel open={open} onClose={handleClose} title="Nuevo Compromiso" isDirty={isDirty}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
           <label className="text-sm font-medium">Tipo de compromiso *</label>
-          <Select value={commitmentTypeId} onValueChange={setCommitmentTypeId}>
-            <SelectTrigger>
+          <Select
+            value={commitmentTypeId}
+            onValueChange={(v) => {
+              setCommitmentTypeId(v);
+              setFieldErrors((p) => ({ ...p, commitmentTypeId: "" }));
+            }}
+          >
+            <SelectTrigger aria-invalid={!!fieldErrors.commitmentTypeId || undefined}>
               <SelectValue placeholder="Seleccione tipo" />
             </SelectTrigger>
             <SelectContent>
@@ -123,6 +156,9 @@ export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) 
               ))}
             </SelectContent>
           </Select>
+          {fieldErrors.commitmentTypeId && (
+            <p className="text-xs text-red-600">{fieldErrors.commitmentTypeId}</p>
+          )}
         </div>
 
         <div className="space-y-1.5">
@@ -130,35 +166,48 @@ export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) 
           <textarea
             className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              setFieldErrors((p) => ({ ...p, description: "" }));
+            }}
             placeholder="Describa el compromiso..."
+            aria-invalid={!!fieldErrors.description || undefined}
           />
+          {fieldErrors.description && (
+            <p className="text-xs text-red-600">{fieldErrors.description}</p>
+          )}
         </div>
 
         <div className="space-y-1.5">
           <label className="text-sm font-medium">Responsable *</label>
-          <Select value={responsibleId} onValueChange={setResponsibleId}>
-            <SelectTrigger>
-              <SelectValue placeholder="Seleccione responsable" />
-            </SelectTrigger>
-            <SelectContent>
-              {users.map((u) => (
-                <SelectItem key={u.id} value={u.id}>
-                  {u.nombre} {u.apellido_paterno}
-                  {u.division_name ? ` (${u.division_name})` : ""}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <ComboboxAsync
+            value={responsibleId}
+            onChange={(v) => {
+              setResponsibleId(v);
+              setFieldErrors((p) => ({ ...p, responsibleId: "" }));
+            }}
+            searchFn={searchUsers}
+            displayLabel={responsibleLabel}
+            placeholder="Buscar responsable por nombre…"
+          />
+          {fieldErrors.responsibleId && (
+            <p className="text-xs text-red-600">{fieldErrors.responsibleId}</p>
+          )}
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium">Fecha limite *</label>
-          <Input
-            type="date"
+          <label className="text-sm font-medium">Fecha límite *</label>
+          <DateField
             value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
+            onChange={(v) => {
+              setDueDate(v);
+              setFieldErrors((p) => ({ ...p, dueDate: "" }));
+            }}
+            aria-invalid={!!fieldErrors.dueDate || undefined}
           />
+          {fieldErrors.dueDate && (
+            <p className="text-xs text-red-600">{fieldErrors.dueDate}</p>
+          )}
         </div>
 
         <div className="space-y-1.5">
@@ -170,8 +219,6 @@ export function IprCompromisoDrawer({ open, onClose, iprId, onCreated }: Props) 
             placeholder="Observaciones opcionales..."
           />
         </div>
-
-        {error && <p className="text-sm text-red-600">{error}</p>}
 
         <div className="flex gap-2 pt-2">
           <Button type="submit" disabled={submitting}>

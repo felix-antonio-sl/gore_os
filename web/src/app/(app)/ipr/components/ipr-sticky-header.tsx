@@ -11,8 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowLeft, MoreVertical, Pencil, UserPlus } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { mechanismColors, mcdPhaseColors } from "./ipr-constants";
+import { MechanismBadge, PhaseBadge } from "./ipr-badges";
 import type { IprDetail } from "./ipr-constants";
 
 interface IprStickyHeaderProps {
@@ -33,8 +32,9 @@ export function IprStickyHeader({ ipr, canEdit, canAssign, onEdit, onAssign }: I
   return (
     <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b px-4 py-2">
       <div className="flex items-center gap-2 min-w-0">
-        <Button variant="ghost" size="icon" className="size-8 shrink-0" onClick={() => router.back()}>
-          <ArrowLeft className="size-4" />
+        <Button variant="ghost" size="sm" className="h-8 px-2 shrink-0" onClick={() => router.back()}>
+          <ArrowLeft className="size-4 mr-1" />
+          Volver
         </Button>
 
         <span className="font-mono text-xs text-muted-foreground shrink-0">{ipr.codigo_bip}</span>
@@ -42,17 +42,14 @@ export function IprStickyHeader({ ipr, canEdit, canAssign, onEdit, onAssign }: I
         <span className="text-sm font-medium truncate min-w-0 flex-1">{ipr.name}</span>
 
         <div className="flex items-center gap-1.5 shrink-0">
-          {ipr.mechanism && (
-            <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 hidden sm:inline-flex", mechanismColors[ipr.mechanism])}>
-              {ipr.mechanism}
-            </Badge>
-          )}
+          <MechanismBadge
+            code={ipr.mechanism}
+            label={ipr.mechanism_label ?? ipr.mechanism}
+            size="sm"
+            className="hidden sm:inline-flex"
+          />
           {ipr.status && <StatusBadge status={ipr.status} size="sm" />}
-          {ipr.mcd_phase && (
-            <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0", mcdPhaseColors[ipr.mcd_phase])}>
-              {ipr.mcd_phase}
-            </Badge>
-          )}
+          <PhaseBadge code={ipr.mcd_phase} label={ipr.mcd_phase} size="sm" />
           {hasActions && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

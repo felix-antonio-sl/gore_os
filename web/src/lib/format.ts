@@ -83,6 +83,37 @@ export function formatCLP(value: number | null | undefined): string {
 /** Alias for formatCLP */
 export const formatCurrency = formatCLP;
 
+/**
+ * Exact CLP currency, no compact notation: "$67.294".
+ * Use for parameters, thresholds, UTM values and any figure where the exact
+ * amount matters — never the compact `formatCLP` (which rounds to "$67,3 mil").
+ */
+export function formatCLPExact(value: number | null | undefined): string {
+  if (value === null || value === undefined) return "-";
+  return new Intl.NumberFormat(LOCALE, {
+    style: "currency",
+    currency: "CLP",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+/** Alias: a UTM-denominated peso amount is always shown exact. */
+export const formatUTM = formatCLPExact;
+
+/**
+ * Human-framed large amounts: ">= 1.000 millones" → "$5.000 millones",
+ * smaller amounts fall back to exact pesos ("$67.294"). Avoids "$5000 M".
+ */
+export function formatMillones(value: number | null | undefined): string {
+  if (value === null || value === undefined) return "-";
+  if (Math.abs(value) < 1_000_000_000) return formatCLPExact(value);
+  const millones = value / 1_000_000;
+  const formatted = new Intl.NumberFormat(LOCALE, {
+    maximumFractionDigits: millones % 1 === 0 ? 0 : 1,
+  }).format(millones);
+  return `$${formatted} millones`;
+}
+
 /** Relative time: "hace 2h", "hace 3d", "hace 1 min" */
 export function formatRelativeTime(dateStr: string | null | undefined): string {
   if (!dateStr) return "-";

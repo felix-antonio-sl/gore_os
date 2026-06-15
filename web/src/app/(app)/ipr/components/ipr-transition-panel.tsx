@@ -9,8 +9,11 @@ import {
 } from "@/components/ui/select";
 import { ChevronRight, Info, Loader2, Lock, ShieldCheck, ShieldX } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { mcdPhaseColors } from "./ipr-constants";
+import { mcdPhaseColors, MCD_PHASES } from "./ipr-constants";
 import type { IprTransition } from "@/types";
+
+const phaseLabel = (code?: string | null) =>
+  MCD_PHASES.find((p) => p.code === code)?.label ?? code ?? "";
 
 interface IprTransitionPanelProps {
   transitions: IprTransition[];
@@ -54,7 +57,7 @@ export function IprTransitionPanel({
 
   return (
     <div className="rounded-xl border bg-card p-4">
-      <h3 className="text-sm font-medium mb-3">Avanzar Estado</h3>
+      <h3 className="text-sm font-medium mb-3">Mover a la siguiente etapa</h3>
 
       {/* Quick gate overview — only when there are phase-crossing transitions */}
       {gatedTransitions.length > 0 && (
@@ -101,7 +104,7 @@ export function IprTransitionPanel({
           <div className="flex-1 min-w-[200px]">
             <Select value={selectedTransition} onValueChange={onSelectTransition}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Seleccionar estado destino..." />
+                <SelectValue placeholder="Seleccione la acción a realizar..." />
               </SelectTrigger>
               <SelectContent>
                 {allowedTransitions.map((t) => (
@@ -131,7 +134,7 @@ export function IprTransitionPanel({
             onClick={onTransition}
           >
             {submitting && <Loader2 className="size-4 mr-1 animate-spin" />}
-            Transicionar
+            Confirmar avance
           </Button>
         </div>
       )}
@@ -140,7 +143,7 @@ export function IprTransitionPanel({
       {selectedTrans && selectedTrans.gates.length > 0 && (
         <div className="mt-3 space-y-1">
           <p className="text-xs font-medium text-muted-foreground">
-            Gates para {currentPhase} → {selectedTrans.target_phase}:
+            Requisitos para pasar de {phaseLabel(currentPhase)} a {phaseLabel(selectedTrans.target_phase)}:
           </p>
           {selectedTrans.gates.map((g) => (
             <div key={g.name} className="flex items-center gap-2 text-xs">
@@ -177,7 +180,7 @@ export function IprTransitionPanel({
         <div className="mt-3 pt-3 border-t">
           <p className="text-[11px] text-muted-foreground flex items-center gap-1.5 mb-1">
             <Lock className="size-3 shrink-0" />
-            {deniedTransitions.length} transición(es) reservada(s) para otros roles
+            {deniedTransitions.length} {deniedTransitions.length === 1 ? "acción disponible" : "acciones disponibles"} solo para otros roles
           </p>
           <div className="flex flex-wrap gap-1.5">
             {deniedTransitions.map((t) => (

@@ -6,6 +6,7 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -218,19 +219,18 @@ export function IprConvenioDrawer({ open, onClose, iprId, onCreated }: Props) {
 
             <div className="space-y-1.5">
               <label className="text-sm font-medium">Vigencia desde</label>
-              <Input
-                type="date"
+              <DateField
                 value={validFrom}
-                onChange={(e) => setValidFrom(e.target.value)}
+                onChange={(v) => setValidFrom(v)}
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="text-sm font-medium">Vigencia hasta</label>
-              <Input
-                type="date"
+              <DateField
                 value={validTo}
-                onChange={(e) => setValidTo(e.target.value)}
+                min={validFrom || undefined}
+                onChange={(v) => setValidTo(v)}
               />
             </div>
 

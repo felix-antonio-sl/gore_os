@@ -15,6 +15,7 @@ import {
 import { Plus, BarChart3, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
+import { DateField } from "@/components/date-field";
 import type { CategoryRef } from "@/types";
 
 interface ExpostEvalItem {
@@ -276,7 +277,7 @@ export function TabEvaluacionExpost({ iprId, canManage }: TabEvaluacionExpostPro
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-sm font-medium">Fecha *</label>
-                  <input type="date" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm" value={evalDate} onChange={(e) => setEvalDate(e.target.value)} />
+                  <DateField value={evalDate} onChange={(v) => setEvalDate(v)} />
                 </div>
               </div>
               <div className="space-y-1.5">

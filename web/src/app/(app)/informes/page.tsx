@@ -445,6 +445,7 @@ export default function InformesPage() {
 
   const [reports, setReports] = useState<DGIReport[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedReport, setSelectedReport] = useState<DGIReport | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -481,10 +482,17 @@ export default function InformesPage() {
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
+    setError(null);
     api
       .get<DGIReport[]>(`/api/dgi/reports?${params.toString()}`)
-      .then(setReports)
-      .catch(() => setReports(null))
+      .then((res) => {
+        setReports(res);
+        setError(null);
+      })
+      .catch(() => {
+        setReports(null);
+        setError("No se pudieron cargar los informes.");
+      })
       .finally(() => setIsLoading(false));
   }, [activeType, page, refreshKey]);
 
@@ -558,7 +566,7 @@ export default function InformesPage() {
       {/* Header */}
       <div className="px-5 py-3 border-b shrink-0">
         <div className="flex items-center justify-between">
-          <div>
+          <div className="border-l-4 border-l-cyan-500 pl-3">
             <h1 className="text-lg font-bold leading-tight">Informes DGI</h1>
             <p className="text-[11px] text-muted-foreground mt-0.5">
               Generación y seguimiento de informes institucionales
@@ -654,26 +662,14 @@ export default function InformesPage() {
               onPageChange={handlePageChange}
               onRowClick={(row) => setSelectedReport(row as DGIReport)}
               isLoading={isLoading}
+              error={error}
+              onRetry={() => setRefreshKey((k) => k + 1)}
+              hasActiveFilters={activeType !== "ALL"}
+              onClearFilters={() => handleTypeChange("ALL")}
+              emptyTitle="Sin informes"
+              emptyDescription="El historial de informes aparecerá aquí."
             />
           </section>
-
-          {/* Empty state when no data at all */}
-          {!isLoading && reports?.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-12 text-muted-foreground gap-2">
-              <FileText className="size-10 opacity-30" />
-              <p className="text-sm">No hay informes para el filtro seleccionado</p>
-              <p className="text-xs">
-                {activeType !== "ALL" ? (
-                  <>
-                    No se encontraron informes de tipo{" "}
-                    <span className="font-medium">{reportTypeLabels[activeType] ?? activeType}</span>
-                  </>
-                ) : (
-                  "El historial de informes aparecerá aquí"
-                )}
-              </p>
-            </div>
-          )}
         </div>
       </ScrollArea>
 

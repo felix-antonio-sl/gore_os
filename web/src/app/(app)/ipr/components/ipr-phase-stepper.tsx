@@ -12,13 +12,15 @@ interface IprPhaseStepperProps {
 export function IprPhaseStepper({ currentPhase, currentPhaseLabel, phaseEnteredAt }: IprPhaseStepperProps) {
   const daysInPhase = phaseEnteredAt ? Math.floor((Date.now() - new Date(phaseEnteredAt).getTime()) / 86400000) : null;
   const currentIdx = MCD_PHASES.findIndex(p => p.code === currentPhase);
+  // Keep the badge label consistent with the stepper circle label for this phase.
+  const phaseLabel = MCD_PHASES[currentIdx]?.label ?? currentPhaseLabel ?? "";
 
   return (
     <div className="rounded-xl border bg-card p-4">
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-sm font-medium text-muted-foreground">Ciclo de Vida</h3>
         <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[currentPhase])}>
-          {currentPhase} — {currentPhaseLabel}
+          {currentPhase} — {phaseLabel}
         </Badge>
       </div>
       <div className="flex items-center gap-0">
@@ -39,8 +41,10 @@ export function IprPhaseStepper({ currentPhase, currentPhaseLabel, phaseEnteredA
                   {isPast ? <CheckCircle2 className="size-4" /> : phase.code}
                 </div>
                 <span className={cn(
-                  "text-[10px] mt-1 text-center leading-tight",
-                  isActive ? "font-semibold text-foreground" : "text-muted-foreground",
+                  // Hide labels on very small screens to avoid overlap; keep the circle.
+                  // The active phase label stays visible so context is never lost.
+                  "text-[10px] mt-1 text-center leading-tight max-w-full truncate px-0.5",
+                  isActive ? "font-semibold text-foreground" : "text-muted-foreground hidden sm:block",
                 )}>
                   {phase.label}
                 </span>

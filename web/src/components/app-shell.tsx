@@ -47,6 +47,14 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex h-screen bg-background">
+      {/* Skip to content — visible only on keyboard focus */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:bg-background focus:px-3 focus:py-2 focus:rounded focus:border"
+      >
+        Saltar al contenido
+      </a>
+
       {/* Sidebar — desktop */}
       <div className="hidden md:block shrink-0">
         <Sidebar />
@@ -67,7 +75,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
 
         {/* Page content */}
-        <main className="flex-1 overflow-auto p-0">
+        <main id="main-content" tabIndex={-1} className="flex-1 overflow-auto p-0">
           {children}
         </main>
 

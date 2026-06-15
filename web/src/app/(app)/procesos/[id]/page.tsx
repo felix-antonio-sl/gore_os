@@ -231,7 +231,7 @@ export default function ProcesoDetailPage() {
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           {process.division_name && (
             <div>
-              <span className="text-muted-foreground">Division: </span>
+              <span className="text-muted-foreground">División: </span>
               <span className="font-medium">{process.division_name}</span>
             </div>
           )}
@@ -295,7 +295,7 @@ export default function ProcesoDetailPage() {
         <TabsList className="flex-wrap">
           <TabsTrigger value="actores">Actores</TabsTrigger>
           <TabsTrigger value="reglas">Reglas</TabsTrigger>
-          <TabsTrigger value="metricas">Metricas</TabsTrigger>
+          <TabsTrigger value="metricas">Métricas</TabsTrigger>
           <TabsTrigger value="dolor">Puntos de Dolor</TabsTrigger>
           <TabsTrigger value="oportunidades">Oportunidades</TabsTrigger>
         </TabsList>
@@ -337,11 +337,11 @@ export default function ProcesoDetailPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Descripcion</label>
+            <label className="text-sm font-medium">Descripción</label>
             <textarea
               value={editDescription}
               onChange={(e) => setEditDescription(e.target.value)}
-              placeholder="Descripcion del proceso"
+              placeholder="Descripción del proceso"
               className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[80px]"
             />
           </div>
@@ -356,10 +356,10 @@ export default function ProcesoDetailPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Division</label>
+            <label className="text-sm font-medium">División</label>
             <Select value={editDivisionId} onValueChange={setEditDivisionId}>
               <SelectTrigger>
-                <SelectValue placeholder="Seleccione division" />
+                <SelectValue placeholder="Seleccione división" />
               </SelectTrigger>
               <SelectContent>
                 {divisions.map((d) => (

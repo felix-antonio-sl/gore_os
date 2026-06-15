@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { DrawerPanel } from "@/components/drawer-panel";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { formatCLP } from "@/lib/format";
+import { formatCLPExact } from "@/lib/format";
 import { Plus, ExternalLink, ChevronDown, ChevronRight } from "lucide-react";
 
 // ---------------------------------------------------------------------------
@@ -49,7 +50,7 @@ const ENFORCEMENT_LABELS: Record<string, string> = {
 
 function formatValue(item: ThresholdItem) {
   if (item.value_utm != null && item.code === "UTM_VALUE") {
-    return formatCLP(item.value_utm);
+    return formatCLPExact(item.value_utm);
   }
   if (item.value_utm != null) return `${Number(item.value_utm).toLocaleString("es-CL")} UTM`;
   if (item.value_pct != null) return `${item.value_pct}%`;
@@ -74,7 +75,7 @@ interface SniLevel {
 }
 
 function formatUtm(value: number | null) {
-  if (value == null) return "Sin limite";
+  if (value == null) return "Sin límite";
   return `${Number(value).toLocaleString("es-CL")} UTM`;
 }
 
@@ -143,7 +144,7 @@ export function TabConfig() {
         <NivelesSniSection />
       </ConfigSection>
 
-      <ConfigSection title="Vias de Financiamiento">
+      <ConfigSection title="Vías de Financiamiento">
         <FinancingTracksSection />
       </ConfigSection>
     </div>
@@ -167,6 +168,7 @@ function UmbralesSection() {
   const [editSource, setEditSource] = useState("");
   const [editSaving, setEditSaving] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [confirmDeactivate, setConfirmDeactivate] = useState(false);
 
   const loadThresholds = () => {
     setIsLoading(true);
@@ -223,7 +225,7 @@ function UmbralesSection() {
     }
   };
 
-  const handleToggleActive = async () => {
+  const performToggleActive = async () => {
     if (!selectedId || !selected) return;
     try {
       await api.patch(`/api/admin/thresholds/${selectedId}`, {
@@ -236,16 +238,26 @@ function UmbralesSection() {
     }
   };
 
+  const handleToggleActive = () => {
+    if (!selected) return;
+    // Activar no requiere confirmación; desactivar sí.
+    if (selected.is_active) {
+      setConfirmDeactivate(true);
+    } else {
+      performToggleActive();
+    }
+  };
+
   return (
     <>
       <div className="rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Codigo</TableHead>
-              <TableHead>Descripcion</TableHead>
+              <TableHead>Código</TableHead>
+              <TableHead>Descripción</TableHead>
               <TableHead>Valor</TableHead>
-              <TableHead>Punto de Aplicacion</TableHead>
+              <TableHead>Punto de Aplicación</TableHead>
               <TableHead>Estado</TableHead>
             </TableRow>
           </TableHeader>
@@ -309,7 +321,7 @@ function UmbralesSection() {
                 <span className="font-mono">{formatValue(selected)}</span>
               </div>
               <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Punto de aplicacion</span>
+                <span className="text-muted-foreground">Punto de aplicación</span>
                 <span>{ENFORCEMENT_LABELS[selected.enforcement_point] ?? selected.enforcement_point}</span>
               </div>
               {selected.source_normativa && (
@@ -352,7 +364,7 @@ function UmbralesSection() {
               Editar Umbral
             </p>
             <div>
-              <label className="text-xs text-muted-foreground">Descripcion</label>
+              <label className="text-xs text-muted-foreground">Descripción</label>
               <Input
                 value={editLabel}
                 onChange={(e) => setEditLabel(e.target.value)}
@@ -408,6 +420,22 @@ function UmbralesSection() {
           </form>
         ) : null}
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={confirmDeactivate}
+        onOpenChange={setConfirmDeactivate}
+        title="¿Desactivar umbral?"
+        description={
+          selected
+            ? `¿Desactivar el umbral ${selected.label}? Dejará de exigirse en las transiciones. Puedes reactivarlo después.`
+            : ""
+        }
+        confirmLabel="Desactivar"
+        onConfirm={async () => {
+          await performToggleActive();
+          setConfirmDeactivate(false);
+        }}
+      />
     </>
   );
 }
@@ -439,6 +467,7 @@ function NivelesSniSection() {
   const [createEvaluator, setCreateEvaluator] = useState("");
   const [createExternal, setCreateExternal] = useState(false);
   const [createSaving, setCreateSaving] = useState(false);
+  const [confirmDeactivate, setConfirmDeactivate] = useState(false);
 
   const loadLevels = () => {
     setIsLoading(true);
@@ -527,7 +556,7 @@ function NivelesSniSection() {
     }
   };
 
-  const handleToggleActive = async () => {
+  const performToggleActive = async () => {
     if (!selectedId || !selected) return;
     try {
       await api.patch(`/api/admin/sni-levels/${selectedId}`, {
@@ -538,6 +567,16 @@ function NivelesSniSection() {
       setSelected({ ...selected, is_active: !selected.is_active });
     } catch {
       // ignore
+    }
+  };
+
+  const handleToggleActive = () => {
+    if (!selected) return;
+    // Activar no requiere confirmación; desactivar sí.
+    if (selected.is_active) {
+      setConfirmDeactivate(true);
+    } else {
+      performToggleActive();
     }
   };
 
@@ -554,7 +593,7 @@ function NivelesSniSection() {
           <p className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">Crear Nivel SNI</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="text-xs text-muted-foreground">Numero *</label>
+              <label className="text-xs text-muted-foreground">Número *</label>
               <Input
                 type="number"
                 min="1"
@@ -565,7 +604,7 @@ function NivelesSniSection() {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="text-xs text-muted-foreground">Descripcion *</label>
+              <label className="text-xs text-muted-foreground">Descripción *</label>
               <Input
                 value={createLabel}
                 onChange={(e) => setCreateLabel(e.target.value)}
@@ -596,7 +635,7 @@ function NivelesSniSection() {
                 value={createMaxUtm}
                 onChange={(e) => setCreateMaxUtm(e.target.value)}
                 className="h-8 text-sm font-mono mt-1"
-                placeholder="Vacio = sin limite"
+                placeholder="Vacío = sin límite"
               />
             </div>
             <div>
@@ -618,7 +657,7 @@ function NivelesSniSection() {
               className="rounded border"
               id="create-external-sni"
             />
-            <label htmlFor="create-external-sni" className="text-sm">Requiere evaluacion externa</label>
+            <label htmlFor="create-external-sni" className="text-sm">Requiere evaluación externa</label>
           </div>
           <div className="flex gap-2 pt-1">
             <Button type="submit" size="sm" disabled={createSaving}>
@@ -636,7 +675,7 @@ function NivelesSniSection() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-16">Nivel</TableHead>
-              <TableHead>Descripcion</TableHead>
+              <TableHead>Descripción</TableHead>
               <TableHead>Rango UTM</TableHead>
               <TableHead>Evaluador</TableHead>
               <TableHead>Eval. Externa</TableHead>
@@ -673,7 +712,7 @@ function NivelesSniSection() {
                   </TableCell>
                   <TableCell>
                     {l.requires_external_eval ? (
-                      <Badge variant="default" className="text-xs">Si</Badge>
+                      <Badge variant="default" className="text-xs">Sí</Badge>
                     ) : (
                       <span className="text-xs text-muted-foreground">No</span>
                     )}
@@ -704,11 +743,11 @@ function NivelesSniSection() {
 
             <div className="rounded-lg border divide-y text-sm">
               <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Minimo</span>
+                <span className="text-muted-foreground">Mínimo</span>
                 <span className="font-mono">{formatUtm(selected.min_utm)}</span>
               </div>
               <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Maximo</span>
+                <span className="text-muted-foreground">Máximo</span>
                 <span className="font-mono">{formatUtm(selected.max_utm)}</span>
               </div>
               <div className="flex justify-between px-3 py-2">
@@ -716,8 +755,8 @@ function NivelesSniSection() {
                 <span>{selected.evaluator_code}</span>
               </div>
               <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Evaluacion externa</span>
-                <span>{selected.requires_external_eval ? "Si" : "No"}</span>
+                <span className="text-muted-foreground">Evaluación externa</span>
+                <span>{selected.requires_external_eval ? "Sí" : "No"}</span>
               </div>
               <div className="flex justify-between px-3 py-2">
                 <span className="text-muted-foreground">Estado</span>
@@ -747,7 +786,7 @@ function NivelesSniSection() {
               Editar Nivel SNI
             </p>
             <div>
-              <label className="text-xs text-muted-foreground">Descripcion</label>
+              <label className="text-xs text-muted-foreground">Descripción</label>
               <Input
                 value={editLabel}
                 onChange={(e) => setEditLabel(e.target.value)}
@@ -775,7 +814,7 @@ function NivelesSniSection() {
                   value={editMaxUtm}
                   onChange={(e) => setEditMaxUtm(e.target.value)}
                   className="h-8 text-sm font-mono mt-1"
-                  placeholder="Vacio = sin limite"
+                  placeholder="Vacío = sin límite"
                 />
               </div>
             </div>
@@ -795,7 +834,7 @@ function NivelesSniSection() {
                 className="rounded border"
                 id="edit-external-sni"
               />
-              <label htmlFor="edit-external-sni" className="text-sm">Requiere evaluacion externa</label>
+              <label htmlFor="edit-external-sni" className="text-sm">Requiere evaluación externa</label>
             </div>
             {editError && <p className="text-xs text-red-600">{editError}</p>}
             <div className="flex gap-2 pt-1">
@@ -809,6 +848,22 @@ function NivelesSniSection() {
           </form>
         ) : null}
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={confirmDeactivate}
+        onOpenChange={setConfirmDeactivate}
+        title="¿Desactivar nivel SNI?"
+        description={
+          selected
+            ? `¿Desactivar el nivel ${selected.label}? Dejará de exigirse en las transiciones. Puedes reactivarlo después.`
+            : ""
+        }
+        confirmLabel="Desactivar"
+        onConfirm={async () => {
+          await performToggleActive();
+          setConfirmDeactivate(false);
+        }}
+      />
     </>
   );
 }
@@ -846,7 +901,7 @@ function FinancingTracksSection() {
           <p className="text-2xl font-semibold tabular-nums">{totalIprs.toLocaleString("es-CL")}</p>
         </div>
         <div className="rounded-lg border bg-card p-3">
-          <p className="text-xs text-muted-foreground">Alertas criticas</p>
+          <p className="text-xs text-muted-foreground">Alertas críticas</p>
           <p className={cn("text-2xl font-semibold tabular-nums", totalAlerts > 0 ? "text-red-600" : "")}>
             {totalAlerts}
           </p>

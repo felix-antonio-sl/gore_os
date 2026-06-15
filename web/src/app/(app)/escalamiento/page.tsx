@@ -40,6 +40,7 @@ export default function EscalamientoPage() {
 
   const [data, setData] = useState<PaginatedResponse<Escalation> | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [creating, setCreating] = useState(false);
 
@@ -68,15 +69,19 @@ export default function EscalamientoPage() {
 
   const fetchData = () => {
     setLoading(true);
+    setError(null);
     const statusParam = statusFilter && statusFilter !== "TODOS" ? `&status=${statusFilter}` : "";
     api
       .get<PaginatedResponse<Escalation>>(
         `/api/dgi/escalations?page=${page}&page_size=20${statusParam}`
       )
-      .then(setData)
+      .then((res) => {
+        setData(res);
+        setError(null);
+      })
       .catch(() => {
         setData(null);
-        toast.error("Error al cargar escalamientos");
+        setError("No se pudieron cargar los escalamientos.");
       })
       .finally(() => setLoading(false));
   };
@@ -87,7 +92,7 @@ export default function EscalamientoPage() {
 
   const handleCreate = async () => {
     if (!form.situation.trim() || !form.impact.trim()) {
-      toast.error("Situacion e impacto son obligatorios");
+      toast.error("Situación e impacto son obligatorios");
       return;
     }
     setCreating(true);
@@ -112,7 +117,7 @@ export default function EscalamientoPage() {
   const columns = [
     {
       key: "code",
-      label: "Codigo",
+      label: "Código",
       render: (v: unknown) => <span className="font-mono text-xs">{String(v ?? "-")}</span>,
     },
     {
@@ -129,7 +134,7 @@ export default function EscalamientoPage() {
     },
     {
       key: "situation",
-      label: "Situacion",
+      label: "Situación",
       render: (v: unknown) => (
         <span className="text-sm line-clamp-2 max-w-xs">{String(v ?? "-")}</span>
       ),
@@ -168,7 +173,7 @@ export default function EscalamientoPage() {
       <PageHeader
         title="Escalamientos"
         description="Protocolo de escalamiento institucional — 4 niveles"
-        accentColor="rose"
+        accentColor="orange"
         actions={
           canCreate ? (
             <Button size="sm" onClick={() => setDrawerOpen(true)}>
@@ -199,7 +204,7 @@ export default function EscalamientoPage() {
             {tab === "TODOS"
               ? "Todos"
               : tab === "EN_GESTION"
-                ? "En Gestion"
+                ? "En Gestión"
                 : tab.charAt(0) + tab.slice(1).toLowerCase()}
           </Button>
         ))}
@@ -214,6 +219,12 @@ export default function EscalamientoPage() {
         onPageChange={(p) => router.push(buildUrl({ page: p }))}
         onRowClick={(row) => router.push(`/escalamiento/${(row as Escalation).id}`)}
         isLoading={loading}
+        error={error}
+        onRetry={fetchData}
+        hasActiveFilters={!!statusFilter && statusFilter !== "TODOS"}
+        onClearFilters={() => router.push(buildUrl({ status: "", page: 1 }))}
+        emptyTitle="Sin escalamientos"
+        emptyDescription="Cuando se registre un escalamiento institucional, aparecerá aquí."
       />
 
       {/* Create drawer */}
@@ -234,11 +245,11 @@ export default function EscalamientoPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Situacion *</Label>
+              <Label>Situación *</Label>
               <Textarea
                 value={form.situation}
                 onChange={(e) => setForm({ ...form, situation: e.target.value })}
-                placeholder="Descripcion de la situacion que requiere escalamiento"
+                placeholder="Descripción de la situación que requiere escalamiento"
                 rows={3}
               />
             </div>
@@ -247,16 +258,16 @@ export default function EscalamientoPage() {
               <Textarea
                 value={form.impact}
                 onChange={(e) => setForm({ ...form, impact: e.target.value })}
-                placeholder="Impacto en la gestion institucional"
+                placeholder="Impacto en la gestión institucional"
                 rows={3}
               />
             </div>
             <div className="space-y-2">
-              <Label>Recomendacion</Label>
+              <Label>Recomendación</Label>
               <Textarea
                 value={form.recommendation}
                 onChange={(e) => setForm({ ...form, recommendation: e.target.value })}
-                placeholder="Recomendacion de accion"
+                placeholder="Recomendación de acción"
                 rows={2}
               />
             </div>

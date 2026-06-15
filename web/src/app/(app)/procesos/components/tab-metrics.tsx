@@ -18,6 +18,7 @@ import {
 import { Plus, Trash2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { formatDate } from "@/lib/format";
+import { DateField } from "@/components/date-field";
 import type { ProcessMetric, MetricComparison } from "@/types";
 
 interface TabMetricsProps {
@@ -276,10 +277,9 @@ export function TabMetrics({ processId, canEdit = false }: TabMetricsProps) {
             </div>
             <div className="space-y-1.5">
               <label className="text-sm font-medium">Fecha medición</label>
-              <Input
-                type="date"
+              <DateField
                 value={measuredAt}
-                onChange={(e) => setMeasuredAt(e.target.value)}
+                onChange={(v) => setMeasuredAt(v)}
               />
             </div>
             <div className="space-y-1.5">

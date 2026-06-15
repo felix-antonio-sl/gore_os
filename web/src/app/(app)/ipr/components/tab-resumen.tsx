@@ -6,7 +6,7 @@ import { IprHistorySection } from "./ipr-history-section";
 import { TrackCard } from "./track-card";
 import { Badge } from "@/components/ui/badge";
 import { UserCheck } from "lucide-react";
-import { formatDate, formatCurrency } from "@/lib/format";
+import { formatDate, formatMillones } from "@/lib/format";
 import { sectorLabel, type IprDetail } from "./ipr-constants";
 import type { IprTransition, TrackInfo, HistoryEntry } from "@/types";
 
@@ -78,42 +78,34 @@ export function TabResumen({
       <div className="rounded-xl border bg-card p-4">
         <h3 className="text-sm font-medium mb-3">Información General</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
-          {ipr.description && (
-            <div className="col-span-full">
-              <span className="text-muted-foreground text-xs">Descripción</span>
-              <p className="mt-0.5">{ipr.description}</p>
-            </div>
-          )}
-          {ipr.total_budget != null && ipr.total_budget > 0 && (
-            <div>
-              <span className="text-muted-foreground text-xs">Presupuesto total</span>
-              <p className="font-medium tabular-nums">{formatCurrency(ipr.total_budget)}</p>
-            </div>
-          )}
-          {ipr.investment_sector && (
-            <div>
-              <span className="text-muted-foreground text-xs">Sector</span>
-              <p>{sectorLabel[ipr.investment_sector] ?? ipr.investment_sector}</p>
-            </div>
-          )}
-          {ipr.funding_source && (
-            <div>
-              <span className="text-muted-foreground text-xs">Fuente</span>
-              <p>{ipr.fund_category_label || ipr.funding_source}</p>
-            </div>
-          )}
-          {ipr.start_date && (
-            <div>
-              <span className="text-muted-foreground text-xs">Inicio</span>
-              <p>{formatDate(ipr.start_date)}</p>
-            </div>
-          )}
-          {ipr.end_date && (
-            <div>
-              <span className="text-muted-foreground text-xs">Término</span>
-              <p>{formatDate(ipr.end_date)}</p>
-            </div>
-          )}
+          <div className="col-span-full">
+            <span className="text-muted-foreground text-xs">Descripción</span>
+            <p className="mt-0.5">{ipr.description || "—"}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground text-xs">Presupuesto total</span>
+            <p className="font-medium tabular-nums">
+              {ipr.total_budget != null && ipr.total_budget > 0
+                ? formatMillones(ipr.total_budget)
+                : "—"}
+            </p>
+          </div>
+          <div>
+            <span className="text-muted-foreground text-xs">Sector</span>
+            <p>{ipr.investment_sector ? (sectorLabel[ipr.investment_sector] ?? ipr.investment_sector) : "—"}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground text-xs">Fuente</span>
+            <p>{ipr.fund_category_label || ipr.funding_source || "—"}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground text-xs">Inicio</span>
+            <p>{ipr.start_date ? formatDate(ipr.start_date) : "—"}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground text-xs">Término</span>
+            <p>{ipr.end_date ? formatDate(ipr.end_date) : "—"}</p>
+          </div>
         </div>
       </div>
     </div>

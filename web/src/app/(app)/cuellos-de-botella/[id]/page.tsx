@@ -54,7 +54,7 @@ const DETECTION_TYPE_COLORS: Record<string, string> = {
 };
 
 const DETECTION_TYPE_LABELS: Record<string, string> = {
-  ACUMULACION: "Acumulacion",
+  ACUMULACION: "Acumulación",
   CICLO_TIEMPO: "Ciclo Tiempo",
   PRESUPUESTO: "Presupuesto",
 };
@@ -63,10 +63,10 @@ const PHASE_ORDER = ["DETECTADO", "VERIFICADO", "ANALIZADO", "PROPUESTO", "IMPLE
 
 const INVESTIGATION_FIELDS: { key: keyof BottleneckDetail; label: string; phase: string }[] = [
   { key: "problem", label: "Problema Detectado", phase: "DETECTADO" },
-  { key: "verification", label: "Verificacion", phase: "VERIFICADO" },
-  { key: "root_cause_analysis", label: "Analisis de Causa Raiz", phase: "ANALIZADO" },
-  { key: "proposal", label: "Propuesta de Solucion", phase: "PROPUESTO" },
-  { key: "communication", label: "Comunicacion", phase: "IMPLEMENTADO" },
+  { key: "verification", label: "Verificación", phase: "VERIFICADO" },
+  { key: "root_cause_analysis", label: "Análisis de Causa Raíz", phase: "ANALIZADO" },
+  { key: "proposal", label: "Propuesta de Solución", phase: "PROPUESTO" },
+  { key: "communication", label: "Comunicación", phase: "IMPLEMENTADO" },
   { key: "follow_up", label: "Seguimiento", phase: "CERRADO" },
 ];
 
@@ -176,7 +176,7 @@ export default function BottleneckDetailPage() {
           <ArrowLeft className="size-4 mr-2" />
           Volver
         </Button>
-        <p className="mt-4 text-muted-foreground">{error ?? "Investigacion no encontrada."}</p>
+        <p className="mt-4 text-muted-foreground">{error ?? "Investigación no encontrada."}</p>
       </div>
     );
   }

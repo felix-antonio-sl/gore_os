@@ -101,7 +101,7 @@ export function CommandCenter() {
       {role === "ANALISTA" && actionData && <ModuleMyWork items={actionData.items} />}
       {role === "ANALISTA" && <ModuleFormulacion />}
       {role && TEAM_ROLES.includes(role) && <ModuleMyTeam />}
-      {role && DGI_KPI_ROLES.includes(role) && <ModuleDgiTeam />}
+      {role && DGI_TEAM_ROLES.includes(role) && <ModuleDgiTeam />}
       {role === "ASESOR_JURIDICO" && <ModuleJuridico />}
       {/* INDICATOR_ROLES and PANORAMA_ROLES get KPIs below — no separate module */}
 

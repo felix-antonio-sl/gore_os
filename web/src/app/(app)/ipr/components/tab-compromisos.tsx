@@ -73,6 +73,8 @@ export function TabCompromisos({ iprId, canCreate }: TabCompromisosProps) {
         total={compromisos?.total ?? 0}
         onPageChange={() => {}}
         isLoading={loading}
+        emptyTitle="Aún no hay compromisos"
+        emptyDescription="Crea el primer compromiso de esta IPR."
       />
       <IprCompromisoDrawer
         iprId={iprId}

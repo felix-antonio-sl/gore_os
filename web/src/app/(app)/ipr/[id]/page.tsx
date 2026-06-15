@@ -219,7 +219,7 @@ function IprDetailPageInner() {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar — hidden on mobile */}
         <aside className="hidden md:block w-52 border-r overflow-y-auto shrink-0 bg-background">
-          <IprSidebarNav activeTab={activeTab} onTabChange={setActiveTab} />
+          <IprSidebarNav activeTab={activeTab} onTabChange={setActiveTab} currentPhase={ipr.mcd_phase} />
         </aside>
 
         {/* Content */}

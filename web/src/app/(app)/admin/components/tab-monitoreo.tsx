@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { cn } from "@/lib/utils";
-import { Database, Users, FileText, Building2, Handshake, ChevronDown, ChevronRight } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle, Database, Users, FileText, Building2, Handshake, ChevronDown, ChevronRight, RotateCw } from "lucide-react";
 import type { DataQualityMetrics } from "@/types";
 
 // ---------------------------------------------------------------------------
@@ -154,13 +156,26 @@ export function TabMonitoreo() {
 function SlasSection() {
   const [data, setData] = useState<SlaDashboard | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
+    setLoading(true);
+    setLoadError(null);
     api
       .get<SlaDashboard>("/api/admin/slas/dashboard")
-      .then(setData)
-      .catch(() => setData(null))
+      .then((res) => {
+        setData(res);
+        setLoadError(null);
+      })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los SLAs.");
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    load();
   }, []);
 
   if (loading) {
@@ -174,7 +189,19 @@ function SlasSection() {
   }
 
   if (!data) {
-    return <p className="text-sm text-muted-foreground">No se pudieron cargar los SLAs.</p>;
+    return (
+      <EmptyState
+        icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+        title="No se pudieron cargar los SLAs"
+        description={loadError ?? "Revisa tu conexión y reintenta."}
+        action={
+          <Button variant="outline" size="sm" onClick={load}>
+            <RotateCw className="size-4 mr-1.5" />
+            Reintentar
+          </Button>
+        }
+      />
+    );
   }
 
   return (
@@ -259,13 +286,26 @@ function SlasSection() {
 function SaludDatosSection() {
   const [data, setData] = useState<DataQualityMetrics | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
+    setLoading(true);
+    setLoadError(null);
     api
       .get<DataQualityMetrics>("/api/admin/data-quality")
-      .then(setData)
-      .catch(() => setData(null))
+      .then((res) => {
+        setData(res);
+        setLoadError(null);
+      })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las métricas.");
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    load();
   }, []);
 
   if (loading) {
@@ -279,7 +319,19 @@ function SaludDatosSection() {
   }
 
   if (!data) {
-    return <p className="text-sm text-muted-foreground">No se pudieron cargar las metricas.</p>;
+    return (
+      <EmptyState
+        icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+        title="No se pudieron cargar las métricas"
+        description={loadError ?? "Revisa tu conexión y reintenta."}
+        action={
+          <Button variant="outline" size="sm" onClick={load}>
+            <RotateCw className="size-4 mr-1.5" />
+            Reintentar
+          </Button>
+        }
+      />
+    );
   }
 
   return (
@@ -291,7 +343,7 @@ function SaludDatosSection() {
         metrics={[
           { label: "Con email", value: data.persons.with_email, total: data.persons.total, pct: data.persons.pct_email },
           { label: "Con RUT", value: data.persons.with_rut, total: data.persons.total, pct: data.persons.pct_rut },
-          { label: "Con telefono", value: data.persons.with_phone, total: data.persons.total, pct: data.persons.pct_phone },
+          { label: "Con teléfono", value: data.persons.with_phone, total: data.persons.total, pct: data.persons.pct_phone },
         ]}
       />
 
@@ -315,7 +367,7 @@ function SaludDatosSection() {
         metrics={[
           { label: "Con resultado CGR", value: data.agreements.with_cgr, total: data.agreements.total, pct: data.agreements.pct_cgr },
           { label: "Con IPR vinculado", value: data.agreements.with_ipr, total: data.agreements.total, pct: data.agreements.pct_ipr },
-          { label: "Con referente tecnico", value: data.agreements.with_referent, total: data.agreements.total, pct: data.agreements.pct_referent },
+          { label: "Con referente técnico", value: data.agreements.with_referent, total: data.agreements.total, pct: data.agreements.pct_referent },
         ]}
       />
 
@@ -335,7 +387,7 @@ function SaludDatosSection() {
         total={data.organizations.total}
         metrics={[
           { label: "Con tipo", value: data.organizations.with_type, total: data.organizations.total, pct: data.organizations.pct_type },
-          { label: "Con organizacion padre", value: data.organizations.with_parent, total: data.organizations.total, pct: data.organizations.pct_parent },
+          { label: "Con organización padre", value: data.organizations.with_parent, total: data.organizations.total, pct: data.organizations.pct_parent },
         ]}
       />
     </div>

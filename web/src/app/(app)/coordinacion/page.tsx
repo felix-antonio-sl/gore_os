@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DrawerPanel } from "@/components/drawer-panel";
+import { DateField } from "@/components/date-field";
 import { toast } from "sonner";
 import { Plus, Lightbulb, AlertTriangle, ArrowUpRight, MessageSquare } from "lucide-react";
 import { formatDate, formatDateTime } from "@/lib/format";
@@ -56,8 +57,8 @@ const DECISION_STATUS_COLORS: Record<string, string> = {
 const TYPE_LABELS: Record<string, string> = {
   PRESUPUESTO: "Presupuesto",
   CARTERA: "Cartera",
-  JURIDICO: "Juridico",
-  TECNOLOGIA: "Tecnologia",
+  JURIDICO: "Jurídico",
+  TECNOLOGIA: "Tecnología",
   PROCESO: "Proceso",
   GENERAL: "General",
 };
@@ -160,6 +161,7 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
   const [prep, setPrep] = useState<ARPrepData | null>(null);
   const [decisions, setDecisions] = useState<PaginatedResponse<ARDecision> | null>(null);
   const [decisionsLoading, setDecisionsLoading] = useState(true);
+  const [decisionsError, setDecisionsError] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [creating, setCreating] = useState(false);
 
@@ -172,10 +174,17 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
 
   const fetchDecisions = () => {
     setDecisionsLoading(true);
+    setDecisionsError(null);
     api
       .get<PaginatedResponse<ARDecision>>("/api/dgi/coordination/ar/decisions?page=1&page_size=50")
-      .then(setDecisions)
-      .catch(() => toast.error("Error al cargar decisiones"))
+      .then((res) => {
+        setDecisions(res);
+        setDecisionsError(null);
+      })
+      .catch((err) => {
+        setDecisionsError(err instanceof Error ? err.message : "No se pudieron cargar las decisiones");
+        toast.error("Error al cargar decisiones");
+      })
       .finally(() => setDecisionsLoading(false));
   };
 
@@ -186,7 +195,7 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
 
   const handleCreate = async () => {
     if (!form.description.trim()) {
-      toast.error("La descripcion es obligatoria");
+      toast.error("La descripción es obligatoria");
       return;
     }
     setCreating(true);
@@ -197,12 +206,12 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
         due_date: form.due_date || undefined,
         context: form.context || undefined,
       });
-      toast.success("Decision AR creada");
+      toast.success("Decisión AR creada");
       setDrawerOpen(false);
       setForm({ description: "", decision_type: "PRIORIDAD", due_date: "", context: "" });
       fetchDecisions();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Error al crear decision");
+      toast.error(err instanceof Error ? err.message : "Error al crear decisión");
     } finally {
       setCreating(false);
     }
@@ -220,7 +229,7 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
 
   const columns = [
     {
-      key: "description", label: "Descripcion",
+      key: "description", label: "Descripción",
       render: (v: unknown) => <span className="text-sm max-w-sm line-clamp-2">{String(v)}</span>,
     },
     {
@@ -297,7 +306,7 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
         <div className="flex justify-end">
           <Button size="sm" onClick={() => setDrawerOpen(true)}>
             <Plus className="size-4 mr-1" />
-            Nueva Decision
+            Nueva Decisión
           </Button>
         </div>
       )}
@@ -310,9 +319,23 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
         total={decisions?.total ?? 0}
         onPageChange={() => {}}
         isLoading={decisionsLoading}
+        error={decisionsError}
+        onRetry={fetchDecisions}
+        emptyTitle="Sin decisiones registradas"
+        emptyDescription="Las decisiones del Administrador Regional aparecerán aquí."
       />
 
-      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Nueva Decision AR">
+      <DrawerPanel
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title="Nueva Decisión AR"
+        isDirty={
+          form.description.trim() !== "" ||
+          form.context.trim() !== "" ||
+          form.due_date !== "" ||
+          form.decision_type !== "PRIORIDAD"
+        }
+      >
         <div className="space-y-4">
           <div className="space-y-2">
             <Label>Tipo</Label>
@@ -327,19 +350,19 @@ function DecisionesTab({ canWrite }: { canWrite: boolean }) {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>Descripcion *</Label>
-            <Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Descripcion de la decision" rows={3} />
+            <Label>Descripción *</Label>
+            <Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Descripción de la decisión" rows={3} />
           </div>
           <div className="space-y-2">
             <Label>Contexto</Label>
-            <Textarea value={form.context} onChange={(e) => setForm({ ...form, context: e.target.value })} placeholder="Situacion que motivo la decision" rows={2} />
+            <Textarea value={form.context} onChange={(e) => setForm({ ...form, context: e.target.value })} placeholder="Situación que motivó la decisión" rows={2} />
           </div>
           <div className="space-y-2">
             <Label>Plazo</Label>
-            <Input type="date" value={form.due_date} onChange={(e) => setForm({ ...form, due_date: e.target.value })} />
+            <DateField value={form.due_date} onChange={(v) => setForm({ ...form, due_date: v })} />
           </div>
           <Button className="w-full" onClick={handleCreate} disabled={creating}>
-            {creating ? "Creando..." : "Crear Decision"}
+            {creating ? "Creando..." : "Crear Decisión"}
           </Button>
         </div>
       </DrawerPanel>
@@ -399,7 +422,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
 
   const handleCreate = async () => {
     if (!form.division_id) {
-      toast.error("Seleccione una division");
+      toast.error("Seleccione una división");
       return;
     }
     setCreating(true);
@@ -414,7 +437,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
         agreements: [],
         participants: [],
       });
-      toast.success("Interaccion registrada");
+      toast.success("Interacción registrada");
       setDrawerOpen(false);
       setForm({
         division_id: "",
@@ -426,7 +449,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
       fetchMatrix();
       fetchInteractions(selectedDivision || undefined);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Error al crear interaccion");
+      toast.error(err instanceof Error ? err.message : "Error al crear interacción");
     } finally {
       setCreating(false);
     }
@@ -435,12 +458,12 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
   const matrixColumns = [
     {
       key: "division_name",
-      label: "Division",
+      label: "División",
       render: (v: unknown) => <span className="font-medium text-sm">{String(v)}</span>,
     },
     {
       key: "last_interaction",
-      label: "Ultima Interaccion",
+      label: "Última Interacción",
       render: (v: unknown) => {
         if (!v) return <span className="text-xs text-red-600">Sin registro</span>;
         return (
@@ -452,7 +475,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
     },
     {
       key: "next_planned",
-      label: "Proxima",
+      label: "Próxima",
       render: (v: unknown) => {
         if (!v) return <span className="text-xs text-muted-foreground">-</span>;
         return <span className="text-xs">{formatDate(v as string)}</span>;
@@ -487,7 +510,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
   const intColumns = [
     {
       key: "division_name",
-      label: "Division",
+      label: "División",
       render: (v: unknown) => <span className="text-sm">{String(v)}</span>,
     },
     {
@@ -513,7 +536,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
     },
     {
       key: "next_date",
-      label: "Proxima",
+      label: "Próxima",
       render: (v: unknown) => <span className="text-xs">{v ? formatDate(v as string) : "-"}</span>,
     },
   ];
@@ -524,7 +547,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
         <div className="flex justify-end">
           <Button size="sm" onClick={() => setDrawerOpen(true)}>
             <Plus className="size-4 mr-1" />
-            Registrar Interaccion
+            Registrar Interacción
           </Button>
         </div>
       )}
@@ -558,7 +581,7 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
       <Card>
         <CardHeader>
           <CardTitle className="text-base">
-            Bitacora de Interacciones
+            Bitácora de Interacciones
             {selectedDivision && (
               <Button
                 variant="ghost"
@@ -585,13 +608,23 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
       </Card>
 
       {/* Create drawer */}
-      <DrawerPanel open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Registrar Interaccion">
+      <DrawerPanel
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title="Registrar Interacción"
+        isDirty={
+          form.division_id !== "" ||
+          form.notes.trim() !== "" ||
+          form.next_date !== "" ||
+          form.interaction_type !== "GENERAL"
+        }
+      >
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label>Division *</Label>
+            <Label>División *</Label>
             <Select value={form.division_id} onValueChange={(v) => setForm({ ...form, division_id: v })}>
               <SelectTrigger>
-                <SelectValue placeholder="Seleccionar division" />
+                <SelectValue placeholder="Seleccionar división" />
               </SelectTrigger>
               <SelectContent>
                 {matrix.map((m) => (
@@ -615,18 +648,18 @@ function DivisionesTab({ canWrite }: { canWrite: boolean }) {
           </div>
           <div className="space-y-2">
             <Label>Fecha</Label>
-            <Input type="date" value={form.interaction_date} onChange={(e) => setForm({ ...form, interaction_date: e.target.value })} />
+            <DateField value={form.interaction_date} onChange={(v) => setForm({ ...form, interaction_date: v })} />
           </div>
           <div className="space-y-2">
             <Label>Notas</Label>
             <Textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} />
           </div>
           <div className="space-y-2">
-            <Label>Proxima reunion</Label>
-            <Input type="date" value={form.next_date} onChange={(e) => setForm({ ...form, next_date: e.target.value })} />
+            <Label>Próxima reunión</Label>
+            <DateField value={form.next_date} onChange={(v) => setForm({ ...form, next_date: v })} />
           </div>
           <Button className="w-full" onClick={handleCreate} disabled={creating}>
-            {creating ? "Registrando..." : "Registrar Interaccion"}
+            {creating ? "Registrando..." : "Registrar Interacción"}
           </Button>
         </div>
       </DrawerPanel>
@@ -755,7 +788,7 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
     },
     {
       key: "description",
-      label: "Descripcion",
+      label: "Descripción",
       render: (v: unknown) => (
         <span className="text-sm line-clamp-1 max-w-[250px] text-muted-foreground">
           {String(v ?? "-")}
@@ -787,7 +820,7 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
         <div className="flex justify-end">
           <Button size="sm" onClick={() => setShowCreate(true)}>
             <Plus className="size-4 mr-1" />
-            Nueva Sesion
+            Nueva Sesión
           </Button>
         </div>
       )}
@@ -822,7 +855,7 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-sm">
-                Sesion #{detail.session_number}
+                Sesión #{detail.session_number}
                 <StatusBadgeTD status={detail.status} />
               </h3>
               <p className="text-xs text-muted-foreground mt-0.5">
@@ -834,12 +867,12 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
               <div className="flex gap-2">
                 {detail.status === "PROGRAMADA" && (
                   <Button size="sm" onClick={() => handleAction("iniciar")}>
-                    Iniciar Sesion
+                    Iniciar Sesión
                   </Button>
                 )}
                 {detail.status === "EN_CURSO" && (
                   <Button size="sm" variant="outline" onClick={() => handleAction("finalizar")}>
-                    Finalizar Sesion
+                    Finalizar Sesión
                   </Button>
                 )}
                 <Button size="sm" variant="ghost" onClick={() => setDetail(null)}>
@@ -906,7 +939,7 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
       <DrawerPanel
         open={showCreate}
         onClose={() => setShowCreate(false)}
-        title="Nueva Sesion TD"
+        title="Nueva Sesión TD"
       >
         <div className="space-y-4 p-4">
           <div>
@@ -919,16 +952,16 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
             />
           </div>
           <div>
-            <label className="text-sm font-medium">Descripcion</label>
+            <label className="text-sm font-medium">Descripción</label>
             <Input
               value={createDesc}
               onChange={(e) => setCreateDesc(e.target.value)}
-              placeholder="Tema principal de la sesion"
+              placeholder="Tema principal de la sesión"
               className="mt-1"
             />
           </div>
           <div>
-            <label className="text-sm font-medium">Ubicacion</label>
+            <label className="text-sm font-medium">Ubicación</label>
             <Input
               value={createLocation}
               onChange={(e) => setCreateLocation(e.target.value)}
@@ -937,7 +970,7 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
             />
           </div>
           <Button onClick={handleCreate} disabled={!createDate} className="w-full">
-            Crear Sesion
+            Crear Sesión
           </Button>
         </div>
       </DrawerPanel>
@@ -949,7 +982,7 @@ function ComiteTDTab({ isDGI }: { isDGI: boolean }) {
 
 export default function CoordinacionPage() {
   const { user } = useAuth();
-  const [tab, setTab] = useTabParam("decisiones");
+  const [tab, setTab] = useTabParam("tab", "decisiones");
 
   const canWrite = user != null && ["JEFE_DGI", "ESP_CONTROL_GESTION"].includes(user.role_code);
   const isDGI = user != null && DGI_ROLES.includes(user.role_code);
@@ -957,8 +990,8 @@ export default function CoordinacionPage() {
   return (
     <div className="p-6 space-y-4">
       <PageHeader
-        title="Coordinacion"
-        description="Decisiones AR, interacciones con divisiones y Comite TD"
+        title="Coordinación"
+        description="Decisiones AR, interacciones con divisiones y Comité TD"
         accentColor="cyan"
       />
 
@@ -966,7 +999,7 @@ export default function CoordinacionPage() {
         <TabsList>
           <TabsTrigger value="decisiones">Decisiones</TabsTrigger>
           <TabsTrigger value="divisiones">Divisiones</TabsTrigger>
-          <TabsTrigger value="comite-td">Comite TD</TabsTrigger>
+          <TabsTrigger value="comite-td">Comité TD</TabsTrigger>
         </TabsList>
 
         <TabsContent value="decisiones" className="mt-4">

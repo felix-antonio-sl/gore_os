@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -117,7 +117,11 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
           ))}
         </div>
       ) : !hitos || hitos.length === 0 ? (
-        <EmptyState compact title="No hay hitos registrados para este IPR." />
+        <EmptyState
+          compact
+          title="Aún no hay hitos"
+          description="Registra el primer hito de esta IPR para seguir su avance."
+        />
       ) : (
         <div className="space-y-3">
           {hitos.map((h) => {
@@ -204,6 +208,7 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
         open={showForm}
         onClose={() => setShowForm(false)}
         title="Nuevo Hito"
+        isDirty={!hitoSubmitting && (!!hitoTypeId || !!hitoPlannedDate || !!hitoDesc.trim())}
       >
         <form onSubmit={handleHitoSubmit} className="space-y-4">
           <div className="space-y-1.5">
@@ -223,10 +228,9 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
           </div>
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Fecha planificada *</label>
-            <Input
-              type="date"
+            <DateField
               value={hitoPlannedDate}
-              onChange={(e) => setHitoPlannedDate(e.target.value)}
+              onChange={setHitoPlannedDate}
             />
           </div>
           <div className="space-y-1.5">

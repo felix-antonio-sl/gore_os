@@ -44,6 +44,14 @@ const CRITICALITY_COLORS: Record<string, string> = {
   BAJO: "bg-green-50 text-green-700 border-green-200",
 };
 
+const STATUS_LABELS: Record<string, string> = Object.fromEntries(
+  STATUS_OPTIONS.map((o) => [o.value, o.label])
+);
+
+const CRITICALITY_LABELS: Record<string, string> = Object.fromEntries(
+  CRITICALITY_OPTIONS.map((o) => [o.value, o.label])
+);
+
 interface DivisionOption {
   id: string;
   name: string;
@@ -57,6 +65,7 @@ export default function ProcesosPage() {
 
   const [data, setData] = useState<PaginatedResponse<ProcessListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const [showCreate, setShowCreate] = useState(false);
   const [createName, setCreateName] = useState("");
@@ -109,10 +118,17 @@ export default function ProcesosPage() {
     if (search) params.set("search", search);
 
     setIsLoading(true);
+    setLoadError(null);
     api
       .get<PaginatedResponse<ProcessListItem>>(`/api/dgi/processes?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
+      .then((res) => {
+        setData(res);
+        setLoadError(null);
+      })
+      .catch((err: Error) => {
+        setData(null);
+        setLoadError(err?.message || "No se pudieron cargar los procesos.");
+      })
       .finally(() => setIsLoading(false));
   }, [page, status, criticality, search]);
 
@@ -161,7 +177,7 @@ export default function ProcesosPage() {
   const columns = [
     {
       key: "code",
-      label: "Codigo",
+      label: "Código",
       render: (v: unknown) => (
         <span className="font-mono text-xs">{String(v ?? "-")}</span>
       ),
@@ -172,7 +188,7 @@ export default function ProcesosPage() {
     },
     {
       key: "division_name",
-      label: "Division",
+      label: "División",
     },
     {
       key: "owner_name",
@@ -181,18 +197,21 @@ export default function ProcesosPage() {
     {
       key: "status",
       label: "Estado",
-      render: (v: unknown) => (
-        <Badge variant="outline" className="text-xs">{String(v)}</Badge>
-      ),
+      render: (v: unknown) => {
+        const code = String(v ?? "");
+        return (
+          <Badge variant="outline" className="text-xs">{STATUS_LABELS[code] ?? code}</Badge>
+        );
+      },
     },
     {
       key: "criticality",
       label: "Criticidad",
       render: (v: unknown) => {
-        const code = String(v);
+        const code = String(v ?? "");
         return (
           <Badge variant="outline" className={`text-xs ${CRITICALITY_COLORS[code] ?? ""}`}>
-            {code}
+            {CRITICALITY_LABELS[code] ?? code}
           </Badge>
         );
       },
@@ -206,8 +225,8 @@ export default function ProcesosPage() {
   return (
     <div className="p-6 space-y-4">
       <PageHeader
-        title="Catalogo de Procesos"
-        description="Gestion del catalogo de procesos institucionales"
+        title="Catálogo de Procesos"
+        description="Gestión del catálogo de procesos institucionales"
         accentColor="cyan"
         actions={
           canCreate ? (
@@ -227,7 +246,7 @@ export default function ProcesosPage() {
         values={filterValues}
         onChange={handleFilterChange}
         onClear={handleClear}
-        searchPlaceholder="Buscar por nombre o codigo..."
+        searchPlaceholder="Buscar por nombre o código..."
         searchValue={search}
         onSearchChange={handleSearchChange}
       />
@@ -244,12 +263,28 @@ export default function ProcesosPage() {
           router.push(`/procesos/${item.id}`);
         }}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={fetchData}
+        hasActiveFilters={Boolean(status || criticality || search)}
+        onClearFilters={handleClear}
+        emptyTitle="Aún no hay procesos"
+        emptyDescription={canCreate ? "Crea el primer proceso institucional para comenzar." : "Cuando se registren procesos, aparecerán aquí."}
       />
 
       <DrawerPanel
         open={showCreate}
         onClose={() => setShowCreate(false)}
         title="Nuevo Proceso"
+        isDirty={
+          !createSubmitting &&
+          Boolean(
+            createName.trim() ||
+              createDescription.trim() ||
+              createScope.trim() ||
+              createDivisionId ||
+              createCriticality
+          )
+        }
       >
         <form onSubmit={handleCreateSubmit} className="space-y-4">
           <div className="space-y-1.5">
@@ -262,11 +297,11 @@ export default function ProcesosPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Descripcion</label>
+            <label className="text-sm font-medium">Descripción</label>
             <textarea
               value={createDescription}
               onChange={(e) => setCreateDescription(e.target.value)}
-              placeholder="Descripcion del proceso"
+              placeholder="Descripción del proceso"
               className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[80px]"
             />
           </div>
@@ -281,10 +316,10 @@ export default function ProcesosPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Division</label>
+            <label className="text-sm font-medium">División</label>
             <Select value={createDivisionId} onValueChange={setCreateDivisionId}>
               <SelectTrigger>
-                <SelectValue placeholder="Seleccione division" />
+                <SelectValue placeholder="Seleccione división" />
               </SelectTrigger>
               <SelectContent>
                 {divisions.map((d) => (

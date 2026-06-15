@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { EmptyState } from "@/components/empty-state";
+import { DateField } from "@/components/date-field";
 import { FileCheck, PenLine, CheckCircle2 } from "lucide-react";
 import { formatDate, formatCurrency } from "@/lib/format";
 
@@ -152,11 +153,9 @@ export function TabCierre({ iprId, canManage, iprStatus }: TabCierreProps) {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium">Fecha de Cierre *</label>
-              <input
-                type="date"
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+              <DateField
                 value={closureDate}
-                onChange={(e) => setClosureDate(e.target.value)}
+                onChange={(v) => setClosureDate(v)}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">

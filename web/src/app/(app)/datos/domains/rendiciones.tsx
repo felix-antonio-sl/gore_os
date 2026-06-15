@@ -10,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ComboboxAsync } from "@/components/combobox-async";
 import type { ComboboxOption } from "@/components/combobox-async";
+import { DateField } from "@/components/date-field";
 import { StatusBadge } from "@/components/status-badge";
 import { TimelineHistory } from "@/components/timeline-history";
 import { X, Loader2, Plus, AlertTriangle } from "lucide-react";
@@ -331,13 +332,13 @@ function NuevaRendicionAction({ onRefresh }: { onRefresh: () => void }) {
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
               <label className="text-xs font-medium">Período inicio</label>
-              <input type="date" value={periodStart} onChange={(e) => setPeriodStart(e.target.value)}
-                className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+              <DateField value={periodStart} onChange={(v) => setPeriodStart(v)}
+                className="w-full h-8 text-xs" />
             </div>
             <div className="space-y-1">
               <label className="text-xs font-medium">Período fin</label>
-              <input type="date" value={periodEnd} onChange={(e) => setPeriodEnd(e.target.value)}
-                className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+              <DateField value={periodEnd} min={periodStart || undefined} onChange={(v) => setPeriodEnd(v)}
+                className="w-full h-8 text-xs" />
             </div>
           </div>
           <div className="space-y-1">
@@ -348,8 +349,8 @@ function NuevaRendicionAction({ onRefresh }: { onRefresh: () => void }) {
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium">Fecha de envío (opcional)</label>
-            <input type="date" value={submittedAt} onChange={(e) => setSubmittedAt(e.target.value)}
-              className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+            <DateField value={submittedAt} onChange={(v) => setSubmittedAt(v)}
+              className="w-full h-8 text-xs" />
           </div>
           {error && <p className="text-xs text-red-600">{error}</p>}
           <div className="flex justify-end gap-2 pt-2">

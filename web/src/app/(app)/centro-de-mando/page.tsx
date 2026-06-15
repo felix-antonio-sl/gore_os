@@ -17,7 +17,8 @@ import {
   Clock,
   Shield,
 } from "lucide-react";
-import { formatDateTime } from "@/lib/format";
+import { tone } from "@/components/status-badge";
+import { Clickable } from "@/components/clickable";
 import { useAuth } from "@/lib/auth";
 import { PageGuard } from "@/components/page-guard";
 import { PageSkeleton } from "@/components/page-skeleton";
@@ -26,11 +27,11 @@ import type { CommandCenterSummary, PaginatedResponse, TimelineEvent, RoleCode }
 const ALLOWED_ROLES: RoleCode[] = ["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA", "JEFE_DGI"];
 
 const CATEGORY_CONFIG: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
-  ESCALATION: { label: "Escalamiento", icon: <AlertTriangle className="size-4" />, color: "bg-orange-100 text-orange-700" },
-  ALERT: { label: "Alerta", icon: <Bell className="size-4" />, color: "bg-red-100 text-red-700" },
-  RISK: { label: "Riesgo", icon: <ShieldAlert className="size-4" />, color: "bg-amber-100 text-amber-700" },
-  DECISION: { label: "Decisión", icon: <FileText className="size-4" />, color: "bg-blue-100 text-blue-700" },
-  MEETING: { label: "Reunión", icon: <CalendarClock className="size-4" />, color: "bg-purple-100 text-purple-700" },
+  ESCALATION: { label: "Escalamiento", icon: <AlertTriangle className="size-4" />, color: tone("orange") },
+  ALERT: { label: "Alerta", icon: <Bell className="size-4" />, color: tone("red") },
+  RISK: { label: "Riesgo", icon: <ShieldAlert className="size-4" />, color: tone("amber") },
+  DECISION: { label: "Decisión", icon: <FileText className="size-4" />, color: tone("blue") },
+  MEETING: { label: "Reunión", icon: <CalendarClock className="size-4" />, color: tone("purple") },
 };
 
 export default function CentroMandoPage() {
@@ -144,7 +145,7 @@ function CentroMandoContent() {
       <PageHeader
         title="Centro de Mando"
         description="Vista consolidada de crisis y contingencias"
-        accentColor="rose"
+        accentColor="indigo"
         actions={
           <div className="flex items-center gap-2">
             <Shield className="size-5 text-muted-foreground" />
@@ -157,7 +158,7 @@ function CentroMandoContent() {
         {kpiCards.map((card, idx) => (
           <Card
             key={card.title}
-            className={`cursor-pointer hover:shadow-md transition-shadow border-l-4 ${getSemaforo(card.count, card.threshold)} animate-in fade-in duration-200`}
+            className={`cursor-pointer hover:shadow-md transition-shadow border-l-4 dark:border dark:bg-card/60 ${getSemaforo(card.count, card.threshold)} animate-in fade-in duration-200`}
             style={{ animationDelay: `${idx * 75}ms`, animationFillMode: "both" }}
             onClick={() => router.push(card.href)}
           >
@@ -192,9 +193,10 @@ function CentroMandoContent() {
               {timeline.map((event, idx) => {
                 const config = CATEGORY_CONFIG[event.category] || CATEGORY_CONFIG.ALERT;
                 return (
-                  <div
+                  <Clickable
                     key={`${event.category}-${event.ref_code}-${idx}`}
-                    className="flex items-start gap-3 py-2 border-b last:border-0 cursor-pointer hover:bg-accent/50 rounded-md px-1 -mx-1 transition-colors"
+                    ariaLabel={`${config.label} ${event.ref_code}: ${event.description}`}
+                    className="flex items-start gap-3 py-2 border-b last:border-0 hover:bg-accent/50 px-1 -mx-1 transition-colors"
                     onClick={() => {
                       const routes: Record<string, string> = {
                         ESCALATION: "/escalamiento",
@@ -227,7 +229,7 @@ function CentroMandoContent() {
                     <span className="text-xs text-muted-foreground whitespace-nowrap shrink-0">
                       {relativeTime(event.event_time)}
                     </span>
-                  </div>
+                  </Clickable>
                 );
               })}
             </div>

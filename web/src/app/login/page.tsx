@@ -78,7 +78,7 @@ export default function LoginPage() {
                 required
                 disabled={isLoading}
                 autoComplete="email"
-                className="bg-white/10 border-white/15 text-white placeholder:text-white/40 focus:border-white/30 focus:ring-white/20"
+                className="bg-white/25 border-white/25 text-white placeholder:text-white/70 focus:border-white/40 focus:ring-white/20"
               />
             </div>
             <div className="space-y-1.5">
@@ -94,7 +94,7 @@ export default function LoginPage() {
                 required
                 disabled={isLoading}
                 autoComplete="current-password"
-                className="bg-white/10 border-white/15 text-white placeholder:text-white/40 focus:border-white/30 focus:ring-white/20"
+                className="bg-white/25 border-white/25 text-white placeholder:text-white/70 focus:border-white/40 focus:ring-white/20"
               />
             </div>
             {error && (

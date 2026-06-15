@@ -160,6 +160,8 @@ export default function CarteraPage() {
   const [cuotasPage, setCuotasPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadingCuotas, setLoadingCuotas] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [cuotasError, setCuotasError] = useState<string | null>(null);
   const [divisions, setDivisions] = useState<CategoryRef[]>([]);
   const [mechanisms, setMechanisms] = useState<CategoryRef[]>([]);
   const [tab, setTab] = useState("cartera");
@@ -173,6 +175,7 @@ export default function CarteraPage() {
   // Fetch cartera + summary
   const fetchCartera = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const params = new URLSearchParams({ page: String(page), page_size: "20" });
       if (search) params.set("search", search);
@@ -194,7 +197,8 @@ export default function CarteraPage() {
       setData(carteraRes);
       setSummary(summaryRes);
     } catch {
-      // error handled by ApiClient
+      setData(null);
+      setError("No se pudieron cargar los datos de la cartera.");
     } finally {
       setLoading(false);
     }
@@ -205,13 +209,15 @@ export default function CarteraPage() {
   // Fetch cuotas when tab changes
   const fetchCuotas = useCallback(async () => {
     setLoadingCuotas(true);
+    setCuotasError(null);
     try {
       const params = new URLSearchParams({ page: String(cuotasPage), page_size: "20" });
       if (divisionId) params.set("division_id", divisionId);
       const res = await api.get<PaginatedResponse<CuotaVencidaItem>>(`/api/dgi/cartera/cuotas-vencidas?${params}`);
       setCuotas(res);
     } catch {
-      // handled
+      setCuotas(null);
+      setCuotasError("No se pudieron cargar las cuotas vencidas.");
     } finally {
       setLoadingCuotas(false);
     }
@@ -223,6 +229,18 @@ export default function CarteraPage() {
 
   // Reset page on filter change
   useEffect(() => { setPage(1); }, [search, divisionId, mechanism, phase, signal]);
+
+  // Active filters (drives DataTable filtered-empty state)
+  const hasActiveCarteraFilters = !!(search || divisionId || mechanism || phase || signal);
+
+  const clearCarteraFilters = () => {
+    setSearchInput("");
+    setSearch("");
+    setDivisionId("");
+    setMechanism("");
+    setPhase("");
+    setSignal("");
+  };
 
   // Debounce search
   const [searchInput, setSearchInput] = useState("");
@@ -360,7 +378,7 @@ export default function CarteraPage() {
       <PageHeader
         title="Control de Cartera IPR"
         description="Vista unificada del portafolio de inversiones"
-        accentColor="indigo"
+        accentColor="cyan"
         actions={
           <Button
             variant="outline"
@@ -517,6 +535,12 @@ export default function CarteraPage() {
               onPageChange={setPage}
               onRowClick={(row) => router.push(`/ipr/${(row as CarteraIPRItem).id}`)}
               isLoading={loading}
+              error={error}
+              onRetry={fetchCartera}
+              hasActiveFilters={hasActiveCarteraFilters}
+              onClearFilters={clearCarteraFilters}
+              emptyTitle="Sin IPR en cartera"
+              emptyDescription="Cuando existan IPR en el portafolio, aparecerán aquí."
             />
           </div>
         </TabsContent>
@@ -535,6 +559,12 @@ export default function CarteraPage() {
               if (r.ipr_id) router.push(`/ipr/${r.ipr_id}`);
             }}
             isLoading={loadingCuotas}
+            error={cuotasError}
+            onRetry={fetchCuotas}
+            hasActiveFilters={!!divisionId}
+            onClearFilters={() => setDivisionId("")}
+            emptyTitle="Sin cuotas vencidas"
+            emptyDescription="No hay cuotas de convenios vencidas con los filtros actuales."
           />
         </TabsContent>
       </Tabs>

@@ -6,6 +6,8 @@ import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
+import { EmptyState } from "@/components/empty-state";
 import {
   Select,
   SelectContent,
@@ -15,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { formatDateTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronRight, Download } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronRight, Download, RotateCw } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 
 interface AuditEvent {
@@ -65,6 +67,8 @@ export function TabAuditoria() {
 
   const [data, setData] = useState<AuditResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const buildUrl = useCallback(
@@ -84,6 +88,8 @@ export function TabAuditoria() {
   useEffect(() => {
     let cancelled = false;
     const fetchData = async () => {
+      setLoading(true);
+      setLoadError(null);
       const params = new URLSearchParams();
       params.set("page", String(page));
       params.set("page_size", "25");
@@ -95,16 +101,22 @@ export function TabAuditoria() {
 
       try {
         const result = await api.get<AuditResponse>(`/api/admin/audit?${params.toString()}`);
-        if (!cancelled) setData(result);
-      } catch {
-        if (!cancelled) setData(null);
+        if (!cancelled) {
+          setData(result);
+          setLoadError(null);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setData(null);
+          setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los eventos.");
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
     };
     fetchData();
     return () => { cancelled = true; };
-  }, [page, eventType, subjectType, dateFrom, dateTo, search]);
+  }, [page, eventType, subjectType, dateFrom, dateTo, search, retryKey]);
 
   const CSV_COLUMNS = [
     { key: "occurred_at", label: "Fecha" },
@@ -164,18 +176,16 @@ export function TabAuditoria() {
           </SelectContent>
         </Select>
 
-        <Input
-          type="date"
+        <DateField
           value={dateFrom}
-          onChange={(e) => router.push(buildUrl({ date_from: e.target.value, page: "1" }))}
-          className="w-36 h-8 text-xs"
+          onChange={(v) => router.push(buildUrl({ date_from: v, page: "1" }))}
+          className="w-36"
           placeholder="Desde"
         />
-        <Input
-          type="date"
+        <DateField
           value={dateTo}
-          onChange={(e) => router.push(buildUrl({ date_to: e.target.value, page: "1" }))}
-          className="w-36 h-8 text-xs"
+          onChange={(v) => router.push(buildUrl({ date_to: v, page: "1" }))}
+          className="w-36"
           placeholder="Hasta"
         />
         <Input
@@ -228,8 +238,11 @@ export function TabAuditoria() {
                     {ev.event_type_label}
                   </Badge>
                   <span className="text-xs text-muted-foreground font-mono">{ev.subject_type}</span>
-                  <span className="text-xs font-mono text-muted-foreground truncate">
-                    {ev.subject_id.substring(0, 8)}...
+                  <span
+                    className="text-xs font-mono text-muted-foreground truncate"
+                    title={ev.subject_id}
+                  >
+                    {ev.subject_type.split(".").pop()}#{ev.subject_id.substring(0, 8)}
                   </span>
                   <span className="text-xs truncate">{ev.actor_name}</span>
                 </div>
@@ -244,17 +257,34 @@ export function TabAuditoria() {
             ))}
           </div>
         </div>
+      ) : loadError ? (
+        <div className="rounded-lg border">
+          <EmptyState
+            icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+            title="No se pudieron cargar los eventos"
+            description={loadError}
+            action={
+              <Button variant="outline" size="sm" onClick={() => setRetryKey((k) => k + 1)}>
+                <RotateCw className="size-4 mr-1.5" />
+                Reintentar
+              </Button>
+            }
+          />
+        </div>
       ) : (
-        <p className="text-sm text-muted-foreground py-8 text-center">
-          No se encontraron eventos con los filtros seleccionados.
-        </p>
+        <div className="rounded-lg border">
+          <EmptyState
+            title="Sin eventos"
+            description="No se encontraron eventos con los filtros seleccionados."
+          />
+        </div>
       )}
 
       {/* Pagination */}
       {data && data.total_pages > 1 && (
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>
-            Pagina {data.page} de {data.total_pages} ({data.total} eventos)
+            Página {data.page} de {data.total_pages} ({data.total} eventos)
           </span>
           <div className="flex gap-1">
             <Button

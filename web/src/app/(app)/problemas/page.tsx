@@ -23,6 +23,7 @@ import { Plus, Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import type { PaginatedResponse, ProblemaListItem, CategoryRef } from "@/types";
 
 interface IprOption {
@@ -74,7 +75,9 @@ export default function ProblemasPage() {
   const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD", "ANALISTA"].includes(user.role_code);
   const [data, setData] = useState<PaginatedResponse<ProblemaListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [confirmCloseOpen, setConfirmCloseOpen] = useState(false);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<ProblemaDetail | null>(null);
@@ -200,6 +203,7 @@ export default function ProblemasPage() {
 
   useEffect(() => {
     setIsLoading(true);
+    setLoadError(null);
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
@@ -209,8 +213,11 @@ export default function ProblemasPage() {
 
     api
       .get<PaginatedResponse<ProblemaListItem>>(`/api/problemas?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los problemas");
+      })
       .finally(() => setIsLoading(false));
   }, [page, estado, tipo, search, refreshKey]);
 
@@ -393,6 +400,10 @@ export default function ProblemasPage() {
         onPageChange={handlePageChange}
         onRowClick={openDetail}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={Boolean(estado || tipo || search)}
+        onClearFilters={handleClear}
       />
 
       <DrawerPanel
@@ -562,7 +573,7 @@ export default function ProblemasPage() {
                       size="sm"
                       variant="outline"
                       className="text-red-600 border-red-300 hover:bg-red-50"
-                      onClick={handleClose}
+                      onClick={() => setConfirmCloseOpen(true)}
                       disabled={actionLoading}
                     >
                       Cerrar sin Resolver
@@ -671,6 +682,17 @@ export default function ProblemasPage() {
           </div>
         </form>
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={confirmCloseOpen}
+        onOpenChange={setConfirmCloseOpen}
+        title="Cerrar problema sin resolver"
+        description="El problema quedará cerrado sin solución registrada. ¿Confirmar el cierre?"
+        variant="destructive"
+        confirmLabel="Cerrar sin resolver"
+        cancelLabel="Cancelar"
+        onConfirm={() => { setConfirmCloseOpen(false); handleClose(); }}
+      />
     </div>
   );
 }

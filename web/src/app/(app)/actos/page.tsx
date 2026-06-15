@@ -18,6 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
+import { ConfirmDialog } from "@/components/confirm-dialog";
+import { DateField } from "@/components/date-field";
 import { useAuth } from "@/lib/auth";
 import { Download, Plus, FileSignature, Scale } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
@@ -182,6 +184,7 @@ export default function ActosPage() {
 
   const [data, setData] = useState<PaginatedResponse<ActoListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   // Pending queue
@@ -205,6 +208,12 @@ export default function ActosPage() {
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
   const [validTransitions, setValidTransitions] = useState<ActoTransition[]>([]);
+  const [confirmAnularOpen, setConfirmAnularOpen] = useState(false);
+
+  // Destructive transition codes that require explicit confirmation.
+  const DESTRUCTIVE_TRANSITIONS = ["ANULADO", "RECHAZADO_CGR"];
+  const selectedTransition = validTransitions.find((t) => t.id === editStateId);
+  const isDestructiveTransition = !!selectedTransition && DESTRUCTIVE_TRANSITIONS.includes(selectedTransition.code);
 
   // Create drawer state
   const [createOpen, setCreateOpen] = useState(false);
@@ -373,12 +382,16 @@ export default function ActosPage() {
     if (act_type) params.set("act_type", act_type);
 
     setIsLoading(true);
+    setLoadError(null);
     api
       .get<PaginatedResponse<ActoListItem>>(
         `/api/actos?${params.toString()}`
       )
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los actos");
+      })
       .finally(() => setIsLoading(false));
   }, [page, state, act_type, refreshKey]);
 
@@ -408,8 +421,7 @@ export default function ActosPage() {
       .catch(() => setValidTransitions([]));
   };
 
-  const handleEditSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const performEditSubmit = async () => {
     if (!selectedId) return;
     setEditSubmitting(true);
     setEditError(null);
@@ -430,6 +442,17 @@ export default function ActosPage() {
     } finally {
       setEditSubmitting(false);
     }
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedId) return;
+    // Gate destructive transitions (anular / rechazo CGR) behind a confirmation.
+    if (isDestructiveTransition) {
+      setConfirmAnularOpen(true);
+      return;
+    }
+    await performEditSubmit();
   };
 
   const columns = [
@@ -594,6 +617,10 @@ export default function ActosPage() {
         onPageChange={handlePageChange}
         onRowClick={openDetail}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={Boolean(state || act_type)}
+        onClearFilters={handleClear}
         emptyTitle={
           role === "ANALISTA" || role === "RTF"
             ? "Sin actos en tu cola"
@@ -871,10 +898,9 @@ export default function ActosPage() {
 
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Fecha de emisión *</label>
-            <Input
-              type="date"
+            <DateField
               value={createIssuedAt}
-              onChange={(e) => setCreateIssuedAt(e.target.value)}
+              onChange={(v) => setCreateIssuedAt(v)}
             />
           </div>
 
@@ -978,6 +1004,25 @@ export default function ActosPage() {
           </div>
         </form>
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={confirmAnularOpen}
+        onOpenChange={setConfirmAnularOpen}
+        title={
+          selectedTransition?.code === "RECHAZADO_CGR"
+            ? "Marcar como rechazado por CGR"
+            : "Anular acto administrativo"
+        }
+        description={
+          selectedTransition?.code === "RECHAZADO_CGR"
+            ? "El acto quedará marcado como rechazado por Contraloría. Esta transición es definitiva."
+            : "El acto quedará anulado y no podrá volver a tramitarse. ¿Confirmar?"
+        }
+        variant="destructive"
+        confirmLabel="Confirmar"
+        cancelLabel="Cancelar"
+        onConfirm={() => { setConfirmAnularOpen(false); performEditSubmit(); }}
+      />
     </div>
   );
 }

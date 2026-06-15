@@ -9,7 +9,6 @@ import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { TimelineHistory } from "@/components/timeline-history";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -18,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
+import { DateField } from "@/components/date-field";
 import { toast } from "sonner";
 import { Plus, UserCheck } from "lucide-react";
 import { formatDate } from "@/lib/format";
@@ -566,11 +566,10 @@ export default function CompromisosPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Fecha limite *</label>
-            <Input
-              type="date"
+            <label className="text-sm font-medium">Fecha límite *</label>
+            <DateField
               value={createDueDate}
-              onChange={(e) => setCreateDueDate(e.target.value)}
+              onChange={setCreateDueDate}
             />
           </div>
 

@@ -53,8 +53,8 @@ export default function CarteraDivisionPage() {
   return (
     <div className="p-6 space-y-4">
       <PageHeader
-        title="Cartera IPR por Division"
-        description="Vista comparativa del portafolio de inversiones por division"
+        title="Cartera IPR por División"
+        description="Vista comparativa del portafolio de inversiones por división"
         accentColor="indigo"
       />
 
@@ -99,7 +99,7 @@ export default function CarteraDivisionPage() {
               <div className="flex gap-3 text-xs">
                 {d.critical_alerts > 0 && (
                   <Badge variant="outline" className="text-red-600 border-red-200 text-[10px]">
-                    {d.critical_alerts} criticas
+                    {d.critical_alerts} críticas
                   </Badge>
                 )}
                 {d.open_problems > 0 && (

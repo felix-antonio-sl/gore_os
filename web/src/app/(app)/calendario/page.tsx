@@ -6,7 +6,7 @@ import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import {
@@ -95,26 +95,26 @@ export default function CalendarioPage() {
       <PageHeader
         title="Calendario DGI"
         description="Agenda consolidada: sesiones, interacciones, plazos, escalamientos y SLAs"
+        accentColor="cyan"
       />
 
       {/* Date range */}
       <div className="flex flex-wrap gap-3 items-center">
         <div className="flex items-center gap-2">
           <label className="text-sm text-muted-foreground">Desde</label>
-          <Input
-            type="date"
+          <DateField
             value={fromParam}
-            onChange={(e) => router.push(buildUrl({ from: e.target.value }))}
-            className="w-40 text-sm"
+            onChange={(v) => router.push(buildUrl({ from: v }))}
+            className="w-40"
           />
         </div>
         <div className="flex items-center gap-2">
           <label className="text-sm text-muted-foreground">Hasta</label>
-          <Input
-            type="date"
+          <DateField
             value={toParam}
-            onChange={(e) => router.push(buildUrl({ to: e.target.value }))}
-            className="w-40 text-sm"
+            onChange={(v) => router.push(buildUrl({ to: v }))}
+            min={fromParam}
+            className="w-40"
           />
         </div>
       </div>

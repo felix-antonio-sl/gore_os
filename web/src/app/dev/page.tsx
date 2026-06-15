@@ -49,7 +49,7 @@ const USER_GROUPS: UserGroup[] = [
   },
   {
     label: "Estrategas",
-    description: "Gobernanza, fiscalizacion y estrategia regional",
+    description: "Gobernanza, fiscalización y estrategia regional",
     color: "bg-amber-500/20 text-amber-300 border-amber-500/30",
     users: [
       { email: "gobernador@goreos.cl", role: "GOBERNADOR" },
@@ -61,7 +61,7 @@ const USER_GROUPS: UserGroup[] = [
   },
   {
     label: "DGI",
-    description: "Control de gestion, procesos y transformacion digital",
+    description: "Control de gestión, procesos y transformación digital",
     color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
     users: [
       { email: "jefe.dgi@goreos.cl", role: "JEFE_DGI" },
@@ -72,7 +72,7 @@ const USER_GROUPS: UserGroup[] = [
   },
   {
     label: "Sistema",
-    description: "Administracion de plataforma",
+    description: "Administración de plataforma",
     color: "bg-rose-500/20 text-rose-300 border-rose-500/30",
     users: [
       { email: "admin@goreos.cl", role: "ADMIN_SISTEMA" },
@@ -85,8 +85,8 @@ const USER_GROUPS: UserGroup[] = [
 const ROLE_LABELS: Record<string, string> = {
   ANALISTA: "Analista",
   RTF: "RTF",
-  ASESOR_JURIDICO: "Asesor Juridico",
-  JEFE_DIVISION: "Jefe de Division",
+  ASESOR_JURIDICO: "Asesor Jurídico",
+  JEFE_DIVISION: "Jefe de División",
   JEFE_DEPARTAMENTO: "Jefe de Departamento",
   JEFE_UNIDAD: "Jefe de Unidad",
   GOBERNADOR: "Gobernador",
@@ -94,9 +94,9 @@ const ROLE_LABELS: Record<string, string> = {
   SECRETARIO_EJECUTIVO: "Secretario Ejecutivo",
   CONSEJERO_REGIONAL: "Consejero Regional",
   JEFE_DGI: "Jefe DGI",
-  ESP_CONTROL_GESTION: "Esp. Control de Gestion",
+  ESP_CONTROL_GESTION: "Esp. Control de Gestión",
   ESP_PROCESOS: "Esp. Procesos",
-  ESP_TD: "Esp. Transformacion Digital",
+  ESP_TD: "Esp. Transformación Digital",
   ADMIN_SISTEMA: "Administrador del Sistema",
 };
 
@@ -126,7 +126,7 @@ export default function DevLoginPage() {
       });
 
       if (!res.ok) {
-        throw new Error("Credenciales invalidas");
+        throw new Error("Credenciales inválidas");
       }
 
       const data = await res.json();
@@ -139,7 +139,7 @@ export default function DevLoginPage() {
         .forEach((k) => localStorage.removeItem(k));
       window.location.href = "/dashboard";
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Error al iniciar sesion";
+      const message = err instanceof Error ? err.message : "Error al iniciar sesión";
       setError(message);
       setLoadingEmail(null);
     }
@@ -210,7 +210,7 @@ export default function DevLoginPage() {
                       {user.email}
                     </div>
                     <div className="text-xs opacity-50 mt-0.5">
-                      {user.division || "Sin division"}
+                      {user.division || "Sin división"}
                     </div>
                   </button>
                 );
@@ -222,7 +222,7 @@ export default function DevLoginPage() {
 
       {/* Footer */}
       <div className="text-center pb-6 text-xs text-slate-600">
-        Todas las contrasenas: admin123 — Solo para desarrollo
+        Todas las contraseñas: admin123 — Solo para desarrollo
       </div>
     </div>
   );

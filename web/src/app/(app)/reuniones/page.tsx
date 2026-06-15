@@ -47,6 +47,7 @@ export default function ReunionesPage() {
 
   const [data, setData] = useState<PaginatedResponse<ReunionListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   // Create drawer state
@@ -84,7 +85,7 @@ export default function ReunionesPage() {
   const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!createScheduledAt) {
-      setCreateError("Debe indicar la fecha y hora de la reunion.");
+      setCreateError("Debe indicar la fecha y hora de la reunión.");
       return;
     }
 
@@ -101,7 +102,7 @@ export default function ReunionesPage() {
       setRefreshKey((k) => k + 1);
       router.push(`/reuniones/${result.id}`);
     } catch (err) {
-      setCreateError(err instanceof Error ? err.message : "Error al crear reunion");
+      setCreateError(err instanceof Error ? err.message : "Error al crear reunión");
     } finally {
       setCreateSubmitting(false);
     }
@@ -115,16 +116,19 @@ export default function ReunionesPage() {
     if (statusFilter) params.set("status", statusFilter);
 
     queueMicrotask(() => {
-      if (active) setIsLoading(true);
+      if (active) { setIsLoading(true); setLoadError(null); }
     });
 
     api
       .get<PaginatedResponse<ReunionListItem>>(`/api/reuniones?${params.toString()}`)
       .then((response) => {
-        if (active) setData(response);
+        if (active) { setData(response); setLoadError(null); }
       })
-      .catch(() => {
-        if (active) setData(null);
+      .catch((err) => {
+        if (active) {
+          setData(null);
+          setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las reuniones");
+        }
       })
       .finally(() => {
         if (active) setIsLoading(false);
@@ -188,13 +192,13 @@ export default function ReunionesPage() {
     <div className="p-6 space-y-4">
       <PageHeader
         title="Reuniones de Crisis"
-        description="Sesiones del Comite de Crisis IPR"
+        description="Sesiones del Comité de Crisis IPR"
         accentColor="violet"
         actions={
           canCreate ? (
             <Button onClick={() => setCreateOpen(true)}>
               <Plus className="size-4 mr-1" />
-              Nueva Reunion
+              Nueva Reunión
             </Button>
           ) : undefined
         }
@@ -225,13 +229,17 @@ export default function ReunionesPage() {
           router.push(`/reuniones/${item.id}`);
         }}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={Boolean(statusFilter)}
+        onClearFilters={() => router.push(buildUrl({ status: "", page: 1 }))}
       />
 
       {/* Create Drawer */}
       <DrawerPanel
         open={createOpen}
         onClose={() => { setCreateOpen(false); resetCreateForm(); }}
-        title="Nueva Reunion de Crisis"
+        title="Nueva Reunión de Crisis"
       >
         <form onSubmit={handleCreateSubmit} className="space-y-4">
           <div className="space-y-1.5">
@@ -244,7 +252,7 @@ export default function ReunionesPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Ubicacion</label>
+            <label className="text-sm font-medium">Ubicación</label>
             <Input
               type="text"
               value={createLocation}
@@ -259,7 +267,7 @@ export default function ReunionesPage() {
               className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               value={createSummary}
               onChange={(e) => setCreateSummary(e.target.value)}
-              placeholder="Describa brevemente el motivo de la reunion..."
+              placeholder="Describa brevemente el motivo de la reunión..."
             />
           </div>
 
@@ -269,7 +277,7 @@ export default function ReunionesPage() {
 
           <div className="flex gap-2 pt-2">
             <Button type="submit" disabled={createSubmitting}>
-              {createSubmitting ? "Creando..." : "Crear Reunion"}
+              {createSubmitting ? "Creando..." : "Crear Reunión"}
             </Button>
             <Button
               type="button"

@@ -10,8 +10,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatCurrency, formatDate } from "@/lib/format";
-import { Receipt, CreditCard, Wallet, ChevronDown, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Receipt, CreditCard, Wallet, ChevronDown, ChevronRight, AlertTriangle, RotateCw } from "lucide-react";
 
 interface RendicionItem {
   id: string;
@@ -94,14 +93,21 @@ function AprobacionesContent() {
   const { user } = useAuth();
   const [data, setData] = useState<PendingApprovals | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
+    setLoading(true);
+    setLoadError(null);
     api
       .get<PendingApprovals>("/api/dashboard/pending-approvals")
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las aprobaciones");
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }, [refreshKey]);
 
   if (loading) {
     return (
@@ -124,20 +130,36 @@ function AprobacionesContent() {
       <PageHeader
         title="Aprobaciones"
         description={
-          totalPending > 0
-            ? `${totalPending} items pendientes en tu cola`
-            : "Todas las aprobaciones al día"
+          loadError
+            ? "No se pudieron cargar las aprobaciones"
+            : totalPending > 0
+              ? `${totalPending} ítems pendientes en tu cola`
+              : "Todas las aprobaciones al día"
         }
         accentColor="emerald"
       />
 
-      {totalPending === 0 && (
+      {loadError ? (
+        <EmptyState
+          icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+          title="No se pudieron cargar los datos"
+          description={loadError}
+          action={
+            <Button variant="outline" size="sm" onClick={() => setRefreshKey((k) => k + 1)}>
+              <RotateCw className="size-4 mr-1.5" />
+              Reintentar
+            </Button>
+          }
+        />
+      ) : totalPending === 0 ? (
         <EmptyState
           title="Sin aprobaciones pendientes"
           description="No hay rendiciones, CDPs ni cuotas que requieran tu aprobación en este momento."
         />
-      )}
+      ) : null}
 
+      {!loadError && (
+        <>
       <Section
         title="Rendiciones por Aprobar"
         icon={Receipt}
@@ -238,6 +260,8 @@ function AprobacionesContent() {
           </div>
         ))}
       </Section>
+        </>
+      )}
     </div>
   );
 }

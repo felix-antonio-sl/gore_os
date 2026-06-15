@@ -259,7 +259,7 @@ export default function InitiativeDMAICPage() {
           )}
           {initiative.division_name && (
             <div>
-              <span className="text-muted-foreground">Division: </span>
+              <span className="text-muted-foreground">División: </span>
               <span className="font-medium">{initiative.division_name}</span>
             </div>
           )}

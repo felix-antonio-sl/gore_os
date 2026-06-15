@@ -46,6 +46,7 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
   const [pwdLoading, setPwdLoading] = useState(false);
   const [pwdSuccess, setPwdSuccess] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [isMac, setIsMac] = useState(false);
 
   const pwdStrength = pwdForm.next.length === 0 ? null :
     pwdForm.next.length < 8 ? "weak" :
@@ -86,6 +87,13 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
     setTheme(isDark ? "dark" : "light");
   }, []);
 
+  // Detect platform for the keyboard hint (⌘K on Mac, Ctrl K elsewhere)
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      setIsMac(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent));
+    }
+  }, []);
+
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
     setTheme(next);
@@ -118,11 +126,12 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
           size="sm"
           className="h-8 gap-2 text-muted-foreground text-xs px-3"
           onClick={() => setSearchOpen(true)}
+          aria-label="Buscar"
         >
           <Search className="size-3.5" />
           <span className="hidden sm:inline">Buscar</span>
           <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border bg-muted px-1 text-[10px]">
-            ⌘K
+            {isMac ? "⌘K" : "Ctrl K"}
           </kbd>
         </Button>
         <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />

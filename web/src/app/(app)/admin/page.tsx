@@ -28,8 +28,8 @@ function AdminContent() {
   return (
     <div className="p-6 space-y-4">
       <PageHeader
-        title="Administracion"
-        description="Panel de administracion del sistema"
+        title="Administración"
+        description="Panel de administración del sistema"
         accentColor="violet"
       />
 
@@ -45,7 +45,7 @@ function AdminContent() {
           </TabsTrigger>
           <TabsTrigger value="configuracion" className="flex items-center gap-1.5 text-xs">
             <Settings className="size-3.5" />
-            Configuracion
+            Configuración
           </TabsTrigger>
           <TabsTrigger value="monitoreo" className="flex items-center gap-1.5 text-xs">
             <Activity className="size-3.5" />
@@ -53,7 +53,7 @@ function AdminContent() {
           </TabsTrigger>
           <TabsTrigger value="auditoria" className="flex items-center gap-1.5 text-xs">
             <Shield className="size-3.5" />
-            Auditoria
+            Auditoría
           </TabsTrigger>
         </TabsList>
 

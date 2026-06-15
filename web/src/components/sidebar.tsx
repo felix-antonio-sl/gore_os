@@ -59,7 +59,7 @@ function NavLink({
       href={item.href}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+        "flex min-h-11 md:min-h-0 items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
         isActive
           ? "bg-sidebar-primary text-sidebar-primary-foreground"
           : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
@@ -298,7 +298,7 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
 
       {/* Dev testing — only visible in dev mode */}
       {devMode && (
-        <div className="mt-auto border-t border-sidebar-border pt-2 px-2 pb-1">
+        <div className="mt-auto border-t border-sidebar-border pt-2 px-2 pb-12">
           <NavLink
             item={{ label: "Testing", href: "/dev/testing", icon: <FlaskConical className="size-4" /> }}
             isActive={isActive("/dev/testing")}

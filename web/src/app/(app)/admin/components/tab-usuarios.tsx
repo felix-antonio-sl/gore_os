@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { DrawerPanel } from "@/components/drawer-panel";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,11 +52,11 @@ interface DivisionOption {
 const ROLE_OPTIONS = [
   { value: "ADMIN_SISTEMA", label: "Admin Sistema" },
   { value: "ADMIN_REGIONAL", label: "Admin Regional" },
-  { value: "JEFE_DIVISION", label: "Jefe Division" },
+  { value: "JEFE_DIVISION", label: "Jefe División" },
   { value: "JEFE_DGI", label: "Jefe DGI" },
-  { value: "ESP_CONTROL_GESTION", label: "Esp. Control Gestion" },
+  { value: "ESP_CONTROL_GESTION", label: "Esp. Control Gestión" },
   { value: "ESP_PROCESOS", label: "Esp. Procesos" },
-  { value: "ESP_TD", label: "Esp. Transformacion Digital" },
+  { value: "ESP_TD", label: "Esp. Transformación Digital" },
 ];
 
 const ACTIVE_OPTIONS = [
@@ -71,6 +72,8 @@ export function TabUsuarios() {
 
   const [data, setData] = useState<PaginatedResponse<UserListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [confirmDeactivate, setConfirmDeactivate] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<UserDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -167,10 +170,17 @@ export function TabUsuarios() {
     if (is_active) params.set("is_active", is_active);
 
     setIsLoading(true);
+    setLoadError(null);
     api
       .get<PaginatedResponse<UserListItem>>(`/api/admin/usuarios?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
+      .then((res) => {
+        setData(res);
+        setLoadError(null);
+      })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los usuarios.");
+      })
       .finally(() => setIsLoading(false));
   }, [page, search, role_code, is_active, refreshKey]);
 
@@ -250,7 +260,7 @@ export function TabUsuarios() {
     }
   };
 
-  const handleToggle = async () => {
+  const performToggle = async () => {
     if (!detail) return;
     try {
       await api.post(`/api/admin/usuarios/${detail.id}/toggle-activo`);
@@ -258,6 +268,16 @@ export function TabUsuarios() {
       refreshList();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error");
+    }
+  };
+
+  const handleToggle = () => {
+    if (!detail) return;
+    // Activar no requiere confirmación; desactivar sí.
+    if (detail.is_active) {
+      setConfirmDeactivate(true);
+    } else {
+      performToggle();
     }
   };
 
@@ -358,7 +378,7 @@ export function TabUsuarios() {
     },
     {
       key: "division_name",
-      label: "Division",
+      label: "División",
       render: (v: unknown) => <span className="text-sm">{String(v ?? "-")}</span>,
     },
     {
@@ -416,6 +436,12 @@ export function TabUsuarios() {
         onPageChange={handlePageChange}
         onRowClick={openDetail}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={!!(search || role_code || is_active)}
+        onClearFilters={handleClear}
+        emptyTitle="Aún no hay usuarios"
+        emptyDescription="Crea el primer usuario con el botón Nuevo Usuario."
       />
 
       <DrawerPanel
@@ -452,7 +478,7 @@ export function TabUsuarios() {
                     <Badge variant="outline">{detail.role_label}</Badge>
                   </div>
                   <div className="flex justify-between px-3 py-2">
-                    <span className="text-muted-foreground">Division</span>
+                    <span className="text-muted-foreground">División</span>
                     <span>{detail.division_name ?? "-"}</span>
                   </div>
                   <div className="flex justify-between px-3 py-2">
@@ -475,7 +501,7 @@ export function TabUsuarios() {
                   )}
                   {detail.phone && (
                     <div className="flex justify-between px-3 py-2">
-                      <span className="text-muted-foreground">Telefono</span>
+                      <span className="text-muted-foreground">Teléfono</span>
                       <span>{detail.phone}</span>
                     </div>
                   )}
@@ -506,20 +532,20 @@ export function TabUsuarios() {
                     }}
                   >
                     <KeyRound className="size-4 mr-1" />
-                    Reset Contrasena
+                    Restablecer contraseña
                   </Button>
                 </div>
 
                 {showResetPw && (
                   <div className="space-y-2 rounded-lg border p-3">
-                    <label className="text-sm font-medium">Nueva contrasena</label>
+                    <label className="text-sm font-medium">Nueva contraseña</label>
                     <Input
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="Nueva contrasena"
+                      placeholder="Nueva contraseña"
                     />
-                    <p className="text-xs text-muted-foreground">Minimo 8 caracteres</p>
+                    <p className="text-xs text-muted-foreground">Mínimo 8 caracteres</p>
                     <Button size="sm" onClick={handleResetPassword} disabled={!newPassword || newPassword.length < 8}>
                       Cambiar
                     </Button>
@@ -568,16 +594,16 @@ export function TabUsuarios() {
                     </Select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-sm font-medium">Division</label>
+                    <label className="text-sm font-medium">División</label>
                     <Select
                       value={editDivisionId || "__none__"}
                       onValueChange={(v) => setEditDivisionId(v === "__none__" ? "" : v)}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Sin division" />
+                        <SelectValue placeholder="Sin división" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="__none__">Sin division</SelectItem>
+                        <SelectItem value="__none__">Sin división</SelectItem>
                         {divisions.map((d) => (
                           <SelectItem key={d.id} value={d.id}>
                             {d.name}
@@ -587,7 +613,7 @@ export function TabUsuarios() {
                     </Select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-sm font-medium">Telefono</label>
+                    <label className="text-sm font-medium">Teléfono</label>
                     <Input value={editPhone} onChange={(e) => setEditPhone(e.target.value)} />
                   </div>
                   <div className="flex gap-2 pt-2">
@@ -658,13 +684,14 @@ export function TabUsuarios() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Contrasena *</label>
+            <label className="text-sm font-medium">Contraseña *</label>
             <Input
               type="password"
               value={createPassword}
               onChange={(e) => setCreatePassword(e.target.value)}
-              placeholder="Contrasena"
+              placeholder="Contraseña"
             />
+            <p className="text-xs text-muted-foreground">Mínimo 8 caracteres</p>
           </div>
 
           <div className="space-y-1.5">
@@ -684,16 +711,16 @@ export function TabUsuarios() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Division</label>
+            <label className="text-sm font-medium">División</label>
             <Select
               value={createDivisionId || "__none__"}
               onValueChange={(v) => setCreateDivisionId(v === "__none__" ? "" : v)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Sin division (opcional)" />
+                <SelectValue placeholder="Sin división (opcional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="__none__">Sin division</SelectItem>
+                <SelectItem value="__none__">Sin división</SelectItem>
                 {divisions.map((d) => (
                   <SelectItem key={d.id} value={d.id}>
                     {d.name}
@@ -713,7 +740,7 @@ export function TabUsuarios() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Telefono</label>
+            <label className="text-sm font-medium">Teléfono</label>
             <Input
               value={createPhone}
               onChange={(e) => setCreatePhone(e.target.value)}
@@ -735,6 +762,22 @@ export function TabUsuarios() {
           </div>
         </form>
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={confirmDeactivate}
+        onOpenChange={setConfirmDeactivate}
+        title="¿Desactivar usuario?"
+        description={
+          detail
+            ? `${detail.names} ${detail.paternal_surname} no podrá iniciar sesión hasta que lo reactives. Puedes reactivarlo después.`
+            : ""
+        }
+        confirmLabel="Desactivar"
+        onConfirm={async () => {
+          await performToggle();
+          setConfirmDeactivate(false);
+        }}
+      />
     </div>
   );
 }

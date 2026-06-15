@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EmptyState } from "@/components/empty-state";
+import { AlertTriangle, RotateCw } from "lucide-react";
 
 interface Column {
   key: string;
@@ -31,6 +32,14 @@ interface DataTableProps {
   isLoading?: boolean;
   emptyTitle?: string;
   emptyDescription?: string;
+  /** When set (and not loading), render a load-error state distinct from "empty". */
+  error?: string | null;
+  /** Retry handler — shows a "Reintentar" button in the error state. */
+  onRetry?: () => void;
+  /** True when filters/search are active — switches the empty copy + offers "Limpiar filtros". */
+  hasActiveFilters?: boolean;
+  /** Clears filters from the empty state (shown only when hasActiveFilters). */
+  onClearFilters?: () => void;
 }
 
 export function DataTable({
@@ -44,6 +53,10 @@ export function DataTable({
   isLoading = false,
   emptyTitle,
   emptyDescription,
+  error,
+  onRetry,
+  hasActiveFilters = false,
+  onClearFilters,
 }: DataTableProps) {
   if (isLoading) {
     return (
@@ -59,6 +72,47 @@ export function DataTable({
   const startItem = total === 0 ? 0 : (page - 1) * pageSize + 1;
   const endItem = Math.min(page * pageSize, total);
 
+  const renderEmptyOrError = () => {
+    if (error) {
+      return (
+        <EmptyState
+          icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+          title="No se pudieron cargar los datos"
+          description={error || "Revisa tu conexión y reintenta."}
+          action={
+            onRetry ? (
+              <Button variant="outline" size="sm" onClick={onRetry}>
+                <RotateCw className="size-4 mr-1.5" />
+                Reintentar
+              </Button>
+            ) : undefined
+          }
+        />
+      );
+    }
+    if (hasActiveFilters) {
+      return (
+        <EmptyState
+          title="Sin coincidencias"
+          description="Ningún registro coincide con los filtros aplicados."
+          action={
+            onClearFilters ? (
+              <Button variant="outline" size="sm" onClick={onClearFilters}>
+                Limpiar filtros
+              </Button>
+            ) : undefined
+          }
+        />
+      );
+    }
+    return (
+      <EmptyState
+        title={emptyTitle ?? "Aún no hay registros"}
+        description={emptyDescription ?? "Cuando se creen, aparecerán aquí."}
+      />
+    );
+  };
+
   return (
     <div className="space-y-2 animate-in fade-in duration-200">
       <div className="rounded-md border">
@@ -73,11 +127,8 @@ export function DataTable({
           <TableBody>
             {data.length === 0 ? (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="py-12"
-                >
-                  <EmptyState title={emptyTitle ?? "Sin resultados"} description={emptyDescription ?? "Intente ajustar los filtros"} />
+                <TableCell colSpan={columns.length} className="py-12">
+                  {renderEmptyOrError()}
                 </TableCell>
               </TableRow>
             ) : (
@@ -104,34 +155,37 @@ export function DataTable({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between px-1 text-sm text-muted-foreground" aria-live="polite">
-        <span>
-          Mostrando {startItem === 0 ? 0 : startItem}–{endItem} de {total}
-        </span>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={page <= 1}
-            onClick={() => onPageChange(page - 1)}
-            aria-label="Página anterior"
-          >
-            &lt;
-          </Button>
+      {/* Hide pager in error/empty states to avoid a "Página 1 de 1" under an error. */}
+      {!error && data.length > 0 && (
+        <div className="flex items-center justify-between px-1 text-sm text-muted-foreground" aria-live="polite">
           <span>
-            Página {page} de {Math.max(totalPages, 1)}
+            Mostrando {startItem === 0 ? 0 : startItem}–{endItem} de {total}
           </span>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={page >= totalPages}
-            onClick={() => onPageChange(page + 1)}
-            aria-label="Página siguiente"
-          >
-            &gt;
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page <= 1}
+              onClick={() => onPageChange(page - 1)}
+              aria-label="Página anterior"
+            >
+              &lt;
+            </Button>
+            <span>
+              Página {page} de {Math.max(totalPages, 1)}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page >= totalPages}
+              onClick={() => onPageChange(page + 1)}
+              aria-label="Página siguiente"
+            >
+              &gt;
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

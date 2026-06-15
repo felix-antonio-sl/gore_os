@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DrawerPanel } from "@/components/drawer-panel";
+import { DateField } from "@/components/date-field";
 import { Plus, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format";
@@ -351,10 +352,9 @@ export function TabEvaluaciones({ iprId, canManage, mechanismCode }: TabEvaluaci
 
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Plazo (opcional)</label>
-            <Input
-              type="date"
+            <DateField
               value={formDeadline}
-              onChange={(e) => setFormDeadline(e.target.value)}
+              onChange={(v) => setFormDeadline(v)}
             />
           </div>
 

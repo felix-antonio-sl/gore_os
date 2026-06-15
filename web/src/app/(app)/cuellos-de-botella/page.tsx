@@ -9,7 +9,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { useAuth } from "@/lib/auth";
 import { DGI_ROLES } from "@/types";
@@ -22,7 +22,7 @@ const FINDING_TYPE_COLORS: Record<string, string> = {
 };
 
 const FINDING_TYPE_LABELS: Record<string, string> = {
-  ACUMULACION: "Acumulacion",
+  ACUMULACION: "Acumulación",
   CICLO_TIEMPO: "Ciclo Tiempo",
   PRESUPUESTO: "Presupuesto",
 };
@@ -53,6 +53,7 @@ export default function CuellosDeBotellaPage() {
   const [scanLoading, setScanLoading] = useState(true);
   const [investigations, setInvestigations] = useState<PaginatedResponse<BottleneckInvestigation> | null>(null);
   const [tableLoading, setTableLoading] = useState(true);
+  const [tableError, setTableError] = useState<string | null>(null);
   const [creatingIndex, setCreatingIndex] = useState<number | null>(null);
 
   const page = Number(searchParams.get("page") ?? "1");
@@ -85,14 +86,18 @@ export default function CuellosDeBotellaPage() {
 
   const fetchInvestigations = () => {
     setTableLoading(true);
+    setTableError(null);
     api
       .get<PaginatedResponse<BottleneckInvestigation>>(
         `/api/dgi/data/bottlenecks?page=${page}&page_size=20`
       )
-      .then(setInvestigations)
-      .catch(() => {
+      .then((res) => {
+        setInvestigations(res);
+        setTableError(null);
+      })
+      .catch((err: Error) => {
         setInvestigations(null);
-        toast.error("Error al cargar investigaciones");
+        setTableError(err.message || "No se pudieron cargar las investigaciones.");
       })
       .finally(() => setTableLoading(false));
   };
@@ -117,7 +122,7 @@ export default function CuellosDeBotellaPage() {
       });
       router.push(`/cuellos-de-botella/${result.id}`);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Error al crear investigacion");
+      toast.error(err instanceof Error ? err.message : "Error al crear investigación");
       setCreatingIndex(null);
     }
   };
@@ -125,14 +130,14 @@ export default function CuellosDeBotellaPage() {
   const columns = [
     {
       key: "code",
-      label: "Codigo",
+      label: "Código",
       render: (v: unknown) => (
         <span className="font-mono text-xs">{String(v ?? "-")}</span>
       ),
     },
     {
       key: "division_name",
-      label: "Division",
+      label: "División",
       render: (v: unknown) => (
         <span className="text-sm">{String(v ?? "-")}</span>
       ),
@@ -181,7 +186,8 @@ export default function CuellosDeBotellaPage() {
     <div className="p-6 space-y-6">
       <PageHeader
         title="Cuellos de Botella"
-        description="Deteccion y resolucion de cuellos de botella institucionales"
+        description="Detección y resolución de cuellos de botella institucionales"
+        accentColor="cyan"
         actions={
           <Button variant="outline" size="sm" onClick={fetchScan} disabled={scanLoading}>
             <RefreshCw className={`size-4 mr-1 ${scanLoading ? "animate-spin" : ""}`} />
@@ -191,7 +197,7 @@ export default function CuellosDeBotellaPage() {
       />
 
       <div className="space-y-3">
-        <h2 className="text-lg font-semibold">Deteccion Automatica</h2>
+        <h2 className="text-lg font-semibold">Detección Automática</h2>
 
         {scanLoading ? (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -200,10 +206,18 @@ export default function CuellosDeBotellaPage() {
             ))}
           </div>
         ) : findings.length === 0 ? (
-          <div className="rounded-xl border bg-card p-8 text-center">
+          <div className="rounded-xl border bg-card p-8">
             <EmptyState
-              title="Sin hallazgos"
-              description="El escaneo no detecto cuellos de botella activos"
+              icon={<Search className="size-10 text-muted-foreground/50" />}
+              title="Sin hallazgos activos"
+              description="El escaneo no detectó cuellos de botella en este momento. Vuelve a escanear para revisar el estado más reciente."
+              action={
+                <Button variant="outline" size="sm" onClick={fetchScan} disabled={scanLoading}>
+                  <RefreshCw className={`size-4 mr-1 ${scanLoading ? "animate-spin" : ""}`} />
+                  Escanear de nuevo
+                </Button>
+              }
+              compact
             />
           </div>
         ) : (
@@ -239,7 +253,7 @@ export default function CuellosDeBotellaPage() {
                     disabled={creatingIndex === idx}
                     onClick={() => handleCreateInvestigation(finding, idx)}
                   >
-                    {creatingIndex === idx ? "Creando..." : "Abrir Investigacion"}
+                    {creatingIndex === idx ? "Creando..." : "Abrir Investigación"}
                   </Button>
                 )}
               </div>
@@ -262,6 +276,10 @@ export default function CuellosDeBotellaPage() {
             router.push(`/cuellos-de-botella/${item.id}`);
           }}
           isLoading={tableLoading}
+          error={tableError}
+          onRetry={fetchInvestigations}
+          emptyTitle="Sin investigaciones"
+          emptyDescription="Cuando abras una investigación desde un hallazgo, aparecerá aquí."
         />
       </div>
     </div>

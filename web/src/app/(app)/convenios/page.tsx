@@ -34,6 +34,7 @@ import { exportCSV } from "@/lib/csv-export";
 import { cn } from "@/lib/utils";
 import { formatCLP, formatDate } from "@/lib/format";
 import { DeadlineCell } from "@/components/deadline-cell";
+import { DateField } from "@/components/date-field";
 import { PageHeader } from "@/components/page-header";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, ConvenioResumen, CategoryRef, InstallmentItem, RenditionSummaryItem } from "@/types";
@@ -100,6 +101,7 @@ export default function ConveniosPage() {
 
   const [data, setData] = useState<PaginatedResponse<ConvenioListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<ConvenioDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -198,10 +200,14 @@ export default function ConveniosPage() {
     if (dateTo) params.set("date_to", dateTo);
 
     setIsLoading(true);
+    setLoadError(null);
     api
       .get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los convenios");
+      })
       .finally(() => setIsLoading(false));
   }, [page, state, agreement_type, dateFrom, dateTo, refreshKey]);
 
@@ -477,7 +483,7 @@ export default function ConveniosPage() {
       key: "receiver_name",
       label: "Receptor",
       render: (v: unknown) => (
-        <span className="text-sm line-clamp-1 max-w-[160px]">{String(v ?? "-")}</span>
+        <span className="text-sm line-clamp-2 min-w-[200px] max-w-[280px] block">{String(v ?? "-")}</span>
       ),
     },
     {
@@ -622,9 +628,9 @@ export default function ConveniosPage() {
 
       <div className="flex items-center gap-2">
         <span className="text-xs text-muted-foreground whitespace-nowrap">Vigencia hasta:</span>
-        <Input type="date" className="h-8 w-36 text-xs" value={dateFrom} onChange={(e) => router.push(buildUrl({ date_from: e.target.value, page: 1 }))} />
+        <DateField className="w-36" value={dateFrom} onChange={(v) => router.push(buildUrl({ date_from: v, page: 1 }))} />
         <span className="text-xs text-muted-foreground">—</span>
-        <Input type="date" className="h-8 w-36 text-xs" value={dateTo} onChange={(e) => router.push(buildUrl({ date_to: e.target.value, page: 1 }))} />
+        <DateField className="w-36" value={dateTo} min={dateFrom || undefined} onChange={(v) => router.push(buildUrl({ date_to: v, page: 1 }))} />
       </div>
 
       <DataTable
@@ -636,6 +642,10 @@ export default function ConveniosPage() {
         onPageChange={handlePageChange}
         onRowClick={openDetail}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={Boolean(state || agreement_type || dateFrom || dateTo)}
+        onClearFilters={handleClear}
       />
 
       <DrawerPanel
@@ -718,10 +728,9 @@ export default function ConveniosPage() {
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs text-muted-foreground">Vigencia hasta</label>
-                    <Input
-                      type="date"
+                    <DateField
                       value={editValidTo}
-                      onChange={(e) => setEditValidTo(e.target.value)}
+                      onChange={(v) => setEditValidTo(v)}
                       className="h-8 text-xs"
                     />
                   </div>
@@ -801,7 +810,7 @@ export default function ConveniosPage() {
                   "bg-yellow-50 border-yellow-200 text-yellow-800"
                 }`}>
                   <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                  Vigencia vence en {detail.days_to_expiry} dia{detail.days_to_expiry !== 1 ? "s" : ""}
+                  Vigencia vence en {detail.days_to_expiry} día{detail.days_to_expiry !== 1 ? "s" : ""}
                 </div>
               )}
               <div className="flex justify-between px-3 py-2">
@@ -860,7 +869,7 @@ export default function ConveniosPage() {
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] text-muted-foreground">Fecha inicio</label>
-                      <Input type="date" value={bulkStartDate} onChange={(e) => setBulkStartDate(e.target.value)} className="h-7 text-xs" />
+                      <DateField value={bulkStartDate} onChange={(v) => setBulkStartDate(v)} className="h-7 text-xs" />
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] text-muted-foreground">Frecuencia</label>
@@ -897,7 +906,7 @@ export default function ConveniosPage() {
                   <p className="text-xs font-medium">Nueva cuota #{(detail.installments.length) + 1}</p>
                   <div className="grid grid-cols-2 gap-2">
                     <Input type="number" min="0" placeholder="Monto (CLP)" value={cuotaAmount} onChange={(e) => setCuotaAmount(e.target.value)} className="h-7 text-xs" />
-                    <Input type="date" value={cuotaDueDate} onChange={(e) => setCuotaDueDate(e.target.value)} className="h-7 text-xs" />
+                    <DateField value={cuotaDueDate} onChange={(v) => setCuotaDueDate(v)} className="h-7 text-xs" />
                   </div>
                   {cuotaError && <p className="text-xs text-red-600">{cuotaError}</p>}
                   <div className="flex gap-1">
@@ -1089,18 +1098,17 @@ export default function ConveniosPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Vigencia Desde</label>
-              <Input
-                type="date"
+              <DateField
                 value={createValidFrom}
-                onChange={(e) => setCreateValidFrom(e.target.value)}
+                onChange={(v) => setCreateValidFrom(v)}
               />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Vigencia Hasta</label>
-              <Input
-                type="date"
+              <DateField
                 value={createValidTo}
-                onChange={(e) => setCreateValidTo(e.target.value)}
+                min={createValidFrom || undefined}
+                onChange={(v) => setCreateValidTo(v)}
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ import { FilterBar } from "@/components/filter-bar";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import { Download, X } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { DeadlineCell } from "@/components/deadline-cell";
@@ -47,6 +47,8 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
 
   const [data, setData] = useState<PaginatedResponse<CompromisoListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [localRefresh, setLocalRefresh] = useState(0);
 
   const page = Number(searchParams.get("page") ?? "1");
   const estado = searchParams.get("estado") ?? "";
@@ -71,6 +73,7 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
 
   useEffect(() => {
     setIsLoading(true);
+    setLoadError(null);
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
@@ -84,10 +87,13 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
 
     api
       .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los compromisos");
+      })
       .finally(() => setIsLoading(false));
-  }, [page, estado, division, responsibleId, soloMios, overdue, dateFrom, dateTo, user?.id, refreshKey]);
+  }, [page, estado, division, responsibleId, soloMios, overdue, dateFrom, dateTo, user?.id, refreshKey, localRefresh]);
 
   const columns = [
     {
@@ -158,18 +164,17 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
 
       <div className="flex items-center gap-2">
         <span className="text-xs text-muted-foreground whitespace-nowrap">Vencimiento:</span>
-        <Input
-          type="date"
-          className="h-8 w-36 text-xs"
+        <DateField
+          className="w-36"
           value={dateFrom}
-          onChange={(e) => router.push(buildUrl({ date_from: e.target.value, page: 1 }))}
+          onChange={(v) => router.push(buildUrl({ date_from: v, page: 1 }))}
         />
         <span className="text-xs text-muted-foreground">—</span>
-        <Input
-          type="date"
-          className="h-8 w-36 text-xs"
+        <DateField
+          className="w-36"
           value={dateTo}
-          onChange={(e) => router.push(buildUrl({ date_to: e.target.value, page: 1 }))}
+          min={dateFrom || undefined}
+          onChange={(v) => router.push(buildUrl({ date_to: v, page: 1 }))}
         />
         <Button
           variant="outline"
@@ -191,6 +196,10 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
         onPageChange={(p) => router.push(buildUrl({ page: p }))}
         onRowClick={(row) => onItemClick(row as CompromisoListItem)}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setLocalRefresh((k) => k + 1)}
+        hasActiveFilters={Boolean(estado || division || responsibleId || overdue || dateFrom || dateTo)}
+        onClearFilters={() => router.push(pathname)}
       />
     </div>
   );

@@ -7,15 +7,18 @@ import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { StatusBadge } from "@/components/status-badge";
+import { EmptyState } from "@/components/empty-state";
+import { Clickable } from "@/components/clickable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Download } from "lucide-react";
+import { Plus, Download, AlertTriangle, RotateCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCurrency } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
+import { MechanismBadge, PhaseBadge } from "./components/ipr-badges";
 import type { PaginatedResponse, IPRListItem } from "@/types";
-import { SECTOR_OPTIONS, sectorLabel } from "./components/ipr-constants";
+import { SECTOR_OPTIONS } from "./components/ipr-constants";
 
 const CSV_COLUMNS = [
   { key: "codigo_bip", label: "Código BIP" },
@@ -115,25 +118,6 @@ const alertLevelColors: Record<string, string> = {
   INFO: "bg-blue-500 text-white",
 };
 
-const mechanismColors: Record<string, string> = {
-  SNI: "bg-indigo-100 text-indigo-800 border-indigo-200",
-  C33: "bg-violet-100 text-violet-800 border-violet-200",
-  FRIL: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  GLOSA06: "bg-sky-100 text-sky-800 border-sky-200",
-  TRANSFER: "bg-amber-100 text-amber-800 border-amber-200",
-  SUBV8: "bg-rose-100 text-rose-800 border-rose-200",
-  FRPD: "bg-teal-100 text-teal-800 border-teal-200",
-};
-
-const mcdPhaseColors: Record<string, string> = {
-  F0: "bg-slate-100 text-slate-700 border-slate-200",
-  F1: "bg-blue-100 text-blue-700 border-blue-200",
-  F2: "bg-cyan-100 text-cyan-700 border-cyan-200",
-  F3: "bg-purple-100 text-purple-700 border-purple-200",
-  F4: "bg-green-100 text-green-700 border-green-200",
-  F5: "bg-gray-100 text-gray-700 border-gray-200",
-};
-
 export default function IprPage() {
   const router = useRouter();
   const pathname = usePathname();
@@ -150,6 +134,8 @@ export default function IprPage() {
 
   const [data, setData] = useState<PaginatedResponse<IPRListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
   const [divisionOptions, setDivisionOptions] = useState<{value: string; label: string}[]>([]);
 
   const page = Number(searchParams.get("page") ?? "1");
@@ -199,6 +185,11 @@ export default function IprPage() {
     router.push(pathname);
   };
 
+  const hasActiveFilters =
+    !!(tipo || estado || sector || alertLevel || mechanism || mcdPhase || division || search);
+
+  const handleRetry = () => setReloadKey((k) => k + 1);
+
   const handlePageChange = (newPage: number) => {
     router.push(buildUrl({ page: newPage }));
   };
@@ -238,7 +229,10 @@ export default function IprPage() {
     if (search) params.set("search", search);
 
     queueMicrotask(() => {
-      if (active) setIsLoading(true);
+      if (active) {
+        setIsLoading(true);
+        setLoadError(null);
+      }
     });
 
     api
@@ -246,8 +240,11 @@ export default function IprPage() {
       .then((response) => {
         if (active) setData(response);
       })
-      .catch(() => {
-        if (active) setData(null);
+      .catch((err) => {
+        if (active) {
+          setData(null);
+          setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las IPR.");
+        }
       })
       .finally(() => {
         if (active) setIsLoading(false);
@@ -256,7 +253,7 @@ export default function IprPage() {
     return () => {
       active = false;
     };
-  }, [page, tipo, estado, sector, alertLevel, mechanism, mcdPhase, division, search]);
+  }, [page, tipo, estado, sector, alertLevel, mechanism, mcdPhase, division, search, reloadKey]);
 
   const columns = [
     {
@@ -305,11 +302,7 @@ export default function IprPage() {
       render: (value: unknown) => {
         const v = String(value ?? "");
         if (!v) return <span className="text-muted-foreground text-xs">—</span>;
-        return (
-          <Badge variant="outline" className={cn("text-xs", mechanismColors[v])}>
-            {mechanismLabel[v] ?? v}
-          </Badge>
-        );
+        return <MechanismBadge code={v} label={mechanismLabel[v] ?? v} />;
       },
     },
     {
@@ -318,11 +311,7 @@ export default function IprPage() {
       render: (value: unknown) => {
         const v = String(value ?? "");
         if (!v) return <span className="text-muted-foreground text-xs">—</span>;
-        return (
-          <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[v])}>
-            {phaseLabel[v] ?? v}
-          </Badge>
-        );
+        return <PhaseBadge code={v} label={phaseLabel[v] ?? v} />;
       },
     },
     {
@@ -440,19 +429,163 @@ export default function IprPage() {
           : "Más filtros"}
       </button>
 
-      <DataTable
-        columns={columns}
-        data={data?.items ?? []}
-        page={page}
-        totalPages={data?.total_pages ?? 1}
-        total={data?.total ?? 0}
-        onPageChange={handlePageChange}
-        onRowClick={(row) => {
-          const ipr = row as IPRListItem;
-          router.push(`/ipr/${ipr.id}`);
-        }}
-        isLoading={isLoading}
-      />
+      {/* Desktop: tabla densa */}
+      <div className="hidden md:block">
+        <DataTable
+          columns={columns}
+          data={data?.items ?? []}
+          page={page}
+          totalPages={data?.total_pages ?? 1}
+          total={data?.total ?? 0}
+          onPageChange={handlePageChange}
+          onRowClick={(row) => {
+            const ipr = row as IPRListItem;
+            router.push(`/ipr/${ipr.id}`);
+          }}
+          isLoading={isLoading}
+          error={loadError}
+          onRetry={handleRetry}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={handleClear}
+        />
+      </div>
+
+      {/* Móvil: tarjetas apiladas */}
+      <div className="md:hidden">
+        {isLoading ? (
+          <div className="space-y-3" aria-busy="true">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="h-28 rounded-xl bg-muted animate-pulse" />
+            ))}
+          </div>
+        ) : loadError ? (
+          <EmptyState
+            icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+            title="No se pudieron cargar los datos"
+            description={loadError}
+            action={
+              <Button variant="outline" size="sm" onClick={handleRetry}>
+                <RotateCw className="size-4 mr-1.5" />
+                Reintentar
+              </Button>
+            }
+          />
+        ) : (data?.items.length ?? 0) === 0 ? (
+          hasActiveFilters ? (
+            <EmptyState
+              title="Sin coincidencias"
+              description="Ninguna IPR coincide con los filtros aplicados."
+              action={
+                <Button variant="outline" size="sm" onClick={handleClear}>
+                  Limpiar filtros
+                </Button>
+              }
+            />
+          ) : (
+            <EmptyState title="Aún no hay IPR" description="Cuando se creen, aparecerán aquí." />
+          )
+        ) : (
+          <div className="space-y-3">
+            {(data?.items ?? []).map((ipr) => {
+              const phaseDays = ipr.phase_entered_at
+                ? Math.floor((Date.now() - new Date(ipr.phase_entered_at).getTime()) / 86400000)
+                : null;
+              const daysColor =
+                phaseDays == null
+                  ? ""
+                  : phaseDays > 90
+                    ? "text-red-600"
+                    : phaseDays > 30
+                      ? "text-amber-600"
+                      : "text-green-600";
+              return (
+                <Clickable
+                  key={ipr.id}
+                  onClick={() => router.push(`/ipr/${ipr.id}`)}
+                  ariaLabel={`Abrir IPR ${ipr.codigo_bip ?? ipr.name}`}
+                  className="block rounded-xl border bg-card p-4 hover:border-primary/40 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-mono text-muted-foreground">
+                        {ipr.codigo_bip ?? "—"}
+                      </p>
+                      <p className="font-medium text-sm leading-tight">{ipr.name}</p>
+                    </div>
+                    {ipr.alert_level && (
+                      <span
+                        className={`mt-1 inline-block shrink-0 rounded-full size-3 ${alertLevelColors[ipr.alert_level] ?? "bg-gray-300"}`}
+                        title={ipr.alert_level}
+                      />
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                    {ipr.ipr_type && (
+                      <Badge variant="outline" className="text-[10px]">
+                        {iprTypeLabel[ipr.ipr_type] ?? ipr.ipr_type}
+                      </Badge>
+                    )}
+                    {ipr.mechanism && (
+                      <MechanismBadge
+                        code={ipr.mechanism}
+                        label={mechanismLabel[ipr.mechanism] ?? ipr.mechanism}
+                        size="sm"
+                      />
+                    )}
+                    {ipr.mcd_phase && (
+                      <PhaseBadge
+                        code={ipr.mcd_phase}
+                        label={phaseLabel[ipr.mcd_phase] ?? ipr.mcd_phase}
+                        size="sm"
+                      />
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2 mt-2">
+                    {ipr.status && <StatusBadge status={ipr.status} size="sm" />}
+                    <div className="flex items-center gap-3 text-[11px] tabular-nums">
+                      {phaseDays != null && (
+                        <span className={cn("font-medium", daysColor)}>{phaseDays}d</span>
+                      )}
+                      <span className="text-muted-foreground">
+                        {formatCurrency(ipr.total_budget)}
+                      </span>
+                    </div>
+                  </div>
+                </Clickable>
+              );
+            })}
+
+            {/* Paginación móvil */}
+            {(data?.total_pages ?? 1) > 1 && (
+              <div className="flex items-center justify-between px-1 pt-1 text-sm text-muted-foreground">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page <= 1}
+                  onClick={() => handlePageChange(page - 1)}
+                  aria-label="Página anterior"
+                >
+                  &lt;
+                </Button>
+                <span>
+                  Página {page} de {Math.max(data?.total_pages ?? 1, 1)}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page >= (data?.total_pages ?? 1)}
+                  onClick={() => handlePageChange(page + 1)}
+                  aria-label="Página siguiente"
+                >
+                  &gt;
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

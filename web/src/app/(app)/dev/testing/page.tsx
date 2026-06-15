@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTabParam } from "@/hooks/use-tab-param";
 import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
+import { Clickable } from "@/components/clickable";
+import { tone } from "@/components/status-badge";
 import { formatRelativeTime } from "@/lib/format";
 
 // ---------------------------------------------------------------------------
@@ -43,8 +45,8 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Sidebar",
       items: [
-        { key: "sidebar_sections", label: "Solo Gestion IPR y Mi Trabajo expandidos" },
-        { key: "sidebar_no_admin", label: "Sin seccion Administracion" },
+        { key: "sidebar_sections", label: "Solo Gestión IPR y Mi Trabajo expandidos" },
+        { key: "sidebar_no_admin", label: "Sin sección Administración" },
         { key: "sidebar_no_dgi", label: "Sin secciones DGI" },
       ],
     },
@@ -67,8 +69,8 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Seguridad",
       items: [
-        { key: "scope_other_ipr", label: "No puedo ver IPR de otra division (403)" },
-        { key: "scope_search", label: "Busqueda global solo retorna mis IPRs" },
+        { key: "scope_other_ipr", label: "No puedo ver IPR de otra división (403)" },
+        { key: "scope_search", label: "Búsqueda global solo retorna mis IPRs" },
       ],
     },
   ],
@@ -136,19 +138,19 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
       category: "Dashboard",
       items: [
         { key: "dashboard_loads", label: "Dashboard carga con ModuleMyTeam" },
-        { key: "team_data", label: "Datos de equipo de mi division" },
+        { key: "team_data", label: "Datos de equipo de mi división" },
       ],
     },
     {
       category: "Sidebar",
       items: [
-        { key: "sidebar_gestion_finanzas", label: "Gestion IPR y Finanzas expandidos" },
+        { key: "sidebar_gestion_finanzas", label: "Gestión IPR y Finanzas expandidos" },
       ],
     },
     {
       category: "IPR",
       items: [
-        { key: "ipr_division_scope", label: "Lista IPR muestra solo mi division" },
+        { key: "ipr_division_scope", label: "Lista IPR muestra solo mi división" },
         { key: "ipr_cartera", label: "Cartera Divisional accesible" },
       ],
     },
@@ -162,7 +164,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Seguridad",
       items: [
-        { key: "scope_other_div", label: "No puedo ver IPR de otra division (403)" },
+        { key: "scope_other_div", label: "No puedo ver IPR de otra división (403)" },
       ],
     },
   ],
@@ -177,7 +179,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Aprobaciones",
       items: [
-        { key: "aprobaciones_page", label: "Pagina Aprobaciones accesible" },
+        { key: "aprobaciones_page", label: "Página Aprobaciones accesible" },
         { key: "aprobaciones_cdps", label: "CDPs pendientes visibles" },
         { key: "aprobaciones_rendiciones", label: "Rendiciones VISADA_RTF visibles" },
       ],
@@ -194,7 +196,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Sidebar",
       items: [
-        { key: "sidebar_gestion", label: "Gestion IPR expandido" },
+        { key: "sidebar_gestion", label: "Gestión IPR expandido" },
       ],
     },
     {
@@ -221,7 +223,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Sidebar",
       items: [
-        { key: "sidebar_all_open", label: "Todas las secciones expandidas (fiscalizacion)" },
+        { key: "sidebar_all_open", label: "Todas las secciones expandidas (fiscalización)" },
         { key: "sidebar_comando", label: "Centro de Mando visible" },
       ],
     },
@@ -236,7 +238,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
       category: "CORE",
       items: [
         { key: "core_sessions", label: "Sesiones CORE accesibles" },
-        { key: "core_preside", label: "Puedo presidir sesion" },
+        { key: "core_preside", label: "Puedo presidir sesión" },
       ],
     },
   ],
@@ -251,12 +253,12 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Admin",
       items: [
-        { key: "admin_tabs", label: "Pagina Admin con 5 tabs" },
+        { key: "admin_tabs", label: "Página Admin con 5 tabs" },
         { key: "admin_usuarios", label: "CRUD usuarios funcional" },
         { key: "admin_divisiones", label: "CRUD divisiones funcional" },
-        { key: "admin_config", label: "Tab Configuracion (umbrales+SNI+tracks)" },
+        { key: "admin_config", label: "Tab Configuración (umbrales+SNI+tracks)" },
         { key: "admin_monitoreo", label: "Tab Monitoreo (SLAs+salud datos)" },
-        { key: "admin_auditoria", label: "Tab Auditoria funcional" },
+        { key: "admin_auditoria", label: "Tab Auditoría funcional" },
       ],
     },
   ],
@@ -298,13 +300,13 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Sidebar",
       items: [
-        { key: "sidebar_all_open", label: "Todas las secciones expandidas (fiscalizacion)" },
+        { key: "sidebar_all_open", label: "Todas las secciones expandidas (fiscalización)" },
       ],
     },
     {
       category: "CORE",
       items: [
-        { key: "core_vote", label: "Puedo votar en sesion CORE" },
+        { key: "core_vote", label: "Puedo votar en sesión CORE" },
       ],
     },
     {
@@ -325,7 +327,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "CORE",
       items: [
-        { key: "core_create", label: "Puedo crear nueva sesion CORE" },
+        { key: "core_create", label: "Puedo crear nueva sesión CORE" },
         { key: "core_agenda", label: "Puedo gestionar agenda" },
       ],
     },
@@ -339,17 +341,17 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
       ],
     },
     {
-      category: "Coordinacion",
+      category: "Coordinación",
       items: [
-        { key: "coordinacion_tabs", label: "Coordinacion con 3 tabs (Decisiones/Divisiones/Comite TD)" },
+        { key: "coordinacion_tabs", label: "Coordinación con 3 tabs (Decisiones/Divisiones/Comité TD)" },
         { key: "escalamiento", label: "Escalamientos accesibles" },
-        { key: "servicios_manage", label: "Gestion de servicios con drawers" },
+        { key: "servicios_manage", label: "Gestión de servicios con drawers" },
       ],
     },
     {
       category: "Monitoreo",
       items: [
-        { key: "cartera", label: "Cartera con semaforo salud" },
+        { key: "cartera", label: "Cartera con semáforo salud" },
         { key: "centro_mando", label: "Centro de Mando accesible" },
       ],
     },
@@ -376,7 +378,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
     {
       category: "Mejora",
       items: [
-        { key: "procesos_catalog", label: "Catalogo de procesos" },
+        { key: "procesos_catalog", label: "Catálogo de procesos" },
         { key: "procesos_detail", label: "Detalle proceso con 5 tabs" },
         { key: "tablero_dmaic", label: "DMAIC 5 fases funcional" },
       ],
@@ -426,30 +428,35 @@ function BugCard({ bug, onDelete }: { bug: BugReport; onDelete: (id: string) => 
     BAJO: "border-l-green-500",
   };
   const severityBadge: Record<string, string> = {
-    CRITICO: "bg-red-100 text-red-800",
-    ALTO: "bg-amber-100 text-amber-800",
-    MEDIO: "bg-blue-100 text-blue-800",
-    BAJO: "bg-green-100 text-green-800",
+    CRITICO: tone("red"),
+    ALTO: tone("amber"),
+    MEDIO: tone("blue"),
+    BAJO: tone("green"),
   };
 
   return (
     <div
-      className={`bg-card border border-l-4 ${severityColors[bug.severity] || "border-l-muted"} rounded-lg p-3 cursor-pointer hover:bg-muted/30 transition-colors`}
-      onClick={() => setExpanded(!expanded)}
+      className={`bg-card border border-l-4 ${severityColors[bug.severity] || "border-l-muted"} rounded-lg p-3 transition-colors`}
     >
-      <div className="flex items-start justify-between">
-        <div>
+      <div className="flex items-start justify-between gap-2">
+        <Clickable
+          ariaLabel={`${expanded ? "Contraer" : "Expandir"} bug: ${bug.title}`}
+          className="flex-1 min-w-0 hover:bg-muted/30 -m-1 p-1"
+          onClick={() => setExpanded(!expanded)}
+        >
           <div className="font-medium text-sm">{bug.title}</div>
           <div className="text-xs text-muted-foreground mt-1">
             {bug.user_email?.split("@")[0]} · {bug.url} · {formatRelativeTime(bug.created_at)}
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${severityBadge[bug.severity] || ""}`}>
+        </Clickable>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${severityBadge[bug.severity] || ""}`}>
             {bug.severity}
           </span>
           <button
-            onClick={(e) => { e.stopPropagation(); onDelete(bug.id); }}
+            type="button"
+            aria-label="Eliminar bug"
+            onClick={() => onDelete(bug.id)}
             className="text-muted-foreground hover:text-destructive text-xs"
           >
             ✕
@@ -545,14 +552,14 @@ export default function TestingPage() {
   const pct = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
 
   return (
-    <div className="space-y-6">
+    <div className="p-6 space-y-6">
       <PageHeader
         title="Testing Checklist"
         description={`${user?.email ?? "..."} — ${user?.role_code ?? "..."} — ${checkedItems}/${totalItems} completados`}
         accentColor="amber"
       />
 
-      <div className="px-6">
+      <div>
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList>
             <TabsTrigger value="checklist">Checklist</TabsTrigger>
@@ -643,7 +650,7 @@ export default function TestingPage() {
             {/* KPI strip */}
             <div className="grid grid-cols-4 gap-3 mb-6">
               {[
-                { label: "Critico", color: "text-red-500", count: bugs.filter((b) => b.severity === "CRITICO").length },
+                { label: "Crítico", color: "text-red-500", count: bugs.filter((b) => b.severity === "CRITICO").length },
                 { label: "Alto", color: "text-amber-500", count: bugs.filter((b) => b.severity === "ALTO").length },
                 { label: "Medio", color: "text-blue-500", count: bugs.filter((b) => b.severity === "MEDIO").length },
                 { label: "Bajo", color: "text-green-500", count: bugs.filter((b) => b.severity === "BAJO").length },
@@ -659,7 +666,7 @@ export default function TestingPage() {
             {bugs.length === 0 ? (
               <EmptyState
                 title="Sin bugs reportados"
-                description="Usa el boton de bug para capturar bugs durante el testing"
+                description="Usa el botón de bug para capturar bugs durante el testing"
               />
             ) : (
               <div className="space-y-2">

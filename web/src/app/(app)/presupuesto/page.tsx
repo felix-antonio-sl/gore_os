@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Download, Plus, ChevronDown } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
-import { formatCLP, formatDate } from "@/lib/format";
+import { formatCLPExact, formatMillones, formatDate } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { toast } from "sonner";
@@ -75,6 +75,7 @@ export default function PresupuestoPage() {
 
   const [data, setData] = useState<PaginatedResponse<PresupuestoListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<PresupuestoDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -228,10 +229,14 @@ export default function PresupuestoPage() {
     if (search) params.set("search", search);
 
     setIsLoading(true);
+    setLoadError(null);
     api
       .get<PaginatedResponse<PresupuestoListItem>>(`/api/presupuesto?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los programas presupuestarios");
+      })
       .finally(() => setIsLoading(false));
   }, [page, fiscal_year, subtitle, division_id, program_code, search, refreshKey]);
 
@@ -355,13 +360,6 @@ export default function PresupuestoPage() {
       ),
     },
     {
-      key: "program_code_label",
-      label: "Programa",
-      render: (v: unknown) => (
-        <span className="text-xs text-muted-foreground">{String(v ?? "-")}</span>
-      ),
-    },
-    {
       key: "item_label",
       label: "Ítem",
       render: (v: unknown) => (
@@ -372,7 +370,7 @@ export default function PresupuestoPage() {
       key: "initial_amount",
       label: "Monto inicial",
       render: (v: unknown) => (
-        <span className="text-xs tabular-nums font-mono">{formatCLP(Number(v))}</span>
+        <span className="text-xs tabular-nums font-mono">{formatMillones(Number(v))}</span>
       ),
     },
     {
@@ -427,6 +425,10 @@ export default function PresupuestoPage() {
         onPageChange={handlePageChange}
         onRowClick={openDetail}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={Boolean(fiscal_year || subtitle || division_id || program_code || search)}
+        onClearFilters={handleClear}
       />
 
       <DrawerPanel
@@ -555,28 +557,28 @@ export default function PresupuestoPage() {
                 <div className="rounded-lg border divide-y text-sm">
                   <div className="flex justify-between px-3 py-2">
                     <span className="text-muted-foreground">Monto inicial</span>
-                    <span className="font-mono">{formatCLP(detail.initial_amount)}</span>
+                    <span className="font-mono">{formatCLPExact(detail.initial_amount)}</span>
                   </div>
                   <div className="flex justify-between px-3 py-2">
                     <span className="text-muted-foreground">Monto vigente</span>
-                    <span className="font-mono">{formatCLP(detail.current_amount)}</span>
+                    <span className="font-mono">{formatCLPExact(detail.current_amount)}</span>
                   </div>
                   <div className="flex justify-between px-3 py-2">
                     <span className="text-muted-foreground">Comprometido</span>
-                    <span className="font-mono">{formatCLP(detail.committed_amount)}</span>
+                    <span className="font-mono">{formatCLPExact(detail.committed_amount)}</span>
                   </div>
                   <div className="flex justify-between px-3 py-2">
                     <span className="text-muted-foreground">Devengado</span>
-                    <span className="font-mono">{formatCLP(detail.accrued_amount)}</span>
+                    <span className="font-mono">{formatCLPExact(detail.accrued_amount)}</span>
                   </div>
                   <div className="flex justify-between px-3 py-2 font-medium">
                     <span>Pagado</span>
-                    <span className="font-mono">{formatCLP(detail.paid_amount)}</span>
+                    <span className="font-mono">{formatCLPExact(detail.paid_amount)}</span>
                   </div>
                   {detail.fndr_amount != null && (
                     <div className="flex justify-between px-3 py-2">
                       <span className="text-muted-foreground">FNDR</span>
-                      <span className="font-mono">{formatCLP(detail.fndr_amount)}</span>
+                      <span className="font-mono">{formatCLPExact(detail.fndr_amount)}</span>
                     </div>
                   )}
                 </div>
@@ -610,7 +612,7 @@ export default function PresupuestoPage() {
                   {detail.carryovers.map((co) => (
                     <div key={co.id} className="flex justify-between px-3 py-2">
                       <span className="text-muted-foreground">Año {co.fiscal_year}</span>
-                      <span className="font-mono">{formatCLP(co.amount)}</span>
+                      <span className="font-mono">{formatCLPExact(co.amount)}</span>
                     </div>
                   ))}
                 </div>
@@ -635,7 +637,7 @@ export default function PresupuestoPage() {
                           {cdp.issued_at ? formatDate(cdp.issued_at) : "-"}
                           {cdp.expires_at ? ` → ${formatDate(cdp.expires_at)}` : ""}
                         </span>
-                        <span className="font-mono text-xs">{formatCLP(cdp.amount)}</span>
+                        <span className="font-mono text-xs">{formatCLPExact(cdp.amount)}</span>
                       </div>
                       {cdp.ipr_codigo_bip && (
                         <p className="text-xs text-muted-foreground mt-0.5">

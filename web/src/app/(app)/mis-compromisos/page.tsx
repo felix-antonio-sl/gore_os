@@ -7,8 +7,9 @@ import { DataTable } from "@/components/data-table";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/empty-state";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, AlertTriangle, RotateCw } from "lucide-react";
 import type { KPICardData, CompromisoListItem } from "@/types";
 
 interface CompromisoGroup {
@@ -33,16 +34,23 @@ const PAGE_SIZE = 10;
 export default function MisCompromisosPage() {
   const [data, setData] = useState<MisCompromisosData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [groupPages, setGroupPages] = useState<Record<string, number>>({});
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
+    setIsLoading(true);
+    setLoadError(null);
     api
       .get<MisCompromisosData>("/api/dashboard/mis-compromisos")
-      .then(setData)
-      .catch(() => setData(null))
+      .then((r) => { setData(r); setLoadError(null); })
+      .catch((err) => {
+        setData(null);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar tus compromisos");
+      })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [refreshKey]);
 
   const columns = [
     {
@@ -108,6 +116,21 @@ export default function MisCompromisosPage() {
         />
       )}
 
+      {/* Estado de error de carga */}
+      {!isLoading && loadError && (
+        <EmptyState
+          icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+          title="No se pudieron cargar los datos"
+          description={loadError}
+          action={
+            <Button variant="outline" size="sm" onClick={() => setRefreshKey((k) => k + 1)}>
+              <RotateCw className="size-4 mr-1.5" />
+              Reintentar
+            </Button>
+          }
+        />
+      )}
+
       {/* Grupos de compromisos */}
       {isLoading ? (
         <div className="space-y-4">
@@ -115,7 +138,7 @@ export default function MisCompromisosPage() {
             <div key={i} className="h-32 rounded-lg bg-muted animate-pulse" />
           ))}
         </div>
-      ) : (
+      ) : loadError ? null : (
         data?.groups.map((group) => {
           const filtered = searchQuery
             ? group.items.filter((item) =>

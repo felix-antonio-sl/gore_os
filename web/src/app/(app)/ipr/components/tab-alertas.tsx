@@ -52,7 +52,13 @@ export function TabAlertas({ iprId }: TabAlertasProps) {
   }
 
   if (!alertas || alertas.items.length === 0) {
-    return <EmptyState compact title="No hay alertas para este IPR." />;
+    return (
+      <EmptyState
+        compact
+        title="Sin alertas activas"
+        description="No hay alertas registradas para esta IPR."
+      />
+    );
   }
 
   return (

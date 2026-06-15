@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
@@ -90,6 +90,7 @@ export default function ServiciosPage() {
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailRequests, setDetailRequests] = useState<PaginatedResponse<ServiceRequest> | null>(null);
   const [detailReqLoading, setDetailReqLoading] = useState(false);
+  const [detailReqError, setDetailReqError] = useState<string | null>(null);
 
   // SLA form (inside detail drawer)
   const [slaForm, setSlaForm] = useState({ product_type: "INFORME_FLASH", target_days: "5", description: "" });
@@ -120,26 +121,39 @@ export default function ServiciosPage() {
       .finally(() => setActiveServicesLoading(false));
   };
 
+  // ---------- Fetch detail requests (extracted for retry) ----------
+  const fetchDetailRequests = useCallback((serviceId: string) => {
+    setDetailReqLoading(true);
+    setDetailReqError(null);
+    api
+      .get<PaginatedResponse<ServiceRequest>>(`/api/dgi/services/requests?service_id=${serviceId}&page=1&page_size=50`)
+      .then((res) => {
+        setDetailRequests(res);
+        setDetailReqError(null);
+      })
+      .catch(() => {
+        setDetailRequests(null);
+        setDetailReqError("No se pudieron cargar las solicitudes.");
+      })
+      .finally(() => setDetailReqLoading(false));
+  }, []);
+
   // ---------- Fetch detail ----------
   useEffect(() => {
     if (!detailId) {
       setDetailService(null);
       setDetailRequests(null);
+      setDetailReqError(null);
       return;
     }
     setDetailLoading(true);
-    setDetailReqLoading(true);
     api
       .get<ServiceDetailData>(`/api/dgi/services/${detailId}`)
       .then(setDetailService)
       .catch(() => toast.error("Error al cargar servicio"))
       .finally(() => setDetailLoading(false));
-    api
-      .get<PaginatedResponse<ServiceRequest>>(`/api/dgi/services/requests?service_id=${detailId}&page=1&page_size=50`)
-      .then(setDetailRequests)
-      .catch(() => {})
-      .finally(() => setDetailReqLoading(false));
-  }, [detailId]);
+    fetchDetailRequests(detailId);
+  }, [detailId, fetchDetailRequests]);
 
   // ---------- Handlers ----------
   const handleCreateService = async () => {
@@ -306,7 +320,20 @@ export default function ServiciosPage() {
           ))}
         </div>
       ) : services.length === 0 ? (
-        <EmptyState title="Sin servicios" description="El catálogo de servicios DGI aparecerá aquí" />
+        <EmptyState
+          title="Sin servicios"
+          description={
+            areaFilter !== "TODOS"
+              ? "No hay servicios en esta área. Prueba con otro filtro o solicita uno."
+              : "El catálogo de servicios DGI aparecerá aquí."
+          }
+          action={
+            <Button size="sm" variant="outline" onClick={handleOpenRequestDrawer}>
+              <Send className="size-4 mr-1" />
+              Solicitar Servicio
+            </Button>
+          }
+        />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((svc) => (
@@ -512,7 +539,7 @@ export default function ServiciosPage() {
               </Card>
               <Card>
                 <CardContent className="pt-3 pb-3">
-                  <p className="text-xs text-muted-foreground">SLA</p>
+                  <p className="text-xs text-muted-foreground">Cumplimiento</p>
                   <p className="text-xl font-bold">{completionRate}%</p>
                 </CardContent>
               </Card>
@@ -618,6 +645,10 @@ export default function ServiciosPage() {
                   total={totalReqs}
                   onPageChange={() => {}}
                   isLoading={detailReqLoading}
+                  error={detailReqError}
+                  onRetry={detailService ? () => fetchDetailRequests(detailService.id) : undefined}
+                  emptyTitle="Sin solicitudes"
+                  emptyDescription="Cuando se solicite este servicio, las solicitudes aparecerán aquí."
                 />
               </TabsContent>
             </Tabs>

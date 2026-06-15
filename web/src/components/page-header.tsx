@@ -18,6 +18,7 @@ const ACCENT_BORDER: Record<string, string> = {
   rose: "border-l-rose-500",
   cyan: "border-l-cyan-500",
   teal: "border-l-teal-500",
+  orange: "border-l-orange-500",
 };
 
 export function PageHeader({ title, description, actions, breadcrumbs, accentColor }: PageHeaderProps) {

@@ -37,7 +37,7 @@ export function TabProblemas({ iprId, canCreate }: TabProblemasProps) {
   const problemaColumns = [
     {
       key: "days_open",
-      label: "Dias abierto",
+      label: "Días abierto",
       render: (v: unknown) => <span className="text-xs tabular-nums">{String(v ?? 0)}d</span>,
     },
     { key: "problem_type_label", label: "Tipo" },
@@ -76,6 +76,8 @@ export function TabProblemas({ iprId, canCreate }: TabProblemasProps) {
         total={problemas?.total ?? 0}
         onPageChange={() => {}}
         isLoading={loading}
+        emptyTitle="Aún no hay problemas registrados"
+        emptyDescription="Registra el primer problema detectado en esta IPR."
       />
       <IprProblemaDrawer
         iprId={iprId}

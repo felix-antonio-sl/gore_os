@@ -139,7 +139,7 @@ function IndicadorDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
       </div>
       <ScrollArea className="flex-1">
         <div className="px-4 py-3 space-y-3 text-sm">
-          <DetailRow label="Dimension" value={ind.dimension} />
+          <DetailRow label="Dimensión" value={ind.dimension} />
           <Separator />
           <DetailRow label="Unidad" value={ind.unit} />
           <Separator />
@@ -174,7 +174,7 @@ function IndicadorDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
             </>
           )}
           <Separator />
-          <DetailRow label="Senal" value={<div className="flex items-center gap-1.5"><SignalDot signal={ind.signal} /><span>{ind.signal ?? "-"}</span></div>} />
+          <DetailRow label="Señal" value={<div className="flex items-center gap-1.5"><SignalDot signal={ind.signal} /><span>{ind.signal ?? "-"}</span></div>} />
           <Separator />
           <DetailRow label="Tendencia" value={<div className="flex items-center gap-1"><TrendIcon trend={ind.trend} /><span className="text-xs capitalize">{ind.trend ?? "-"}</span></div>} />
           <Separator />
@@ -183,13 +183,13 @@ function IndicadorDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
             <>
               <Separator />
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium">Descripcion</p>
+                <p className="text-xs text-muted-foreground font-medium">Descripción</p>
                 <p className="text-xs leading-relaxed text-foreground/80">{ind.description}</p>
               </div>
             </>
           )}
           <Separator />
-          <DetailRow label="Formula" value={ind.formula ?? "-"} />
+          <DetailRow label="Fórmula" value={ind.formula ?? "-"} />
           <Separator />
           <DetailRow label="Frecuencia" value={ind.frequency ?? "-"} />
           <Separator />
@@ -356,10 +356,10 @@ function NuevoIndicadorAction({ onRefresh }: { onRefresh: () => void }) {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium">Dimension *</label>
+            <label className="text-xs font-medium">Dimensión *</label>
             <Select value={dimension} onValueChange={setDimension}>
               <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Seleccionar dimension" />
+                <SelectValue placeholder="Seleccionar dimensión" />
               </SelectTrigger>
               <SelectContent>
                 {DIMENSION_OPTIONS.map((o) => (
@@ -369,16 +369,16 @@ function NuevoIndicadorAction({ onRefresh }: { onRefresh: () => void }) {
             </Select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium">Descripcion</label>
+            <label className="text-xs font-medium">Descripción</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Descripcion del indicador"
+              placeholder="Descripción del indicador"
               className="w-full h-16 text-xs rounded-md border border-input bg-background px-3 py-2 resize-none"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium">Formula</label>
+            <label className="text-xs font-medium">Fórmula</label>
             <input
               value={formula}
               onChange={(e) => setFormula(e.target.value)}
@@ -456,11 +456,11 @@ export const indicadoresConfig: DomainConfig = {
   searchPlaceholder: "Buscar indicador...",
   filters: [
     {
-      key: "dimension", label: "Dimension",
+      key: "dimension", label: "Dimensión",
       options: DIMENSION_OPTIONS,
     },
     {
-      key: "signal", label: "Senal",
+      key: "signal", label: "Señal",
       options: [
         { value: "VERDE", label: "Verde" },
         { value: "AMARILLO", label: "Amarillo" },

@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { toast } from "sonner";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -53,7 +55,27 @@ export default function NuevaIprPage() {
   const [description, setDescription] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [confirmCancelOpen, setConfirmCancelOpen] = useState(false);
+
+  const isDirty =
+    !!codigoBip ||
+    !!name ||
+    !!iprTypeId ||
+    !!statusId ||
+    !!divisionId ||
+    !!mechanismId ||
+    !!fundingSourceId ||
+    !!mcdPhaseId ||
+    !!description;
+
+  const requestCancel = () => {
+    if (isDirty) {
+      setConfirmCancelOpen(true);
+    } else {
+      router.push("/ipr");
+    }
+  };
 
   useEffect(() => {
     api.get<CategoryOption[]>("/api/catalogs/categories/ipr_type").then(setIprTypes).catch(() => {});
@@ -78,15 +100,15 @@ export default function NuevaIprPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name) {
-      setError("El nombre es requerido.");
+    if (!name.trim()) {
+      setNameError("El nombre es requerido.");
       return;
     }
 
     setSubmitting(true);
-    setError(null);
+    setNameError(null);
     try {
-      const res = await api.post<{ id: string }>("/api/ipr", {
+      const res = await api.post<{ id: string; codigo_bip?: string }>("/api/ipr", {
         codigo_bip: codigoBip || "",
         name,
         ipr_type_id: iprTypeId || null,
@@ -97,9 +119,10 @@ export default function NuevaIprPage() {
         mcd_phase_id: mcdPhaseId || null,
         description: description || null,
       });
+      toast.success(`IPR ${res.codigo_bip || codigoBip || name} creada`);
       router.push(`/ipr/${res.id}?tab=partes`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al crear IPR");
+      toast.error(err instanceof Error ? err.message : "Error al crear IPR");
     } finally {
       setSubmitting(false);
     }
@@ -112,7 +135,7 @@ export default function NuevaIprPage() {
         variant="ghost"
         size="sm"
         className="mb-4"
-        onClick={() => router.push("/ipr")}
+        onClick={requestCancel}
       >
         <ArrowLeft className="size-4 mr-1" />
         Volver
@@ -125,11 +148,11 @@ export default function NuevaIprPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">Codigo BIP</label>
+              <label className="text-sm font-medium">Código BIP</label>
               <Input
                 value={codigoBip}
                 onChange={(e) => setCodigoBip(e.target.value)}
-                placeholder="Dejar vacio para auto-generar"
+                placeholder="Dejar vacío para auto-generar"
               />
             </div>
 
@@ -137,9 +160,14 @@ export default function NuevaIprPage() {
               <label className="text-sm font-medium">Nombre *</label>
               <Input
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (nameError) setNameError(null);
+                }}
                 placeholder="Nombre de la IPR"
+                aria-invalid={!!nameError || undefined}
               />
+              {nameError && <p className="text-xs text-red-600">{nameError}</p>}
             </div>
 
             <div className="space-y-1.5">
@@ -175,10 +203,10 @@ export default function NuevaIprPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">Division patrocinante</label>
+              <label className="text-sm font-medium">División patrocinante</label>
               <Select value={divisionId} onValueChange={setDivisionId}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Seleccione division" />
+                  <SelectValue placeholder="Seleccione división" />
                 </SelectTrigger>
                 <SelectContent>
                   {divisions.map((d) => (
@@ -248,10 +276,6 @@ export default function NuevaIprPage() {
               />
             </div>
 
-            {error && (
-              <p className="text-sm text-red-600">{error}</p>
-            )}
-
             <div className="flex gap-2 pt-2">
               <Button type="submit" disabled={submitting}>
                 {submitting ? "Creando..." : "Crear IPR"}
@@ -259,7 +283,7 @@ export default function NuevaIprPage() {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => router.push("/ipr")}
+                onClick={requestCancel}
               >
                 Cancelar
               </Button>
@@ -267,6 +291,20 @@ export default function NuevaIprPage() {
           </form>
         </CardContent>
       </Card>
+
+      <ConfirmDialog
+        open={confirmCancelOpen}
+        onOpenChange={setConfirmCancelOpen}
+        title="Descartar cambios"
+        description="Tienes datos sin guardar — si sales ahora se perderá lo que ingresaste."
+        confirmLabel="Descartar cambios"
+        cancelLabel="Seguir editando"
+        variant="destructive"
+        onConfirm={() => {
+          setConfirmCancelOpen(false);
+          router.push("/ipr");
+        }}
+      />
     </div>
   );
 }

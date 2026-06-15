@@ -64,6 +64,7 @@ export default function CoreSessionsPage() {
 
   const [data, setData] = useState<PaginatedResponse<CoreSessionListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [nextSession, setNextSession] = useState<CoreSessionListItem | null>(null);
 
@@ -112,7 +113,7 @@ export default function CoreSessionsPage() {
   const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!createScheduledAt) {
-      setCreateError("Debe indicar la fecha y hora de la sesion.");
+      setCreateError("Debe indicar la fecha y hora de la sesión.");
       return;
     }
 
@@ -130,7 +131,7 @@ export default function CoreSessionsPage() {
       setRefreshKey((k) => k + 1);
       router.push(`/core-sessions/${result.id}`);
     } catch (err) {
-      setCreateError(err instanceof Error ? err.message : "Error al crear sesion");
+      setCreateError(err instanceof Error ? err.message : "Error al crear sesión");
     } finally {
       setCreateSubmitting(false);
     }
@@ -145,16 +146,19 @@ export default function CoreSessionsPage() {
     if (typeFilter) params.set("session_type", typeFilter);
 
     queueMicrotask(() => {
-      if (active) setIsLoading(true);
+      if (active) { setIsLoading(true); setLoadError(null); }
     });
 
     api
       .get<PaginatedResponse<CoreSessionListItem>>(`/api/core-sessions?${params.toString()}`)
       .then((response) => {
-        if (active) setData(response);
+        if (active) { setData(response); setLoadError(null); }
       })
-      .catch(() => {
-        if (active) setData(null);
+      .catch((err) => {
+        if (active) {
+          setData(null);
+          setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las sesiones");
+        }
       })
       .finally(() => {
         if (active) setIsLoading(false);
@@ -220,10 +224,10 @@ export default function CoreSessionsPage() {
     },
     {
       key: "quorum_reached",
-      label: "Quorum",
+      label: "Quórum",
       render: (v: unknown) => (
         <span className="text-sm">
-          {v === true ? "Si" : v === false ? "No" : "-"}
+          {v === true ? "Sí" : v === false ? "No" : "-"}
         </span>
       ),
     },
@@ -291,7 +295,7 @@ export default function CoreSessionsPage() {
               <div className="flex items-center gap-2">
                 <Users className="size-4 text-muted-foreground shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Quorum</p>
+                  <p className="text-xs text-muted-foreground">Quórum</p>
                   <p className="text-sm font-medium">
                     {nextSession.quorum_reached === true
                       ? "Alcanzado"
@@ -337,24 +341,28 @@ export default function CoreSessionsPage() {
           router.push(`/core-sessions/${item.id}`);
         }}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => setRefreshKey((k) => k + 1)}
+        hasActiveFilters={Boolean(statusFilter || typeFilter)}
+        onClearFilters={() => router.push(buildUrl({ status: "", session_type: "", page: 1 }))}
       />
 
       {/* Create Drawer */}
       <DrawerPanel
         open={createOpen}
         onClose={() => { setCreateOpen(false); resetCreateForm(); }}
-        title="Nueva Sesion del Consejo Regional"
+        title="Nueva Sesión del Consejo Regional"
       >
         <form onSubmit={handleCreateSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Tipo de Sesion *</label>
+            <label className="text-sm font-medium">Tipo de Sesión *</label>
             <Select value={createSessionType} onValueChange={setCreateSessionType}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ORDINARIA">Sesion Ordinaria</SelectItem>
-                <SelectItem value="EXTRAORDINARIA">Sesion Extraordinaria</SelectItem>
+                <SelectItem value="ORDINARIA">Sesión Ordinaria</SelectItem>
+                <SelectItem value="EXTRAORDINARIA">Sesión Extraordinaria</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -369,7 +377,7 @@ export default function CoreSessionsPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Ubicacion</label>
+            <label className="text-sm font-medium">Ubicación</label>
             <Input
               type="text"
               value={createLocation}
@@ -384,7 +392,7 @@ export default function CoreSessionsPage() {
               className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               value={createSummary}
               onChange={(e) => setCreateSummary(e.target.value)}
-              placeholder="Describa brevemente los temas principales de la sesion..."
+              placeholder="Describa brevemente los temas principales de la sesión..."
             />
           </div>
 
@@ -394,7 +402,7 @@ export default function CoreSessionsPage() {
 
           <div className="flex gap-2 pt-2">
             <Button type="submit" disabled={createSubmitting}>
-              {createSubmitting ? "Creando..." : "Crear Sesion"}
+              {createSubmitting ? "Creando..." : "Crear Sesión"}
             </Button>
             <Button
               type="button"

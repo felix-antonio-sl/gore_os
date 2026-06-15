@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { DrawerPanel } from "@/components/drawer-panel";
+import { EmptyState } from "@/components/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
+import { AlertTriangle, Plus, RotateCw } from "lucide-react";
 
 interface DivisionItem {
   id: string;
@@ -29,6 +30,7 @@ interface DivisionItem {
 export function TabDivisiones() {
   const [divisions, setDivisions] = useState<DivisionItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Detail / edit
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -47,10 +49,17 @@ export function TabDivisiones() {
 
   const loadDivisions = () => {
     setIsLoading(true);
+    setLoadError(null);
     api
       .get<DivisionItem[]>("/api/admin/divisiones")
-      .then(setDivisions)
-      .catch(() => setDivisions([]))
+      .then((res) => {
+        setDivisions(res);
+        setLoadError(null);
+      })
+      .catch((err) => {
+        setDivisions([]);
+        setLoadError(err instanceof Error ? err.message : "No se pudieron cargar las divisiones.");
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -95,7 +104,7 @@ export function TabDivisiones() {
 
   const handleCreate = async () => {
     if (!newCode || !newName) {
-      setCreateError("Codigo y nombre son requeridos.");
+      setCreateError("Código y nombre son requeridos.");
       return;
     }
     setCreateSaving(true);
@@ -122,17 +131,17 @@ export function TabDivisiones() {
         <div />
         <Button onClick={() => setCreating(true)}>
           <Plus className="size-4 mr-1" />
-          Nueva Division
+          Nueva División
         </Button>
       </div>
 
       {/* Create inline form */}
       {creating && (
         <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
-          <p className="font-medium text-sm">Crear nueva division</p>
+          <p className="font-medium text-sm">Crear nueva división</p>
           <div className="flex gap-3">
             <div className="space-y-1 flex-1">
-              <label className="text-sm font-medium">Codigo *</label>
+              <label className="text-sm font-medium">Código *</label>
               <Input
                 value={newCode}
                 onChange={(e) => setNewCode(e.target.value)}
@@ -144,7 +153,7 @@ export function TabDivisiones() {
               <Input
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                placeholder="Nombre de la division"
+                placeholder="Nombre de la división"
               />
             </div>
           </div>
@@ -174,12 +183,26 @@ export function TabDivisiones() {
             <div key={i} className="h-10 rounded bg-muted animate-pulse" />
           ))}
         </div>
+      ) : loadError ? (
+        <div className="rounded-md border">
+          <EmptyState
+            icon={<AlertTriangle className="size-10 stroke-1 text-amber-500" />}
+            title="No se pudieron cargar las divisiones"
+            description={loadError}
+            action={
+              <Button variant="outline" size="sm" onClick={loadDivisions}>
+                <RotateCw className="size-4 mr-1.5" />
+                Reintentar
+              </Button>
+            }
+          />
+        </div>
       ) : (
         <div className="rounded-md border">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Codigo</TableHead>
+                <TableHead>Código</TableHead>
                 <TableHead>Nombre</TableHead>
                 <TableHead>Tipo</TableHead>
                 <TableHead>Usuarios</TableHead>
@@ -189,8 +212,11 @@ export function TabDivisiones() {
             <TableBody>
               {divisions.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                    Sin divisiones
+                  <TableCell colSpan={5} className="py-12">
+                    <EmptyState
+                      title="Aún no hay divisiones"
+                      description="Crea la primera división con el botón Nueva División."
+                    />
                   </TableCell>
                 </TableRow>
               ) : (
@@ -242,7 +268,7 @@ export function TabDivisiones() {
           setSelectedId(null);
           setEditing(false);
         }}
-        title="Detalle de Division"
+        title="Detalle de División"
       >
         {selectedItem ? (
           <div className="space-y-5">
@@ -283,7 +309,7 @@ export function TabDivisiones() {
             ) : (
               <div className="space-y-3">
                 <div className="space-y-1.5">
-                  <label className="text-sm font-medium">Codigo</label>
+                  <label className="text-sm font-medium">Código</label>
                   <Input value={editCode} onChange={(e) => setEditCode(e.target.value)} />
                 </div>
                 <div className="space-y-1.5">
@@ -302,7 +328,7 @@ export function TabDivisiones() {
             )}
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">Seleccione una division.</p>
+          <p className="text-muted-foreground text-sm">Seleccione una división.</p>
         )}
       </DrawerPanel>
     </div>

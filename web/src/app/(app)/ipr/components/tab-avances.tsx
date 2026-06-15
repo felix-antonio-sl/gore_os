@@ -6,6 +6,7 @@ import { DataTable } from "@/components/data-table";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DateField } from "@/components/date-field";
 import { Plus } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
@@ -160,10 +161,9 @@ export function TabAvances({ iprId, canManage }: TabAvancesProps) {
         <form onSubmit={handleAvanceSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Fecha del reporte *</label>
-            <Input
-              type="date"
+            <DateField
               value={avanceDate}
-              onChange={(e) => setAvanceDate(e.target.value)}
+              onChange={(v) => setAvanceDate(v)}
             />
           </div>
 
