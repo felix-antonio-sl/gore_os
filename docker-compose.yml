@@ -44,7 +44,7 @@ services:
       DB_PORT: 5432
       JWT_SECRET: ${JWT_SECRET:-goreos-dev-secret-change-in-production}
       ENV: ${ENV:-development}
-      CORS_ORIGINS: '["http://localhost:3000"]'
+      CORS_ORIGINS: '["http://localhost:3000","https://goreos.sanixai.com"]'
     ports:
       - "8000:8000"
     volumes:
@@ -56,6 +56,15 @@ services:
       retries: 5
     networks:
       - visor_model_default
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.goreos-api.rule=Host(`goreos.sanixai.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.goreos-api.entrypoints=websecure"
+      - "traefik.http.routers.goreos-api.priority=100"
+      - "traefik.http.routers.goreos-api.tls.certresolver=myresolver"
+      - "traefik.http.services.goreos-api.loadbalancer.server.port=8000"
 
   # =============================================================================
   # Next.js Frontend
@@ -65,8 +74,9 @@ services:
     build: ./web
     container_name: goreos_web
     restart: unless-stopped
+    command: sh -c "npm run build && npm run start"
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_API_URL: https://goreos.sanixai.com
     ports:
       - "3000:3000"
     volumes:
@@ -78,6 +88,16 @@ services:
         condition: service_healthy
     networks:
       - visor_model_default
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.goreos-web.rule=Host(`goreos.sanixai.com`)"
+      - "traefik.http.routers.goreos-web.entrypoints=websecure"
+      - "traefik.http.routers.goreos-web.tls.certresolver=myresolver"
+      - "traefik.http.routers.goreos-web.middlewares=goreos-auth@docker"
+      - "traefik.http.services.goreos-web.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.goreos-auth.basicauth.users=${GOREOS_BASICAUTH}"
 
   # =============================================================================
   # PgAdmin 4 - Administración de Base de Datos (Desarrollo)
@@ -118,6 +138,9 @@ networks:
   visor_model_default:
     external: true
     name: visor_model_default
+  web:
+    external: true
+    name: web
 
 # =============================================================================
 # Uso
