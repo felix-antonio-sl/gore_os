@@ -11,6 +11,8 @@ Dos poblaciones sobre la misma base de datos:
 
 Single login → detección de rol → routing a sidebar/dashboard correspondiente.
 
+**Acceso remoto:** desplegado en `https://goreos.sanixai.com` (Traefik + TLS Let's Encrypt; un subdominio con routing `/api` mismo-origen; web en modo prod). Gate de **basic-auth** en la UI (usuario `gore`, hash en `.env` `GOREOS_BASICAUTH`). Secretos (`JWT_SECRET`, `GOREOS_BASICAUTH`) solo en `.env` gitignored — plantilla e instrucciones en `.env.example`. Local: `http://localhost:3000` (o túnel SSH). Detalle en `docker-compose.yml`.
+
 ## Quick Start
 
 ```bash
