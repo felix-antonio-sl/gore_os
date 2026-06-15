@@ -1,1 +1,1 @@
-Ver [CLAUDE.md](CLAUDE.md)
+Ver CLAUDE.md
