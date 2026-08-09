@@ -1,6 +1,6 @@
 # Modelo de Datos GORE_OS
 
-> Para arquitectura completa, comandos y convenciones: ver [../../CLAUDE.md](../../CLAUDE.md)
+> Para el contrato de arquitectura y cambios: ver [../../AGENTS.md](../../AGENTS.md).
 
 **Estado**: Ejecutable y auditado
 **PostgreSQL**: 16+

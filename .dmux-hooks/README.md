@@ -1,52 +1,36 @@
 # dmux Hooks
 
-This directory contains hooks that run automatically at key lifecycle events in dmux.
+This directory contains optional, versioned examples for dmux lifecycle hooks.
+No hook is active while it keeps the `.example` suffix.
 
 ## Quick Start
 
-1. **Read the documentation**:
-   - `CLAUDE.md` — Complete project reference (architecture, commands, conventions, rules)
+1. Read [`README.md`](../README.md) to run the system and
+   [`AGENTS.md`](../AGENTS.md) before changing it.
 
-2. **Check examples**:
-   - `examples/` directory contains starter templates
+2. Choose one file from `examples/`.
 
-3. **Create a hook**:
+3. Copy it without the `.example` suffix and make it executable:
+
    ```bash
-   touch worktree_created
-   chmod +x worktree_created
-   nano worktree_created
+   cp .dmux-hooks/examples/run_test.example .dmux-hooks/run_test
+   chmod +x .dmux-hooks/run_test
    ```
 
-4. **Test it**:
+4. Run the hook directly before relying on a dmux lifecycle event:
+
    ```bash
    export DMUX_ROOT="$(pwd)"
    export DMUX_WORKTREE_PATH="$(pwd)"
-   ./worktree_created
+   ./.dmux-hooks/run_test
    ```
 
-## Available Hooks
+## Examples
 
-- `before_pane_create` - Before pane creation
-- `pane_created` - After pane created
-- `worktree_created` - After worktree setup
-- `before_pane_close` - Before closing
-- `pane_closed` - After closed
-- `before_worktree_remove` - Before worktree removal
-- `worktree_removed` - After worktree removed
-- `pre_merge` - Before merge
-- `post_merge` - After merge
-- `run_test` - When running tests
-- `run_dev` - When starting dev server
+- `worktree_created.example`
+- `post_merge.example`
+- `run_test.example`
+- `run_dev.example`
 
-## Documentation
-
-See `CLAUDE.md` for complete project documentation including:
-- Environment variables
-- HTTP callback API
-- Common patterns
-- Best practices
-- Testing strategies
-
-## Note
-
-This directory is **version controlled**. Hooks you create here will be shared with your team.
+Active hooks are repository-local behavior. Keep only hooks that protect a current,
+observable workflow.

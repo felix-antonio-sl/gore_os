@@ -59,7 +59,7 @@ out = []; W = out.append
 
 W("# GORE_OS — ERD y Diccionario de Datos\n")
 W(f"> **⚠️ Documento generado automáticamente** por `scripts/gen_erd.py` desde `model/model_goreos/sql/goreos_ddl.sql` ({STAMP}).")
-W("> La fuente de verdad del esquema es el DDL. Arquitectura, reglas y convenciones: [CLAUDE.md](../../../CLAUDE.md).")
+W("> La fuente de verdad del esquema es el DDL. Contrato de arquitectura y cambios: [AGENTS.md](../../../AGENTS.md).")
 W("> Regenerar tras cambios de schema (`python3 scripts/gen_erd.py`); **no editar a mano** (evita la deriva que afectó a versiones previas).\n")
 W("## Resumen\n")
 W(f"**{len(logical)} tablas lógicas** en 5 schemas — 128 `CREATE TABLE` físicos = {len(logical)} lógicas + {len(partition_children)} particiones de `txn`:\n")

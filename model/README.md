@@ -1,6 +1,6 @@
 # Modelo Semántico GORE_OS
 
-> Para arquitectura, comandos y convenciones: ver [../CLAUDE.md](../CLAUDE.md)
+> Para el contrato de arquitectura y cambios: ver [../AGENTS.md](../AGENTS.md).
 
 ## Estructura
 
@@ -26,6 +26,6 @@ model/
 ## Referencia
 
 - [MANIFESTO.md](../MANIFESTO.md) — Identidad y principios
-- [CLAUDE.md](../CLAUDE.md) — Arquitectura y convenciones completas
+- [AGENTS.md](../AGENTS.md) — Arquitectura y convenciones para cambios
 - [model_goreos/README.md](model_goreos/README.md) — Guía del modelo PostgreSQL
 - [model_goreos/docs/GOREOS_ERD_v3.md](model_goreos/docs/GOREOS_ERD_v3.md) — ERD + diccionario

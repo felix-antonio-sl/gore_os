@@ -1,7 +1,7 @@
 # GORE_OS — ERD y Diccionario de Datos
 
 > **⚠️ Documento generado automáticamente** por `scripts/gen_erd.py` desde `model/model_goreos/sql/goreos_ddl.sql` (2026-06-14).
-> La fuente de verdad del esquema es el DDL. Arquitectura, reglas y convenciones: [CLAUDE.md](../../../CLAUDE.md).
+> La fuente de verdad del esquema es el DDL. Contrato de arquitectura y cambios: [AGENTS.md](../../../AGENTS.md).
 > Regenerar tras cambios de schema (`python3 scripts/gen_erd.py`); **no editar a mano** (evita la deriva que afectó a versiones previas).
 
 ## Resumen

@@ -1,7 +1,7 @@
 # GORE_OS — Índice de Documentación
 
-> **SSOT**: [CLAUDE.md](../CLAUDE.md) es la fuente de verdad de arquitectura, modelo de datos, reglas y convenciones.
-> Este índice cataloga la documentación secundaria **vigente**. Ante cualquier conflicto, **CLAUDE.md prevalece**.
+> [README.md](../README.md) es la entrada humana y [AGENTS.md](../AGENTS.md) contiene
+> el contrato para cambiar el sistema. Este índice cataloga la documentación secundaria.
 
 ---
 
@@ -9,10 +9,9 @@
 
 | Doc | Audiencia | Propósito |
 |-----|-----------|-----------|
-| [CLAUDE.md](../CLAUDE.md) | Devs, agentes | Arquitectura, modelo de datos, reglas, comandos, convenciones |
-| [INDEX.md](../INDEX.md) | Todos | Mapa del repositorio: árbol de directorios + estado del modelo |
+| [README.md](../README.md) | Operador | Arranque y accesos locales |
+| [AGENTS.md](../AGENTS.md) | Devs, agentes | Arquitectura, reglas y verificaciones para cambios |
 | [MANIFESTO.md](../MANIFESTO.md) | Todos | Identidad, filosofía Story-First, 5 funciones motoras |
-| [ONBOARDING.md](ONBOARDING.md) | Nuevos devs | Setup local, patrones clave, flujo de nueva feature |
 
 ## Dominio y requisitos (vigente)
 
@@ -29,7 +28,7 @@
 
 | Documento | Fecha | Contenido |
 |-----------|-------|-----------|
-| [GORE_OS_Audit_v3.0.md](GORE_OS_Audit_v3.0.md) | 2026-03-08 | Scorecard CQ (472 CQs, 15 HΩ), cobertura ontológica, gap analysis. **Snapshot fechado** — los conteos de infraestructura están congelados; el estado vigente vive en CLAUDE.md. |
+| [GORE_OS_Audit_v3.0.md](GORE_OS_Audit_v3.0.md) | 2026-03-08 | Scorecard CQ (472 CQs, 15 HΩ), cobertura ontológica, gap analysis. **Snapshot fechado** — revalidar el estado vigente en código, DDL y suite. |
 
 ## Testing
 
@@ -53,7 +52,7 @@
 
 ## Decisiones de arquitectura (ADRs)
 
-> Tabla canónica de ADRs. INDEX.md referencia esta tabla en lugar de duplicarla.
+> Tabla canónica de ADRs.
 
 | ADR | Tema | Estado |
 |-----|------|--------|

@@ -6,7 +6,7 @@ Desarrollar GORE_OS como sistema Story-First sobre FastAPI, Next.js y PostgreSQL
 
 ## Orientación
 
-- Lee `README.md`, `docs/README.md` y el README del componente afectado.
+- Lee `README.md`, `docs/README.md` y, si existe, el README del componente afectado.
 - Identifica la historia, categoría y transición de estado antes de tocar código.
 - Conserva la trazabilidad Story-First; no implementes UI, endpoint o tabla sin su comportamiento y autoridad claros.
 
