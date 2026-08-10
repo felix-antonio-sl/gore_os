@@ -53,11 +53,14 @@ export default function CalendarioPage() {
   const { user } = useAuth();
 
   const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [referenceDate] = useState(() => new Date());
+  const [loadedRequestKey, setLoadedRequestKey] = useState<string | null>(null);
 
   const typeFilter = searchParams.get("type") ?? "";
-  const fromParam = searchParams.get("from") ?? new Date().toISOString().slice(0, 10);
-  const toParam = searchParams.get("to") ?? new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+  const fromParam = searchParams.get("from") ?? referenceDate.toISOString().slice(0, 10);
+  const toParam = searchParams.get("to") ?? new Date(referenceDate.getTime() + 30 * 86400000).toISOString().slice(0, 10);
+  const requestKey = `${fromParam}:${toParam}:${typeFilter}`;
+  const isLoading = loadedRequestKey !== requestKey;
 
   const isDGI = user && DGI_ROLES.includes(user.role_code);
 
@@ -74,7 +77,7 @@ export default function CalendarioPage() {
   );
 
   useEffect(() => {
-    setIsLoading(true);
+    let active = true;
     const params = new URLSearchParams();
     params.set("from", fromParam);
     params.set("to", toParam);
@@ -82,13 +85,20 @@ export default function CalendarioPage() {
 
     api
       .get<CalendarEvent[]>(`/api/dgi/coordination/calendar?${params.toString()}`)
-      .then(setEvents)
-      .catch(() => setEvents([]))
-      .finally(() => setIsLoading(false));
-  }, [fromParam, toParam, typeFilter]);
+      .then((items) => {
+        if (active) setEvents(items);
+      })
+      .catch(() => {
+        if (active) setEvents([]);
+      })
+      .finally(() => {
+        if (active) setLoadedRequestKey(requestKey);
+      });
+    return () => { active = false; };
+  }, [fromParam, toParam, typeFilter, requestKey]);
 
   const grouped = groupByDate(events);
-  const today = new Date().toISOString().slice(0, 10);
+  const today = referenceDate.toISOString().slice(0, 10);
 
   return (
     <div className="p-6 space-y-4">

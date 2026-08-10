@@ -46,7 +46,7 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
   const { user } = useAuth();
 
   const [data, setData] = useState<PaginatedResponse<CompromisoListItem> | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loadedRequestKey, setLoadedRequestKey] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [localRefresh, setLocalRefresh] = useState(0);
 
@@ -58,6 +58,11 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
   const overdue = searchParams.get("overdue") === "true";
   const dateFrom = searchParams.get("date_from") ?? "";
   const dateTo = searchParams.get("date_to") ?? "";
+  const requestKey = JSON.stringify([
+    page, estado, division, responsibleId, soloMios, overdue, dateFrom, dateTo,
+    user?.id, refreshKey, localRefresh,
+  ]);
+  const isLoading = loadedRequestKey !== requestKey;
 
   const buildUrl = useCallback(
     (overrides: Record<string, string | number>) => {
@@ -72,8 +77,7 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
   );
 
   useEffect(() => {
-    setIsLoading(true);
-    setLoadError(null);
+    let active = true;
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
@@ -87,13 +91,21 @@ export function CompromisosListView({ onItemClick, refreshKey }: Props) {
 
     api
       .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?${params.toString()}`)
-      .then((r) => { setData(r); setLoadError(null); })
+      .then((r) => {
+        if (!active) return;
+        setData(r);
+        setLoadError(null);
+      })
       .catch((err) => {
+        if (!active) return;
         setData(null);
         setLoadError(err instanceof Error ? err.message : "No se pudieron cargar los compromisos");
       })
-      .finally(() => setIsLoading(false));
-  }, [page, estado, division, responsibleId, soloMios, overdue, dateFrom, dateTo, user?.id, refreshKey, localRefresh]);
+      .finally(() => {
+        if (active) setLoadedRequestKey(requestKey);
+      });
+    return () => { active = false; };
+  }, [page, estado, division, responsibleId, soloMios, overdue, dateFrom, dateTo, user?.id, refreshKey, localRefresh, requestKey]);
 
   const columns = [
     {

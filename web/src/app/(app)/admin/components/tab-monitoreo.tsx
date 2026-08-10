@@ -158,9 +158,7 @@ function SlasSection() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  const load = () => {
-    setLoading(true);
-    setLoadError(null);
+  const fetchSlas = () => {
     api
       .get<SlaDashboard>("/api/admin/slas/dashboard")
       .then((res) => {
@@ -174,8 +172,14 @@ function SlasSection() {
       .finally(() => setLoading(false));
   };
 
+  const load = () => {
+    setLoading(true);
+    setLoadError(null);
+    fetchSlas();
+  };
+
   useEffect(() => {
-    load();
+    fetchSlas();
   }, []);
 
   if (loading) {
@@ -288,9 +292,7 @@ function SaludDatosSection() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  const load = () => {
-    setLoading(true);
-    setLoadError(null);
+  const fetchMetrics = () => {
     api
       .get<DataQualityMetrics>("/api/admin/data-quality")
       .then((res) => {
@@ -304,8 +306,14 @@ function SaludDatosSection() {
       .finally(() => setLoading(false));
   };
 
+  const load = () => {
+    setLoading(true);
+    setLoadError(null);
+    fetchMetrics();
+  };
+
   useEffect(() => {
-    load();
+    fetchMetrics();
   }, []);
 
   if (loading) {

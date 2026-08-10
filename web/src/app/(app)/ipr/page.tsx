@@ -119,6 +119,7 @@ const alertLevelColors: Record<string, string> = {
 };
 
 export default function IprPage() {
+  const [referenceTime] = useState(Date.now);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -488,7 +489,7 @@ export default function IprPage() {
           <div className="space-y-3">
             {(data?.items ?? []).map((ipr) => {
               const phaseDays = ipr.phase_entered_at
-                ? Math.floor((Date.now() - new Date(ipr.phase_entered_at).getTime()) / 86400000)
+                ? Math.floor((referenceTime - new Date(ipr.phase_entered_at).getTime()) / 86400000)
                 : null;
               const daysColor =
                 phaseDays == null

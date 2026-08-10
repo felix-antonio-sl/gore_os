@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { Bug } from "lucide-react";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { useAuth } from "@/lib/auth";
@@ -13,13 +13,17 @@ const SEVERITY_OPTIONS = [
   { value: "BAJO", label: "Bajo", color: "bg-green-500", activeRing: "ring-green-500" },
 ] as const;
 
-export function BugReportFab() {
-  const [devMode, setDevMode] = useState(false);
-  const [open, setOpen] = useState(false);
+const subscribeToDevMode = (callback: () => void) => {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+};
 
-  useEffect(() => {
-    setDevMode(localStorage.getItem("goreos_dev_mode") === "true");
-  }, []);
+const getDevModeSnapshot = () => localStorage.getItem("goreos_dev_mode") === "true";
+const getServerDevModeSnapshot = () => false;
+
+export function BugReportFab() {
+  const devMode = useSyncExternalStore(subscribeToDevMode, getDevModeSnapshot, getServerDevModeSnapshot);
+  const [open, setOpen] = useState(false);
 
   if (!devMode) return null;
 

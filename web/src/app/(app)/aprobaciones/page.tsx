@@ -97,8 +97,6 @@ function AprobacionesContent() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
-    setLoadError(null);
     api
       .get<PendingApprovals>("/api/dashboard/pending-approvals")
       .then((r) => { setData(r); setLoadError(null); })
@@ -108,6 +106,12 @@ function AprobacionesContent() {
       })
       .finally(() => setLoading(false));
   }, [refreshKey]);
+
+  const handleRetry = () => {
+    setLoading(true);
+    setLoadError(null);
+    setRefreshKey((k) => k + 1);
+  };
 
   if (loading) {
     return (
@@ -145,7 +149,7 @@ function AprobacionesContent() {
           title="No se pudieron cargar los datos"
           description={loadError}
           action={
-            <Button variant="outline" size="sm" onClick={() => setRefreshKey((k) => k + 1)}>
+            <Button variant="outline" size="sm" onClick={handleRetry}>
               <RotateCw className="size-4 mr-1.5" />
               Reintentar
             </Button>

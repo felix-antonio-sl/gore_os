@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { formatDate } from "@/lib/format";
 
 interface DeadlineCellProps {
@@ -6,10 +9,12 @@ interface DeadlineCellProps {
 }
 
 export function DeadlineCell({ date: dateStr, daysRemaining }: DeadlineCellProps) {
+  const [referenceTime] = useState(Date.now);
+
   if (!dateStr) return <span className="text-muted-foreground text-xs">—</span>;
 
   const dr = daysRemaining ?? Math.round(
-    (new Date(dateStr).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+    (new Date(dateStr).getTime() - referenceTime) / (1000 * 60 * 60 * 24)
   );
 
   const color =

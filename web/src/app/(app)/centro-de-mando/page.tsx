@@ -49,9 +49,9 @@ function CentroMandoContent() {
   const [summary, setSummary] = useState<CommandCenterSummary | null>(null);
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [referenceTime] = useState(Date.now);
 
   useEffect(() => {
-    setLoading(true);
     Promise.all([
       api.get<CommandCenterSummary>("/api/command-center/summary"),
       api.get<PaginatedResponse<TimelineEvent>>("/api/command-center/timeline?days=7&page_size=15"),
@@ -132,7 +132,7 @@ function CentroMandoContent() {
 
   // Relative time
   const relativeTime = (iso: string) => {
-    const diff = Date.now() - new Date(iso).getTime();
+    const diff = referenceTime - new Date(iso).getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
     if (hours < 1) return "Hace minutos";
     if (hours < 24) return `Hace ${hours}h`;

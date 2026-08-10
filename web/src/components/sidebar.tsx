@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -137,14 +137,18 @@ interface SidebarProps {
   onNavClick?: () => void;
 }
 
+const subscribeToDevMode = (callback: () => void) => {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+};
+
+const getDevModeSnapshot = () => localStorage.getItem("goreos_dev_mode") === "true";
+const getServerDevModeSnapshot = () => false;
+
 export function Sidebar({ onNavClick }: SidebarProps = {}) {
   const { user } = useAuth();
   const pathname = usePathname();
-  const [devMode, setDevMode] = useState(false);
-
-  useEffect(() => {
-    setDevMode(localStorage.getItem("goreos_dev_mode") === "true");
-  }, []);
+  const devMode = useSyncExternalStore(subscribeToDevMode, getDevModeSnapshot, getServerDevModeSnapshot);
 
   if (!user) return null;
 

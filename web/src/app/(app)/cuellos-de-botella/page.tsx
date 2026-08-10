@@ -70,10 +70,7 @@ export default function CuellosDeBotellaPage() {
     [pathname, searchParams]
   );
 
-  const handlePageChange = (newPage: number) => router.push(buildUrl({ page: newPage }));
-
-  const fetchScan = () => {
-    setScanLoading(true);
+  const requestScan = useCallback(() => {
     api
       .get<BottleneckFinding[]>("/api/dgi/data/bottlenecks/scan")
       .then(setFindings)
@@ -82,14 +79,17 @@ export default function CuellosDeBotellaPage() {
         toast.error("Error al ejecutar escaneo");
       })
       .finally(() => setScanLoading(false));
+  }, []);
+
+  const fetchScan = () => {
+    setScanLoading(true);
+    requestScan();
   };
 
-  const fetchInvestigations = () => {
-    setTableLoading(true);
-    setTableError(null);
+  const requestInvestigations = useCallback((requestedPage: number) => {
     api
       .get<PaginatedResponse<BottleneckInvestigation>>(
-        `/api/dgi/data/bottlenecks?page=${page}&page_size=20`
+        `/api/dgi/data/bottlenecks?page=${requestedPage}&page_size=20`
       )
       .then((res) => {
         setInvestigations(res);
@@ -100,15 +100,27 @@ export default function CuellosDeBotellaPage() {
         setTableError(err.message || "No se pudieron cargar las investigaciones.");
       })
       .finally(() => setTableLoading(false));
+  }, []);
+
+  const fetchInvestigations = () => {
+    setTableLoading(true);
+    setTableError(null);
+    requestInvestigations(page);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setTableLoading(true);
+    setTableError(null);
+    router.push(buildUrl({ page: newPage }));
   };
 
   useEffect(() => {
-    fetchScan();
-  }, []);
+    requestScan();
+  }, [requestScan]);
 
   useEffect(() => {
-    fetchInvestigations();
-  }, [page]);
+    requestInvestigations(page);
+  }, [page, requestInvestigations]);
 
   const handleCreateInvestigation = async (finding: BottleneckFinding, index: number) => {
     setCreatingIndex(index);

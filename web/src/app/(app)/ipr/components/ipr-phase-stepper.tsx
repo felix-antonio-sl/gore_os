@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCD_PHASES, mcdPhaseColors } from "./ipr-constants";
+import { useState } from "react";
 
 interface IprPhaseStepperProps {
   currentPhase: string;
@@ -10,7 +11,8 @@ interface IprPhaseStepperProps {
 }
 
 export function IprPhaseStepper({ currentPhase, currentPhaseLabel, phaseEnteredAt }: IprPhaseStepperProps) {
-  const daysInPhase = phaseEnteredAt ? Math.floor((Date.now() - new Date(phaseEnteredAt).getTime()) / 86400000) : null;
+  const [referenceTime] = useState(Date.now);
+  const daysInPhase = phaseEnteredAt ? Math.floor((referenceTime - new Date(phaseEnteredAt).getTime()) / 86400000) : null;
   const currentIdx = MCD_PHASES.findIndex(p => p.code === currentPhase);
   // Keep the badge label consistent with the stepper circle label for this phase.
   const phaseLabel = MCD_PHASES[currentIdx]?.label ?? currentPhaseLabel ?? "";

@@ -40,8 +40,6 @@ export default function MisCompromisosPage() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    setIsLoading(true);
-    setLoadError(null);
     api
       .get<MisCompromisosData>("/api/dashboard/mis-compromisos")
       .then((r) => { setData(r); setLoadError(null); })
@@ -51,6 +49,12 @@ export default function MisCompromisosPage() {
       })
       .finally(() => setIsLoading(false));
   }, [refreshKey]);
+
+  const handleRetry = () => {
+    setIsLoading(true);
+    setLoadError(null);
+    setRefreshKey((k) => k + 1);
+  };
 
   const columns = [
     {
@@ -123,7 +127,7 @@ export default function MisCompromisosPage() {
           title="No se pudieron cargar los datos"
           description={loadError}
           action={
-            <Button variant="outline" size="sm" onClick={() => setRefreshKey((k) => k + 1)}>
+            <Button variant="outline" size="sm" onClick={handleRetry}>
               <RotateCw className="size-4 mr-1.5" />
               Reintentar
             </Button>

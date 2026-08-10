@@ -13,10 +13,15 @@ interface LeanMetricsPanelProps {
 export function LeanMetricsPanel({ open }: LeanMetricsPanelProps) {
   const [metrics, setMetrics] = useState<LeanMetrics | null>(null);
   const [loading, setLoading] = useState(false);
+  const [previousOpen, setPreviousOpen] = useState(open);
+
+  if (open !== previousOpen) {
+    setPreviousOpen(open);
+    if (open) setLoading(true);
+  }
 
   useEffect(() => {
     if (!open) return;
-    setLoading(true);
     api
       .get<LeanMetrics>("/api/dgi/initiatives/lean-metrics")
       .then(setMetrics)

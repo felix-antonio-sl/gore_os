@@ -52,18 +52,24 @@ export function FilterBar({
 
   // Local state for the search input so typing is never blocked by
   // the async URL/state update that onSearchChange may trigger.
-  const [localSearch, setLocalSearch] = useState(searchValue ?? "");
+  const externalSearch = searchValue ?? "";
+  const [localSearch, setLocalSearch] = useState(externalSearch);
+  const [previousExternalSearch, setPreviousExternalSearch] = useState(externalSearch);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  if (externalSearch !== previousExternalSearch) {
+    setPreviousExternalSearch(externalSearch);
+    setLocalSearch(externalSearch);
+  }
 
   // Sync local state when the external searchValue changes (e.g. "Limpiar" button)
   // Also cancel any pending debounce to avoid stale values firing after the reset.
   useEffect(() => {
-    setLocalSearch(searchValue ?? "");
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
       debounceRef.current = null;
     }
-  }, [searchValue]);
+  }, [externalSearch]);
 
   const handleLocalSearchChange = useCallback(
     (value: string) => {
