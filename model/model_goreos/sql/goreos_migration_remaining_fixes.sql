@@ -7,7 +7,7 @@
 --   2. UNIQUE partial index on ipr_party (replace non-partial)
 --   3. ~11 FSMs: poblar valid_transitions + crear triggers (DGI + scaffold)
 --
--- Fuente de verdad: SSOT /gorenuble/knowledge/domains/gn/01_fundamentos/ssot/
+-- Fuente de verdad: KORA urn:gn:kb:ssot-master y sus artefactos relacionados.
 -- =============================================================================
 
 BEGIN;

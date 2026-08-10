@@ -2,7 +2,7 @@
 -- Migration: SSOT Organizational Alignment
 -- Date: 2026-03-15
 -- Purpose: Align organization codes, types, and roles with SSOT canonical
---          definitions (ssot-organica.md, kb_gn_002_organigrama.md).
+--          definitions (urn:gn:kb:ssot-organica, urn:gn:kb:gn-organigrama).
 --
 -- Changes:
 --   1. Add missing org_types (STAFF_UNIT, ADVISORY_BODY, etc.)

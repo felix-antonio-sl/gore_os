@@ -11,7 +11,7 @@ _meta:
   source_files:
     - "_procesos_extraidos_us.txt"
     - "_index.yml"
-    - "gorenuble/knowledge/domains/gn/*"
+    - "urn:gn:kb:ssot-master"
   total_processes: 289
   base_model: "Omega v2.6.0"
 
@@ -730,11 +730,11 @@ _stats:
     L3_EJECUCION: 27
     L4_SOPORTE: 133
   sources_consulted:
-    - "kb_gn_019_gestion_ipr_koda.yml"
-    - "kb_gn_014_glosario_gore_nuble_koda.yml"
-    - "kb_gn_018_gestion_prpto_2026_koda.yml"
-    - "kb_gn_020_gestion_rendiciones_koda.yml"
-    - "kb_gn_046_manual_compras_koda.yml"
-    - "kb_gn_043_manual_presupuesto_koda.yml"
-    - "omega_gore_nuble_mermaid.md"
+    - "urn:gn:kb:gestion-ipr"
+    - "urn:gn:kb:glosario-gore-os"
+    - "urn:gn:kb:gestion-prpto-2026"
+    - "urn:gn:kb:gestion-rendiciones"
+    - "urn:gn:kb:manual-compras"
+    - "urn:gn:kb:manual-presupuesto"
+    - "urn:gn:kb:omega-gore-nuble-mermaid"
     - "User Stories (goreos/model/stories/*)"

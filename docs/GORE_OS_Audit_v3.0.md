@@ -364,7 +364,7 @@ Mapeo de las 198 classes `gnub:*` contra implementación GORE_OS.
 
 ## 4.5 Omega Model Coverage (Reglas de Negocio Operativas)
 
-El Modelo Omega v2.6.0 (`omega_gore_nuble_mermaid.md`, 111KB) es la fuente de verdad operativa del GORE de Ñuble. Contiene reglas de negocio exactas, umbrales con valores, SLAs, procesos paso a paso, y tablas paramétricas que las CQs y Stories no detallan. Esta sección cruza el Omega contra la implementación GORE_OS para identificar gaps operativos de alta granularidad.
+El Modelo Omega v2.6.0 (`urn:gn:kb:omega-gore-nuble-mermaid`, 111KB) es la fuente de verdad operativa del GORE de Ñuble. Contiene reglas de negocio exactas, umbrales con valores, SLAs, procesos paso a paso, y tablas paramétricas que las CQs y Stories no detallan. Esta sección cruza el Omega contra la implementación GORE_OS para identificar gaps operativos de alta granularidad.
 
 ### 4.5.1 Resumen de Cobertura Omega
 
@@ -836,7 +836,7 @@ La frontera de valor se ha desplazado desde "compliance como codigo" y "tablas p
 - `model/stories/` -- 818 historias de usuario (16 dominios)
 - `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleCQs_Master.yml` -- 472 CQs (20 dominios) (referencia externa/histórica no resoluble en este repo)
 - `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleOntology.ttl` -- 198 OWL classes (referencia externa/histórica no resoluble en este repo)
-- `gorenuble/knowledge/ontologies/onto_gorenuble/omega_gore_nuble_mermaid.md` -- Modelo Omega v2.6.0 (111KB, reglas de negocio operativas) (referencia externa/histórica no resoluble en este repo)
+- `urn:gn:kb:omega-gore-nuble-mermaid` -- Modelo Omega v2.6.0 (111KB, reglas de negocio operativas; fuente canónica en KORA)
 - `model/model_goreos/sql/goreos_ddl.sql` -- DDL (92 tablas)
 - `model/model_goreos/sql/goreos_migration_*.sql` -- 25 archivos migracion (18 tracked en schema_migration)
 - `CLAUDE.md` -- Project conventions (actualizado Ciclo 25)

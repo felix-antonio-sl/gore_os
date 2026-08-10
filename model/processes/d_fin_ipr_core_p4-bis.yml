@@ -2,7 +2,7 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p4_bis:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
+  source: urn:gn:kb:bpmn-d08-rendiciones
 id: PROC-FIN-IPR_CORE-P4-BIS
 name: Flujo Otorgante GORE (SISREC)
 domain: D-FIN-IPR_CORE
@@ -11,7 +11,7 @@ subdomain: Revisión
 process_type: BPMN
 spec:
   bpmn_id: BPMN-GN-REND-OTORGANTE-01
-  mermaid_ref: D08_rendiciones_koda.yml#flujo-entidad-otorgante-gore
+  mermaid_ref: urn:gn:kb:bpmn-d08-rendiciones#flujo-entidad-otorgante-gore
   mermaid: |
     flowchart TD
         subgraph RTF["👤 RTF (Analista Otorgante)"]

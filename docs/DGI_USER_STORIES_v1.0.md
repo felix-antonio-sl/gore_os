@@ -3,7 +3,7 @@
 > **Complemento**: Para métricas de cobertura actualizadas por rol y por Story, ver [GORE_OS_Story_Coverage_v1.0.md](GORE_OS_Story_Coverage_v1.0.md) (sesión C60). Este documento es el catálogo completo de 185 stories; aquel documento añade el desglose por rol y la cobertura efectiva (26.5% implementado).
 
 **Fecha**: 2026-03-10
-**Fuentes**: `kb_gn_plan_potenciamiento_dgi_koda.yml`, `kb_gn_manual_operacional_dgi_koda.yml`
+**Fuentes KORA**: `urn:gn:kb:plan-potenciamiento-dgi`, `urn:gn:kb:manual-operacional-dgi`
 **Cruce**: Inventario GORE_OS DGI layer (34 endpoints, 5 páginas, 4 cockpits, 398 tests)
 
 ## Convenciones

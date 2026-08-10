@@ -2,7 +2,7 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
+  source: urn:gn:kb:bpmn-d08-rendiciones
 id: PROC-FIN-EJECUTORES-P4-BIS
 name: Flujo Entidad Ejecutora (SISREC)
 domain: D-FIN-REND
@@ -11,7 +11,7 @@ subdomain: Ejecutores
 process_type: BPMN
 spec:
   bpmn_id: BPMN-GN-REND-EJECUTOR-01
-  mermaid_ref: D08_rendiciones_koda.yml#flujo-entidad-ejecutora
+  mermaid_ref: urn:gn:kb:bpmn-d08-rendiciones#flujo-entidad-ejecutora
   mermaid: |
     flowchart TD
         subgraph ANALISTA["👤 Analista Ejecutor"]

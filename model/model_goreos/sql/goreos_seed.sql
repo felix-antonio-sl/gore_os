@@ -5,7 +5,7 @@
 -- Descripción: Datos iniciales para ref.category (83+ schemes) y ref.actor
 -- Última actualización: 2026-01-30
 -- Fuentes: planclaude.md, especificaciones.md, goreNubleOntology.ttl,
---          goreNubleReferenceData.ttl, tdeCore.ttl, omega_gore_nuble_mermaid.md
+--          goreNubleReferenceData.ttl, tdeCore.ttl, urn:gn:kb:omega-gore-nuble-mermaid
 -- ============================================================================
 -- Cambios v3.4:
 --   +scheme professional_qualification (14 códigos)
