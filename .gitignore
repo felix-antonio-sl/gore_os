@@ -24,6 +24,18 @@ coverage/
 .tox/
 htmlcov/
 
+# Local UX audit runs (generated evidence and one-off harnesses)
+/.playwright-mcp/
+/audit-shots/
+/audit-shots-baseline/
+/[0-9][0-9]-*.png
+/audit-a11y.mjs
+/audit-capture.mjs
+/.uxaudit-workflow.mjs
+
+# Root-level dependency symlink used by local audit tooling
+/node_modules
+
 # Turborepo
 .turbo
 
