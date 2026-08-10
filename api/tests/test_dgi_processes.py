@@ -1,9 +1,9 @@
 """
 Integration tests for DGI Process Catalog (/api/dgi/processes/).
 
-24 tests covering:
-- Process CRUD: create, list, get detail, update, delete (5)
-- Process FSM: valid transitions, invalid transition, suspend/resume (4)
+33 tests covering:
+- Process CRUD: create, list, search, get detail, update, delete (6)
+- Process FSM: valid transitions, invalid API/DB transitions, suspend/resume (5)
 - Code generation: auto-incremented PROC-NNNN (1)
 - Satellite — Actors: create, list, delete (3)
 - Satellite — Rules: create, list, delete, duplicate 409 (4)
@@ -21,6 +21,10 @@ Cleanup: conftest.py cleanup_test_artifacts deletes satellites then processes.
 
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from tests.conftest import auth
 
 
@@ -208,6 +212,41 @@ async def test_process_fsm_invalid_transition(client: AsyncClient, dgi_token):
     )
     assert resp.status_code == 400
     assert "Transición inválida" in resp.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_process_fsm_is_enforced_by_db(
+    client: AsyncClient,
+    dgi_token,
+    db: AsyncSession,
+):
+    """A direct write cannot bypass the canonical process FSM."""
+    create_resp = await client.post(
+        "/api/dgi/processes",
+        json={"name": "Proceso Autoridad DB"},
+        headers=auth(dgi_token),
+    )
+    assert create_resp.status_code == 201
+    process_id = create_resp.json()["id"]
+
+    try:
+        with pytest.raises(DBAPIError) as exc_info:
+            await db.execute(
+                text("""
+                    UPDATE core.dgi_process
+                    SET status_id = (
+                        SELECT id FROM ref.category
+                        WHERE scheme = 'dgi_process_status'
+                          AND code = 'PUBLICADO'
+                    )
+                    WHERE id = :id
+                """),
+                {"id": process_id},
+            )
+    finally:
+        await db.rollback()
+
+    assert "Transición de estado inválida" in str(exc_info.value.orig)
 
 
 @pytest.mark.asyncio
@@ -694,7 +733,7 @@ async def test_opportunity_list(client: AsyncClient, dgi_token):
 
 @pytest.mark.asyncio
 async def test_opportunity_update(client: AsyncClient, dgi_token):
-    """Update opportunity status via PATCH."""
+    """Advance an opportunity through the complete canonical lifecycle."""
     proc_resp = await client.post(
         "/api/dgi/processes",
         json={"name": "Proceso Actualizar Oportunidad"},
@@ -709,13 +748,95 @@ async def test_opportunity_update(client: AsyncClient, dgi_token):
     )
     opp_id = opp_resp.json()["id"]
 
-    resp = await client.patch(
-        f"/api/dgi/processes/{proc_id}/opportunities/{opp_id}",
-        json={"status": "VALIDADA"},
+    for target in ["VALIDADA", "EN_EJECUCION", "IMPLEMENTADA"]:
+        resp = await client.patch(
+            f"/api/dgi/processes/{proc_id}/opportunities/{opp_id}",
+            json={"status": target},
+            headers=auth(dgi_token),
+        )
+        assert resp.status_code == 200, f"Failed transition to {target}: {resp.text}"
+        assert resp.json()["status"] == target
+
+
+@pytest.mark.asyncio
+async def test_opportunity_fsm_rejects_invalid_api_transition(client: AsyncClient, dgi_token):
+    """The API exposes the DB-authoritative opportunity lifecycle as a conflict."""
+    proc_resp = await client.post(
+        "/api/dgi/processes",
+        json={"name": "Proceso FSM Oportunidad API"},
         headers=auth(dgi_token),
     )
-    assert resp.status_code == 200
-    assert resp.json()["status"] == "VALIDADA"
+    proc_id = proc_resp.json()["id"]
+    opp_resp = await client.post(
+        f"/api/dgi/processes/{proc_id}/opportunities",
+        json={"dimension": "VALOR", "description": "Salto inválido", "impact": "ALTO", "effort": "BAJO"},
+        headers=auth(dgi_token),
+    )
+    opp_id = opp_resp.json()["id"]
+
+    resp = await client.patch(
+        f"/api/dgi/processes/{proc_id}/opportunities/{opp_id}",
+        json={"status": "IMPLEMENTADA"},
+        headers=auth(dgi_token),
+    )
+
+    assert resp.status_code == 409
+    assert "Transición de oportunidad inválida" in resp.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_opportunity_fsm_is_enforced_by_db(
+    client: AsyncClient,
+    dgi_token,
+    db: AsyncSession,
+):
+    """A direct SQL write cannot skip the opportunity lifecycle."""
+    proc_resp = await client.post(
+        "/api/dgi/processes",
+        json={"name": "Proceso FSM Oportunidad DB"},
+        headers=auth(dgi_token),
+    )
+    proc_id = proc_resp.json()["id"]
+    opp_resp = await client.post(
+        f"/api/dgi/processes/{proc_id}/opportunities",
+        json={"dimension": "ERRORES", "description": "Bypass DB", "impact": "MEDIO", "effort": "MEDIO"},
+        headers=auth(dgi_token),
+    )
+    opp_id = opp_resp.json()["id"]
+
+    try:
+        with pytest.raises(DBAPIError) as exc_info:
+            await db.execute(
+                text("""
+                    UPDATE core.dgi_improvement_opportunity
+                    SET status = 'IMPLEMENTADA'
+                    WHERE id = :id
+                """),
+                {"id": opp_id},
+            )
+    finally:
+        await db.rollback()
+
+    assert "Transición de oportunidad inválida" in str(exc_info.value.orig)
+
+
+@pytest.mark.asyncio
+async def test_opportunity_create_rejects_noncanonical_dimension(client: AsyncClient, dgi_token):
+    """Invalid catalog values are rejected at the API boundary, before SQL."""
+    proc_resp = await client.post(
+        "/api/dgi/processes",
+        json={"name": "Proceso Dimensión Inválida"},
+        headers=auth(dgi_token),
+    )
+    proc_id = proc_resp.json()["id"]
+
+    resp = await client.post(
+        f"/api/dgi/processes/{proc_id}/opportunities",
+        json={"dimension": "TIEMPO", "description": "Contrato divergente", "impact": "ALTO", "effort": "BAJO"},
+        headers=auth(dgi_token),
+    )
+
+    assert resp.status_code == 422
 
 
 @pytest.mark.asyncio

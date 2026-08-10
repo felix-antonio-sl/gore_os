@@ -1,17 +1,6 @@
-"""Tests for Kanban WIP limits and initiative CRUD."""
+"""Tests for initiative CRUD and Kanban movement."""
 import uuid
-import pytest
-from sqlalchemy import text
 from tests.conftest import auth
-
-
-@pytest.fixture
-async def clean_initiatives(db):
-    """Soft-delete accumulated initiatives from prior runs to prevent WIP pollution."""
-    await db.execute(text(
-        "UPDATE core.dgi_initiative SET deleted_at = NOW() WHERE deleted_at IS NULL"
-    ))
-    await db.commit()
 
 
 async def _create_initiative(client, token, **overrides):
@@ -31,7 +20,7 @@ async def test_create_initiative(client, dgi_token):
     assert data["status"] == "BACKLOG"
 
 
-async def test_move_to_en_curso(client, dgi_token, clean_initiatives):
+async def test_move_to_en_curso(client, dgi_token):
     """Move initiative from BACKLOG to EN_CURSO."""
     data = await _create_initiative(client, dgi_token)
     resp = await client.post(
@@ -43,49 +32,21 @@ async def test_move_to_en_curso(client, dgi_token, clean_initiatives):
     assert resp.json()["status"] == "EN_CURSO"
 
 
-async def test_wip_limit_en_curso(client, dgi_token, clean_initiatives):
-    """6th initiative in EN_CURSO triggers 409 (limit 5)."""
-    # Create 5 in EN_CURSO
-    for _ in range(5):
-        data = await _create_initiative(client, dgi_token)
-        await client.post(
-            f"/api/dgi/initiatives/{data['id']}/move",
-            json={"status": "EN_CURSO"},
-            headers=auth(dgi_token),
-        )
-
-    # 6th should fail
-    data = await _create_initiative(client, dgi_token)
-    resp = await client.post(
-        f"/api/dgi/initiatives/{data['id']}/move",
-        json={"status": "EN_CURSO"},
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 409
-    assert "WIP" in resp.json()["detail"]
+async def test_move_beyond_legacy_fixed_caps(client, dgi_token):
+    """C62 removed fixed caps; Kanban movement remains available at prior thresholds."""
+    for target_status, quantity in (("EN_CURSO", 6), ("REVISION", 3)):
+        for _ in range(quantity):
+            data = await _create_initiative(client, dgi_token)
+            resp = await client.post(
+                f"/api/dgi/initiatives/{data['id']}/move",
+                json={"status": target_status},
+                headers=auth(dgi_token),
+            )
+            assert resp.status_code == 200
 
 
-async def test_wip_limit_revision(client, dgi_token, clean_initiatives):
-    """3rd initiative in REVISION triggers 409 (limit 2)."""
-    for _ in range(2):
-        data = await _create_initiative(client, dgi_token)
-        await client.post(
-            f"/api/dgi/initiatives/{data['id']}/move",
-            json={"status": "REVISION"},
-            headers=auth(dgi_token),
-        )
-
-    data = await _create_initiative(client, dgi_token)
-    resp = await client.post(
-        f"/api/dgi/initiatives/{data['id']}/move",
-        json={"status": "REVISION"},
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 409
-
-
-async def test_move_to_completado_no_limit(client, dgi_token):
-    """COMPLETADO has no WIP limit."""
+async def test_move_to_completado(client, dgi_token):
+    """Move an initiative from BACKLOG to COMPLETADO."""
     data = await _create_initiative(client, dgi_token)
     resp = await client.post(
         f"/api/dgi/initiatives/{data['id']}/move",

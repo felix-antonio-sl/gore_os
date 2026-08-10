@@ -146,7 +146,7 @@
 
 | ID | Historia | CA | Fuente | Estado | P |
 |----|----------|----|--------|:------:|:-:|
-| D-DGI-MP-021 | Como ESP_PROCESOS, quiero gestionar iniciativas DGI en un tablero Kanban con fases DMAIC, para seguir la metodología de mejora | Kanban: BACKLOG → EN_DISEÑO (D-M-A) → EN_IMPLEMENTACIÓN (I) → EN_VERIFICACIÓN (C) → COMPLETADO. WIP limits: Diseño=2, Implementación=3, Verificación=2 | PP POT-DMAIC-04 | Implementado | — |
+| D-DGI-MP-021 | Como ESP_PROCESOS, quiero gestionar iniciativas DGI en un tablero Kanban con fases DMAIC, para seguir la metodología de mejora | Kanban: BACKLOG → EN_DISEÑO (D-M-A) → EN_IMPLEMENTACIÓN (I) → EN_VERIFICACIÓN (C) → COMPLETADO, con drag-and-drop y orden persistente | PP POT-DMAIC-04 | Implementado | — |
 | D-DGI-MP-022 | Como ESP_PROCESOS, quiero registrar la fase DMAIC actual de una iniciativa (Define/Measure/Analyze/Improve/Control), para tracking granular | Campo dmaic_phase en iniciativa con opciones D/M/A/I/C | PP POT-DMAIC-01 | Implementado | — |
 | D-DGI-MP-023 | Como ESP_PROCESOS, quiero definir un charter de proyecto DMAIC con problema, alcance, objetivos SMART, stakeholders y sponsor, para la fase Define | Formulario charter: problema_desc, alcance, objetivo_smart, stakeholders[], sponsor_id, caso_negocio | PP POT-DMAIC-01 | Nuevo | P1 |
 | D-DGI-MP-024 | Como ESP_PROCESOS, quiero registrar la línea base de un proyecto DMAIC con métricas y VSM, para la fase Measure | Sección Measure en iniciativa: metricas_base[], vsm_url, sistema_medicion_validado (bool) | PP POT-DMAIC-01 | Nuevo | P2 |
@@ -386,7 +386,7 @@
 | ID | Historia | CA | Fuente | Estado | P |
 |----|----------|----|--------|:------:|:-:|
 | D-DGI-POT-014 | Como ESP_PROCESOS, quiero visualizar el flujo de trabajo del equipo DGI en tablero Kanban, para transparencia | Tablero Kanban con columnas BACKLOG/EN_DISEÑO/EN_IMPLEMENTACION/EN_VERIFICACION/COMPLETADO | PP POT-EF-02 | Implementado | — |
-| D-DGI-POT-015 | Como JEFE_DGI, quiero ver WIP limits por columna para evitar sobrecarga, para flujo saludable | WIP: Diseño=2, Implementación=3, Verificación=2. Error 409 si excede | PP POT-DMAIC-04 | Implementado | — |
+| D-DGI-POT-015 | Como JEFE_DGI, quiero ver WIP limits por columna para evitar sobrecarga, para flujo saludable | Topes fijos retirados en C62 tras prueba manual; el conteo WIP permanece como métrica informativa, sin bloqueo 409 | PP POT-DMAIC-04 | Retirado C62 | — |
 | D-DGI-POT-016 | Como JEFE_DGI, quiero ver métricas Lean del equipo (throughput, lead time, cycle time), para optimizar flujo | Cálculo: throughput = iniciativas completadas/mes, lead_time = promedio(completada - creada), cycle_time = promedio(tiempo en columna). Dashboard | PP POT-EF-02 | Nuevo | P1 |
 | D-DGI-POT-017 | Como JEFE_DGI, quiero ver un CFD (Cumulative Flow Diagram) de iniciativas, para detectar cuellos de botella | Gráfico de áreas apiladas: count iniciativas por estado a lo largo del tiempo | PP POT-EF-02 | Nuevo | P2 |
 | D-DGI-POT-018 | Como ESP_PROCESOS, quiero ver el aging de items en cada columna Kanban (días), para detectar bloqueos | Badge con días en columna actual. Alerta si > promedio × 1.5 | PP POT-EF-02 | Nuevo | P2 |

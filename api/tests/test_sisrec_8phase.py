@@ -10,6 +10,8 @@ Covers:
 import uuid
 import pytest
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+
 from tests.conftest import auth
 
 
@@ -181,6 +183,36 @@ async def test_check_escalations_idempotent(client, dgi_token, db):
     n2 = resp2.json()["new_escalations"]
     # Second run should not re-create the same escalation for this rendicion
     assert n2 < n1
+
+
+@pytest.mark.asyncio
+async def test_open_escalation_uniqueness_is_enforced_by_db(client, dgi_token, db):
+    """Direct SQL cannot create two open escalations for one rendition/phase/level."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    phase_id = (await db.execute(text("""
+        SELECT id FROM core.rendition_phase WHERE code = 'REVISION_RTF'
+    """))).scalar_one()
+
+    try:
+        await db.execute(
+            text("""
+                INSERT INTO core.rendition_escalation
+                    (rendition_id, phase_id, escalation_level)
+                VALUES (:rid, :phase_id, 1)
+            """),
+            {"rid": rid, "phase_id": phase_id},
+        )
+        with pytest.raises(DBAPIError):
+            await db.execute(
+                text("""
+                    INSERT INTO core.rendition_escalation
+                        (rendition_id, phase_id, escalation_level)
+                    VALUES (:rid, :phase_id, 1)
+                """),
+                {"rid": rid, "phase_id": phase_id},
+            )
+    finally:
+        await db.rollback()
 
 
 @pytest.mark.asyncio

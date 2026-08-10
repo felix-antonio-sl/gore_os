@@ -2,7 +2,7 @@
 -- GORE_OS — Remover Datos Demo Ciclo 2
 -- =============================================================================
 -- Elimina SOLO los registros demo (prefijo DEMO-)
--- Los schemes estructurales (budget_item, budget_allocation, etc.) NO se eliminan
+-- Los catálogos estructurales pertenecen a goreos_seed.sql y NO se eliminan
 -- La app sigue funcionando después de esto (sin datos demo, pero sin errores)
 -- =============================================================================
 

@@ -6,7 +6,7 @@
 **PostgreSQL**: 16+
 **Tablas**: 128 en 5 schemas (core, txn, public, meta, ref)
 **Schemes**: 105 vocabularios controlados (Category Pattern)
-**CHECK constraints**: 159 (`fn_validate_category_scheme`) + triggers de transición/timing (76 totales)
+**CHECK constraints**: 178 (incluye `fn_validate_category_scheme`) + triggers de transición/timing (89 totales)
 **Univocidad categorial**: 100% (0 FK→ref.category sin protección)
 
 ---
@@ -41,7 +41,8 @@ SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;
 
 | Archivo | Propósito |
 |---------|-----------|
-| `sql/goreos_ddl.sql` | Estructura completa (schemas, tablas, funciones, particiones) |
+| `sql/goreos_ddl.sql` | Baseline canónico y ejecutable en DB fresca (schemas, tablas, funciones, particiones) |
+| `sql/goreos_ddl_production.sql` | Snapshot anterior sin owners; excluido del bootstrap automático |
 | `sql/goreos_seed.sql` | Vocabularios controlados (105 schemes) |
 | `sql/goreos_seed_territory.sql` | Territorio Región de Ñuble (3 provincias, 21 comunas) |
 | `sql/goreos_triggers.sql` | Triggers de negocio |
@@ -51,7 +52,41 @@ SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;
 | `sql/goreos_migration_*.sql` | Migraciones incrementales |
 | `sql/goreos_rollback_*.sql` | Rollbacks correspondientes |
 
-**Importante**: No aplicar `goreos_ddl.sql` a DB fresca. Usar `pg_dump --schema-only` desde `goreos_model`.
+**Bootstrap fresco**: aplicar, en este orden, `goreos_ddl.sql`, `goreos_seed.sql`
+y `goreos_seed_territory.sql`. Las migraciones, rollbacks, identidades y seeds demo
+quedan fuera del arranque automático. Verificar el circuito con
+`./scripts/verify_fresh_db.sh` desde la raíz del repositorio.
+
+**Instalación existente**: nombrar explícitamente las migraciones y su orden. El
+runner aplica todo el lote pendiente en una transacción, registra su checksum y
+rechaza la ejecución implícita de todos los archivos:
+
+```bash
+./scripts/run_migrations.sh \
+  --container goreos_db \
+  --database goreos_model \
+  goreos_migration_primera.sql \
+  goreos_migration_segunda.sql
+```
+
+Lote ordenado de la refactorización de autoridad transaccional:
+
+```bash
+./scripts/run_migrations.sh \
+  goreos_migration_act_state_cross_cutting.sql \
+  goreos_migration_rendition_escalation_uniqueness.sql \
+  goreos_migration_bottleneck_fsm.sql \
+  goreos_migration_indicator_catalogs_fsm.sql \
+  goreos_migration_process_catalogs_fsm.sql \
+  goreos_migration_opportunity_fsm.sql \
+  goreos_migration_service_request_active_guard.sql \
+  goreos_migration_report_catalogs_fsm.sql \
+  goreos_migration_dmaic_catalog_fsm.sql \
+  goreos_migration_session_lifecycle_authority.sql \
+  goreos_migration_evaluation_result_authority.sql \
+  goreos_migration_session_agreement_status_authority.sql \
+  goreos_migration_budget_cycle_completion_authority.sql
+```
 
 ## Documentación del Modelo
 

@@ -395,27 +395,36 @@ async def create_request(
     status_id = await _get_cat_id(db, "dgi_request_status", "RECIBIDA")
     code = await _next_request_code(db)
 
-    result = await db.execute(
-        text("""
-            INSERT INTO core.dgi_service_request
-                (code, service_id, status_id, requester_id, division_id,
-                 description, urgency, created_by_id)
-            VALUES
-                (:code, :service_id, :status_id, :requester_id, :division_id,
-                 :description, :urgency, :created_by_id)
-            RETURNING id
-        """),
-        {
-            "code": code,
-            "service_id": str(body.service_id),
-            "status_id": status_id,
-            "requester_id": str(user["id"]),
-            "division_id": user.get("division_id"),
-            "description": body.description,
-            "urgency": urgency,
-            "created_by_id": str(user["id"]),
-        },
-    )
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.dgi_service_request
+                    (code, service_id, status_id, requester_id, division_id,
+                     description, urgency, created_by_id)
+                VALUES
+                    (:code, :service_id, :status_id, :requester_id, :division_id,
+                     :description, :urgency, :created_by_id)
+                RETURNING id
+            """),
+            {
+                "code": code,
+                "service_id": str(body.service_id),
+                "status_id": status_id,
+                "requester_id": str(user["id"]),
+                "division_id": user.get("division_id"),
+                "description": body.description,
+                "urgency": urgency,
+                "created_by_id": str(user["id"]),
+            },
+        )
+    except DBAPIError as exc:
+        await db.rollback()
+        if "requires an active service" in str(exc.orig):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="El servicio dejó de estar activo antes de crear la solicitud",
+            ) from exc
+        raise
     new_id = str(result.scalar())
     await record_event(db, "CREACION", "core.dgi_service_request", new_id, user["id"], {"code": code, "service_id": str(body.service_id)})
     await db.commit()

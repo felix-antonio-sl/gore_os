@@ -84,6 +84,7 @@ async def _create_cdp_with_item(
 ) -> str:
     """Create a budget_program with specific item and link a CDP to the IPR."""
     item_id = await _get_category_id(db, "budget_item", item_code)
+    status_id = await _get_category_id(db, "budget_commitment_status", "EMITIDO")
     bp_code = f"TENF-BP-{uuid.uuid4().hex[:6].upper()}"
 
     bp_row = (await db.execute(
@@ -100,13 +101,20 @@ async def _create_cdp_with_item(
     cdp_row = (await db.execute(
         text("""
             INSERT INTO core.budget_commitment (
-                budget_program_id, ipr_id, commitment_number, amount, issued_at
+                budget_program_id, ipr_id, commitment_number, amount, issued_at, status_id
             ) VALUES (
-                CAST(:bp_id AS uuid), CAST(:ipr_id AS uuid), :num, :amount, NOW()
+                CAST(:bp_id AS uuid), CAST(:ipr_id AS uuid), :num, :amount, NOW(),
+                CAST(:status_id AS uuid)
             )
             RETURNING id
         """),
-        {"bp_id": bp_id, "ipr_id": ipr_id, "num": cdp_num, "amount": amount},
+        {
+            "bp_id": bp_id,
+            "ipr_id": ipr_id,
+            "num": cdp_num,
+            "amount": amount,
+            "status_id": status_id,
+        },
     )).mappings().first()
     await db.commit()
     return str(cdp_row["id"])

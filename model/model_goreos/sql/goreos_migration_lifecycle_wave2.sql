@@ -74,6 +74,7 @@ CREATE INDEX IF NOT EXISTS idx_ipr_modification_ipr ON core.ipr_modification(ipr
 CREATE INDEX IF NOT EXISTS idx_ipr_modification_status ON core.ipr_modification(status_id);
 
 -- FSM trigger for modification_status
+DROP TRIGGER IF EXISTS trg_modification_state_transition ON core.ipr_modification;
 CREATE TRIGGER trg_modification_state_transition
     BEFORE UPDATE OF status_id ON core.ipr_modification
     FOR EACH ROW

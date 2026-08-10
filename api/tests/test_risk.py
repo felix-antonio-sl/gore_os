@@ -29,10 +29,21 @@ async def _seed_risk(client: AsyncClient, token: str, db: AsyncSession, **overri
         text("SELECT id FROM ref.category WHERE scheme = 'problem_impact' AND code = 'BLOQUEA_PAGO'")
     )).scalar()
 
-    # Get an IPR for subject
+    # Own the polymorphic subject instead of depending on test order or demo data.
     ipr = (await db.execute(
-        text("SELECT id FROM core.ipr WHERE deleted_at IS NULL LIMIT 1")
-    )).scalar()
+        text("""
+            INSERT INTO core.ipr (codigo_bip, name, ipr_type_id, ipr_nature)
+            VALUES (
+                'RISK-TEST-SUBJECT',
+                'Risk Test Subject',
+                (SELECT id FROM ref.category WHERE scheme = 'ipr_type' ORDER BY sort_order LIMIT 1),
+                'PROYECTO'
+            )
+            ON CONFLICT (codigo_bip) DO UPDATE SET name = EXCLUDED.name
+            RETURNING id
+        """)
+    )).scalar_one()
+    await db.commit()
 
     body = {
         "name": overrides.get("name", "Test Risk"),

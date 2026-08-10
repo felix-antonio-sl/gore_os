@@ -1,5 +1,9 @@
 """Tests for budget program calculations and role restrictions."""
 import uuid
+import pytest
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+
 from tests.conftest import auth
 
 
@@ -237,6 +241,93 @@ async def test_update_milestone_status(client, regional_token):
     assert resp.status_code == 200
     assert resp.json()["status"] == "COMPLETADO"
     assert resp.json()["completed_at"] is not None
+
+
+async def test_db_rejects_completed_milestone_without_witnesses(
+    client, regional_token, db,
+):
+    """A direct writer cannot claim COMPLETADO without date and actor."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    timeline = (await client.get(
+        "/api/presupuesto/ciclo/2026", headers=auth(regional_token)
+    )).json()
+
+    with pytest.raises(DBAPIError, match="requires completed_at and completed_by_id"):
+        await db.execute(
+            text("""
+                UPDATE core.budget_cycle_tracking
+                SET status = 'COMPLETADO'
+                WHERE id = :id
+            """),
+            {"id": timeline[0]["id"]},
+        )
+        await db.commit()
+    await db.rollback()
+
+
+async def test_db_rejects_stale_completion_witnesses(
+    client, regional_token, db,
+):
+    """A direct status change cannot retain witnesses outside COMPLETADO."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    timeline = (await client.get(
+        "/api/presupuesto/ciclo/2026", headers=auth(regional_token)
+    )).json()
+    tracking_id = timeline[0]["id"]
+    completed = await client.patch(
+        f"/api/presupuesto/ciclo/tracking/{tracking_id}",
+        json={"status": "COMPLETADO"},
+        headers=auth(regional_token),
+    )
+    assert completed.status_code == 200
+
+    with pytest.raises(DBAPIError, match="must clear completion witnesses"):
+        await db.execute(
+            text("""
+                UPDATE core.budget_cycle_tracking
+                SET status = 'OMITIDO'
+                WHERE id = :id
+            """),
+            {"id": tracking_id},
+        )
+        await db.commit()
+    await db.rollback()
+
+
+async def test_omitting_completed_milestone_clears_witnesses(
+    client, regional_token, db,
+):
+    """The API leaves no false completion evidence when a milestone is omitted."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    timeline = (await client.get(
+        "/api/presupuesto/ciclo/2026", headers=auth(regional_token)
+    )).json()
+    tracking_id = timeline[0]["id"]
+    await client.patch(
+        f"/api/presupuesto/ciclo/tracking/{tracking_id}",
+        json={"status": "COMPLETADO"},
+        headers=auth(regional_token),
+    )
+
+    omitted = await client.patch(
+        f"/api/presupuesto/ciclo/tracking/{tracking_id}",
+        json={"status": "OMITIDO"},
+        headers=auth(regional_token),
+    )
+    assert omitted.status_code == 200
+    assert omitted.json()["status"] == "OMITIDO"
+    assert omitted.json()["completed_at"] is None
+
+    witnesses = (await db.execute(
+        text("""
+            SELECT completed_at, completed_by_id
+            FROM core.budget_cycle_tracking
+            WHERE id = :id
+        """),
+        {"id": tracking_id},
+    )).mappings().one()
+    assert witnesses["completed_at"] is None
+    assert witnesses["completed_by_id"] is None
 
 
 async def test_update_milestone_invalid_status(client, regional_token):

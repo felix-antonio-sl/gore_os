@@ -48,18 +48,6 @@ def _require_write(user: dict) -> None:
 
 
 # ---------------------------------------------------------------------------
-# FSM (matches DB valid_transitions exactly)
-# ---------------------------------------------------------------------------
-_FSM: dict[str, set[str]] = {
-    "IDENTIFICADO":  {"EN_EVALUACION", "ACEPTADO"},
-    "EN_EVALUACION": {"EN_MITIGACION", "ACEPTADO", "CERRADO"},
-    "EN_MITIGACION": {"MITIGADO", "CERRADO"},
-    "MITIGADO":      {"CERRADO"},
-    "ACEPTADO":      {"CERRADO"},
-    "CERRADO":       set(),
-}
-
-# ---------------------------------------------------------------------------
 # PATCH allowlist
 # ---------------------------------------------------------------------------
 _FIELD_ALLOWLIST = {
@@ -477,7 +465,9 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
     _require_write(user)
 
     existing = (await db.execute(text("""
-        SELECT r.id, rs.code AS current_status
+        SELECT r.id,
+               rs.code AS current_status,
+               COALESCE(rs.valid_transitions, '[]'::jsonb) AS valid_transitions
         FROM core.risk r
         JOIN ref.category rs ON rs.id = r.status_id
         WHERE r.id = :id AND r.deleted_at IS NULL
@@ -490,6 +480,7 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
 
     # FSM transition
     old_status = None
+    new_status = None
     if "status_id" in body:
         new_status_code = body.pop("status_id").upper() if isinstance(body.get("status_id"), str) else None
         if new_status_code:
@@ -502,7 +493,7 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
                 raise HTTPException(status_code=400, detail=f"Estado inválido: {new_status_code}")
 
             current = existing["current_status"]
-            allowed = _FSM.get(current, set())
+            allowed = set(existing["valid_transitions"] or [])
             if new_status_code not in allowed:
                 raise HTTPException(
                     status_code=422,
@@ -512,6 +503,7 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
             updates.append("status_id = :new_status_id")
             params["new_status_id"] = str(target_row["id"])
             old_status = current
+            new_status = new_status_code
 
     # Regular fields
     for field in _FIELD_ALLOWLIST:
@@ -526,11 +518,11 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
 
     if old_status:
         await record_event(db, "RISK_STATUS_CHANGE", "core.risk", risk_id, user["id"],
-                           {"old_status": old_status, "new_status": params.get("new_status_id")})
+                           {"old_status": old_status, "new_status": new_status})
 
     try:
         await db.commit()
-    except IntegrityError as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         error_msg = str(e.orig) if e.orig else str(e)
         if "Transición de estado inválida" in error_msg:

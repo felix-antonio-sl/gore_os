@@ -1,5 +1,7 @@
 """Tests for the reuniones (crisis meetings) module — full lifecycle."""
 import pytest
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
 from tests.conftest import auth
 
 
@@ -128,7 +130,7 @@ async def test_finalizar_reunion(client, regional_token):
 
 @pytest.mark.asyncio
 async def test_add_topic(client, regional_token):
-    """POST /api/reuniones/{id}/temas adds a topic with agreement_number."""
+    """A new topic starts in the canonical PENDIENTE state."""
     data = await _create_reunion(client, regional_token)
 
     resp = await client.post(
@@ -141,6 +143,10 @@ async def test_add_topic(client, regional_token):
     assert "id" in topic
     assert "agreement_number" in topic
     assert topic["agreement_number"] == 1
+
+    detail = await client.get(f"/api/reuniones/{data['id']}", headers=auth(regional_token))
+    created = next(t for t in detail.json()["topics"] if t["id"] == topic["id"])
+    assert created["status"] == "PENDIENTE"
 
 
 # ---------------------------------------------------------------------------
@@ -163,7 +169,7 @@ async def test_review_topic(client, regional_token):
     # Review it
     resp = await client.post(
         f"/api/reuniones/{data['id']}/temas/{topic_id}/revisar",
-        json={"decision": "Aprobado"},
+        json={"decision": "Aprobado", "status": "COMPLETADO"},
         headers=auth(regional_token),
     )
     assert resp.status_code == 200
@@ -175,6 +181,93 @@ async def test_review_topic(client, regional_token):
     reviewed = [t for t in topics if t["id"] == topic_id]
     assert len(reviewed) == 1
     assert reviewed[0]["decision"] == "Aprobado"
+    assert reviewed[0]["status"] == "COMPLETADO"
+
+
+@pytest.mark.asyncio
+async def test_db_rejects_invalid_topic_status_transition(client, regional_token, db):
+    """A direct writer cannot skip PENDIENTE and jump to VERIFICADO."""
+    data = await _create_reunion(client, regional_token)
+    topic_resp = await client.post(
+        f"/api/reuniones/{data['id']}/temas",
+        json={"subject": "Tema con estado protegido"},
+        headers=auth(regional_token),
+    )
+    topic_id = topic_resp.json()["id"]
+
+    await db.execute(
+        text("""
+            UPDATE core.session_agreement
+            SET status_id = (
+                SELECT id FROM ref.category
+                WHERE scheme = 'commitment_state' AND code = 'PENDIENTE'
+            )
+            WHERE id = :id
+        """),
+        {"id": topic_id},
+    )
+    await db.commit()
+
+    with pytest.raises(DBAPIError, match="Transición de estado inválida"):
+        await db.execute(
+            text("""
+                UPDATE core.session_agreement
+                SET status_id = (
+                    SELECT id FROM ref.category
+                    WHERE scheme = 'commitment_state' AND code = 'VERIFICADO'
+                )
+                WHERE id = :id
+            """),
+            {"id": topic_id},
+        )
+        await db.commit()
+    await db.rollback()
+
+
+@pytest.mark.asyncio
+async def test_analista_cannot_mutate_reunion_topics(
+    client, regional_token, analista_token,
+):
+    """Topic creation and review use the same manager authority as the meeting."""
+    data = await _create_reunion(client, regional_token)
+
+    denied_create = await client.post(
+        f"/api/reuniones/{data['id']}/temas",
+        json={"subject": "No autorizado"},
+        headers=auth(analista_token),
+    )
+    assert denied_create.status_code == 403
+
+    topic_resp = await client.post(
+        f"/api/reuniones/{data['id']}/temas",
+        json={"subject": "Tema autorizado"},
+        headers=auth(regional_token),
+    )
+    denied_review = await client.post(
+        f"/api/reuniones/{data['id']}/temas/{topic_resp.json()['id']}/revisar",
+        json={"decision": "No autorizada", "status": "COMPLETADO"},
+        headers=auth(analista_token),
+    )
+    assert denied_review.status_code == 403
+
+
+@pytest.mark.asyncio
+async def test_cannot_review_topic_through_another_reunion(client, regional_token):
+    """The reunion path cannot mutate a topic owned by another session."""
+    first = await _create_reunion(client, regional_token)
+    second = await _create_reunion(client, regional_token)
+    topic_resp = await client.post(
+        f"/api/reuniones/{first['id']}/temas",
+        json={"subject": "Tema de la primera reunión"},
+        headers=auth(regional_token),
+    )
+
+    response = await client.post(
+        f"/api/reuniones/{second['id']}/temas/{topic_resp.json()['id']}/revisar",
+        json={"decision": "Cruce inválido", "status": "COMPLETADO"},
+        headers=auth(regional_token),
+    )
+    assert response.status_code == 404
 
 
 # ---------------------------------------------------------------------------
@@ -236,6 +329,44 @@ async def test_finish_before_start_error(client, regional_token):
     )
     assert resp.status_code == 400
     assert "no ha sido iniciada" in resp.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_session_lifecycle_syncs_crisis_meeting_mirror(client, regional_token, db):
+    """The parent session is the sole lifecycle authority for a crisis meeting."""
+    data = await _create_reunion(client, regional_token)
+
+    await db.execute(
+        text("UPDATE core.session SET started_at = NOW() WHERE id = :id"),
+        {"id": data["session_id"]},
+    )
+    await db.commit()
+
+    row = (await db.execute(
+        text("""
+            SELECT s.started_at, cm.started_at AS mirror_started_at
+            FROM core.session s
+            JOIN core.crisis_meeting cm ON cm.session_id = s.id
+            WHERE s.id = :id
+        """),
+        {"id": data["session_id"]},
+    )).mappings().one()
+    assert row["started_at"] is not None
+    assert row["mirror_started_at"] == row["started_at"]
+
+
+@pytest.mark.asyncio
+async def test_db_rejects_direct_crisis_meeting_lifecycle_update(client, regional_token, db):
+    """The crisis_meeting lifecycle mirror cannot be mutated directly."""
+    data = await _create_reunion(client, regional_token)
+
+    with pytest.raises(DBAPIError, match="lifecycle is derived from core.session"):
+        await db.execute(
+            text("UPDATE core.crisis_meeting SET started_at = NOW() WHERE id = :id"),
+            {"id": data["id"]},
+        )
+        await db.commit()
+    await db.rollback()
 
 
 # ---------------------------------------------------------------------------

@@ -1262,11 +1262,11 @@ Este es el rol mas amplio de la poblacion DGI. Acceso total a todas las funciona
 
 ```
 📍 /tablero ⭐ (Kanban DGI Initiatives):
-  🔍 4 columnas WIP-managed:
-    ↳ BACKLOG (sin limite)
-    ↳ EN_CURSO (WIP limit: 5)
-    ↳ REVISION (WIP limit: 2)
-    ↳ COMPLETADO (sin limite)
+  🔍 4 columnas Kanban:
+    ↳ BACKLOG
+    ↳ EN_CURSO
+    ↳ REVISION
+    ↳ COMPLETADO
   🔍 KanbanCard por iniciativa:
     ↳ Titulo, asignado, prioridad badge
     ↳ DMAIC phase badge (DEFINE/MEASURE/ANALYZE/IMPROVE/VERIFY)
@@ -1281,7 +1281,7 @@ Este es el rol mas amplio de la poblacion DGI. Acceso total a todas las funciona
   ✏️ Drag-and-drop (@dnd-kit/sortable):
     ↳ Vertical: reordenar dentro de columna
     ↳ Horizontal: mover entre columnas
-    ↳ Validacion WIP: si EN_CURSO ya tiene 5, toast error "WIP limit alcanzado"
+    ↳ Sin topes WIP fijos desde C62; el conteo por columna es informativo
     ↳ POST /api/dgi/initiatives/reorder (bulk sort_order update)
   ✏️ Mover iniciativa: POST /api/dgi/initiatives/{id}/move → nuevo status_id
   🗑️ Eliminar iniciativa (soft-delete, ConfirmDialog)

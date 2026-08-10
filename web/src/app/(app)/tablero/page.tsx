@@ -53,7 +53,7 @@ interface UserOption {
 
 type WipColumn = "BACKLOG" | "EN_CURSO" | "REVISION" | "COMPLETADO";
 
-const COLUMNS: { key: WipColumn; label: string; wipLimit?: number }[] = [
+const COLUMNS: { key: WipColumn; label: string }[] = [
   { key: "BACKLOG", label: "Backlog" },
   { key: "EN_CURSO", label: "En Curso" },
   { key: "REVISION", label: "Revisión" },
@@ -422,10 +422,6 @@ export default function TableroPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-start">
             {COLUMNS.map((col) => {
               const colItems = byColumn(col.key);
-              const isOverWip =
-                col.wipLimit !== undefined && colItems.length > col.wipLimit;
-              const isAtCapacity =
-                col.wipLimit !== undefined && colItems.length === col.wipLimit;
 
               return (
                 <div key={col.key} className="flex flex-col gap-3">
@@ -434,22 +430,10 @@ export default function TableroPage() {
                     <h2 className="text-sm font-semibold">{col.label}</h2>
                     <Badge
                       variant="outline"
-                      className={
-                        isOverWip
-                          ? "border-red-400 text-red-600"
-                          : isAtCapacity
-                          ? "border-amber-400 text-amber-600"
-                          : "border-gray-300 text-gray-600"
-                      }
+                      className="border-gray-300 text-gray-600"
                     >
                       {colItems.length}
-                      {col.wipLimit !== undefined && `/${col.wipLimit}`}
                     </Badge>
-                    {isOverWip && (
-                      <span className="text-xs text-red-600 font-medium">
-                        WIP excedido
-                      </span>
-                    )}
                   </div>
 
                   {/* Column container — droppable + sortable */}

@@ -1,17 +1,21 @@
 """
 Integration tests for DGI Bottleneck Detection & Investigation router.
 
-10 tests covering:
+13 tests covering:
 - Scan detection endpoint (1)
 - Summary endpoint (1)
 - Investigation CRUD: create, list, detail, delete (4)
-- Investigation FSM: full 6-state chain + invalid transition (2)
+- Investigation FSM: full chain, direct close, and API/DB invalid transitions (4)
 - Field update via PATCH (1)
-- Role restrictions: analista_token -> 403 (1)
+- Role restrictions for non-DGI and read-only DGI roles (2)
 """
 
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from tests.conftest import auth
 
 
@@ -265,6 +269,46 @@ async def test_investigation_fsm_invalid_transition(client: AsyncClient, esp_con
     )
     assert resp.status_code == 422
     assert "Transición inválida" in resp.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_investigation_fsm_is_enforced_by_db(
+    client: AsyncClient,
+    esp_control_token,
+    db: AsyncSession,
+):
+    """A direct write cannot bypass the canonical bottleneck FSM."""
+    create_resp = await client.post(
+        "/api/dgi/data/bottlenecks",
+        json={
+            "detection_type": "ACUMULACION",
+            "detection_value": 30.0,
+            "detection_threshold": 10.0,
+            "problem": "DB authority test",
+        },
+        headers=auth(esp_control_token),
+    )
+    assert create_resp.status_code == 201
+    investigation_id = create_resp.json()["id"]
+
+    try:
+        with pytest.raises(DBAPIError) as exc_info:
+            await db.execute(
+                text("""
+                    UPDATE core.dgi_bottleneck_investigation
+                    SET status_id = (
+                        SELECT id FROM ref.category
+                        WHERE scheme = 'dgi_bottleneck_status'
+                          AND code = 'ANALIZADO'
+                    )
+                    WHERE id = :id
+                """),
+                {"id": investigation_id},
+            )
+    finally:
+        await db.rollback()
+
+    assert "Transición de estado inválida" in str(exc_info.value.orig)
 
 
 @pytest.mark.asyncio

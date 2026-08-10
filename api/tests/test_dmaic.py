@@ -9,6 +9,9 @@ Wave C Tests: DMAIC structured improvement + Lean metrics + Process analytics.
 """
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import AsyncSession
 
 pytestmark = pytest.mark.asyncio
 
@@ -222,6 +225,44 @@ class TestDMAICTransitions:
             )
             assert resp.status_code == 400
             assert "retroceder" in resp.json()["detail"].lower()
+        finally:
+            await _cleanup_initiative(client, dgi_token, ini["id"])
+
+    async def test_transition_is_enforced_by_db(
+        self,
+        client: AsyncClient,
+        dgi_token: str,
+        db: AsyncSession,
+    ):
+        """A direct write cannot move DMAIC to an earlier phase."""
+        ini = await _create_initiative(client, dgi_token, "Test DMAIC DB Authority")
+        try:
+            for phase in ("DEFINE", "MEASURE"):
+                resp = await client.post(
+                    f"/api/dgi/initiatives/{ini['id']}/dmaic/transition",
+                    json={"target_phase": phase},
+                    headers={"Authorization": f"Bearer {dgi_token}"},
+                )
+                assert resp.status_code == 200
+
+            try:
+                with pytest.raises(DBAPIError) as exc_info:
+                    await db.execute(
+                        text("""
+                            UPDATE core.dgi_initiative
+                            SET dmaic_phase_id = (
+                                SELECT id FROM ref.category
+                                WHERE scheme = 'dgi_dmaic_phase'
+                                  AND code = 'DEFINE'
+                            )
+                            WHERE id = :id
+                        """),
+                        {"id": ini["id"]},
+                    )
+            finally:
+                await db.rollback()
+
+            assert "Transición de estado inválida" in str(exc_info.value.orig)
         finally:
             await _cleanup_initiative(client, dgi_token, ini["id"])
 

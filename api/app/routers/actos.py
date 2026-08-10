@@ -27,10 +27,6 @@ _ACT_FIELD_ALLOWLIST = {
 
 _RES_FIELDS = {"ipr_id", "agreement_id", "budget_amount", "resolution_type_id", "resolution_subtype_id"}
 
-# Terminal act states — cannot transition out of these
-_TERMINAL_STATES = {"TOMADO_RAZON", "RECHAZADO_CGR", "ANULADO"}
-
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -200,10 +196,6 @@ async def _validate_state_transition(
     current_code = row["current_code"]
     new_code = row["new_code"]
     valid = row["valid_transitions"] or []
-
-    # ANULADO is cross-cutting: allowed from any non-terminal state
-    if new_code == "ANULADO" and current_code not in _TERMINAL_STATES:
-        return current_code, new_code
 
     if new_code not in valid:
         raise HTTPException(
@@ -610,12 +602,7 @@ async def get_valid_transitions(
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Acto no encontrado")
 
-    current_code = row["current_code"]
     valid_codes = list(row["valid_transitions"] or [])
-
-    # ANULADO cross-cutting: add if current state is not terminal
-    if current_code not in _TERMINAL_STATES and "ANULADO" not in valid_codes:
-        valid_codes.append("ANULADO")
 
     if not valid_codes:
         return []

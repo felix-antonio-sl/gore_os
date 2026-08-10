@@ -21,5 +21,5 @@ Use a single polymorphic reference table `ref.category(scheme, code, label, sort
 - **No table proliferation**: Adding a new vocabulary requires only inserting rows into `ref.category`, not creating a new table.
 - **Uniform query pattern**: `JOIN ref.category c ON c.id = entity.fk_col WHERE c.scheme = 'scheme_name'` is consistent across all FK lookups.
 - **No cross-scheme contamination**: The FK points to only one scheme by design. A `CHECK` constraint plus the `fn_validate_category_scheme` trigger enforces this at the DB level.
-- **DGI schemes are production-only**: Schemes like `dgi_initiative_status` are NOT in the seed SQL; they exist in `goreos_model` and are copied to `goreos_test` via `pg_dump COPY`. Never seed them manually in test scripts.
-- **Adding new schemes**: Insert into `ref.category` in production first, then the test DB picks them up via `setup_test_db.sh`.
+- **Controlled vocabularies are versioned**: Every scheme consumed by the API, including DGI schemes such as `dgi_initiative_status`, belongs in `goreos_seed.sql`. A fresh or test database is reproducible from the checkout and never copies rows from production.
+- **Adding new schemes**: Change the canonical seed and add an explicit compatible migration when existing environments need the new rows. Production state is not a bootstrap source or a test fixture.

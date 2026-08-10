@@ -419,7 +419,7 @@ Centro de Comando → /datos?tab=indicadores (solo VIGENTE)
 /procesos (catálogo) → /procesos/{id} (FSM 6 estados)
   → Levantar proceso: Actores, Reglas, Métricas, Dolores
   → Tab Oportunidades → Puente a iniciativa DMAIC
-  → /tablero Kanban (WIP: EN_CURSO:5, REVISION:2)
+  → /tablero Kanban (ordenamiento vertical y movimiento entre columnas)
   → /tablero/{id} DMAIC stepper (DEFINE→MEASURE→ANALYZE→IMPROVE→VERIFY)
 ```
 
@@ -427,7 +427,7 @@ Centro de Comando → /datos?tab=indicadores (solo VIGENTE)
 - Cockpit: `cockpit-procesos.tsx` — agenda procesos, guidance contextual
 - `/procesos`: FilterBar (status/criticality/search), DataTable 7 cols, DrawerPanel create
 - `/procesos/{id}`: Hero card, FSM 6-state transitions, 5 tabs (actores, reglas, métricas, dolores, oportunidades)
-- `/tablero`: Kanban @dnd-kit sortable, WIP limits con toast
+- `/tablero`: Kanban @dnd-kit sortable, sin topes WIP fijos desde C62
 - `/tablero/{id}`: DMAIC 5-phase stepper, lean-metrics-panel, phase-gated editing
 - `/procesos/progreso`: Dashboard de progreso
 
@@ -841,7 +841,7 @@ Para validar el journey-first redesign (todos los journeys):
 | J6 | Crisis escala | jefe.daf | AttentionStrip CRITICO → `/ipr/{id}?tab=alertas` → crear problema |
 | J7 | Panorama AR | regional | `/centro-de-mando` → 6 KPIs + timeline, escalamientos visibles |
 | J8 | CG monitoreo | control.gestion | `/datos?tab=indicadores` → solo VIGENTE, filtro dimensión, drill-down ROJO |
-| J9 | Procesos DMAIC | procesos | `/procesos` → catálogo → `/tablero` Kanban con WIP limits |
+| J9 | Procesos DMAIC | procesos | `/procesos` → catálogo → `/tablero` Kanban ordenable |
 | J10 | Coordinación DGI | jefe.dgi | `/coordinacion` → AR decisions + `/escalamiento` → FSM stepper |
 | J11 | GOBERNADOR cola firma | gobernador | `/actos` → PendingQueue VISADO arriba, stepper visual |
 | J12 | Presidir CORE | gobernador | `/core-sessions/{id}` → "Iniciar Sesión" → votación → "Finalizar" |

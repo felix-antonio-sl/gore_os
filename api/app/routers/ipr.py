@@ -2538,7 +2538,7 @@ async def get_track_info(
                 text("""
                     SELECT ea.id, et.code AS evaluator_type, o.short_name AS evaluator_org_name,
                            ea.evaluator_name, ea.assigned_at, ea.deadline_at,
-                           ea.completed_at, ea.result_code, r.label AS result_label,
+                           ea.completed_at, r.code AS result_code, r.label AS result_label,
                            ea.observations, ea.numeric_score
                     FROM core.evaluation_assignment ea
                     JOIN ref.category et ON et.id = ea.evaluator_type_id
@@ -3929,7 +3929,7 @@ async def list_evaluations(
                    et.code AS evaluator_type, et.label AS evaluator_type_label,
                    o.short_name AS evaluator_org_name,
                    ea.evaluator_name, ea.assigned_at, ea.deadline_at,
-                   ea.completed_at, ea.result_code,
+                   ea.completed_at, r.code AS result_code,
                    r.label AS result_label, ea.observations,
                    ea.numeric_score,
                    ea.rank_position, ea.rank_total, ea.convocatoria_code
@@ -4064,14 +4064,6 @@ async def update_evaluation(
     if "result_id" in updates and updates["result_id"] is not None:
         set_clauses.append("result_id = CAST(:result_id AS uuid)")
         params["result_id"] = str(updates["result_id"])
-        # Denormalize result_code
-        rc_row = (await db.execute(
-            text("SELECT code FROM ref.category WHERE id = CAST(:rid AS uuid)"),
-            {"rid": str(updates["result_id"])},
-        )).mappings().first()
-        if rc_row:
-            set_clauses.append("result_code = :result_code")
-            params["result_code"] = rc_row["code"]
 
     if "observations" in updates:
         set_clauses.append("observations = :observations")

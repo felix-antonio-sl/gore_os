@@ -13,6 +13,10 @@ Integration tests for Wave B: Coordination, Escalation, Services, SLAs.
 
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from tests.conftest import auth
 
 
@@ -388,6 +392,64 @@ async def test_request_create(client: AsyncClient, dgi_token, jefe_token):
     assert data["code"].startswith("REQ-")
     assert data["status"] == "RECIBIDA"
     assert data["urgency"] == "ALTA"
+
+
+@pytest.mark.asyncio
+async def test_inactive_service_cannot_receive_request_even_via_direct_sql(
+    client: AsyncClient,
+    dgi_token,
+    jefe_token,
+    db: AsyncSession,
+):
+    """Only an active catalog service may accept a new request, including direct SQL."""
+    svc_resp = await client.post(
+        "/api/dgi/services",
+        json={"name": "Inactive Request Guard", "area": "CG"},
+        headers=auth(dgi_token),
+    )
+    service_id = svc_resp.json()["id"]
+    suspend_resp = await client.patch(
+        f"/api/dgi/services/{service_id}",
+        json={"status": "SUSPENDIDO"},
+        headers=auth(dgi_token),
+    )
+    assert suspend_resp.status_code == 200
+
+    api_resp = await client.post(
+        "/api/dgi/services/requests",
+        json={"service_id": service_id, "description": "Must stay blocked"},
+        headers=auth(jefe_token),
+    )
+    assert api_resp.status_code == 400
+
+    status_id = (await db.execute(text("""
+        SELECT id FROM ref.category
+        WHERE scheme = 'dgi_request_status' AND code = 'RECIBIDA'
+    """))).scalar_one()
+    requester_id = (await db.execute(text("""
+        SELECT id FROM core."user" WHERE email = 'jefe.daf@goreos.cl'
+    """))).scalar_one()
+
+    try:
+        with pytest.raises(DBAPIError) as exc_info:
+            await db.execute(
+                text("""
+                    INSERT INTO core.dgi_service_request
+                        (code, service_id, status_id, requester_id, description)
+                    VALUES
+                        ('REQ-INACTIVE-DB', :service_id, :status_id, :requester_id,
+                         'Direct SQL must stay blocked')
+                """),
+                {
+                    "service_id": service_id,
+                    "status_id": status_id,
+                    "requester_id": requester_id,
+                },
+            )
+    finally:
+        await db.rollback()
+
+    assert "requires an active service" in str(exc_info.value.orig)
 
 
 @pytest.mark.asyncio

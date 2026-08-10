@@ -659,15 +659,6 @@ async def set_indicator_value(
 # POST /api/dgi/data/indicators/{id}/lifecycle — Lifecycle transition
 # ---------------------------------------------------------------------------
 
-_LIFECYCLE_TRANSITIONS = {
-    ("BORRADOR", "APROBADO"),
-    ("APROBADO", "VIGENTE"),
-    ("VIGENTE", "DEPRECADO"),
-    ("APROBADO", "BORRADOR"),
-    ("VIGENTE", "APROBADO"),
-}
-
-
 @router.post("/indicators/{indicator_id}/lifecycle", response_model=IndicatorItem)
 async def transition_indicator_lifecycle(
     indicator_id: UUID,
@@ -690,7 +681,10 @@ async def transition_indicator_lifecycle(
 
     # Get current lifecycle
     row = (await db.execute(text("""
-        SELECT i.id, lc.code AS lifecycle_status, i.lifecycle_status_id
+        SELECT i.id,
+               lc.code AS lifecycle_status,
+               i.lifecycle_status_id,
+               COALESCE(lc.valid_transitions, '[]'::jsonb) AS valid_transitions
         FROM core.dgi_indicator i
         LEFT JOIN ref.category lc ON lc.id = i.lifecycle_status_id
         WHERE i.id = :id
@@ -700,7 +694,8 @@ async def transition_indicator_lifecycle(
 
     current = row["lifecycle_status"] or "BORRADOR"
 
-    if (current, target) not in _LIFECYCLE_TRANSITIONS:
+    allowed = set(row["valid_transitions"] or [])
+    if target not in allowed:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"Transición no válida: {current} → {target}",
@@ -717,36 +712,48 @@ async def transition_indicator_lifecycle(
             detail=f"Estado lifecycle '{target}' no encontrado en ref.category",
         )
 
-    # Insert lifecycle history
-    await db.execute(text("""
-        INSERT INTO core.dgi_indicator_lifecycle_history (
-            indicator_id, previous_lifecycle_id, new_lifecycle_id,
-            changed_by_id, comment, changed_at
-        ) VALUES (
-            :indicator_id,
-            :prev_id,
-            :new_id,
-            :user_id,
-            :comment,
-            NOW()
+    try:
+        await db.execute(text("""
+            INSERT INTO core.dgi_indicator_lifecycle_history (
+                indicator_id, previous_lifecycle_id, new_lifecycle_id,
+                changed_by_id, comment, changed_at
+            ) VALUES (
+                :indicator_id,
+                :prev_id,
+                :new_id,
+                :user_id,
+                :comment,
+                NOW()
+            )
+        """), {
+            "indicator_id": str(indicator_id),
+            "prev_id": str(row["lifecycle_status_id"]) if row["lifecycle_status_id"] else None,
+            "new_id": str(target_cat["id"]),
+            "user_id": str(user["id"]),
+            "comment": body.comment,
+        })
+
+        await db.execute(text("""
+            UPDATE core.dgi_indicator
+            SET lifecycle_status_id = :new_id, updated_at = NOW()
+            WHERE id = :id
+        """), {"new_id": str(target_cat["id"]), "id": str(indicator_id)})
+
+        await record_event(
+            db,
+            "STATE_TRANSITION",
+            "core.dgi_indicator",
+            indicator_id,
+            user["id"],
+            {"from": current, "to": target},
         )
-    """), {
-        "indicator_id": str(indicator_id),
-        "prev_id": str(row["lifecycle_status_id"]) if row["lifecycle_status_id"] else None,
-        "new_id": str(target_cat["id"]),
-        "user_id": str(user["id"]),
-        "comment": body.comment,
-    })
+        await db.commit()
+    except DBAPIError as exc:
+        await db.rollback()
+        if "Transición de estado inválida" in str(exc.orig):
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc.orig))
+        raise
 
-    # Update indicator
-    await db.execute(text("""
-        UPDATE core.dgi_indicator
-        SET lifecycle_status_id = :new_id, updated_at = NOW()
-        WHERE id = :id
-    """), {"new_id": str(target_cat["id"]), "id": str(indicator_id)})
-
-    await record_event(db, "STATE_TRANSITION", "core.dgi_indicator", indicator_id, user["id"], {"from": current, "to": target})
-    await db.commit()
     return await _get_indicator_item(indicator_id, db)
 
 
@@ -1372,19 +1379,22 @@ async def check_escalations(
             if days <= threshold:
                 continue
 
-            existing = (await db.execute(
+            escalation_id = (await db.execute(
                 text("""
-                    SELECT 1 FROM core.rendition_escalation
-                    WHERE rendition_id = :rid AND phase_id = :pid
-                      AND escalation_level = :level AND resolved_at IS NULL
+                    INSERT INTO core.rendition_escalation (
+                        rendition_id, phase_id, escalation_level
+                    ) VALUES (:rid, :pid, :level)
+                    ON CONFLICT (rendition_id, phase_id, escalation_level)
+                        WHERE resolved_at IS NULL
+                    DO NOTHING
+                    RETURNING id
                 """),
                 {"rid": str(r["id"]), "pid": phase_info["id"], "level": level},
             )).scalar()
 
-            if existing:
+            if escalation_id is None:
                 continue
 
-            alert_id = None
             if severity_id and alert_type_id:
                 alert_row = (await db.execute(
                     text("""
@@ -1407,21 +1417,17 @@ async def check_escalations(
                     },
                 )).mappings().first()
                 if alert_row:
-                    alert_id = str(alert_row["id"])
-
-            await db.execute(
-                text("""
-                    INSERT INTO core.rendition_escalation (
-                        rendition_id, phase_id, escalation_level, alert_id
-                    ) VALUES (:rid, :pid, :level, :aid)
-                """),
-                {
-                    "rid": str(r["id"]),
-                    "pid": phase_info["id"],
-                    "level": level,
-                    "aid": alert_id,
-                },
-            )
+                    await db.execute(
+                        text("""
+                            UPDATE core.rendition_escalation
+                            SET alert_id = :alert_id
+                            WHERE id = :escalation_id
+                        """),
+                        {
+                            "alert_id": str(alert_row["id"]),
+                            "escalation_id": str(escalation_id),
+                        },
+                    )
             new_escalations += 1
             details.append({
                 "rendition_id": str(r["id"]),

@@ -23,10 +23,17 @@ interface TabOpportunitiesProps {
   canEdit?: boolean;
 }
 
-const DIMENSION_OPTIONS = ["TIEMPO", "COSTO", "CALIDAD", "RIESGO", "SATISFACCION", "CUMPLIMIENTO"] as const;
+const DIMENSION_OPTIONS = ["VALOR", "DUPLICACION", "ESPERAS", "MOVIMIENTOS", "ERRORES", "AUTOMATIZACION"] as const;
 const IMPACT_OPTIONS = ["ALTO", "MEDIO", "BAJO"] as const;
 const EFFORT_OPTIONS = ["ALTO", "MEDIO", "BAJO"] as const;
-const STATUS_OPTIONS = ["IDENTIFICADA", "EN_EVALUACION", "EN_EJECUCION", "IMPLEMENTADA", "DESCARTADA"] as const;
+type OpportunityStatus = ImprovementOpportunity["status"];
+const STATUS_TRANSITIONS: Record<OpportunityStatus, readonly OpportunityStatus[]> = {
+  PROPUESTA: ["VALIDADA", "DESCARTADA"],
+  VALIDADA: ["EN_EJECUCION", "DESCARTADA"],
+  EN_EJECUCION: ["IMPLEMENTADA"],
+  IMPLEMENTADA: [],
+  DESCARTADA: [],
+};
 
 const impactColors: Record<string, string> = {
   ALTO: "bg-red-100 text-red-800 border-red-200",
@@ -82,14 +89,14 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!dimension || !description.trim()) return;
+    if (!dimension || !description.trim() || !impact || !effort) return;
     setSubmitting(true);
     try {
       await api.post(`/api/dgi/processes/${processId}/opportunities`, {
         dimension,
         description: description.trim(),
-        impact: impact || null,
-        effort: effort || null,
+        impact,
+        effort,
       });
       toast.success("Oportunidad registrada");
       resetForm();
@@ -223,17 +230,18 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
             <Select
               value={r.status}
               onValueChange={(val) => handleStatusChange(r.id, val)}
+              disabled={STATUS_TRANSITIONS[r.status].length === 0}
             >
               <SelectTrigger className="h-7 text-xs w-28">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {STATUS_OPTIONS.map((s) => (
+                {[r.status, ...STATUS_TRANSITIONS[r.status]].map((s) => (
                   <SelectItem key={s} value={s} className="text-xs">{s}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {!r.initiative_id && (
+            {!r.initiative_id && r.status === "VALIDADA" && (
               <Button
                 size="sm"
                 variant="ghost"
@@ -334,7 +342,7 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
               </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">Impacto</label>
+              <label className="text-sm font-medium">Impacto *</label>
               <Select value={impact} onValueChange={setImpact}>
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione impacto" />
@@ -347,7 +355,7 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
               </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">Esfuerzo</label>
+              <label className="text-sm font-medium">Esfuerzo *</label>
               <Select value={effort} onValueChange={setEffort}>
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione esfuerzo" />
@@ -370,7 +378,7 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
             />
           </div>
           <div className="flex gap-2 pt-1">
-            <Button type="submit" size="sm" disabled={submitting || !dimension || !description.trim()}>
+            <Button type="submit" size="sm" disabled={submitting || !dimension || !description.trim() || !impact || !effort}>
               {submitting ? "Guardando..." : "Agregar"}
             </Button>
             <Button type="button" size="sm" variant="outline" onClick={() => setShowForm(false)}>

@@ -666,7 +666,10 @@ async def transition_dmaic_phase(
 
     # Get current state
     sql = text("""
-        SELECT ini.id, ini.metadata, ph.code AS current_phase
+        SELECT ini.id,
+               ini.metadata,
+               ph.code AS current_phase,
+               COALESCE(ph.valid_transitions, '[]'::jsonb) AS valid_transitions
         FROM core.dgi_initiative ini
         LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
         WHERE ini.id = :id AND ini.deleted_at IS NULL
@@ -678,15 +681,16 @@ async def transition_dmaic_phase(
     current_phase = row["current_phase"]
     metadata = row["metadata"] or {}
 
-    # Validate ordering (can only advance forward)
-    if current_phase:
-        current_idx = _DMAIC_PHASE_ORDER.index(current_phase) if current_phase in _DMAIC_PHASE_ORDER else -1
-        target_idx = _DMAIC_PHASE_ORDER.index(target_phase)
-        if target_idx <= current_idx:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"No se puede retroceder de {current_phase} a {target_phase}",
-            )
+    # La DB define el avance desde una fase persistida; una iniciativa sin fase
+    # conserva el comportamiento de inicio existente.
+    allowed_phases = set(
+        _DMAIC_PHASE_ORDER if current_phase is None else row["valid_transitions"] or []
+    )
+    if target_phase not in allowed_phases:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"No se puede retroceder de {current_phase} a {target_phase}",
+        )
 
     # Resolve target phase category id
     phase_row = (await db.execute(
@@ -696,19 +700,31 @@ async def transition_dmaic_phase(
     if not phase_row:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Fase DMAIC no encontrada en catálogo: {target_phase}")
 
-    # Update phase
-    await db.execute(
-        text("""
-            UPDATE core.dgi_initiative
-            SET dmaic_phase_id = :phase_id,
-                updated_at = NOW(),
-                updated_by_id = :user_id
-            WHERE id = :id
-        """),
-        {"id": initiative_id_str, "phase_id": str(phase_row["id"]), "user_id": str(user["id"])},
-    )
-    await record_event(db, "STATE_TRANSITION", "core.dgi_initiative", initiative_id, user["id"], {"dmaic_phase": target_phase, "from": current_phase, "to": target_phase})
-    await db.commit()
+    try:
+        await db.execute(
+            text("""
+                UPDATE core.dgi_initiative
+                SET dmaic_phase_id = :phase_id,
+                    updated_at = NOW(),
+                    updated_by_id = :user_id
+                WHERE id = :id
+            """),
+            {"id": initiative_id_str, "phase_id": str(phase_row["id"]), "user_id": str(user["id"])},
+        )
+        await record_event(
+            db,
+            "STATE_TRANSITION",
+            "core.dgi_initiative",
+            initiative_id,
+            user["id"],
+            {"dmaic_phase": target_phase, "from": current_phase, "to": target_phase},
+        )
+        await db.commit()
+    except DBAPIError as exc:
+        await db.rollback()
+        if "Transición de estado inválida" in str(exc.orig):
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc.orig))
+        raise
 
     # Evaluate gates for the result
     phases = {

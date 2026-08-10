@@ -1,9 +1,9 @@
 """
 Integration tests for /api/dgi/data/ endpoints (dgi_data.py router).
 
-26 endpoints covered across 6 groups, 39 tests total:
+26 endpoints covered across 6 groups, 41 tests total:
 
-- Indicators CRUD + lifecycle (21 tests):
+- Indicators CRUD + lifecycle (18 tests):
     list, list w/ dimension filter, detail, 404, create, create invalid dim,
     create non-JEFE forbidden, update, update ESP_CONTROL allowed, manual value,
     manual value computed rejected, lifecycle full flow (BORRADOR→DEPRECADO),
@@ -16,7 +16,7 @@ Integration tests for /api/dgi/data/ endpoints (dgi_data.py router).
 
 - Events (1 test): eventos list
 
-- Renditions CRUD + FSM (10 tests):
+- Renditions CRUD + FSM and summary (13 tests):
     list, create, create requires link, detail, FSM transition,
     invalid transition, phase definitions, vencidas, ciclo timeline,
     escalamientos, check-escalations, archive requires APROBADA
@@ -29,6 +29,10 @@ Integration tests for /api/dgi/data/ endpoints (dgi_data.py router).
 
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from tests.conftest import auth
 
 
@@ -339,6 +343,45 @@ async def test_indicator_lifecycle_invalid_transition(client: AsyncClient, dgi_t
         headers=auth(dgi_token),
     )
     assert resp.status_code == 409
+
+
+@pytest.mark.asyncio
+async def test_indicator_lifecycle_is_enforced_by_db(
+    client: AsyncClient,
+    dgi_token,
+    db: AsyncSession,
+):
+    """A direct write cannot bypass the canonical indicator lifecycle."""
+    create_resp = await client.post(
+        "/api/dgi/data/indicators",
+        json={
+            "name": "Test DB Lifecycle Authority",
+            "dimension": "PRESUPUESTO",
+            "source_type": "MANUAL",
+        },
+        headers=auth(dgi_token),
+    )
+    assert create_resp.status_code == 201
+    indicator_id = create_resp.json()["id"]
+
+    try:
+        with pytest.raises(DBAPIError) as exc_info:
+            await db.execute(
+                text("""
+                    UPDATE core.dgi_indicator
+                    SET lifecycle_status_id = (
+                        SELECT id FROM ref.category
+                        WHERE scheme = 'dgi_indicator_lifecycle'
+                          AND code = 'VIGENTE'
+                    )
+                    WHERE id = :id
+                """),
+                {"id": indicator_id},
+            )
+    finally:
+        await db.rollback()
+
+    assert "Transición de estado inválida" in str(exc_info.value.orig)
 
 
 @pytest.mark.asyncio

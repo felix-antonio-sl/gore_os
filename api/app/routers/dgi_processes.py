@@ -30,18 +30,6 @@ def _require_dgi(user: dict):
 router = APIRouter(prefix="/api/dgi/processes", tags=["dgi"])
 
 # ---------------------------------------------------------------------------
-# FSM for process status transitions
-# ---------------------------------------------------------------------------
-_PROCESS_FSM: dict[str, set[str]] = {
-    "IDENTIFICADO":     {"EN_LEVANTAMIENTO", "SUSPENDIDO"},
-    "EN_LEVANTAMIENTO": {"MODELADO", "IDENTIFICADO", "SUSPENDIDO"},
-    "MODELADO":         {"VALIDADO", "EN_LEVANTAMIENTO", "SUSPENDIDO"},
-    "VALIDADO":         {"PUBLICADO", "MODELADO", "SUSPENDIDO"},
-    "PUBLICADO":        {"SUSPENDIDO"},
-    "SUSPENDIDO":       {"IDENTIFICADO"},
-}
-
-# ---------------------------------------------------------------------------
 # PATCH allowlist
 # ---------------------------------------------------------------------------
 _PROCESS_FIELD_ALLOWLIST = {"name", "description", "scope", "division_id", "owner_id", "criticality"}
@@ -63,6 +51,7 @@ async def _get_process_row(process_id: str, db: AsyncSession) -> dict | None:
             proc.owner_id,
             p.names || ' ' || p.paternal_surname AS owner_name,
             st.code           AS status,
+            COALESCE(st.valid_transitions, '[]'::jsonb) AS valid_transitions,
             proc.criticality,
             proc.created_at,
             proc.updated_at,
@@ -424,7 +413,7 @@ async def update_process(
         current_status = existing["status"]
 
         if target_status != current_status:
-            allowed = _PROCESS_FSM.get(current_status, set())
+            allowed = set(existing["valid_transitions"] or [])
             if target_status not in allowed:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
@@ -465,16 +454,29 @@ async def update_process(
     updates["id"] = process_id_str
     updates["updated_by_id"] = str(user["id"])
 
-    await db.execute(
-        text(f"UPDATE core.dgi_process SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
-        updates,
-    )
-    if "status_id" in updates:
-        target_status = body.status.upper()
-        await record_event(db, "STATE_TRANSITION", "core.dgi_process", process_id, user["id"], {"from": existing["status"], "to": target_status})
-    else:
-        await record_event(db, "MODIFICACION", "core.dgi_process", process_id, user["id"])
-    await db.commit()
+    try:
+        await db.execute(
+            text(f"UPDATE core.dgi_process SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
+            updates,
+        )
+        if "status_id" in updates:
+            target_status = body.status.upper()
+            await record_event(
+                db,
+                "STATE_TRANSITION",
+                "core.dgi_process",
+                process_id,
+                user["id"],
+                {"from": existing["status"], "to": target_status},
+            )
+        else:
+            await record_event(db, "MODIFICACION", "core.dgi_process", process_id, user["id"])
+        await db.commit()
+    except DBAPIError as exc:
+        await db.rollback()
+        if "Transición de estado inválida" in str(exc.orig):
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc.orig))
+        raise
 
     row = await _get_process_row(process_id_str, db)
     return ProcessItem(
@@ -1107,11 +1109,20 @@ async def update_opportunity(
     set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
     updates["opp_id"] = str(opportunity_id)
 
-    await db.execute(
-        text(f"UPDATE core.dgi_improvement_opportunity SET {set_clauses}, updated_at = NOW() WHERE id = :opp_id"),
-        updates,
-    )
-    await db.commit()
+    try:
+        await db.execute(
+            text(f"UPDATE core.dgi_improvement_opportunity SET {set_clauses}, updated_at = NOW() WHERE id = :opp_id"),
+            updates,
+        )
+        await db.commit()
+    except DBAPIError as exc:
+        await db.rollback()
+        if "Transición de oportunidad inválida" in str(exc.orig):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail=str(exc.orig).split("CONTEXT:", 1)[0].strip(),
+            ) from exc
+        raise
 
     # Re-fetch with JOIN
     r = (await db.execute(

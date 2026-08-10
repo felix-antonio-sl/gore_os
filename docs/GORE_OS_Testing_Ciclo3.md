@@ -93,7 +93,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | DGI gauges | **Nuevo C4** | C4 | Gauges semaforo en cockpit DGI con iconos visuales |
 | DGI Cockpits | Completo | C2 | 4 cockpits por rol DGI |
 | DGI Indicadores | Completo | C2 | Semaforo 5 dimensiones, refresh desde BD real |
-| DGI Iniciativas | Completo | C2+C6 | Kanban con WIP limits, paginacion opcional |
+| DGI Iniciativas | Completo | C2+C6 | Kanban ordenable sin topes WIP fijos, paginacion opcional |
 | DGI Informes | Completo | C2 | 4 tipos, 6 secciones auto-populadas |
 | Navegacion bidireccional | **Nuevo C6** | C6 | Links clickeables entre entidades satelite e IPR en 6 paginas |
 | Timeline problemas | **Nuevo C6** | C6 | Historial visual de estados en drawer de problemas |
@@ -1113,7 +1113,7 @@ GET    /api/dgi/cockpit                    Cockpit por rol DGI
 GET    /api/dgi/initiatives                Iniciativas (filtros: status, responsible_id, page, page_size)
 POST   /api/dgi/initiatives                Crear iniciativa
 PATCH  /api/dgi/initiatives/{id}           Actualizar iniciativa
-POST   /api/dgi/initiatives/{id}/move      Mover en Kanban (WIP limits)
+POST   /api/dgi/initiatives/{id}/move      Mover en Kanban (sin tope WIP fijo desde C62)
 POST   /api/dgi/data/indicators/refresh    Recalcular indicadores
 GET    /api/dgi/reports                    Informes
 ```
@@ -1326,7 +1326,6 @@ Los siguientes tests pueden fallar debido a contaminacion de datos entre ejecuci
 
 | Test | Problema | Solucion |
 |------|----------|----------|
-| `test_initiatives::test_move_to_en_curso` | WIP limit 5 alcanzado por datos acumulados | `UPDATE core.dgi_initiative SET deleted_at = NOW() WHERE deleted_at IS NULL;` en `goreos_test` |
 | `test_sisrec::test_vencidas_endpoint` | Rendiciones stale acumuladas | `DELETE FROM core.rendition WHERE created_at > '2026-01-01';` en `goreos_test` |
 | `test_parametric::test_routing_query` | Requiere seed data TP-01 | Verificar que existen filas en `core.financing_track` |
 | `test_parentesco::test_gate_blocks_without_declarations` | Requiere IPR con track SUBV8 | Sensible al estado de la DB de test; verificar track assignment |

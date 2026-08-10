@@ -25,7 +25,7 @@
 -- ref.category ↔ gist:Category (patrón taxonomía flexible)
 -- ref.actor ↔ gnub:Actor (participantes proceso DIPIR)
 -- scheme='mcd_phase' ↔ gnub:IPRPhase (6 fases F0-F5)
--- scheme='ipr_state' ↔ gnub:IPRState (28 estados operativos)
+-- scheme='ipr_state' ↔ gnub:IPRState (estados operativos)
 -- scheme='mechanism' ↔ gnub:FinancingMechanism (7 tracks)
 -- scheme='aspect' ↔ gist:Aspect (7 aspects presupuestarios)
 -- scheme='event_type' ↔ gnub:BudgetaryTransaction subclases
@@ -55,7 +55,8 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('ipr_type', 'TRANSFERENCIA', 'Transferencia', 'Transferencias a entidades ejecutoras', 4),
 ('ipr_type', 'SUBSIDIO', 'Subsidio', 'Subsidios y aportes', 5),
 ('ipr_type', 'ESTUDIO', 'Estudio', 'Estudios y diseños', 6),
-('ipr_type', 'PROGRAMA_SOCIAL', 'Programa Social', 'Programas sociales operativos', 7)
+('ipr_type', 'PROGRAMA_SOCIAL', 'Programa Social', 'Programas sociales operativos', 7),
+('ipr_type', 'PROGRAMA_8PCT', 'Programa 8%', 'Programa financiado por la subvención FNDR 8%', 8)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -75,7 +76,7 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     description = EXCLUDED.description,
     sort_order = EXCLUDED.sort_order;
 
--- ESTADOS IPR OPERATIVOS (28 estados - gnub:IPRState subclasses)
+-- ESTADOS IPR OPERATIVOS (gnub:IPRState subclasses)
 -- Fuente: goreNubleOntology.ttl:768-805
 -- HIGH-002 FIX: Crear categorías padre dentro del mismo scheme para jerarquía válida
 INSERT INTO ref.category (scheme, code, label, description, parent_code, sort_order) VALUES
@@ -86,17 +87,18 @@ INSERT INTO ref.category (scheme, code, label, description, parent_code, sort_or
 -- Estados Universales (gnub:UniversalIPRState)
 ('ipr_state', 'INGRESADO', 'Ingresado', 'Iniciativa ingresada al sistema', 'UNIVERSAL', 1),
 ('ipr_state', 'EN_REVISION', 'En Revisión', 'Revisión de admisibilidad', 'UNIVERSAL', 2),
-('ipr_state', 'ADMISIBLE', 'Admisible', 'Cumple requisitos formales', 'UNIVERSAL', 3),
-('ipr_state', 'INADMISIBLE', 'Inadmisible', 'No cumple requisitos formales', 'UNIVERSAL', 4),
-('ipr_state', 'EN_EVALUACION', 'En Evaluación', 'En proceso de evaluación técnica', 'UNIVERSAL', 5),
-('ipr_state', 'CDP_EMITIDO', 'CDP Emitido', 'Certificado de disponibilidad presupuestaria emitido', 'UNIVERSAL', 6),
-('ipr_state', 'EN_FORMALIZACION', 'En Formalización', 'Preparando convenio/contrato', 'UNIVERSAL', 7),
-('ipr_state', 'FORMALIZADO', 'Formalizado', 'Convenio/contrato firmado', 'UNIVERSAL', 8),
-('ipr_state', 'EN_EJECUCION', 'En Ejecución', 'Ejecución física y financiera activa', 'UNIVERSAL', 9),
-('ipr_state', 'SUSPENDIDO', 'Suspendido', 'Ejecución suspendida temporalmente', 'UNIVERSAL', 10),
-('ipr_state', 'EN_RENDICION', 'En Rendición', 'Proceso de rendición de cuentas', 'UNIVERSAL', 11),
-('ipr_state', 'CERRADO', 'Cerrado', 'Iniciativa cerrada administrativamente', 'UNIVERSAL', 12),
-('ipr_state', 'ANULADO', 'Anulado', 'Iniciativa anulada', 'UNIVERSAL', 13),
+('ipr_state', 'PRE_ADMISIBLE', 'Pre-admisible', 'Verificación de admisibilidad en curso', 'UNIVERSAL', 3),
+('ipr_state', 'ADMISIBLE', 'Admisible', 'Cumple requisitos formales', 'UNIVERSAL', 4),
+('ipr_state', 'INADMISIBLE', 'Inadmisible', 'No cumple requisitos formales', 'UNIVERSAL', 5),
+('ipr_state', 'EN_EVALUACION', 'En Evaluación', 'En proceso de evaluación técnica', 'UNIVERSAL', 6),
+('ipr_state', 'CDP_EMITIDO', 'CDP Emitido', 'Certificado de disponibilidad presupuestaria emitido', 'UNIVERSAL', 7),
+('ipr_state', 'EN_FORMALIZACION', 'En Formalización', 'Preparando convenio/contrato', 'UNIVERSAL', 8),
+('ipr_state', 'FORMALIZADO', 'Formalizado', 'Convenio/contrato firmado', 'UNIVERSAL', 9),
+('ipr_state', 'EN_EJECUCION', 'En Ejecución', 'Ejecución física y financiera activa', 'UNIVERSAL', 10),
+('ipr_state', 'SUSPENDIDO', 'Suspendido', 'Ejecución suspendida temporalmente', 'UNIVERSAL', 11),
+('ipr_state', 'EN_RENDICION', 'En Rendición', 'Proceso de rendición de cuentas', 'UNIVERSAL', 12),
+('ipr_state', 'CERRADO', 'Cerrado', 'Iniciativa cerrada administrativamente', 'UNIVERSAL', 13),
+('ipr_state', 'ANULADO', 'Anulado', 'Iniciativa anulada', 'UNIVERSAL', 14),
 -- Estados Proyecto (gnub:ProjectIPRState) - HIGH-002 FIX: parent_code ahora válido
 ('ipr_state', 'RS', 'RS', 'Rate of Social Return - Tasa Social calculada', 'ESTADO_PROYECTO', 20),
 ('ipr_state', 'FI', 'FI', 'Favorable Incondicional', 'ESTADO_PROYECTO', 21),
@@ -111,7 +113,12 @@ INSERT INTO ref.category (scheme, code, label, description, parent_code, sort_or
 -- Estados Programa (gnub:ProgramIPRState) - HIGH-002 FIX: parent_code ahora válido
 ('ipr_state', 'RF', 'RF', 'Recomendación Favorable', 'ESTADO_PROGRAMA', 30),
 ('ipr_state', 'ITF', 'ITF', 'Informe Técnico Favorable', 'ESTADO_PROGRAMA', 31),
-('ipr_state', 'AT', 'AT', 'Aprobación Técnica', 'ESTADO_PROGRAMA', 32)
+('ipr_state', 'AT', 'AT', 'Aprobación Técnica', 'ESTADO_PROGRAMA', 32),
+-- Estados incorporados por la evolución del ciclo de vida
+('ipr_state', 'TERMINADO_ANTICIPADAMENTE', 'Terminado Anticipadamente', 'IPR terminada antes de completar su ciclo', 'UNIVERSAL', 30),
+('ipr_state', 'CONTRATO_FIRMADO', 'Contrato Firmado', 'Contrato firmado entre GORE y adjudicatario', 'ESTADO_PROYECTO', 33),
+('ipr_state', 'RENDICION_APROBADA', 'Rendición Aprobada', 'Ciclo SISREC aprobado; pendiente cierre administrativo', 'UNIVERSAL', 36),
+('ipr_state', 'EN_CIERRE_ADMINISTRATIVO', 'En Cierre Administrativo', 'Proceso de cierre formal con acta y firma de autoridad', 'UNIVERSAL', 37)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -163,6 +170,63 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('mechanism', 'TRANSFER', 'Track D2: Transferencias', 'Transferencias, Comité GORE, producto ITF', 5),
 ('mechanism', 'SUBV8', 'Track E1: Subvención 8%', '8% concursable, Comisión, producto Puntaje', 6),
 ('mechanism', 'FRPD', 'Track E2: FRPD Royalty', 'Royalty I+D+i, ANID/CORFO, producto Elegibilidad', 7)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- CATEGORÍAS CIRCULAR 33 Y ORGANISMO CERTIFICADOR
+INSERT INTO ref.category (scheme, code, label, description, metadata, sort_order) VALUES
+('categoria_c33', 'EDIFICACION', 'Edificación', 'Proyectos de edificación — certificación SERVIU', '{"certifier_org_code": "SERVIU"}', 1),
+('categoria_c33', 'VIALIDAD', 'Vialidad', 'Proyectos viales — certificación MOP', '{"certifier_org_code": "MOP"}', 2)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    metadata = EXCLUDED.metadata,
+    sort_order = EXCLUDED.sort_order;
+
+-- TIPOS DE IMPACTO TERRITORIAL DE UNA IPR
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('territory_impact', 'UBICACION', 'Ubicación Física', 'Territorio donde se ejecuta físicamente la IPR', 1),
+('territory_impact', 'IMPACTO_DIRECTO', 'Impacto Directo', 'Comunas directamente beneficiadas por la IPR', 2),
+('territory_impact', 'IMPACTO_INDIRECTO', 'Impacto Indirecto', 'Comunas con efecto spillover de la IPR', 3),
+('territory_impact', 'ZONA_INFLUENCIA', 'Zona de Influencia', 'Territorio de usuarios potenciales', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- TIPOS DE HITO DEL CICLO IPR
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('milestone_type', 'INICIO_OBRA', 'Inicio de Obras', 'Acta de inicio de construcción', 1),
+('milestone_type', 'AVANCE_25', 'Avance 25%', 'Hito de avance físico 25%', 2),
+('milestone_type', 'AVANCE_50', 'Avance 50%', 'Hito de avance físico 50%', 3),
+('milestone_type', 'AVANCE_75', 'Avance 75%', 'Hito de avance físico 75%', 4),
+('milestone_type', 'RECEPCION_PROV', 'Recepción Provisoria', 'Acta de recepción provisoria de obras', 5),
+('milestone_type', 'RECEPCION_DEF', 'Recepción Definitiva', 'Acta de recepción definitiva', 6),
+('milestone_type', 'CIERRE_ADMIN', 'Cierre Administrativo', 'Cierre administrativo y contable', 7),
+('milestone_type', 'ENTREGA_DISENO', 'Entrega de Diseño', 'Entrega de diseño o estudio', 8),
+('milestone_type', 'INFORME_FINAL', 'Informe Final', 'Entrega de informe final', 9),
+('milestone_type', 'APROBACION_CDP', 'Aprobación CDP', 'Emisión de Certificado de Disponibilidad Presupuestaria', 10),
+('milestone_type', 'FIRMA_CONVENIO', 'Firma de Convenio', 'Suscripción del convenio de transferencia', 11),
+('milestone_type', 'LICITACION', 'Publicación Licitación', 'Publicación en MercadoPúblico', 12),
+('milestone_type', 'ADJUDICACION', 'Adjudicación', 'Resolución de adjudicación', 13)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ROLES DE ORGANIZACIONES PARTICIPANTES EN UNA IPR
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('ipr_party_role', 'POSTULANTE', 'Postulante', 'Organización que postula la iniciativa', 1),
+('ipr_party_role', 'FORMULADOR', 'Formulador', 'Organización que formula técnicamente la IPR', 2),
+('ipr_party_role', 'EJECUTOR', 'Ejecutor', 'Organización que ejecuta técnica y financieramente', 3),
+('ipr_party_role', 'COFINANCIADOR', 'Cofinanciador', 'Organización que aporta recursos adicionales', 4),
+('ipr_party_role', 'UNIDAD_TECNICA', 'Unidad Técnica', 'Servicio que supervisa la ejecución', 5),
+('ipr_party_role', 'FISCALIZADOR', 'Fiscalizador', 'Organización que fiscaliza el proyecto', 6),
+('ipr_party_role', 'BENEFICIARIO', 'Beneficiario Institucional', 'Organización beneficiaria directa', 7),
+('ipr_party_role', 'MANDANTE', 'Mandante', 'GORE como mandante en convenio mandato', 8),
+('ipr_party_role', 'MANDATARIO', 'Mandatario', 'Organización que recibe el mandato de ejecución', 9)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -415,19 +479,38 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     description = EXCLUDED.description,
     sort_order = EXCLUDED.sort_order;
 
+-- GOBERNANZA DE SESIONES Y VOTACIÓN
+-- Catálogos estructurales requeridos por core.session y core.session_vote.
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('session_type', 'ORDINARIA', 'Sesión Ordinaria', 'Sesión ordinaria del órgano colegiado', 1),
+('session_type', 'EXTRAORDINARIA', 'Sesión Extraordinaria', 'Sesión extraordinaria del órgano colegiado', 2),
+('session_type', 'CRISIS', 'Sesión de Crisis', 'Sesión extraordinaria para gestión de crisis', 3),
+('vote_option', 'A_FAVOR', 'A Favor', 'Voto favorable', 1),
+('vote_option', 'EN_CONTRA', 'En Contra', 'Voto desfavorable', 2),
+('vote_option', 'ABSTENCION', 'Abstención', 'Abstención de voto', 3),
+('quorum_type', 'SIMPLE', 'Mayoría Simple (9/16)', 'Mayoría simple del CORE', 1),
+('quorum_type', 'CALIFICADA', 'Mayoría Calificada (11/16)', 'Mayoría calificada del CORE', 2)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES RENDICIÓN (ONTO-003 FIX Auditoría v5)
 -- ============================================================================
--- Fuente: goreNubleReferenceData.ttl - gnub:RenditionState (5 instancias)
+-- Fuente: goreNubleReferenceData.ttl + flujo SISREC RTF→UCR
 
 -- ESTADOS DE RENDICIÓN (gnub:AccountabilityState)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('rendition_state', 'PENDIENTE', 'Pendiente', 'gnubd:_AccountabilityState_Pending - Rendición pendiente de inicio', 1),
-('rendition_state', 'EN_REVISION', 'En Revisión', 'gnubd:_AccountabilityState_InReview - En proceso de revisión técnica', 2),
-('rendition_state', 'OBSERVADA', 'Observada', 'gnubd:_AccountabilityState_Observed - Con observaciones a subsanar', 3),
-('rendition_state', 'APROBADA', 'Aprobada', 'gnubd:_AccountabilityState_Approved - Rendición aprobada', 4),
-('rendition_state', 'APROBADA_PARCIALMENTE', 'Aprobada Parcialmente', 'Rendición con aprobación parcial - requiere complemento', 5),
-('rendition_state', 'RECHAZADA', 'Rechazada', 'gnubd:_AccountabilityState_Rejected - Rendición rechazada', 6)
+('rendition_state', 'EN_REVISION_RTF', 'En Revisión RTF', 'Revisión técnica por Referente Técnico Financiero', 2),
+('rendition_state', 'VISADA_RTF', 'Visada RTF', 'Rendición visada por RTF, pendiente de UCR', 3),
+('rendition_state', 'EN_REVISION_UCR', 'En Revisión UCR', 'Revisión final por Unidad de Control de Rendiciones', 4),
+('rendition_state', 'OBSERVADA', 'Observada', 'gnubd:_AccountabilityState_Observed - Con observaciones a subsanar', 5),
+('rendition_state', 'APROBADA', 'Aprobada', 'gnubd:_AccountabilityState_Approved - Rendición aprobada', 6),
+('rendition_state', 'APROBADA_PARCIALMENTE', 'Aprobada Parcialmente', 'Rendición con aprobación parcial - requiere complemento', 7),
+('rendition_state', 'RECHAZADA', 'Rechazada', 'gnubd:_AccountabilityState_Rejected - Rendición rechazada', 8),
+('rendition_state', 'EN_REVISION', 'En Revisión (legado)', 'DEPRECADO: reemplazado por EN_REVISION_RTF/EN_REVISION_UCR', 99)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -451,6 +534,20 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('evaluation_result', 'NV', 'No Viable', 'Proyecto no viable técnica o financieramente', 8),
 ('evaluation_result', 'PUNTAJE', 'Puntaje', 'Evaluación por puntaje (ranking competitivo)', 9),
 ('evaluation_result', 'AT', 'Aprobación Técnica', 'Aprobación técnica sin cálculo de RS', 10)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- EVALUACIÓN EX-POST DE IPR CERRADAS
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('expost_eval_type', 'SIMPLIFICADA', 'Simplificada', 'Evaluación simplificada de resultados', 1),
+('expost_eval_type', 'PROFUNDIDAD', 'En Profundidad', 'Evaluación detallada de impacto y sostenibilidad', 2),
+('expost_eval_type', 'IMPACTO', 'De Impacto', 'Evaluación de impacto socioeconómico a largo plazo', 3),
+('expost_rating', 'EXITOSO', 'Exitoso', 'IPR cumplió y superó objetivos planificados', 1),
+('expost_rating', 'SATISFACTORIO', 'Satisfactorio', 'IPR cumplió objetivos principales', 2),
+('expost_rating', 'PARCIAL', 'Parcialmente Satisfactorio', 'IPR cumplió parcialmente sus objetivos', 3),
+('expost_rating', 'INSATISFACTORIO', 'Insatisfactorio', 'IPR no cumplió objetivos mínimos', 4)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -542,9 +639,101 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     description = EXCLUDED.description,
     sort_order = EXCLUDED.sort_order;
 
+-- PROBABILIDAD DE RIESGO
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('risk_probability', 'MUY_BAJA', 'Muy Baja', 'Probabilidad <10%', 1),
+('risk_probability', 'BAJA', 'Baja', 'Probabilidad 10-30%', 2),
+('risk_probability', 'MEDIA', 'Media', 'Probabilidad 30-60%', 3),
+('risk_probability', 'ALTA', 'Alta', 'Probabilidad 60-85%', 4),
+('risk_probability', 'MUY_ALTA', 'Muy Alta', 'Probabilidad >85%', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ESTADOS DE RIESGO
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('risk_status', 'IDENTIFICADO', 'Identificado', 'Riesgo detectado, pendiente evaluación', 1),
+('risk_status', 'EN_EVALUACION', 'En Evaluación', 'Evaluando impacto y probabilidad', 2),
+('risk_status', 'EN_MITIGACION', 'En Mitigación', 'Plan de mitigación en ejecución', 3),
+('risk_status', 'MITIGADO', 'Mitigado', 'Acciones de mitigación completadas', 4),
+('risk_status', 'ACEPTADO', 'Aceptado', 'Riesgo aceptado sin mitigación', 5),
+('risk_status', 'CERRADO', 'Cerrado', 'Riesgo ya no aplica', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES ESPECIFICACIONES.MD (NUEVOS)
 -- ============================================================================
+
+-- ÍTEMS PRESUPUESTARIOS (clasificación DIPRES)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('budget_item', 'PERSONAL', 'Personal', 'Gastos en personal (Subtítulo 21)', 1),
+('budget_item', 'BIENES_SERVICIOS', 'Bienes y Servicios', 'Bienes y servicios de consumo (Subtítulo 22)', 2),
+('budget_item', 'TRANSFERENCIAS_CTES', 'Transferencias Corrientes', 'Transferencias corrientes (Subtítulo 24)', 3),
+('budget_item', 'ADQUIS_ACTIVOS_NF', 'Activos No Financieros', 'Adquisición de activos no financieros (Subtítulo 29)', 4),
+('budget_item', 'INV_REAL', 'Inversión Real', 'Iniciativas de inversión (Subtítulo 31)', 5),
+('budget_item', 'INV_FINANCIERA', 'Inversión Financiera', 'Inversión financiera', 6),
+('budget_item', 'TRANSF_CAPITAL', 'Transferencias de Capital', 'Transferencias de capital (Subtítulo 33)', 7),
+('budget_item', 'DEUDA', 'Servicio de Deuda', 'Servicio de la deuda (Subtítulo 34)', 8),
+('budget_item', 'SALDO_CAJA', 'Saldo de Caja', 'Saldo final de caja (Subtítulo 35)', 9),
+('budget_item', 'PRESTAMOS', 'Préstamos', 'Préstamos otorgados', 10),
+('budget_item', 'OTROS_GASTOS', 'Otros Gastos', 'Otros gastos varios', 11),
+('budget_item', 'INTEGROS_FISCO', 'Íntegros al Fisco', 'Devoluciones al fisco', 12),
+('budget_item', 'APORTES_FISCAL', 'Aportes Fiscales', 'Aportes fiscales recibidos', 13),
+('budget_item', 'PROVISIONES', 'Provisiones', 'Provisiones presupuestarias', 14)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ASIGNACIONES PRESUPUESTARIAS
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('budget_allocation', 'FNDR_EQUIPAMIENTO', 'FNDR Equipamiento', 'Asignación FNDR para equipamiento', 1),
+('budget_allocation', 'FNDR_INFRAESTRUCTURA', 'FNDR Infraestructura', 'Asignación FNDR para infraestructura', 2),
+('budget_allocation', 'FNDR_PROGRAMA_SOCIAL', 'FNDR Programa Social', 'Asignación FNDR para programas sociales', 3),
+('budget_allocation', 'FNDR_ESTUDIO', 'FNDR Estudio', 'Asignación FNDR para estudios', 4),
+('budget_allocation', 'FNDR_8PCT', 'FNDR 8% Cultural/Deporte', 'Asignación FNDR Ley 8%', 5),
+('budget_allocation', 'SECT_MINVU', 'Sectorial MINVU', 'Recursos sectoriales MINVU', 6),
+('budget_allocation', 'SECT_MOP', 'Sectorial MOP', 'Recursos sectoriales MOP', 7),
+('budget_allocation', 'SECT_EDUCACION', 'Sectorial Educación', 'Recursos sectoriales educación', 8),
+('budget_allocation', 'SECT_SALUD', 'Sectorial Salud', 'Recursos sectoriales salud', 9),
+('budget_allocation', 'PROPIOS_OPERACION', 'Propios Operación', 'Recursos propios operación corriente', 10),
+('budget_allocation', 'PROPIOS_EMERGENCIA', 'Propios Emergencia', 'Recursos propios emergencias', 11),
+('budget_allocation', 'ROYALTY_INVERSION', 'Royalty Inversión', 'Royalty destinado a inversión', 12),
+('budget_allocation', 'FIC_INNOVACION', 'FIC Innovación', 'Fondo de Innovación y Competitividad', 13),
+('budget_allocation', 'ISAR_ASIGNACION', 'ISAR Asignación', 'Inversiones Sectoriales de Asignación Regional', 14),
+('budget_allocation', 'FEIRR_RECONVERSION', 'FEIRR Reconversión', 'Fondo de Inversión y Reconversión Regional', 15)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- TIPOS DE PROGRAMA PRESUPUESTARIO
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('program_type', 'PPR_INVERSION', 'Programa Inversión', 'Programa presupuestario de inversión', 1),
+('program_type', 'PPR_FUNCIONAMIENTO', 'Programa Funcionamiento', 'Programa presupuestario de funcionamiento', 2),
+('program_type', 'PPR_TRANSFERENCIA', 'Programa Transferencia', 'Programa presupuestario de transferencias', 3),
+('program_type', 'PPR_PROGRAMA', 'Programa Social/Fomento', 'Programa presupuestario social o de fomento', 4),
+('program_type', 'PPR_PROVISIONES', 'Provisiones', 'Programa presupuestario de provisiones', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ESTADOS DE COMPROMISO PRESUPUESTARIO (CDP)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('budget_commitment_status', 'EMITIDO', 'Emitido', 'CDP emitido, pendiente de validación', 1),
+('budget_commitment_status', 'VIGENTE', 'Vigente', 'CDP vigente y activo', 2),
+('budget_commitment_status', 'EJECUTADO', 'Ejecutado', 'CDP totalmente ejecutado', 3),
+('budget_commitment_status', 'ANULADO', 'Anulado', 'CDP anulado', 4),
+('budget_commitment_status', 'VENCIDO', 'Vencido', 'CDP vencido sin ejecución', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ROLES DEL SISTEMA — 15 roles alineados con SSOT organica + organigrama
 -- sort_order 4 (ex-ENCARGADO) vacante deliberadamente para evitar cascada
@@ -600,6 +789,170 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('commitment_state', 'VERIFICADO', 'Verificado', 'Compromiso verificado y cerrado', 4),
 ('commitment_state', 'VENCIDO', 'Vencido', 'Compromiso con plazo vencido', 5),
 ('commitment_state', 'CANCELADO', 'Cancelado', 'Compromiso cancelado', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ESTADOS DE INICIATIVA DGI (Kanban sin topes WIP fijos desde C62)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('dgi_initiative_status', 'BACKLOG', 'Backlog', 'Iniciativa priorizable aún no iniciada', 1),
+('dgi_initiative_status', 'EN_CURSO', 'En Curso', 'Iniciativa en ejecución', 2),
+('dgi_initiative_status', 'REVISION', 'En Revisión', 'Iniciativa en revisión de resultados', 3),
+('dgi_initiative_status', 'COMPLETADO', 'Completado', 'Iniciativa completada', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- CATÁLOGOS Y CICLO DE VIDA DE INDICADORES DGI
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('dgi_indicator_dimension', 'PRESUPUESTO', 'Presupuesto', 'Ejecución y gestión presupuestaria', 1),
+('dgi_indicator_dimension', 'CARTERA_IPR', 'Cartera IPR', 'Estado agregado de la cartera de iniciativas', 2),
+('dgi_indicator_dimension', 'CONVENIOS', 'Convenios', 'Gestión y vigencia de convenios', 3),
+('dgi_indicator_dimension', 'RIESGOS', 'Riesgos', 'Alertas, problemas y riesgos operacionales', 4),
+('dgi_indicator_dimension', 'TDE', 'Transformación Digital', 'Transformación digital del Estado', 5),
+('dgi_signal', 'VERDE', 'Verde', 'Resultado dentro del rango esperado', 1),
+('dgi_signal', 'AMARILLO', 'Amarillo', 'Resultado que requiere atención', 2),
+('dgi_signal', 'ROJO', 'Rojo', 'Resultado crítico', 3)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+INSERT INTO ref.category
+    (scheme, code, label, description, sort_order, valid_transitions)
+VALUES
+('dgi_indicator_lifecycle', 'BORRADOR', 'Borrador', 'Indicador en definición', 1, '["APROBADO"]'::jsonb),
+('dgi_indicator_lifecycle', 'APROBADO', 'Aprobado', 'Indicador aprobado, aún no vigente', 2, '["VIGENTE", "BORRADOR"]'::jsonb),
+('dgi_indicator_lifecycle', 'VIGENTE', 'Vigente', 'Indicador activo', 3, '["DEPRECADO", "APROBADO"]'::jsonb),
+('dgi_indicator_lifecycle', 'DEPRECADO', 'Deprecado', 'Indicador retirado', 4, '[]'::jsonb)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order,
+    valid_transitions = EXCLUDED.valid_transitions;
+
+-- CATÁLOGOS Y CICLO DE VIDA DEL MODELAMIENTO DE PROCESOS DGI
+INSERT INTO ref.category
+    (scheme, code, label, description, sort_order, valid_transitions)
+VALUES
+('dgi_process_status', 'IDENTIFICADO', 'Identificado', 'Proceso identificado', 1, '["EN_LEVANTAMIENTO", "SUSPENDIDO"]'::jsonb),
+('dgi_process_status', 'EN_LEVANTAMIENTO', 'En Levantamiento', 'Proceso en levantamiento', 2, '["MODELADO", "IDENTIFICADO", "SUSPENDIDO"]'::jsonb),
+('dgi_process_status', 'MODELADO', 'Modelado', 'Proceso modelado', 3, '["VALIDADO", "EN_LEVANTAMIENTO", "SUSPENDIDO"]'::jsonb),
+('dgi_process_status', 'VALIDADO', 'Validado', 'Modelo validado', 4, '["PUBLICADO", "MODELADO", "SUSPENDIDO"]'::jsonb),
+('dgi_process_status', 'PUBLICADO', 'Publicado', 'Proceso publicado', 5, '["SUSPENDIDO"]'::jsonb),
+('dgi_process_status', 'SUSPENDIDO', 'Suspendido', 'Proceso temporalmente suspendido', 6, '["IDENTIFICADO"]'::jsonb),
+('dgi_bpmn_status', 'BORRADOR', 'Borrador', 'Modelo BPMN en edición', 1, '["REVISION"]'::jsonb),
+('dgi_bpmn_status', 'REVISION', 'En Revisión', 'Modelo BPMN en revisión', 2, '["BORRADOR", "VALIDADO"]'::jsonb),
+('dgi_bpmn_status', 'VALIDADO', 'Validado', 'Modelo BPMN validado', 3, '["BORRADOR"]'::jsonb)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order,
+    valid_transitions = EXCLUDED.valid_transitions;
+
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('dgi_bpmn_type', 'AS_IS', 'Estado Actual', 'Modelo del proceso vigente', 1),
+('dgi_bpmn_type', 'TO_BE', 'Estado Futuro', 'Modelo del proceso objetivo', 2)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- CATÁLOGOS Y FLUJO DE INFORMES DGI (D-DGI-CG-024..027)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('dgi_report_type', 'FLASH', 'Flash', 'Informe urgente y conciso', 1),
+('dgi_report_type', 'SEMANAL', 'Semanal', 'Informe semanal de gestión', 2),
+('dgi_report_type', 'MENSUAL', 'Mensual', 'Informe mensual de gestión', 3),
+('dgi_report_type', 'TEMATICO', 'Temático', 'Informe sobre una materia específica', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+INSERT INTO ref.category
+    (scheme, code, label, description, sort_order, valid_transitions)
+VALUES
+('dgi_report_status', 'BORRADOR', 'Borrador', 'Informe en elaboración', 1, '["EN_REVISION"]'::jsonb),
+('dgi_report_status', 'EN_REVISION', 'En Revisión', 'Informe en revisión por jefatura', 2, '["BORRADOR", "ENVIADO"]'::jsonb),
+('dgi_report_status', 'ENVIADO', 'Enviado', 'Informe enviado a su destinatario', 3, '[]'::jsonb)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order,
+    valid_transitions = EXCLUDED.valid_transitions;
+
+-- FASES DMAIC DE INICIATIVAS DGI
+INSERT INTO ref.category
+    (scheme, code, label, description, sort_order, valid_transitions)
+VALUES
+('dgi_dmaic_phase', 'DEFINE', 'Definir', 'Definición del problema y alcance', 1, '["MEASURE", "ANALYZE", "IMPROVE", "VERIFY"]'::jsonb),
+('dgi_dmaic_phase', 'MEASURE', 'Medir', 'Medición de la línea base', 2, '["ANALYZE", "IMPROVE", "VERIFY"]'::jsonb),
+('dgi_dmaic_phase', 'ANALYZE', 'Analizar', 'Análisis de causas raíz', 3, '["IMPROVE", "VERIFY"]'::jsonb),
+('dgi_dmaic_phase', 'IMPROVE', 'Mejorar', 'Diseño y prueba de mejoras', 4, '["VERIFY"]'::jsonb),
+('dgi_dmaic_phase', 'VERIFY', 'Verificar', 'Verificación y sostenibilidad de la mejora', 5, '[]'::jsonb)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order,
+    valid_transitions = EXCLUDED.valid_transitions;
+
+-- ESTADOS DE INVESTIGACIÓN DE CUELLOS DE BOTELLA DGI
+INSERT INTO ref.category
+    (scheme, code, label, description, sort_order, valid_transitions)
+VALUES
+('dgi_bottleneck_status', 'DETECTADO', 'Detectado', 'Cuello de botella detectado, pendiente de verificación', 1, '["VERIFICADO", "CERRADO"]'::jsonb),
+('dgi_bottleneck_status', 'VERIFICADO', 'Verificado', 'Hallazgo confirmado', 2, '["ANALIZADO", "CERRADO"]'::jsonb),
+('dgi_bottleneck_status', 'ANALIZADO', 'Analizado', 'Causa raíz analizada', 3, '["PROPUESTO", "CERRADO"]'::jsonb),
+('dgi_bottleneck_status', 'PROPUESTO', 'Propuesto', 'Solución propuesta', 4, '["IMPLEMENTADO", "CERRADO"]'::jsonb),
+('dgi_bottleneck_status', 'IMPLEMENTADO', 'Implementado', 'Solución implementada, pendiente de cierre', 5, '["CERRADO"]'::jsonb),
+('dgi_bottleneck_status', 'CERRADO', 'Cerrado', 'Investigación cerrada', 6, '[]'::jsonb)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order,
+    valid_transitions = EXCLUDED.valid_transitions;
+
+-- CATÁLOGOS DE COORDINACIÓN DGI (Wave B)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('dgi_ar_decision_type', 'PRIORIDAD', 'Prioridad', 'Decisión de priorización', 1),
+('dgi_ar_decision_type', 'RECURSO', 'Recurso', 'Asignación de recursos', 2),
+('dgi_ar_decision_type', 'ESCALAMIENTO', 'Escalamiento', 'Decisión de escalamiento', 3),
+('dgi_ar_decision_type', 'ESTRATEGIA', 'Estrategia', 'Decisión estratégica', 4),
+('dgi_ar_decision_status', 'PENDIENTE', 'Pendiente', 'Decisión pendiente de ejecución', 1),
+('dgi_ar_decision_status', 'EN_EJECUCION', 'En Ejecución', 'Decisión en proceso de implementación', 2),
+('dgi_ar_decision_status', 'COMPLETADA', 'Completada', 'Decisión completada', 3),
+('dgi_escalation_level', 'NIVEL_1', 'Nivel 1', 'Jefe DGI — resolución en 4h', 1),
+('dgi_escalation_level', 'NIVEL_2', 'Nivel 2', 'Administrador Regional — resolución en 24h', 2),
+('dgi_escalation_level', 'NIVEL_3', 'Nivel 3', 'Administrador Regional + Mesa — resolución en 48h', 3),
+('dgi_escalation_level', 'NIVEL_4', 'Nivel 4', 'Gobernador — según urgencia', 4),
+('dgi_escalation_status', 'ABIERTO', 'Abierto', 'Escalamiento registrado', 1),
+('dgi_escalation_status', 'EN_GESTION', 'En Gestión', 'Escalamiento siendo gestionado', 2),
+('dgi_escalation_status', 'RESUELTO', 'Resuelto', 'Escalamiento resuelto', 3),
+('dgi_escalation_status', 'CERRADO', 'Cerrado', 'Escalamiento cerrado', 4),
+('dgi_service_status', 'ACTIVO', 'Activo', 'Servicio disponible', 1),
+('dgi_service_status', 'SUSPENDIDO', 'Suspendido', 'Servicio temporalmente suspendido', 2),
+('dgi_service_status', 'DESCONTINUADO', 'Descontinuado', 'Servicio descontinuado', 3),
+('dgi_request_status', 'RECIBIDA', 'Recibida', 'Solicitud recibida', 1),
+('dgi_request_status', 'EN_EVALUACION', 'En Evaluación', 'Solicitud siendo evaluada', 2),
+('dgi_request_status', 'ACEPTADA', 'Aceptada', 'Solicitud aceptada', 3),
+('dgi_request_status', 'EN_EJECUCION', 'En Ejecución', 'Solicitud en ejecución', 4),
+('dgi_request_status', 'COMPLETADA', 'Completada', 'Solicitud completada', 5),
+('dgi_request_status', 'RECHAZADA', 'Rechazada', 'Solicitud rechazada', 6),
+('dgi_interaction_type', 'PRESUPUESTO', 'Presupuesto', 'Interacción sobre temas presupuestarios', 1),
+('dgi_interaction_type', 'CARTERA', 'Cartera', 'Interacción sobre cartera de proyectos', 2),
+('dgi_interaction_type', 'JURIDICO', 'Jurídico', 'Interacción sobre temas jurídicos', 3),
+('dgi_interaction_type', 'TECNOLOGIA', 'Tecnología', 'Interacción sobre temas tecnológicos', 4),
+('dgi_interaction_type', 'PROCESO', 'Proceso', 'Interacción sobre procesos', 5),
+('dgi_interaction_type', 'GENERAL', 'General', 'Interacción general', 6),
+('dgi_sla_product_type', 'INFORME_FLASH', 'Informe Flash', 'Informe flash de contingencia', 1),
+('dgi_sla_product_type', 'INFORME_SEMANAL', 'Informe Semanal', 'Informe semanal de gestión', 2),
+('dgi_sla_product_type', 'INFORME_MENSUAL', 'Informe Mensual', 'Informe mensual de gestión', 3),
+('dgi_sla_product_type', 'LEVANTAMIENTO_PROCESO', 'Levantamiento de Proceso', 'Levantamiento y modelado de proceso', 4),
+('dgi_sla_product_type', 'ANALISIS_INDICADOR', 'Análisis de Indicador', 'Análisis de indicador de gestión', 5),
+('dgi_sla_product_type', 'EVALUACION_CARTERA', 'Evaluación de Cartera', 'Evaluación de cartera IPR', 6),
+('dgi_sla_product_type', 'SOPORTE_TD', 'Soporte TD', 'Soporte en transformación digital', 7)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -930,8 +1283,11 @@ ON CONFLICT (code) DO UPDATE SET
 UPDATE ref.category SET valid_transitions = '["EN_REVISION", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'INGRESADO';
 
-UPDATE ref.category SET valid_transitions = '["ADMISIBLE", "INADMISIBLE"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["PRE_ADMISIBLE", "INADMISIBLE"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_REVISION';
+
+UPDATE ref.category SET valid_transitions = '["ADMISIBLE", "INADMISIBLE"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'PRE_ADMISIBLE';
 
 UPDATE ref.category SET valid_transitions = '["EN_EVALUACION"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'ADMISIBLE';
@@ -939,7 +1295,7 @@ WHERE scheme = 'ipr_state' AND code = 'ADMISIBLE';
 UPDATE ref.category SET valid_transitions = '["INGRESADO", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'INADMISIBLE';
 
-UPDATE ref.category SET valid_transitions = '["RS", "FI", "FC", "OT", "RF", "ITF", "AT", "AD"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["RS", "FI", "FC", "OT", "RF", "ITF", "AT", "AD", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_EVALUACION';
 
 -- Estados Proyecto post-evaluación
@@ -955,22 +1311,25 @@ WHERE scheme = 'ipr_state' AND code = 'FC';
 UPDATE ref.category SET valid_transitions = '["EN_EVALUACION", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'OT';
 
-UPDATE ref.category SET valid_transitions = '["EN_LICITACION"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_LICITACION", "CDP_EMITIDO", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'AD';
 
-UPDATE ref.category SET valid_transitions = '["ADJUDICADO", "ANULADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["ADJUDICADO", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_LICITACION';
 
-UPDATE ref.category SET valid_transitions = '["EN_OBRA"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["CONTRATO_FIRMADO", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'ADJUDICADO';
 
-UPDATE ref.category SET valid_transitions = '["RECEPCION_PROVISORIA", "SUSPENDIDO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_OBRA", "SUSPENDIDO", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'CONTRATO_FIRMADO';
+
+UPDATE ref.category SET valid_transitions = '["RECEPCION_PROVISORIA", "SUSPENDIDO", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_OBRA';
 
-UPDATE ref.category SET valid_transitions = '["RECEPCION_DEFINITIVA"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["RECEPCION_DEFINITIVA", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'RECEPCION_PROVISORIA';
 
-UPDATE ref.category SET valid_transitions = '["EN_RENDICION", "CERRADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_RENDICION", "CERRADO", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'RECEPCION_DEFINITIVA';
 
 -- Estados Programa post-evaluación
@@ -984,27 +1343,33 @@ UPDATE ref.category SET valid_transitions = '["CDP_EMITIDO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'AT';
 
 -- Estados comunes post-CDP
-UPDATE ref.category SET valid_transitions = '["EN_FORMALIZACION"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_FORMALIZACION", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'CDP_EMITIDO';
 
-UPDATE ref.category SET valid_transitions = '["FORMALIZADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["FORMALIZADO", "EN_LICITACION", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_FORMALIZACION';
 
-UPDATE ref.category SET valid_transitions = '["EN_EJECUCION"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_EJECUCION", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'FORMALIZADO';
 
-UPDATE ref.category SET valid_transitions = '["EN_RENDICION", "SUSPENDIDO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_RENDICION", "SUSPENDIDO", "CERRADO", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_EJECUCION';
 
-UPDATE ref.category SET valid_transitions = '["EN_EJECUCION", "EN_OBRA", "ANULADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_EJECUCION", "EN_OBRA", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'SUSPENDIDO';
 
-UPDATE ref.category SET valid_transitions = '["CERRADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["RENDICION_APROBADA", "CERRADO", "TERMINADO_ANTICIPADAMENTE", "ANULADO"]'::jsonb
 WHERE scheme = 'ipr_state' AND code = 'EN_RENDICION';
+
+UPDATE ref.category SET valid_transitions = '["EN_CIERRE_ADMINISTRATIVO", "CERRADO", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'RENDICION_APROBADA';
+
+UPDATE ref.category SET valid_transitions = '["CERRADO", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_CIERRE_ADMINISTRATIVO';
 
 -- Estados terminales (sin transiciones salientes)
 UPDATE ref.category SET valid_transitions = '[]'::jsonb
-WHERE scheme = 'ipr_state' AND code IN ('CERRADO', 'ANULADO');
+WHERE scheme = 'ipr_state' AND code IN ('CERRADO', 'ANULADO', 'TERMINADO_ANTICIPADAMENTE');
 
 -- Transiciones de work_item_status
 UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "CANCELADO"]'::jsonb
@@ -1023,7 +1388,7 @@ UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'work_item_status' AND code IN ('VERIFICADO', 'CANCELADO');
 
 -- Transiciones de commitment_state
-UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "CANCELADO", "VENCIDO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "COMPLETADO", "CANCELADO", "VENCIDO"]'::jsonb
 WHERE scheme = 'commitment_state' AND code = 'PENDIENTE';
 
 UPDATE ref.category SET valid_transitions = '["COMPLETADO", "VENCIDO", "CANCELADO"]'::jsonb
@@ -1032,11 +1397,90 @@ WHERE scheme = 'commitment_state' AND code = 'EN_PROGRESO';
 UPDATE ref.category SET valid_transitions = '["VERIFICADO", "EN_PROGRESO"]'::jsonb
 WHERE scheme = 'commitment_state' AND code = 'COMPLETADO';
 
-UPDATE ref.category SET valid_transitions = '["EN_PROGRESO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "COMPLETADO"]'::jsonb
 WHERE scheme = 'commitment_state' AND code = 'VENCIDO';
 
 UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'commitment_state' AND code IN ('VERIFICADO', 'CANCELADO');
+
+-- Transiciones de dgi_initiative_status (movimiento Kanban libre; COMPLETADO reabre a BACKLOG)
+UPDATE ref.category SET valid_transitions = '["EN_CURSO", "REVISION", "COMPLETADO"]'::jsonb
+WHERE scheme = 'dgi_initiative_status' AND code = 'BACKLOG';
+
+UPDATE ref.category SET valid_transitions = '["BACKLOG", "REVISION", "COMPLETADO"]'::jsonb
+WHERE scheme = 'dgi_initiative_status' AND code = 'EN_CURSO';
+
+UPDATE ref.category SET valid_transitions = '["BACKLOG", "EN_CURSO", "COMPLETADO"]'::jsonb
+WHERE scheme = 'dgi_initiative_status' AND code = 'REVISION';
+
+UPDATE ref.category SET valid_transitions = '["BACKLOG"]'::jsonb
+WHERE scheme = 'dgi_initiative_status' AND code = 'COMPLETADO';
+
+-- Transiciones de coordinación DGI
+UPDATE ref.category SET valid_transitions = '["EN_EJECUCION"]'::jsonb
+WHERE scheme = 'dgi_ar_decision_status' AND code = 'PENDIENTE';
+
+UPDATE ref.category SET valid_transitions = '["COMPLETADA"]'::jsonb
+WHERE scheme = 'dgi_ar_decision_status' AND code = 'EN_EJECUCION';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'dgi_ar_decision_status' AND code = 'COMPLETADA';
+
+UPDATE ref.category SET valid_transitions = '["EN_GESTION", "CERRADO"]'::jsonb
+WHERE scheme = 'dgi_escalation_status' AND code = 'ABIERTO';
+
+UPDATE ref.category SET valid_transitions = '["RESUELTO", "CERRADO"]'::jsonb
+WHERE scheme = 'dgi_escalation_status' AND code = 'EN_GESTION';
+
+UPDATE ref.category SET valid_transitions = '["CERRADO"]'::jsonb
+WHERE scheme = 'dgi_escalation_status' AND code = 'RESUELTO';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'dgi_escalation_status' AND code = 'CERRADO';
+
+UPDATE ref.category SET valid_transitions = '["EN_EVALUACION", "RECHAZADA"]'::jsonb
+WHERE scheme = 'dgi_request_status' AND code = 'RECIBIDA';
+
+UPDATE ref.category SET valid_transitions = '["ACEPTADA", "RECHAZADA"]'::jsonb
+WHERE scheme = 'dgi_request_status' AND code = 'EN_EVALUACION';
+
+UPDATE ref.category SET valid_transitions = '["EN_EJECUCION"]'::jsonb
+WHERE scheme = 'dgi_request_status' AND code = 'ACEPTADA';
+
+UPDATE ref.category SET valid_transitions = '["COMPLETADA"]'::jsonb
+WHERE scheme = 'dgi_request_status' AND code = 'EN_EJECUCION';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'dgi_request_status' AND code IN ('COMPLETADA', 'RECHAZADA');
+
+-- Transiciones de risk_status
+UPDATE ref.category SET valid_transitions = '["EN_EVALUACION", "ACEPTADO"]'::jsonb
+WHERE scheme = 'risk_status' AND code = 'IDENTIFICADO';
+
+UPDATE ref.category SET valid_transitions = '["EN_MITIGACION", "ACEPTADO", "CERRADO"]'::jsonb
+WHERE scheme = 'risk_status' AND code = 'EN_EVALUACION';
+
+UPDATE ref.category SET valid_transitions = '["MITIGADO", "CERRADO"]'::jsonb
+WHERE scheme = 'risk_status' AND code = 'EN_MITIGACION';
+
+UPDATE ref.category SET valid_transitions = '["CERRADO"]'::jsonb
+WHERE scheme = 'risk_status' AND code IN ('MITIGADO', 'ACEPTADO');
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'risk_status' AND code = 'CERRADO';
+
+-- Transiciones de budget_commitment_status
+UPDATE ref.category SET valid_transitions = '["VIGENTE", "ANULADO"]'::jsonb
+WHERE scheme = 'budget_commitment_status' AND code = 'EMITIDO';
+
+UPDATE ref.category SET valid_transitions = '["EJECUTADO", "VENCIDO", "ANULADO"]'::jsonb
+WHERE scheme = 'budget_commitment_status' AND code = 'VIGENTE';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'budget_commitment_status' AND code IN ('EJECUTADO', 'ANULADO');
+
+UPDATE ref.category SET valid_transitions = '["VIGENTE"]'::jsonb
+WHERE scheme = 'budget_commitment_status' AND code = 'VENCIDO';
 
 -- Transiciones de agreement_state
 UPDATE ref.category SET valid_transitions = '["EN_NEGOCIACION", "CANCELADO"]'::jsonb
@@ -1094,17 +1538,17 @@ WHERE scheme = 'rendition_state' AND code IN ('APROBADA', 'RECHAZADA');
 UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'rendition_state' AND code = 'EN_REVISION';
 
--- Transiciones de act_state
-UPDATE ref.category SET valid_transitions = '["EN_REVISION"]'::jsonb
+-- Transiciones de act_state. ANULADO es transversal desde todo estado no terminal.
+UPDATE ref.category SET valid_transitions = '["EN_REVISION", "ANULADO"]'::jsonb
 WHERE scheme = 'act_state' AND code = 'BORRADOR';
 
-UPDATE ref.category SET valid_transitions = '["VISADO", "BORRADOR"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["VISADO", "BORRADOR", "ANULADO"]'::jsonb
 WHERE scheme = 'act_state' AND code = 'EN_REVISION';
 
-UPDATE ref.category SET valid_transitions = '["FIRMADO"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["FIRMADO", "ANULADO"]'::jsonb
 WHERE scheme = 'act_state' AND code = 'VISADO';
 
-UPDATE ref.category SET valid_transitions = '["ENVIADO_CGR"]'::jsonb
+UPDATE ref.category SET valid_transitions = '["ENVIADO_CGR", "ANULADO"]'::jsonb
 WHERE scheme = 'act_state' AND code = 'FIRMADO';
 
 UPDATE ref.category SET valid_transitions = '["TOMADO_RAZON", "RECHAZADO_CGR", "OBSERVADO", "ANULADO"]'::jsonb

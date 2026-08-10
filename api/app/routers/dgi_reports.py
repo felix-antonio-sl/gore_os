@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
@@ -443,14 +443,11 @@ async def update_report_section(
 # POST /api/dgi/reports/{id}/status — Change report status (approval workflow)
 # ---------------------------------------------------------------------------
 
-# Valid transitions: BORRADOR→EN_REVISION (any DGI), EN_REVISION→ENVIADO (JEFE_DGI),
-#                    EN_REVISION→BORRADOR (JEFE_DGI, devolver)
-_VALID_TRANSITIONS: dict[str, dict[str, set[str]]] = {
-    "BORRADOR": {"EN_REVISION": DGI_ROLES},
-    "EN_REVISION": {
-        "ENVIADO": {"JEFE_DGI"},
-        "BORRADOR": {"JEFE_DGI"},
-    },
+# La DB define las transiciones; la API conserva solo la autoridad por destino.
+_STATUS_TARGET_ROLES: dict[str, set[str]] = {
+    "EN_REVISION": DGI_ROLES,
+    "ENVIADO": {"JEFE_DGI"},
+    "BORRADOR": {"JEFE_DGI"},
 }
 
 
@@ -471,7 +468,8 @@ async def change_report_status(
 
     # Get current status
     row = (await db.execute(text("""
-        SELECT st.code AS current_status
+        SELECT st.code AS current_status,
+               COALESCE(st.valid_transitions, '[]'::jsonb) AS valid_transitions
         FROM core.dgi_report r
         JOIN ref.category st ON st.id = r.status_id
         WHERE r.id = :id AND r.deleted_at IS NULL
@@ -484,7 +482,7 @@ async def change_report_status(
     target = body.status.upper()
 
     # Validate transition
-    allowed_targets = _VALID_TRANSITIONS.get(current, {})
+    allowed_targets = set(row["valid_transitions"] or [])
     if target not in allowed_targets:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -492,7 +490,7 @@ async def change_report_status(
         )
 
     # Check role permission for this specific transition
-    allowed_roles = allowed_targets[target]
+    allowed_roles = _STATUS_TARGET_ROLES.get(target, set())
     if user["role_code"] not in allowed_roles:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -507,14 +505,21 @@ async def change_report_status(
     if target == "ENVIADO":
         set_parts.append("sent_at = NOW()")
 
-    await db.execute(
-        text(f"UPDATE core.dgi_report SET {', '.join(set_parts)} WHERE id = :id"),
-        {"target": target, "id": str(report_id)},
-    )
-    await record_event(db, "STATE_TRANSITION", "core.dgi_report", report_id, user["id"], {"from": current, "to": target})
     try:
+        await db.execute(
+            text(f"UPDATE core.dgi_report SET {', '.join(set_parts)} WHERE id = :id"),
+            {"target": target, "id": str(report_id)},
+        )
+        await record_event(
+            db,
+            "STATE_TRANSITION",
+            "core.dgi_report",
+            report_id,
+            user["id"],
+            {"from": current, "to": target},
+        )
         await db.commit()
-    except IntegrityError as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         error_msg = str(e.orig) if e.orig else str(e)
         if "Transición de estado inválida" in error_msg:

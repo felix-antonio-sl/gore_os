@@ -337,6 +337,275 @@ $$;
 ALTER FUNCTION core.trg_request_timing_fn() OWNER TO goreos;
 
 --
+-- Name: trg_session_lifecycle_guard_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_session_lifecycle_guard_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.ended_at IS NOT NULL AND NEW.started_at IS NULL THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'core.session cannot finish before it starts';
+    END IF;
+
+    IF NEW.ended_at IS NOT NULL AND NEW.ended_at < NEW.started_at THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'core.session ended_at cannot precede started_at';
+    END IF;
+
+    IF TG_OP = 'UPDATE' THEN
+        IF OLD.started_at IS NOT NULL
+           AND NEW.started_at IS DISTINCT FROM OLD.started_at THEN
+            RAISE EXCEPTION USING
+                ERRCODE = '23514',
+                MESSAGE = 'core.session started_at is immutable once set';
+        END IF;
+
+        IF OLD.ended_at IS NOT NULL
+           AND NEW.ended_at IS DISTINCT FROM OLD.ended_at THEN
+            RAISE EXCEPTION USING
+                ERRCODE = '23514',
+                MESSAGE = 'core.session ended_at is immutable once set';
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_session_lifecycle_guard_fn() OWNER TO goreos;
+
+--
+-- Name: trg_session_lifecycle_sync_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_session_lifecycle_sync_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.started_at IS DISTINCT FROM OLD.started_at
+       OR NEW.ended_at IS DISTINCT FROM OLD.ended_at THEN
+        UPDATE core.crisis_meeting
+        SET started_at = NEW.started_at,
+            finished_at = NEW.ended_at,
+            updated_at = NOW()
+        WHERE session_id = NEW.id
+          AND (started_at IS DISTINCT FROM NEW.started_at
+               OR finished_at IS DISTINCT FROM NEW.ended_at);
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_session_lifecycle_sync_fn() OWNER TO goreos;
+
+--
+-- Name: trg_crisis_meeting_lifecycle_guard_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_crisis_meeting_lifecycle_guard_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    parent_started_at TIMESTAMPTZ;
+    parent_ended_at TIMESTAMPTZ;
+BEGIN
+    SELECT started_at, ended_at
+    INTO parent_started_at, parent_ended_at
+    FROM core.session
+    WHERE id = NEW.session_id;
+
+    IF NOT FOUND THEN
+        RETURN NEW;
+    END IF;
+
+    IF TG_OP = 'INSERT' THEN
+        NEW.started_at := parent_started_at;
+        NEW.finished_at := parent_ended_at;
+        RETURN NEW;
+    END IF;
+
+    IF NEW.started_at IS DISTINCT FROM parent_started_at
+       OR NEW.finished_at IS DISTINCT FROM parent_ended_at THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'core.crisis_meeting lifecycle is derived from core.session';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_crisis_meeting_lifecycle_guard_fn() OWNER TO goreos;
+
+--
+-- Name: trg_evaluation_assignment_result_guard_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_evaluation_assignment_result_guard_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    canonical_result_code character varying(10);
+BEGIN
+    IF NEW.completed_at IS NOT NULL AND NEW.result_id IS NULL THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'core.evaluation_assignment cannot complete without result_id';
+    END IF;
+
+    IF NEW.result_id IS NULL THEN
+        NEW.result_code := NULL;
+        RETURN NEW;
+    END IF;
+
+    SELECT code
+    INTO canonical_result_code
+    FROM ref.category
+    WHERE id = NEW.result_id
+      AND scheme = 'evaluation_result';
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'core.evaluation_assignment result_id must belong to evaluation_result';
+    END IF;
+
+    NEW.result_code := canonical_result_code;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_evaluation_assignment_result_guard_fn() OWNER TO goreos;
+
+--
+-- Name: trg_session_agreement_status_default_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_session_agreement_status_default_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.status_id IS NULL THEN
+        SELECT id
+        INTO NEW.status_id
+        FROM ref.category
+        WHERE scheme = 'commitment_state'
+          AND code = 'PENDIENTE';
+
+        IF NEW.status_id IS NULL THEN
+            RAISE EXCEPTION USING
+                ERRCODE = '23514',
+                MESSAGE = 'commitment_state/PENDIENTE is required for session agreements';
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_session_agreement_status_default_fn() OWNER TO goreos;
+
+--
+-- Name: trg_budget_cycle_completion_guard_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_budget_cycle_completion_guard_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.status = 'COMPLETADO' THEN
+        IF NEW.completed_at IS NULL OR NEW.completed_by_id IS NULL THEN
+            RAISE EXCEPTION USING
+                ERRCODE = '23514',
+                MESSAGE = 'COMPLETADO requires completed_at and completed_by_id';
+        END IF;
+    ELSIF NEW.completed_at IS NOT NULL OR NEW.completed_by_id IS NOT NULL THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'non-completed budget milestone must clear completion witnesses';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_budget_cycle_completion_guard_fn() OWNER TO goreos;
+
+--
+-- Name: trg_dgi_opportunity_status_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_dgi_opportunity_status_transition_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.status IS NOT DISTINCT FROM OLD.status THEN
+        RETURN NEW;
+    END IF;
+
+    IF NOT (
+        (OLD.status = 'PROPUESTA' AND NEW.status IN ('VALIDADA', 'DESCARTADA'))
+        OR (OLD.status = 'VALIDADA' AND NEW.status IN ('EN_EJECUCION', 'DESCARTADA'))
+        OR (OLD.status = 'EN_EJECUCION' AND NEW.status = 'IMPLEMENTADA')
+    ) THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = format(
+                'Transición de oportunidad inválida: %s → %s',
+                OLD.status,
+                NEW.status
+            );
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_dgi_opportunity_status_transition_fn() OWNER TO goreos;
+
+--
+-- Name: trg_service_request_active_service_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_service_request_active_service_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM core.dgi_service service
+        JOIN ref.category service_status
+          ON service_status.id = service.status_id
+         AND service_status.scheme = 'dgi_service_status'
+        WHERE service.id = NEW.service_id
+          AND service.deleted_at IS NULL
+          AND service_status.code = 'ACTIVO'
+    ) THEN
+        RAISE EXCEPTION USING
+            ERRCODE = '23514',
+            MESSAGE = 'core.dgi_service_request requires an active service';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_service_request_active_service_fn() OWNER TO goreos;
+
+--
 -- Name: fn_act_history(); Type: FUNCTION; Schema: public; Owner: goreos
 --
 
@@ -1748,7 +2017,7 @@ CREATE TABLE core.budget_commitment (
     amount numeric(18,2) NOT NULL,
     issued_at date NOT NULL,
     expires_at date,
-    status_id uuid,
+    status_id uuid NOT NULL,
     resolution_id uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -1809,6 +2078,7 @@ CREATE TABLE core.budget_cycle_tracking (
     notes text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT chk_budget_cycle_completion_witness CHECK ((((status)::text = 'COMPLETADO'::text) AND (completed_at IS NOT NULL) AND (completed_by_id IS NOT NULL) OR (((status)::text <> 'COMPLETADO'::text) AND (completed_at IS NULL) AND (completed_by_id IS NULL)))),
     CONSTRAINT budget_cycle_tracking_fiscal_year_check CHECK (((fiscal_year >= 2020) AND (fiscal_year <= 2040))),
     CONSTRAINT budget_cycle_tracking_status_check CHECK (((status)::text = ANY ((ARRAY['PENDIENTE'::character varying, 'EN_CURSO'::character varying, 'COMPLETADO'::character varying, 'OMITIDO'::character varying])::text[])))
 );
@@ -1998,7 +2268,8 @@ CREATE TABLE core.crisis_meeting (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_crisis_meeting_lifecycle_order CHECK (((finished_at IS NULL) OR ((started_at IS NOT NULL) AND (finished_at >= started_at))))
 );
 
 
@@ -2762,6 +3033,8 @@ CREATE TABLE core.evaluation_assignment (
     rank_position integer,
     rank_total integer,
     convocatoria_code character varying(32),
+    CONSTRAINT chk_evaluation_completion_result CHECK (((completed_at IS NULL) OR (result_id IS NOT NULL))),
+    CONSTRAINT chk_evaluation_result_code_presence CHECK (((result_id IS NULL) = (result_code IS NULL))),
     CONSTRAINT chk_evaluation_result_scheme CHECK (((result_id IS NULL) OR public.fn_validate_category_scheme(result_id, 'evaluation_result'::character varying))),
     CONSTRAINT chk_evaluator_type_scheme CHECK (((evaluator_type_id IS NULL) OR public.fn_validate_category_scheme(evaluator_type_id, 'evaluator_type'::character varying)))
 );
@@ -4036,6 +4309,7 @@ CREATE TABLE core.session (
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
     metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_session_lifecycle_order CHECK (((ended_at IS NULL) OR ((started_at IS NOT NULL) AND (ended_at >= started_at)))),
     CONSTRAINT chk_session_type_scheme CHECK (((session_type_id IS NULL) OR public.fn_validate_category_scheme(session_type_id, 'session_type'::character varying)))
 );
 
@@ -8035,6 +8309,13 @@ CREATE INDEX idx_rendition_escalation_rendition ON core.rendition_escalation USI
 
 
 --
+-- Name: uq_rendition_escalation_open; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE UNIQUE INDEX uq_rendition_escalation_open ON core.rendition_escalation USING btree (rendition_id, phase_id, escalation_level) WHERE (resolved_at IS NULL);
+
+
+--
 -- Name: idx_rendition_history_rendition; Type: INDEX; Schema: core; Owner: goreos
 --
 
@@ -9918,6 +10199,13 @@ CREATE TRIGGER trg_budget_program_updated_at BEFORE UPDATE ON core.budget_progra
 
 
 --
+-- Name: budget_cycle_tracking trg_budget_cycle_completion_guard; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_budget_cycle_completion_guard BEFORE INSERT OR UPDATE ON core.budget_cycle_tracking FOR EACH ROW EXECUTE FUNCTION core.trg_budget_cycle_completion_guard_fn();
+
+
+--
 -- Name: operational_commitment trg_commitment_history; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
@@ -9944,6 +10232,19 @@ CREATE TRIGGER trg_committee_member_updated_at BEFORE UPDATE ON core.committee_m
 
 CREATE TRIGGER trg_committee_updated_at BEFORE UPDATE ON core.committee FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
 
+--
+-- Name: crisis_meeting trg_crisis_meeting_lifecycle_guard; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_crisis_meeting_lifecycle_guard BEFORE INSERT OR UPDATE ON core.crisis_meeting FOR EACH ROW EXECUTE FUNCTION core.trg_crisis_meeting_lifecycle_guard_fn();
+
+
+--
+-- Name: dgi_bottleneck_investigation trg_dgi_bottleneck_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_bottleneck_status_transition BEFORE UPDATE OF status_id ON core.dgi_bottleneck_investigation FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
+
 
 --
 -- Name: dgi_bpmn_model trg_dgi_bpmn_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
@@ -9957,6 +10258,34 @@ CREATE TRIGGER trg_dgi_bpmn_status_transition BEFORE UPDATE ON core.dgi_bpmn_mod
 --
 
 CREATE TRIGGER trg_dgi_initiative_status_transition BEFORE UPDATE ON core.dgi_initiative FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
+
+
+--
+-- Name: dgi_initiative trg_dgi_initiative_dmaic_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_initiative_dmaic_transition BEFORE UPDATE OF dmaic_phase_id ON core.dgi_initiative FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('dmaic_phase_id');
+
+
+--
+-- Name: dgi_indicator trg_dgi_indicator_lifecycle_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_indicator_lifecycle_transition BEFORE UPDATE OF lifecycle_status_id ON core.dgi_indicator FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('lifecycle_status_id');
+
+
+--
+-- Name: dgi_improvement_opportunity trg_dgi_opportunity_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_opportunity_status_transition BEFORE UPDATE OF status ON core.dgi_improvement_opportunity FOR EACH ROW EXECUTE FUNCTION core.trg_dgi_opportunity_status_transition_fn();
+
+
+--
+-- Name: dgi_process trg_dgi_process_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_process_status_transition BEFORE UPDATE OF status_id ON core.dgi_process FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
@@ -9992,6 +10321,13 @@ CREATE TRIGGER trg_document_updated_at BEFORE UPDATE ON core.document FOR EACH R
 --
 
 CREATE TRIGGER trg_electronic_file_updated_at BEFORE UPDATE ON core.electronic_file FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
+
+
+--
+-- Name: evaluation_assignment trg_evaluation_assignment_result_guard; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_evaluation_assignment_result_guard BEFORE INSERT OR UPDATE ON core.evaluation_assignment FOR EACH ROW EXECUTE FUNCTION core.trg_evaluation_assignment_result_guard_fn();
 
 
 --
@@ -10226,6 +10562,13 @@ CREATE TRIGGER trg_request_state_transition BEFORE UPDATE ON core.dgi_service_re
 
 
 --
+-- Name: dgi_service_request trg_service_request_active_service; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_service_request_active_service BEFORE INSERT OR UPDATE OF service_id ON core.dgi_service_request FOR EACH ROW EXECUTE FUNCTION core.trg_service_request_active_service_fn();
+
+
+--
 -- Name: dgi_service_request trg_request_timing; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
@@ -10251,6 +10594,33 @@ CREATE TRIGGER trg_risk_status_transition BEFORE UPDATE ON core.risk FOR EACH RO
 --
 
 CREATE TRIGGER trg_risk_updated_at BEFORE UPDATE ON core.risk FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
+
+--
+-- Name: session trg_session_lifecycle_guard; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_session_lifecycle_guard BEFORE INSERT OR UPDATE ON core.session FOR EACH ROW EXECUTE FUNCTION core.trg_session_lifecycle_guard_fn();
+
+
+--
+-- Name: session trg_session_lifecycle_sync; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_session_lifecycle_sync AFTER UPDATE OF started_at, ended_at ON core.session FOR EACH ROW EXECUTE FUNCTION core.trg_session_lifecycle_sync_fn();
+
+
+--
+-- Name: session_agreement trg_session_agreement_status_default; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_session_agreement_status_default BEFORE INSERT ON core.session_agreement FOR EACH ROW EXECUTE FUNCTION core.trg_session_agreement_status_default_fn();
+
+
+--
+-- Name: session_agreement trg_session_agreement_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_session_agreement_status_transition BEFORE UPDATE OF status_id ON core.session_agreement FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
@@ -14069,4 +14439,3 @@ ALTER TABLE txn.magnitude
 --
 
 \unrestrict NMFrJ9BglWRqTau7JbNVMoC3ERTL3jeDVK3aABUMrkWVo8mCRThP5mu5tR4Cbzj
-

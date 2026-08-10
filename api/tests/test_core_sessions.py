@@ -3,6 +3,7 @@ import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
 from tests.conftest import auth
 
 
@@ -319,3 +320,40 @@ async def test_finalizar_session(client, regional_token):
         f"/api/core-sessions/{data['id']}", headers=auth(regional_token)
     )
     assert detail.json()["status"] == "FINALIZADA"
+
+
+@pytest.mark.asyncio
+async def test_db_rejects_finishing_session_before_start(client, regional_token, db):
+    """A direct SQL write cannot skip PROGRAMADA -> EN_CURSO."""
+    data = await _create_core_session(client, regional_token)
+
+    with pytest.raises(DBAPIError, match="cannot finish before it starts"):
+        await db.execute(
+            text("UPDATE core.session SET ended_at = NOW() WHERE id = :id"),
+            {"id": data["id"]},
+        )
+        await db.commit()
+    await db.rollback()
+
+
+@pytest.mark.asyncio
+async def test_db_rejects_reopening_finished_session(client, regional_token, db):
+    """A completed session cannot be reopened by clearing ended_at."""
+    data = await _create_core_session(client, regional_token)
+    await client.post(
+        f"/api/core-sessions/{data['id']}/iniciar",
+        headers=auth(regional_token),
+    )
+    await client.post(
+        f"/api/core-sessions/{data['id']}/finalizar",
+        json={"summary": "Sesion completada"},
+        headers=auth(regional_token),
+    )
+
+    with pytest.raises(DBAPIError, match="ended_at is immutable"):
+        await db.execute(
+            text("UPDATE core.session SET ended_at = NULL WHERE id = :id"),
+            {"id": data["id"]},
+        )
+        await db.commit()
+    await db.rollback()

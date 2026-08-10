@@ -797,7 +797,7 @@ async def update_cycle_tracking(
             sets.append("completed_at = NOW()")
             sets.append("completed_by_id = :uid")
             params["uid"] = str(user["id"])
-        elif body.status in ("PENDIENTE", "EN_CURSO"):
+        else:
             sets.append("completed_at = NULL")
             sets.append("completed_by_id = NULL")
 

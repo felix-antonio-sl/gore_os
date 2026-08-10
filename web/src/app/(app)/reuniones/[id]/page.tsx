@@ -220,7 +220,7 @@ export default function ReunionDetailPage() {
     try {
       await api.post(`/api/reuniones/${id}/temas/${topicId}/revisar`, {
         decision: reviewDecision || null,
-        status: "TRATADO",
+        status: "COMPLETADO",
       });
       setReviewingId(null);
       setReviewDecision("");
@@ -551,14 +551,14 @@ export default function ReunionDetailPage() {
                       </span>
                       {topic.status && (
                         <Badge
-                          variant={topic.status === "TRATADO" ? "default" : "outline"}
+                          variant={topic.status === "COMPLETADO" ? "default" : "outline"}
                           className={
-                            topic.status === "TRATADO"
+                            topic.status === "COMPLETADO"
                               ? "text-[10px] px-1.5 py-0 bg-green-600"
                               : "text-[10px] px-1.5 py-0"
                           }
                         >
-                          {topic.status === "TRATADO" ? "Tratado" : topic.status}
+                          {topic.status === "COMPLETADO" ? "Tratado" : topic.status}
                         </Badge>
                       )}
                       {topic.context_type && (
@@ -600,7 +600,7 @@ export default function ReunionDetailPage() {
                   </div>
 
                   {/* Review button (EN_CURSO only) */}
-                  {isEnCurso && topic.status !== "TRATADO" && (
+                  {isEnCurso && topic.status !== "COMPLETADO" && (
                     <div className="shrink-0">
                       {reviewingId === topic.id ? (
                         <div className="space-y-2 w-64">

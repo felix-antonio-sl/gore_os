@@ -1,4 +1,6 @@
 from __future__ import annotations
+from typing import Literal
+
 from pydantic import BaseModel
 from uuid import UUID
 from datetime import date, datetime
@@ -601,26 +603,26 @@ class ProcessPainPointCreate(BaseModel):
 
 class ImprovementOpportunityItem(BaseModel):
     id: UUID
-    dimension: str
+    dimension: Literal["VALOR", "DUPLICACION", "ESPERAS", "MOVIMIENTOS", "ERRORES", "AUTOMATIZACION"]
     description: str
-    impact: str
-    effort: str
-    status: str
+    impact: Literal["ALTO", "MEDIO", "BAJO"]
+    effort: Literal["ALTO", "MEDIO", "BAJO"]
+    status: Literal["PROPUESTA", "VALIDADA", "EN_EJECUCION", "IMPLEMENTADA", "DESCARTADA"]
     initiative_id: UUID | None
     initiative_code: str | None
     created_at: datetime
 
 
 class ImprovementOpportunityCreate(BaseModel):
-    dimension: str
+    dimension: Literal["VALOR", "DUPLICACION", "ESPERAS", "MOVIMIENTOS", "ERRORES", "AUTOMATIZACION"]
     description: str
-    impact: str
-    effort: str
-    status: str = "PROPUESTA"
+    impact: Literal["ALTO", "MEDIO", "BAJO"]
+    effort: Literal["ALTO", "MEDIO", "BAJO"]
+    status: Literal["PROPUESTA"] = "PROPUESTA"
 
 
 class ImprovementOpportunityUpdate(BaseModel):
-    status: str | None = None
+    status: Literal["PROPUESTA", "VALIDADA", "EN_EJECUCION", "IMPLEMENTADA", "DESCARTADA"] | None = None
     initiative_id: UUID | None = None
 
 

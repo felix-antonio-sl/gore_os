@@ -338,7 +338,7 @@
 2. `/centro-de-mando` → 6 KPIs + timeline
 3. `/cartera` → Portfolio IPR health VERDE/AMARILLO/ROJO
 4. `/ipr/cartera` → Portfolio divisional
-5. `/tablero` → Kanban: drag-and-drop + WIP limits (EN_CURSO:5, REVISION:2)
+5. `/tablero` → Kanban: drag-and-drop + orden persistente, sin topes WIP fijos
 6. `/coordinacion` → AR prep + decisions → `/coordinacion/divisiones` → Interaction matrix
 7. `/procesos/progreso` → Dashboard progreso DMAIC
 8. `/informes` → 4 tipos reporte + edicion atomica JSONB
@@ -394,14 +394,14 @@
 2. `/procesos` → FilterBar + DataTable 7 cols + Crear proceso
 3. `/procesos/{id}` → Hero + FSM 6-state + 5 tabs (actores, reglas, metricas, dolores, oportunidades)
 4. Tab Oportunidades → Bridge Process→Opportunity→Initiative → "Crear Iniciativa"
-5. `/tablero` → Kanban @dnd-kit: drag-and-drop + WIP limits (toast exceso)
+5. `/tablero` → Kanban @dnd-kit: drag-and-drop + orden persistente
 6. `/tablero/{id}` → DMAIC 5-phase (DEFINE→MEASURE→ANALYZE→IMPROVE→**VERIFY**) + lean-metrics
 7. `/procesos/progreso` → Dashboard progreso
 8. `/cuellos-de-botella` → 3 scans + investigations → Click → 6-state FSM + textareas
 
 **Checks de rol**:
 - Puede CRUD procesos + satelites
-- WIP limits enforced con toast
+- Movimiento libre entre columnas; conteo WIP solo informativo
 - DMAIC forward-only, 5ta fase = VERIFY (no CONTROL)
 - Bridge Process→Opportunity→Initiative funcional
 

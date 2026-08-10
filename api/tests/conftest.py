@@ -7,18 +7,30 @@ Strategy:
 - Session: Each test gets a fresh session, commits are real
 - Run: docker compose exec api pytest -v
 """
+import os
+
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
+from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy import text
 
 from app.main import create_app
+from app.core.config import get_settings
 from app.core.database import get_db
 from app.core.security import create_access_token
 
 
-TEST_DB_URL = "postgresql+asyncpg://goreos:goreos_2026@goreos_db:5432/goreos_test"
+settings = get_settings()
+TEST_DB_URL = URL.create(
+    "postgresql+asyncpg",
+    username=settings.DB_USER,
+    password=settings.DB_PASSWORD,
+    host=settings.DB_HOST,
+    port=settings.DB_PORT,
+    database=os.getenv("TEST_DB_NAME", "goreos_test"),
+)
 
 
 # ---------------------------------------------------------------------------

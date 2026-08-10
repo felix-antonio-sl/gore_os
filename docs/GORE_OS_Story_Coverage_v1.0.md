@@ -86,7 +86,7 @@ Fecha: 2026-03-22 | Sesion: C60
 | D-DGI-POT-011 | Tiempo promedio respuesta a solicitudes | NUEVO | P2 | /servicios (dashboard) |
 | D-DGI-POT-012 | Proyectos completados sin escalamiento | NUEVO | P2 | /tablero (metricas) |
 | D-DGI-POT-013 | Red de embajadores por division | NUEVO | P3 | /stakeholders |
-| D-DGI-POT-015 | WIP limits por columna Kanban | IMPL | — | /tablero |
+| D-DGI-POT-015 | WIP limits por columna Kanban | RETIRADO C62 | — | /tablero |
 | D-DGI-POT-016 | Metricas Lean (throughput, lead/cycle time) | NUEVO | P1 | /tablero (lean panel) |
 | D-DGI-POT-017 | CFD (Cumulative Flow Diagram) | NUEVO | P2 | /tablero (grafico) |
 | D-DGI-POT-019 | Definir SLAs por producto DGI | NUEVO | P1 | /servicios/[id] (SLAs) |

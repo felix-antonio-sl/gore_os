@@ -11,7 +11,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -29,18 +29,6 @@ from app.schemas.dgi import (
 )
 
 router = APIRouter(prefix="/api/dgi/data/bottlenecks", tags=["dgi"])
-
-# ---------------------------------------------------------------------------
-# FSM: allowed transitions
-# ---------------------------------------------------------------------------
-_FSM: dict[str, set[str]] = {
-    "DETECTADO":    {"VERIFICADO", "CERRADO"},
-    "VERIFICADO":   {"ANALIZADO", "CERRADO"},
-    "ANALIZADO":    {"PROPUESTO", "CERRADO"},
-    "PROPUESTO":    {"IMPLEMENTADO", "CERRADO"},
-    "IMPLEMENTADO": {"CERRADO"},
-    "CERRADO":      set(),
-}
 
 # PATCH field allowlist — must match DB column names exactly
 _FIELD_ALLOWLIST = {
@@ -646,7 +634,9 @@ async def update_investigation(
     # Fetch current record
     existing = (await db.execute(
         text(f"""
-            SELECT b.id, st.code AS current_status
+            SELECT b.id,
+                   st.code AS current_status,
+                   COALESCE(st.valid_transitions, '[]'::jsonb) AS valid_transitions
             {_LIST_FROM}
             WHERE b.id = :id AND b.deleted_at IS NULL
         """),
@@ -670,7 +660,7 @@ async def update_investigation(
     # Status transition
     if body.status is not None:
         target = body.status.upper()
-        allowed = _FSM.get(current_status, set())
+        allowed = set(existing["valid_transitions"] or [])
         if target not in allowed:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -716,7 +706,7 @@ async def update_investigation(
         await record_event(db, "MODIFICACION", "core.dgi_bottleneck", investigation_id, user["id"])
     try:
         await db.commit()
-    except IntegrityError as e:
+    except (IntegrityError, DBAPIError) as e:
         await db.rollback()
         error_msg = str(e.orig) if e.orig else str(e)
         if "Transición de estado inválida" in error_msg:

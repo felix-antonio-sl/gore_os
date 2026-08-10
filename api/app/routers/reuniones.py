@@ -74,8 +74,8 @@ async def _get_reunion_or_404(reunion_id: UUID, db: AsyncSession) -> dict:
                 s.session_number,
                 s.scheduled_at,
                 s.location,
-                cm.started_at,
-                cm.finished_at,
+                s.started_at,
+                s.ended_at AS finished_at,
                 cm.summary,
                 cm.organizer_id,
                 (p.names || ' ' || p.paternal_surname) AS organizer_name,
@@ -120,11 +120,11 @@ async def list_reuniones(
 
     if status_filter:
         if status_filter == "FINALIZADA":
-            conditions.append("cm.finished_at IS NOT NULL")
+            conditions.append("s.ended_at IS NOT NULL")
         elif status_filter == "EN_CURSO":
-            conditions.append("cm.started_at IS NOT NULL AND cm.finished_at IS NULL")
+            conditions.append("s.started_at IS NOT NULL AND s.ended_at IS NULL")
         elif status_filter == "PROGRAMADA":
-            conditions.append("cm.started_at IS NULL AND cm.finished_at IS NULL")
+            conditions.append("s.started_at IS NULL AND s.ended_at IS NULL")
 
     where_clause = " AND ".join(conditions)
 
@@ -151,8 +151,8 @@ async def list_reuniones(
                 cm.session_id,
                 s.session_number,
                 s.scheduled_at,
-                cm.started_at,
-                cm.finished_at,
+                s.started_at,
+                s.ended_at AS finished_at,
                 cm.summary,
                 (p.names || ' ' || p.paternal_surname) AS organizer_name,
                 COALESCE(
@@ -440,6 +440,7 @@ async def add_topic(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_manager(user)
     row = await _get_reunion_or_404(reunion_id, db)
     minute_id = row.get("minute_id")
     if not minute_id:
@@ -516,12 +517,20 @@ async def review_topic(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    await _get_reunion_or_404(reunion_id, db)
+    _require_manager(user)
+    reunion = await _get_reunion_or_404(reunion_id, db)
 
-    # Verify the topic exists
+    # Verify the topic belongs to the session named in the route.
     check = await db.execute(
-        text("SELECT 1 FROM core.session_agreement WHERE id = :id"),
-        {"id": str(tema_id)},
+        text("""
+            SELECT 1
+            FROM core.session_agreement sa
+            JOIN core.minute m ON m.id = sa.minute_id
+            WHERE sa.id = :id
+              AND m.session_id = :session_id
+              AND sa.deleted_at IS NULL
+        """),
+        {"id": str(tema_id), "session_id": str(reunion["session_id"])},
     )
     if not check.scalar():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tema no encontrado")
@@ -534,15 +543,18 @@ async def review_topic(
         params["decision"] = body.decision
 
     if body.status is not None:
-        # Look up or create the status category
         status_result = await db.execute(
-            text("SELECT id FROM ref.category WHERE scheme = 'session_agreement_status' AND code = :code"),
+            text("SELECT id FROM ref.category WHERE scheme = 'commitment_state' AND code = :code"),
             {"code": body.status},
         )
         status_row = status_result.mappings().first()
-        if status_row:
-            updates["status_id"] = ":status_id"
-            params["status_id"] = str(status_row["id"])
+        if not status_row:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Falta estado canónico de acuerdo: {body.status}",
+            )
+        updates["status_id"] = "CAST(:status_id AS uuid)"
+        params["status_id"] = str(status_row["id"])
 
     if not updates:
         return {"message": "Sin cambios"}
@@ -572,10 +584,6 @@ async def start_reunion(
         raise HTTPException(status_code=400, detail="La reunion ya fue iniciada")
 
     await db.execute(
-        text("UPDATE core.crisis_meeting SET started_at = NOW(), updated_at = NOW() WHERE id = :id"),
-        {"id": str(reunion_id)},
-    )
-    await db.execute(
         text("UPDATE core.session SET started_at = NOW(), updated_at = NOW() WHERE id = :sid"),
         {"sid": str(row["session_id"])},
     )
@@ -602,16 +610,11 @@ async def finish_reunion(
     if row.get("finished_at"):
         raise HTTPException(status_code=400, detail="La reunion ya fue finalizada")
 
-    params: dict = {"id": str(reunion_id)}
-    summary_clause = ""
     if body.summary:
-        summary_clause = ", summary = :summary"
-        params["summary"] = body.summary
-
-    await db.execute(
-        text(f"UPDATE core.crisis_meeting SET finished_at = NOW(), updated_at = NOW(){summary_clause} WHERE id = :id"),
-        params,
-    )
+        await db.execute(
+            text("UPDATE core.crisis_meeting SET summary = :summary, updated_at = NOW() WHERE id = :id"),
+            {"id": str(reunion_id), "summary": body.summary},
+        )
     await db.execute(
         text("UPDATE core.session SET ended_at = NOW(), updated_at = NOW() WHERE id = :sid"),
         {"sid": str(row["session_id"])},

@@ -3,7 +3,7 @@
 True concurrency tests require separate DB connections, which our shared-session
 test fixture doesn't support. These tests verify:
 1. Sequential code generators produce unique results
-2. Advisory locks are present in the codebase (structural verification)
+2. Advisory locks are present in code generators (structural verification)
 """
 
 
@@ -96,14 +96,3 @@ async def test_advisory_locks_present_in_code_generators(db):
         assert "pg_advisory_xact_lock" in source, (
             f"{name} must use pg_advisory_xact_lock for concurrency safety"
         )
-
-
-async def test_wip_advisory_lock_present():
-    """Verify that WIP limit check uses advisory lock (structural test)."""
-    import inspect
-    from app.routers import dgi_initiatives
-
-    source = inspect.getsource(dgi_initiatives.move_initiative)
-    assert "pg_advisory_xact_lock" in source, (
-        "move_initiative must use pg_advisory_xact_lock for WIP limit checks"
-    )

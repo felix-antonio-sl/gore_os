@@ -8,6 +8,7 @@ import uuid
 import pytest
 from httpx import AsyncClient
 from sqlalchemy import text
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from tests.conftest import auth
@@ -329,6 +330,59 @@ async def test_update_evaluation_result(
     assert found is not None
     assert found["result_code"] == "RS"
     assert found["observations"] == "Aprobado por MDSF"
+
+
+async def test_db_rejects_completed_evaluation_without_result(
+    db: AsyncSession,
+):
+    """A direct writer cannot complete an evaluation without a dictamen."""
+    ipr_id = await _create_test_ipr(db, "EN_EVALUACION", "F2", mechanism_code="SNI")
+    evaluator_type_id = await _get_category_id(db, "evaluator_type", "MDSF")
+
+    try:
+        with pytest.raises(DBAPIError, match="cannot complete without result_id"):
+            await db.execute(
+                text("""
+                    INSERT INTO core.evaluation_assignment (
+                        ipr_id, evaluator_type_id, completed_at
+                    ) VALUES (
+                        CAST(:ipr_id AS uuid), CAST(:evaluator_type_id AS uuid), NOW()
+                    )
+                """),
+                {"ipr_id": ipr_id, "evaluator_type_id": evaluator_type_id},
+            )
+    finally:
+        await db.rollback()
+
+
+async def test_db_derives_result_code_from_result_id(
+    db: AsyncSession,
+):
+    """result_id is authoritative even when a direct writer supplies a stale code."""
+    ipr_id = await _create_test_ipr(db, "EN_EVALUACION", "F2", mechanism_code="SNI")
+    evaluator_type_id = await _get_category_id(db, "evaluator_type", "MDSF")
+    result_id = await _get_category_id(db, "evaluation_result", "RS")
+
+    try:
+        stored_code = (await db.execute(
+            text("""
+                INSERT INTO core.evaluation_assignment (
+                    ipr_id, evaluator_type_id, result_id, result_code
+                ) VALUES (
+                    CAST(:ipr_id AS uuid), CAST(:evaluator_type_id AS uuid),
+                    CAST(:result_id AS uuid), 'FI'
+                )
+                RETURNING result_code
+            """),
+            {
+                "ipr_id": ipr_id,
+                "evaluator_type_id": evaluator_type_id,
+                "result_id": result_id,
+            },
+        )).scalar_one()
+        assert stored_code == "RS"
+    finally:
+        await db.rollback()
 
 
 async def test_list_evaluations(

@@ -910,11 +910,11 @@ export interface ProcessPainPoint {
 
 export interface ImprovementOpportunity {
   id: string;
-  dimension: string;
+  dimension: "VALOR" | "DUPLICACION" | "ESPERAS" | "MOVIMIENTOS" | "ERRORES" | "AUTOMATIZACION";
   description: string;
-  impact: string | null;
-  effort: string | null;
-  status: string;
+  impact: "ALTO" | "MEDIO" | "BAJO";
+  effort: "ALTO" | "MEDIO" | "BAJO";
+  status: "PROPUESTA" | "VALIDADA" | "EN_EJECUCION" | "IMPLEMENTADA" | "DESCARTADA";
   initiative_id: string | null;
   initiative_code: string | null;
   created_at: string;

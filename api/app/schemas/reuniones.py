@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from uuid import UUID
 from datetime import date, datetime
-from typing import Optional
+from typing import Literal, Optional
 
 
 class ReunionListItem(BaseModel):
@@ -50,7 +50,7 @@ class TopicCreate(BaseModel):
 
 class TopicUpdate(BaseModel):
     decision: Optional[str] = None
-    status: Optional[str] = None  # 'TRATADO', 'PENDIENTE'
+    status: Optional[Literal["PENDIENTE", "COMPLETADO"]] = None
 
 
 class FinalizarBody(BaseModel):
