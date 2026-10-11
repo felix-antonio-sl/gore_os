@@ -1,7 +1,13 @@
 # GORE_OS
 
-Sistema Story-First para la gestión institucional del Gobierno Regional de Ñuble,
-con FastAPI, Next.js y PostgreSQL.
+Bandeja de trabajo para funcionarios del Gobierno Regional de Ñuble: muestra
+pendientes, responsable, estado y siguiente acción según la asignación y el rol.
+El desarrollo sigue Story-First sobre FastAPI, Next.js y PostgreSQL.
+
+Tras iniciar sesión, `/dashboard` abre la bandeja. Los panoramas por rol y sus
+herramientas se conservan en `/panorama`; los compromisos abren por su propio
+identificador, con las transiciones autorizadas por la API y la base de datos.
+Este propósito de producto no acredita adopción ni ratificación institucional.
 
 ## Ejecutar
 
@@ -33,5 +39,7 @@ El baseline puede verificarse sin tocar `goreos_db` ni sus volúmenes:
 ## Referencias
 
 - [AGENTS.md](AGENTS.md) — contrato para cambiar y verificar el sistema.
+- [Bandeja de trabajo](docs/GORE_OS_Bandeja_Trabajo.md) — recorrido, fuentes,
+  autoridad y límites del incremento vigente.
 - [docs/README.md](docs/README.md) — catálogo de documentación vigente e histórica.
 - [model/README.md](model/README.md) — modelo semántico y fuentes de datos.

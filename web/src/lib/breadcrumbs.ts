@@ -4,7 +4,8 @@ export interface BreadcrumbItem {
 }
 
 const ROUTE_LABELS: Record<string, string> = {
-  "/dashboard": "Inicio",
+  "/dashboard": "Bandeja de trabajo",
+  "/panorama": "Panorama",
   "/ipr": "IPR",
   "/compromisos": "Compromisos",
   "/problemas": "Problemas",
@@ -47,7 +48,7 @@ export function buildBreadcrumbs(
   pathname: string,
   entityLabel?: string
 ): BreadcrumbItem[] {
-  const crumbs: BreadcrumbItem[] = [{ label: "Inicio", href: "/dashboard" }];
+  const crumbs: BreadcrumbItem[] = [{ label: "Bandeja", href: "/dashboard" }];
 
   // Try progressively longer path prefixes to find matching routes
   const segments = pathname.split("/").filter(Boolean);

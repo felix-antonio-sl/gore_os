@@ -6,6 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.commitments import commitment_actions
+from app.core.security import ALL_ROLES
 from app.schemas.dashboard import (
     ActionItem,
     ActionItemsResponse,
@@ -68,6 +70,7 @@ _SEVERITY_MAP = {
 # Roles that scope to own items only (no DGI / global views)
 _PERSONAL_ROLES = ("ANALISTA", "RTF", "ASESOR_JURIDICO")
 _DIVISION_ROLES = ("JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD")
+_COORDINATION_READ_ROLES = {"JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_PROCESOS", "ESP_TD", "ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"}
 
 
 def _compute_temporal(days_remaining: int | None) -> str | None:
@@ -116,7 +119,7 @@ def _severity_from_risk_probability(prob_code: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Action-items: 6 source query functions
+# Action-items: queries over existing domain entities, without a second task store
 # ---------------------------------------------------------------------------
 async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
     role = user["role_code"]
@@ -132,16 +135,12 @@ async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
     elif role in _DIVISION_ROLES:
         if not div_id:
             return []
-        where_scope = (
-            "AND oc.ipr_id IN ("
-            "  SELECT i.id FROM core.ipr i"
-            "  WHERE i.sponsor_division_id = :div_id AND i.deleted_at IS NULL"
-            ")"
-        )
+        where_scope = "AND oc.division_id = :div_id"
         params["div_id"] = div_id
     else:
-        # Global roles: only overdue
-        where_scope = "AND oc.due_date < CURRENT_DATE"
+        # Keep institutional attention, plus the user's own future assignments.
+        where_scope = "AND (oc.due_date < CURRENT_DATE OR oc.responsible_id = :uid OR sc.code = 'COMPLETADO')"
+        params["uid"] = uid
 
     sql = text(f"""
         SELECT
@@ -150,20 +149,30 @@ async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
             oc.description,
             ipr.codigo_bip AS ipr_codigo_bip,
             oc.due_date,
+            oc.responsible_id,
+            oc.division_id,
+            sc.code AS state,
+            sc.label AS state_label,
+            sc.valid_transitions,
+            p.names || ' ' || p.paternal_surname AS responsible_name,
             (oc.due_date - CURRENT_DATE) AS days_remaining
         FROM core.operational_commitment oc
         JOIN ref.category sc ON sc.id = oc.state_id
         LEFT JOIN core.ipr ipr ON ipr.id = oc.ipr_id AND ipr.deleted_at IS NULL
-        WHERE sc.code NOT IN ('COMPLETADO', 'VERIFICADO', 'CANCELADO')
+        LEFT JOIN core."user" u ON u.id = oc.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE sc.code NOT IN ('VERIFICADO', 'CANCELADO')
           AND oc.deleted_at IS NULL
           {where_scope}
         ORDER BY oc.due_date ASC NULLS LAST
-        LIMIT 20
     """)
     rows = (await db.execute(sql, params)).mappings().all()
 
     items: list[ActionItem] = []
     for r in rows:
+        actions = commitment_actions(user, dict(r))
+        if r["state"] == "COMPLETADO" and "verificar" not in actions:
+            continue  # Waiting on the supervisor, not another task for the executor.
         dr = r["days_remaining"]
         if dr is not None and dr < 0:
             sev = "ALTO"
@@ -183,10 +192,14 @@ async def _ai_commitments(db: AsyncSession, user: dict) -> list[ActionItem]:
             temporal=temporal,
             severity=sev,
             priority=_compute_priority(temporal, sev),
-            action_label="Completar",
-            action_route=f"/ipr/{r['ipr_id']}?tab=compromisos" if r.get("ipr_id") else "/compromisos",
+            action_label="Verificar" if "verificar" in actions else "Completar" if "completar" in actions else "Revisar",
+            action_route=f"/compromisos?id={r['id']}",
             ipr_id=r.get("ipr_id"),
             ipr_codigo_bip=r.get("ipr_codigo_bip"),
+            state=r["state"],
+            state_label=r["state_label"],
+            responsible_id=str(r["responsible_id"]),
+            responsible_name=r["responsible_name"],
         ))
     return items
 
@@ -258,6 +271,8 @@ async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="ALERTA",
+            state="SIN_RESOLVER",
+            state_label="Sin resolver",
             title=r["message"] or "Alerta",
             subtitle=r["alert_code"],
             deadline=None,
@@ -274,7 +289,7 @@ async def _ai_alerts(db: AsyncSession, user: dict) -> list[ActionItem]:
 
 async def _ai_decisions(db: AsyncSession, user: dict) -> list[ActionItem]:
     role = user["role_code"]
-    if role in (*_PERSONAL_ROLES, *_DIVISION_ROLES):
+    if role not in _COORDINATION_READ_ROLES:
         return []
 
     sql = text("""
@@ -282,11 +297,16 @@ async def _ai_decisions(db: AsyncSession, user: dict) -> list[ActionItem]:
             d.id::text AS id,
             d.description,
             d.due_date,
+            d.responsible_id::text AS responsible_id,
+            p.names || ' ' || p.paternal_surname AS responsible_name,
+            ss.code AS state, ss.label AS state_label,
             (d.due_date - CURRENT_DATE) AS days_remaining,
             ts.code AS type_code
         FROM core.dgi_ar_decision d
         JOIN ref.category ss ON d.status_id = ss.id
         JOIN ref.category ts ON d.decision_type_id = ts.id
+        LEFT JOIN core."user" u ON u.id = d.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
         WHERE ss.code = 'PENDIENTE'
           AND d.deleted_at IS NULL
         ORDER BY d.due_date ASC NULLS LAST
@@ -305,6 +325,8 @@ async def _ai_decisions(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="DECISION",
+            state=r["state"], state_label=r["state_label"],
+            responsible_id=r["responsible_id"], responsible_name=r["responsible_name"],
             title=r["description"] or "Decisión AR",
             subtitle=r["type_code"],
             deadline=r["due_date"],
@@ -312,7 +334,7 @@ async def _ai_decisions(db: AsyncSession, user: dict) -> list[ActionItem]:
             temporal=temporal,
             severity=sev,
             priority=_compute_priority(temporal, sev),
-            action_label="Decidir",
+            action_label="Revisar decisión",
             action_route="/coordinacion",
         ))
     return items
@@ -320,7 +342,7 @@ async def _ai_decisions(db: AsyncSession, user: dict) -> list[ActionItem]:
 
 async def _ai_escalations(db: AsyncSession, user: dict) -> list[ActionItem]:
     role = user["role_code"]
-    if role in _PERSONAL_ROLES:
+    if role not in _COORDINATION_READ_ROLES:
         return []
 
     params: dict = {}
@@ -334,6 +356,7 @@ async def _ai_escalations(db: AsyncSession, user: dict) -> list[ActionItem]:
             e.id::text AS id,
             e.code AS ref_code,
             e.situation,
+            ss.code AS state, ss.label AS state_label,
             e.deadline::date AS deadline,
             (e.deadline::date - CURRENT_DATE) AS days_remaining,
             lc.code AS level_code
@@ -356,6 +379,7 @@ async def _ai_escalations(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="ESCALAMIENTO",
+            state=r["state"], state_label=r["state_label"],
             title=r["situation"] or f"Escalamiento {r['ref_code']}",
             subtitle=r["level_code"],
             deadline=r["deadline"],
@@ -363,7 +387,7 @@ async def _ai_escalations(db: AsyncSession, user: dict) -> list[ActionItem]:
             temporal=temporal,
             severity=sev,
             priority=_compute_priority(temporal, sev),
-            action_label="Gestionar",
+            action_label="Revisar escalamiento",
             action_route=f"/escalamiento/{r['id']}",
         ))
     return items
@@ -379,12 +403,17 @@ async def _ai_sla_breaches(db: AsyncSession, user: dict) -> list[ActionItem]:
             sr.id::text AS id,
             s.name AS service_name,
             sr.service_id::text AS service_id,
+            rs.code AS state, rs.label AS state_label,
+            sr.assigned_to_id::text AS responsible_id,
+            p.names || ' ' || p.paternal_surname AS responsible_name,
             EXTRACT(DAY FROM (NOW() - sr.created_at))::int AS elapsed_days,
             sla.target_days
         FROM core.dgi_service_request sr
         JOIN core.dgi_service s ON sr.service_id = s.id
         JOIN core.dgi_sla sla ON sla.service_id = s.id
         JOIN ref.category rs ON sr.status_id = rs.id
+        LEFT JOIN core."user" u ON u.id = sr.assigned_to_id
+        LEFT JOIN core.person p ON p.id = u.person_id
         WHERE rs.code NOT IN ('COMPLETADA', 'RECHAZADA')
           AND sr.deleted_at IS NULL
           AND s.deleted_at IS NULL
@@ -399,6 +428,8 @@ async def _ai_sla_breaches(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="SLA",
+            state=r["state"], state_label=r["state_label"],
+            responsible_id=r["responsible_id"], responsible_name=r["responsible_name"],
             title=f"SLA excedido: {r['service_name']}",
             subtitle=f"{r['elapsed_days']}d / {r['target_days']}d",
             deadline=None,
@@ -422,6 +453,7 @@ async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
             r.id::text AS id,
             r.code AS ref_code,
             r.name,
+            ss.code AS state, ss.label AS state_label,
             pc.code AS prob_code
         FROM core.risk r
         JOIN ref.category ss ON r.status_id = ss.id
@@ -441,6 +473,7 @@ async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="RIESGO",
+            state=r["state"], state_label=r["state_label"],
             title=r["name"] or f"Riesgo {r['ref_code']}",
             subtitle=r["ref_code"],
             deadline=None,
@@ -448,7 +481,7 @@ async def _ai_risks(db: AsyncSession, user: dict) -> list[ActionItem]:
             temporal=None,
             severity=sev,
             priority=_compute_priority(None, sev),
-            action_label="Gestionar",
+            action_label="Revisar riesgo",
             action_route=f"/riesgos/{r['id']}",
         ))
     return items
@@ -468,16 +501,20 @@ async def _ai_pending_signatures(db: AsyncSession, user: dict) -> list[ActionIte
         return []
 
     sql = text("""
-        SELECT id::text, act_number AS ref_code, subject, 'acto' AS item_type
-        FROM core.administrative_act
-        WHERE state_id IN (SELECT id FROM ref.category WHERE scheme = 'act_state' AND code = 'VISADO')
-          AND deleted_at IS NULL
+        SELECT aa.id::text, aa.act_number AS ref_code, aa.subject, 'acto' AS item_type,
+               ss.code AS state, ss.label AS state_label
+        FROM core.administrative_act aa
+        JOIN ref.category ss ON ss.id = aa.state_id
+        WHERE ss.code = 'VISADO' AND ss.scheme = 'act_state'
+          AND aa.deleted_at IS NULL
         UNION ALL
         SELECT a.id::text, a.agreement_number AS ref_code,
-               COALESCE(at.label, a.agreement_number) AS subject, 'convenio' AS item_type
+               COALESCE(at.label, a.agreement_number) AS subject, 'convenio' AS item_type,
+               ss.code AS state, ss.label AS state_label
         FROM core.agreement a
         LEFT JOIN ref.category at ON at.id = a.agreement_type_id
-        WHERE a.state_id IN (SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'VISADO_INTERNAMENTE')
+        JOIN ref.category ss ON ss.id = a.state_id
+        WHERE ss.code = 'VISADO_INTERNAMENTE' AND ss.scheme = 'agreement_state'
           AND a.deleted_at IS NULL
         ORDER BY item_type
         LIMIT 15
@@ -486,10 +523,11 @@ async def _ai_pending_signatures(db: AsyncSession, user: dict) -> list[ActionIte
 
     items: list[ActionItem] = []
     for r in rows:
-        route = f"/actos/{r['id']}" if r["item_type"] == "acto" else f"/convenios/{r['id']}"
+        route = f"/actos?id={r['id']}" if r["item_type"] == "acto" else f"/convenios?id={r['id']}"
         items.append(ActionItem(
             id=r["id"],
             category="FIRMA",
+            state=r["state"], state_label=r["state_label"],
             title=f"{r['ref_code'] or 'S/N'} — {r['subject'] or 'Sin materia'}",
             subtitle=r["item_type"].capitalize(),
             deadline=None,
@@ -512,21 +550,30 @@ async def _ai_pending_renditions(db: AsyncSession, user: dict) -> list[ActionIte
     role = user["role_code"]
     if role not in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO"):
         return []
+    if not user.get("division_id"):
+        return []
 
     sql = text("""
         SELECT r.id::text, LEFT(r.id::text, 8) AS ref_code,
                a.agreement_number, r.amount,
+               rs.code AS state, rs.label AS state_label,
+               r.responsible_id::text AS responsible_id,
+               p.names || ' ' || p.paternal_surname AS responsible_name,
                COALESCE(r.phase_entered_at, r.updated_at) AS entered_at,
                EXTRACT(DAY FROM NOW() - COALESCE(r.phase_entered_at, r.updated_at))::int AS days_waiting
         FROM core.rendition r
         JOIN ref.category rs ON rs.id = r.state_id
         LEFT JOIN core.agreement a ON a.id = r.agreement_id
+        JOIN core.ipr ipr ON ipr.id = COALESCE(r.ipr_id, a.ipr_id) AND ipr.deleted_at IS NULL
+        LEFT JOIN core."user" u ON u.id = r.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
         WHERE rs.code = 'VISADA_RTF'
           AND r.deleted_at IS NULL
+          AND ipr.sponsor_division_id = :div_id
         ORDER BY r.phase_entered_at ASC
         LIMIT 10
     """)
-    rows = (await db.execute(sql)).mappings().all()
+    rows = (await db.execute(sql, {"div_id": str(user["division_id"])})).mappings().all()
 
     items: list[ActionItem] = []
     for r in rows:
@@ -535,6 +582,8 @@ async def _ai_pending_renditions(db: AsyncSession, user: dict) -> list[ActionIte
         items.append(ActionItem(
             id=r["id"],
             category="RENDICION",
+            state=r["state"], state_label=r["state_label"],
+            responsible_id=r["responsible_id"], responsible_name=r["responsible_name"],
             title=f"Rendición {r['ref_code']} — {r['agreement_number'] or 'S/N'}",
             subtitle=f"{days}d esperando aprobación",
             deadline=None,
@@ -542,7 +591,7 @@ async def _ai_pending_renditions(db: AsyncSession, user: dict) -> list[ActionIte
             temporal="VENCIDO" if days > 3 else "HOY" if days > 1 else None,
             severity=sev,
             priority=_compute_priority("VENCIDO" if days > 3 else None, sev),
-            action_label="Aprobar",
+            action_label="Revisar rendición",
             action_route="/datos?dominio=rendiciones&state=VISADA_RTF",
         ))
     return items
@@ -572,12 +621,16 @@ async def _ai_ipr_stale(db: AsyncSession, user: dict) -> list[ActionItem]:
 
     sql = text(f"""
         SELECT i.id::text, i.codigo_bip, i.name,
+               i.assignee_id::text AS responsible_id,
+               p.names || ' ' || p.paternal_surname AS responsible_name,
                sc.code AS status_code, sc.label AS status_label,
                mcd.code AS phase,
                EXTRACT(DAY FROM NOW() - i.phase_entered_at)::int AS days_in_phase
         FROM core.ipr i
         JOIN ref.category sc ON sc.id = i.status_id
         LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+        LEFT JOIN core."user" u ON u.id = i.assignee_id
+        LEFT JOIN core.person p ON p.id = u.person_id
         WHERE i.deleted_at IS NULL
           AND i.phase_entered_at IS NOT NULL
           AND EXTRACT(DAY FROM NOW() - i.phase_entered_at) > 7
@@ -598,6 +651,8 @@ async def _ai_ipr_stale(db: AsyncSession, user: dict) -> list[ActionItem]:
         items.append(ActionItem(
             id=r["id"],
             category="IPR",
+            state=r["status_code"], state_label=r["status_label"],
+            responsible_id=r["responsible_id"], responsible_name=r["responsible_name"],
             title=f"{r['codigo_bip']} — {r['status_label'] or r['status_code']}",
             subtitle=f"{days}d en {r['phase'] or '?'}",
             deadline=None,
@@ -1522,7 +1577,7 @@ async def get_chart_data(
 
 
 # ---------------------------------------------------------------------------
-# GET /api/dashboard/action-items — 6-source coproduct with role scoping
+# GET /api/dashboard/action-items — Work inbox with existing role scoping
 # ---------------------------------------------------------------------------
 @router.get("/action-items", response_model=ActionItemsResponse)
 async def get_action_items(
@@ -1534,6 +1589,7 @@ async def get_action_items(
     SLA breaches, and risks — scoped by the user's role and division.
     Sorted by priority (lower = more urgent).
     """
+    _require_roles(user, *ALL_ROLES)
     # Gather all 9 sources
     commitments = await _ai_commitments(db, user)
     alerts = await _ai_alerts(db, user)
@@ -1564,7 +1620,7 @@ async def get_action_items(
             parts.append(f"{hoy} para hoy")
         summary = "Tienes " + " y ".join(parts)
     else:
-        summary = "Todo al día"
+        summary = f"{len(all_items)} pendientes en tu ámbito" if all_items else "Sin pendientes en tu ámbito"
 
     # Greeting
     nombre = user.get("nombre", "") or ""
@@ -1576,6 +1632,13 @@ async def get_action_items(
         summary=summary,
         items=all_items,
         counts=counts,
+        scope_label="Mis asignaciones" if user["role_code"] in _PERSONAL_ROLES else "Mi división" if user["role_code"] in _DIVISION_ROLES else "Atención institucional y mis asignaciones",
+        limited_sources=[name for name, source, limit in (
+            ("Alertas", alerts, 10), ("Decisiones", decisions, 10),
+            ("Escalamientos", escalations, 10), ("Servicios", sla_breaches, 10),
+            ("Riesgos", risks, 10), ("Firmas", signatures, 15),
+            ("Rendiciones", renditions, 10), ("IPR", stale_iprs, 5),
+        ) if len(source) == limit],
     )
 
 

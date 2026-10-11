@@ -108,6 +108,8 @@ export interface IPRListItem {
   phase_entered_at: string | null;
 }
 
+export type CommitmentAction = "completar" | "verificar" | "devolver" | "reasignar" | "editar_observaciones";
+
 export interface CompromisoListItem {
   id: string;
   code: string | null;
@@ -125,6 +127,7 @@ export interface CompromisoListItem {
   days_remaining: number;
   completed_at: string | null;
   verified_at: string | null;
+  allowed_actions: CommitmentAction[];
 }
 
 export interface ProblemaListItem {
@@ -1347,6 +1350,10 @@ export interface ActionItem {
   action_route: string;
   ipr_id?: string | null;
   ipr_codigo_bip?: string | null;
+  state: string | null;
+  state_label: string | null;
+  responsible_id: string | null;
+  responsible_name: string | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -1382,6 +1389,8 @@ export interface ActionItemsResponse {
   summary: string;
   items: ActionItem[];
   counts: Record<string, number>;
+  scope_label: string;
+  limited_sources: string[];
 }
 
 // ---------------------------------------------------------------------------

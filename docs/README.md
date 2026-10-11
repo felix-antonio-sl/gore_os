@@ -11,7 +11,8 @@
 |-----|-----------|-----------|
 | [README.md](../README.md) | Operador | Arranque y accesos locales |
 | [AGENTS.md](../AGENTS.md) | Devs, agentes | Arquitectura, reglas y verificaciones para cambios |
-| [MANIFESTO.md](../MANIFESTO.md) | Todos | Identidad, filosofía Story-First, 5 funciones motoras |
+| [GORE_OS_Bandeja_Trabajo.md](GORE_OS_Bandeja_Trabajo.md) | Producto y desarrollo | Entrada vigente: pendientes, responsable, estado y siguiente acción |
+| [MANIFESTO.md](../MANIFESTO.md) | Contexto | Filosofía Story-First y visión amplia previa; el alcance de entrega actual lo fija la bandeja |
 
 ## Dominio y requisitos (vigente)
 

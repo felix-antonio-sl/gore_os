@@ -6,6 +6,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ConfirmDialog } from "@/components/confirm-dialog";
@@ -37,6 +38,7 @@ export function DrawerPanel({ open, onClose, title, children, wide, isDirty = fa
         <SheetContent side="right" className={`flex flex-col p-0 ${wide ? "sm:max-w-xl" : ""}`}>
           <SheetHeader className="px-6 py-4 border-b">
             <SheetTitle>{title}</SheetTitle>
+            <SheetDescription className="sr-only">Detalle y acciones disponibles para tu asignación y rol.</SheetDescription>
           </SheetHeader>
           <ScrollArea className="flex-1">
             <div className="px-6 py-4">

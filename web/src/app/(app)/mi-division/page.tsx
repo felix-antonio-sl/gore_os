@@ -5,5 +5,5 @@ import { redirect } from "next/navigation";
  * Redirect any bookmarked URLs to the dashboard.
  */
 export default function MiDivisionPage() {
-  redirect("/dashboard");
+  redirect("/panorama");
 }

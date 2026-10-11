@@ -80,7 +80,7 @@ const ROLE_CHECKLISTS: Record<string, CheckCategory[]> = {
       category: "Dashboard",
       items: [
         { key: "dashboard_loads", label: "Dashboard carga con KPIs" },
-        { key: "attention_strip", label: "AttentionStrip muestra rendiciones pendientes" },
+        { key: "attention_strip", label: "Bandeja muestra rendiciones pendientes en la división" },
       ],
     },
     {

@@ -1,6 +1,9 @@
 from pydantic import BaseModel
 from uuid import UUID
 from datetime import date, datetime
+from typing import Literal
+
+CommitmentAction = Literal["completar", "verificar", "devolver", "reasignar", "editar_observaciones"]
 
 
 class CompromisoListItem(BaseModel):
@@ -20,6 +23,7 @@ class CompromisoListItem(BaseModel):
     days_remaining: int
     completed_at: datetime | None
     verified_at: datetime | None
+    allowed_actions: list[CommitmentAction] = []
 
 
 class CompromisoDetail(BaseModel):
@@ -46,6 +50,7 @@ class CompromisoDetail(BaseModel):
     verified_at: datetime | None
     created_at: datetime
     history: list["HistoryEntry"]
+    allowed_actions: list[CommitmentAction] = []
 
 
 class HistoryEntry(BaseModel):

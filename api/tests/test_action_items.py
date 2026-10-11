@@ -32,7 +32,7 @@ async def test_action_items_item_fields(client: AsyncClient, regional_token: str
         item = data["items"][0]
         for key in ("id", "category", "title", "severity", "priority", "action_label", "action_route"):
             assert key in item, f"Missing field: {key}"
-        assert item["category"] in ("COMPROMISO", "ALERTA", "DECISION", "ESCALAMIENTO", "SLA", "RIESGO")
+        assert item["category"] in ("COMPROMISO", "ALERTA", "DECISION", "ESCALAMIENTO", "SLA", "RIESGO", "FIRMA", "RENDICION", "IPR")
         assert item["severity"] in ("CRITICO", "ALTO", "MEDIO", "BAJO")
 
 
@@ -88,10 +88,15 @@ async def test_action_items_all_roles_accessible(
     admin_token: str, regional_token: str, jefe_token: str,
     analista_token: str, dgi_token: str,
     rtf_token: str, juridico_token: str,
+    gobernador_token: str, secretario_token: str, consejero_token: str,
+    jefe_departamento_token: str, jefe_unidad_token: str,
+    esp_control_token: str, esp_procesos_token: str, esp_td_token: str,
 ):
-    """All 7 test role tokens can access the endpoint."""
+    """The common inbox is readable by all 15 recognized system roles."""
     for token in (admin_token, regional_token, jefe_token, analista_token,
-                  dgi_token, rtf_token, juridico_token):
+                  dgi_token, rtf_token, juridico_token, gobernador_token,
+                  secretario_token, consejero_token, jefe_departamento_token,
+                  jefe_unidad_token, esp_control_token, esp_procesos_token, esp_td_token):
         resp = await client.get("/api/dashboard/action-items", headers=auth(token))
         assert resp.status_code == 200
 

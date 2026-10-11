@@ -75,8 +75,8 @@ function NavLink({
 // ─── Nav Data ─────────────────────────────────────────────────────────────────
 
 const NAV = {
-  inicio: { label: "Inicio", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
-  home: { label: "Home", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
+  bandeja: { label: "Bandeja de trabajo", href: "/dashboard", icon: <CheckSquare className="size-4" /> },
+  panorama: { label: "Panorama", href: "/panorama", icon: <LayoutDashboard className="size-4" /> },
 
   // Comando
   centroMando: { label: "Centro de Mando", href: "/centro-de-mando", icon: <Shield className="size-4" /> },
@@ -223,7 +223,8 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
         {isDgi ? (
           <>
             {/* Pinned */}
-            {link(NAV.home)}
+            {link(NAV.bandeja)}
+            {link(NAV.panorama)}
 
             <NavSection id="dgi-monitoreo" label="Monitoreo" defaultOpen={sectionOpen("dgi-monitoreo")}>
               {link(NAV.centroMando)}
@@ -256,7 +257,8 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
         ) : (
           <>
             {/* Pinned */}
-            {link(NAV.inicio)}
+            {link(NAV.bandeja)}
+            {link(NAV.panorama)}
 
             {showComando && (
               <NavSection id="op-comando" label="Comando" defaultOpen={sectionOpen("op-comando")}>

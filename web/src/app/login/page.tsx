@@ -58,7 +58,7 @@ export default function LoginPage() {
             GORE_OS
           </h1>
           <p className="text-sm text-white/60 mt-1">
-            Sistema Operativo Institucional
+            Bandeja de trabajo del GORE Ñuble
           </p>
         </div>
 

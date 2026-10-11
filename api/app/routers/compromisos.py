@@ -8,8 +8,9 @@ from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.core.security import WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
+from app.core.security import ALL_ROLES, WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
 from app.core.audit import record_event
+from app.core.commitments import ADMIN_ROLES, MANAGER_ROLES, check_personal_commitment_access, commitment_actions
 from app.routers.notifications import create_notification
 from app.schemas.compromiso import CompromisoCreate, CompromisoListItem, CompromisoDetail, HistoryEntry, StateChangeRequest, CompromisoUpdate
 
@@ -18,10 +19,6 @@ router = APIRouter(prefix="/api/compromisos", tags=["compromisos"])
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
-
-ADMIN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"}
-MANAGER_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO"}
-
 
 def _require_roles(user: dict, *roles: str) -> None:
     if user["role_code"] not in roles:
@@ -37,6 +34,7 @@ async def _get_compromiso_or_404(compromiso_id: UUID, db: AsyncSession) -> dict:
                    oc.created_at, oc.updated_at,
                    state_cat.code      AS state,
                    state_cat.label     AS state_label,
+                   state_cat.valid_transitions,
                    type_cat.code       AS commitment_type,
                    type_cat.name       AS commitment_type_label,
                    ipr.codigo_bip      AS ipr_codigo_bip,
@@ -114,25 +112,27 @@ async def list_compromisos(
     ipr_id: UUID | None = None,
     overdue: bool | None = None,
     mine: bool | None = None,
+    pending_only: bool = False,
     date_from: date | None = None,
     date_to: date | None = None,
 ):
     role = user["role_code"]
+    _require_roles(user, *ALL_ROLES)
     params: dict = {}
 
     # Role-based defaults
     effective_division_id = division_id
     effective_responsible_id = responsible_id
 
-    if mine:
+    if mine or role in PERSONAL_SCOPE_ROLES:
         effective_responsible_id = user["id"]
     else:
         if role == "JEFE_DIVISION" and not division_id:
             effective_division_id = user.get("division_id")
-        if role in PERSONAL_SCOPE_ROLES and not responsible_id:
-            effective_responsible_id = user["id"]
 
     conditions = ["oc.deleted_at IS NULL"]
+    if pending_only:
+        conditions.append("state_cat.code NOT IN ('COMPLETADO', 'VERIFICADO', 'CANCELADO')")
 
     if state:
         conditions.append(
@@ -202,10 +202,12 @@ async def list_compromisos(
                 type_cat.name                               AS commitment_type,
                 (p.names || ' ' || p.paternal_surname)      AS responsible_name,
                 oc.responsible_id,
+                oc.division_id,
                 org.name                                    AS division_name,
                 oc.due_date,
                 state_cat.code                              AS state,
                 state_cat.label                             AS state_label,
+                state_cat.valid_transitions,
                 (oc.due_date - CURRENT_DATE)                AS days_remaining,
                 oc.completed_at,
                 oc.verified_at
@@ -222,7 +224,7 @@ async def list_compromisos(
         params,
     )
     rows = rows_result.mappings().all()
-    items = [CompromisoListItem(**dict(r)) for r in rows]
+    items = [CompromisoListItem(**dict(r), allowed_actions=commitment_actions(user, dict(r))) for r in rows]
     total_pages = math.ceil(total / page_size) if page_size else 0
 
     return {
@@ -245,6 +247,7 @@ async def get_compromiso(
     db: AsyncSession = Depends(get_db),
 ):
     row = await _get_compromiso_or_404(compromiso_id, db)
+    check_personal_commitment_access(user, row)
     history_rows = await _get_history(compromiso_id, db)
     history = [
         HistoryEntry(
@@ -281,6 +284,7 @@ async def get_compromiso(
         verified_at=row["verified_at"],
         created_at=row["created_at"],
         history=history,
+        allowed_actions=commitment_actions(user, row),
     )
     return detail.model_dump()
 
@@ -385,7 +389,8 @@ async def update_compromiso(
     db: AsyncSession = Depends(get_db),
 ):
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
-    await _get_compromiso_or_404(compromiso_id, db)
+    row = await _get_compromiso_or_404(compromiso_id, db)
+    check_personal_commitment_access(user, row)
 
     updates = {k: v for k, v in data.model_dump(exclude_none=True).items() if k in _PATCH_ALLOWLIST}
     if not updates:
@@ -422,6 +427,7 @@ async def update_compromiso(
     return CompromisoDetail(
         **{k: updated[k] for k in updated if k != "history"},
         history=[],
+        allowed_actions=commitment_actions(user, updated),
     ).model_dump()
 
 
@@ -436,6 +442,7 @@ async def completar(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     row = await _get_compromiso_or_404(compromiso_id, db)
 
     # Only the responsible user or admins can complete
@@ -447,7 +454,7 @@ async def completar(
             detail="Solo el responsable o un administrador puede completar este compromiso",
         )
 
-    if row["state"] in ("VERIFICADO", "CANCELADO"):
+    if "COMPLETADO" not in (row["valid_transitions"] or []):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"No se puede completar un compromiso en estado {row['state']}",

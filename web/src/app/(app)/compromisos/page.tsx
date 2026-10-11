@@ -66,10 +66,12 @@ export default function CompromisosPage() {
   // --- View mode ---
   const role = user?.role_code;
   const responsibleIdParam = searchParams.get("responsible_id");
+  const mine = searchParams.get("mine") === "true";
+  const detailIdParam = searchParams.get("id");
   const isJefe = role && ["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(role);
   const isPersonalScope = role && ["ANALISTA", "RTF", "ASESOR_JURIDICO"].includes(role);
   const viewMode: ViewMode =
-    isPersonalScope
+    mine || isPersonalScope
       ? "work"
       : isJefe && !responsibleIdParam
         ? "team"
@@ -83,6 +85,8 @@ export default function CompromisosPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<CompromisoDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [detailError, setDetailError] = useState<string | null>(null);
+  const [returnReason, setReturnReason] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
   const [editObs, setEditObs] = useState("");
   const [obsEditing, setObsEditing] = useState(false);
@@ -91,30 +95,52 @@ export default function CompromisosPage() {
   const [reassignUser, setReassignUser] = useState("");
   const [reassignLoading, setReassignLoading] = useState(false);
 
-  const openDetail = (item: CompromisoListItem) => {
-    setSelectedId(item.id);
+  const openDetailById = useCallback((id: string) => {
+    setSelectedId(id);
     setDetail(null);
+    setDetailError(null);
+    setReturnReason("");
     setDetailLoading(true);
     setReassigning(false);
     setReassignUser("");
     api
-      .get<CompromisoDetail>(`/api/compromisos/${item.id}`)
+      .get<CompromisoDetail>(`/api/compromisos/${id}`)
       .then((det) => {
         setDetail(det);
         setEditObs(det.observations ?? "");
         setObsEditing(false);
       })
-      .catch(() => setDetail(item as CompromisoDetail))
+      .catch((err) => setDetailError(err instanceof Error ? err.message : "No se pudo cargar el compromiso"))
       .finally(() => setDetailLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (detailIdParam) openDetailById(detailIdParam);
+  }, [detailIdParam, openDetailById]);
+
+  const openDetail = (item: CompromisoListItem) => openDetailById(item.id);
+
+  const closeDetail = () => {
+    setSelectedId(null);
+    if (detailIdParam) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("id");
+      router.replace(`/compromisos${params.size ? `?${params}` : ""}`);
+    }
   };
 
   const handleAction = async (action: "completar" | "verificar" | "devolver") => {
     if (!selectedId) return;
+    if (action === "devolver" && !returnReason.trim()) {
+      toast.error("Indica el motivo de devolución");
+      return;
+    }
     setActionLoading(true);
     try {
-      await api.post(`/api/compromisos/${selectedId}/${action}`, {});
-      setSelectedId(null);
+      await api.post(`/api/compromisos/${selectedId}/${action}`, action === "devolver" ? { observations: returnReason.trim() } : {});
+      closeDetail();
       onRefresh();
+      toast.success(action === "completar" ? "Compromiso completado, pendiente de verificación" : action === "verificar" ? "Compromiso verificado" : "Compromiso devuelto al responsable");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al actualizar estado");
     } finally {
@@ -162,30 +188,13 @@ export default function CompromisosPage() {
     }
   };
 
-  // Permission checks
-  const canComplete =
-    detail &&
-    detail.state === "PENDIENTE" &&
-    user &&
-    detail.responsible_id === user.id;
-  const canVerify =
-    detail &&
-    detail.state === "COMPLETADO" &&
-    user &&
-    ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(user.role_code);
-  const canReturn =
-    detail &&
-    (detail.state === "COMPLETADO" || detail.state === "EN_PROGRESO") &&
-    user &&
-    ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(user.role_code);
-  const canReassign =
-    detail &&
-    detail.state !== "VERIFICADO" &&
-    detail.state !== "CANCELADO" &&
-    user &&
-    ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA", "GOBERNADOR", "JEFE_DEPARTAMENTO"].includes(
-      user.role_code
-    );
+  // Assignment/role and canonical transitions are resolved by the backend.
+  const actions = detail?.allowed_actions ?? [];
+  const canComplete = actions.includes("completar");
+  const canVerify = actions.includes("verificar");
+  const canReturn = actions.includes("devolver");
+  const canReassign = actions.includes("reasignar");
+  const canEditObservations = actions.includes("editar_observaciones");
   const canCreate =
     user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
 
@@ -295,6 +304,7 @@ export default function CompromisosPage() {
           onItemClick={openDetail}
           refreshKey={refreshKey}
           onRefresh={onRefresh}
+          mine={mine}
         />
       )}
       {viewMode === "team" && (
@@ -315,7 +325,7 @@ export default function CompromisosPage() {
       {/* Shared Detail Drawer */}
       <DrawerPanel
         open={!!selectedId}
-        onClose={() => setSelectedId(null)}
+        onClose={closeDetail}
         title="Detalle de Compromiso"
       >
         {detailLoading ? (
@@ -424,7 +434,7 @@ export default function CompromisosPage() {
             <div className="pt-2 border-t">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold">Observaciones</h3>
-                {!obsEditing ? (
+                {!obsEditing && canEditObservations ? (
                   <Button
                     variant="ghost"
                     size="sm"
@@ -433,7 +443,7 @@ export default function CompromisosPage() {
                   >
                     Editar
                   </Button>
-                ) : (
+                ) : obsEditing ? (
                   <div className="flex gap-1">
                     <Button
                       variant="ghost"
@@ -455,7 +465,7 @@ export default function CompromisosPage() {
                       {obsSaving ? "Guardando..." : "Guardar"}
                     </Button>
                   </div>
-                )}
+                ) : null}
               </div>
               {obsEditing ? (
                 <textarea
@@ -472,6 +482,13 @@ export default function CompromisosPage() {
             </div>
 
             {/* Actions */}
+            {canReturn && (
+              <div className="flex flex-col gap-2">
+                <label htmlFor="return-reason" className="text-sm font-medium">Motivo de devolución</label>
+                <textarea id="return-reason" value={returnReason} onChange={(event) => setReturnReason(event.target.value)}
+                  className="w-full rounded-md border bg-background px-3 py-2 text-sm" placeholder="Indica qué debe corregir el responsable" />
+              </div>
+            )}
             {(canComplete || canVerify || canReturn) && (
               <div className="flex gap-2 flex-wrap pt-2 border-t">
                 {canComplete && (
@@ -498,7 +515,7 @@ export default function CompromisosPage() {
                     size="sm"
                     variant="outline"
                     onClick={() => handleAction("devolver")}
-                    disabled={actionLoading}
+                    disabled={actionLoading || !returnReason.trim()}
                   >
                     Devolver
                   </Button>
@@ -515,7 +532,7 @@ export default function CompromisosPage() {
             )}
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
+          <p role="alert" className="text-muted-foreground text-sm">{detailError ?? "No se pudo cargar el detalle."}</p>
         )}
       </DrawerPanel>
 

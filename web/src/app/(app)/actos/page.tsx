@@ -395,18 +395,32 @@ export default function ActosPage() {
       .finally(() => setIsLoading(false));
   }, [page, state, act_type, refreshKey]);
 
-  const openDetail = (row: unknown) => {
-    const item = row as ActoListItem;
-    setSelectedId(item.id);
+  const openDetailById = useCallback((id: string) => {
+    setSelectedId(id);
     setDetail(null);
     setIsEditing(false);
     setEditError(null);
     setDetailLoading(true);
     api
-      .get<ActoDetail>(`/api/actos/${item.id}`)
+      .get<ActoDetail>(`/api/actos/${id}`)
       .then(setDetail)
       .catch(() => setDetail(null))
       .finally(() => setDetailLoading(false));
+  }, []);
+
+  const detailIdParam = searchParams.get("id");
+  useEffect(() => {
+    if (detailIdParam) openDetailById(detailIdParam);
+  }, [detailIdParam, openDetailById]);
+
+  const openDetail = (row: unknown) => openDetailById((row as ActoListItem).id);
+  const closeDetail = () => {
+    setSelectedId(null);
+    if (detailIdParam) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("id");
+      router.replace(`${pathname}${params.size ? `?${params}` : ""}`);
+    }
   };
 
   const openEdit = () => {
@@ -635,7 +649,7 @@ export default function ActosPage() {
 
       <DrawerPanel
         open={!!selectedId}
-        onClose={() => setSelectedId(null)}
+        onClose={closeDetail}
         title="Detalle de Acto Administrativo"
       >
         {detailLoading ? (

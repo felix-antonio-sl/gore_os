@@ -240,18 +240,32 @@ export default function ConveniosPage() {
       .catch(() => setResumen(null));
   }, [refreshKey]);
 
-  const openDetail = (row: unknown) => {
-    const item = row as ConvenioListItem;
-    setSelectedId(item.id);
+  const openDetailById = useCallback((id: string) => {
+    setSelectedId(id);
     setDetail(null);
     setIsEditing(false);
     setEditError(null);
     setDetailLoading(true);
     api
-      .get<ConvenioDetail>(`/api/convenios/${item.id}`)
+      .get<ConvenioDetail>(`/api/convenios/${id}`)
       .then(setDetail)
       .catch(() => setDetail(null))
       .finally(() => setDetailLoading(false));
+  }, []);
+
+  const detailIdParam = searchParams.get("id");
+  useEffect(() => {
+    if (detailIdParam) openDetailById(detailIdParam);
+  }, [detailIdParam, openDetailById]);
+
+  const openDetail = (row: unknown) => openDetailById((row as ConvenioListItem).id);
+  const closeDetail = () => {
+    setSelectedId(null);
+    if (detailIdParam) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("id");
+      router.replace(`${pathname}${params.size ? `?${params}` : ""}`);
+    }
   };
 
   const openEdit = () => {
@@ -650,7 +664,7 @@ export default function ConveniosPage() {
 
       <DrawerPanel
         open={!!selectedId}
-        onClose={() => setSelectedId(null)}
+        onClose={closeDetail}
         title="Detalle de Convenio"
       >
         {detailLoading ? (

@@ -127,6 +127,10 @@ class ActionItem(BaseModel):
     action_route: str
     ipr_id: str | None = None
     ipr_codigo_bip: str | None = None
+    state: str | None = None
+    state_label: str | None = None
+    responsible_id: str | None = None
+    responsible_name: str | None = None
 
 
 class ActionItemsResponse(BaseModel):
@@ -135,3 +139,5 @@ class ActionItemsResponse(BaseModel):
     summary: str
     items: list[ActionItem]
     counts: dict[str, int]
+    scope_label: str = "Atención institucional"
+    limited_sources: list[str] = []

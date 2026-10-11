@@ -22,26 +22,38 @@ interface Props {
   onItemClick: (item: CompromisoListItem) => void;
   refreshKey: number;
   onRefresh: () => void;
+  mine?: boolean;
 }
 
-const DONE = new Set(["VERIFICADO", "CANCELADO"]);
-
-export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Props) {
+export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh, mine = false }: Props) {
   const [items, setItems] = useState<CompromisoListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [completing, setCompleting] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
     api
-      .get<PaginatedResponse<CompromisoListItem>>("/api/compromisos?page_size=100")
-      .then((r) => setItems(r.items))
-      .catch(() => setItems([]))
+      .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?page_size=100&page=${page}&pending_only=true${mine ? "&mine=true" : ""}`)
+      .then((r) => {
+        setItems(r.items);
+        setTotal(r.total);
+        setTotalPages(Math.max(1, r.total_pages));
+        if (page > 1 && r.items.length === 0) setPage(page - 1);
+      })
+      .catch((err) => {
+        setItems([]);
+        setError(err instanceof Error ? err.message : "No se pudieron cargar los compromisos");
+      })
       .finally(() => setLoading(false));
-  }, [refreshKey]);
+  }, [refreshKey, page, mine]);
 
-  const active = items.filter((i) => !DONE.has(i.state));
+  const active = items;
 
   // Build groups
   const groupMap = new Map<string, IprGroup>();
@@ -59,19 +71,6 @@ export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Prop
     if (a.hasUrgent !== b.hasUrgent) return a.hasUrgent ? -1 : 1;
     return b.items.length - a.items.length;
   });
-
-  // Auto-collapse non-urgent on data change
-  useEffect(() => {
-    const urgentKeys = new Set<string>();
-    const allKeys = new Set<string>();
-    for (const item of items) {
-      if (DONE.has(item.state)) continue;
-      const key = item.ipr_id ?? "__general__";
-      allKeys.add(key);
-      if (item.days_remaining != null && item.days_remaining <= 0) urgentKeys.add(key);
-    }
-    setCollapsed(new Set([...allKeys].filter((k) => !urgentKeys.has(k))));
-  }, [items]);
 
   const toggle = (key: string) =>
     setCollapsed((prev) => {
@@ -104,6 +103,8 @@ export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Prop
   }
 
   if (active.length === 0) {
+    if (error) return <EmptyState title="No se pudieron cargar tus compromisos" description={error}
+      action={<Button variant="outline" onClick={onRefresh}>Reintentar</Button>} />;
     return <EmptyState title="Sin compromisos pendientes" description="No tienes compromisos activos asignados." />;
   }
 
@@ -112,7 +113,7 @@ export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Prop
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 text-sm">
-        <span className="font-medium tabular-nums">{active.length} pendientes</span>
+        <span className="font-medium tabular-nums">{total} pendientes</span>
         {overdue > 0 && <span className="text-red-600 font-medium tabular-nums">{overdue} vencidos</span>}
       </div>
 
@@ -146,7 +147,7 @@ export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Prop
                     const dr = item.days_remaining;
                     const isOverdue = dr != null && dr < 0;
                     const isToday = dr === 0;
-                    const canAct = item.state === "PENDIENTE" || item.state === "EN_PROGRESO";
+                    const canAct = item.allowed_actions.includes("completar");
                     return (
                       <div
                         key={item.id}
@@ -197,8 +198,10 @@ export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Prop
                             className="h-7 px-2 shrink-0"
                             onClick={(e) => complete(item.id, e)}
                             disabled={completing === item.id}
+                            aria-label={`Completar: ${item.description}`}
                           >
                             <Check className="size-3.5" />
+                            Completar
                           </Button>
                         )}
                       </div>
@@ -210,6 +213,15 @@ export function CompromisosWorkView({ onItemClick, refreshKey, onRefresh }: Prop
           );
         })}
       </div>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-sm text-muted-foreground">Página {page} de {totalPages}</span>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" disabled={page === 1} onClick={() => setPage(page - 1)}>Anterior</Button>
+            <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Siguiente</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
