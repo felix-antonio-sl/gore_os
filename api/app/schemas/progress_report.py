@@ -3,14 +3,6 @@ from uuid import UUID
 from datetime import date, datetime
 
 
-class ProgressReportCreate(BaseModel):
-    report_date: date
-    physical_progress: float | None = None
-    financial_progress: float | None = None
-    description: str | None = None
-    issues_detected: str | None = None
-
-
 class ProgressReportItem(BaseModel):
     id: UUID
     report_number: int

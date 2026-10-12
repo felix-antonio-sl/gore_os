@@ -19,24 +19,6 @@ async def test_analista_can_list_ipr(client: AsyncClient, analista_token: str):
 
 
 @pytest.mark.asyncio
-async def test_analista_can_create_ipr(client: AsyncClient, analista_token: str, db):
-    """ANALISTA should be able to create an IPR (F0 Postulación)."""
-    from sqlalchemy import text
-
-    ipr_type = await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'ipr_type' LIMIT 1")
-    )
-    ipr_type_id = str(ipr_type.scalar())
-
-    resp = await client.post("/api/ipr", json={
-        "codigo_bip": "ROLE-TEST-001",
-        "name": "Test IPR from ANALISTA",
-        "ipr_type_id": ipr_type_id,
-    }, headers=auth(analista_token))
-    assert resp.status_code == 201, resp.text
-
-
-@pytest.mark.asyncio
 async def test_analista_can_list_compromisos(client: AsyncClient, analista_token: str):
     """ANALISTA can list operational commitments."""
     resp = await client.get("/api/compromisos", headers=auth(analista_token))
@@ -179,24 +161,6 @@ async def test_rtf_cannot_approve_rendicion(client: AsyncClient, rtf_token: str,
 
 
 @pytest.mark.asyncio
-async def test_rtf_cannot_create_ipr(client: AsyncClient, rtf_token: str, db):
-    """RTF should NOT be able to create IPR (not in _CREATE_ROLES)."""
-    from sqlalchemy import text
-
-    ipr_type = await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'ipr_type' LIMIT 1")
-    )
-    ipr_type_id = str(ipr_type.scalar())
-
-    resp = await client.post("/api/ipr", json={
-        "codigo_bip": "ROLE-RTF-001",
-        "name": "Test IPR from RTF",
-        "ipr_type_id": ipr_type_id,
-    }, headers=auth(rtf_token))
-    assert resp.status_code == 403
-
-
-@pytest.mark.asyncio
 async def test_rtf_cannot_access_admin(client: AsyncClient, rtf_token: str):
     """RTF should NOT access admin endpoints."""
     resp = await client.get("/api/admin/usuarios", headers=auth(rtf_token))
@@ -226,24 +190,6 @@ async def test_juridico_can_list_actos(client: AsyncClient, juridico_token: str)
     """ASESOR_JURIDICO should access administrative acts list."""
     resp = await client.get("/api/actos", headers=auth(juridico_token))
     assert resp.status_code == 200
-
-
-@pytest.mark.asyncio
-async def test_juridico_cannot_create_ipr(client: AsyncClient, juridico_token: str, db):
-    """ASESOR_JURIDICO should NOT be able to create IPR."""
-    from sqlalchemy import text
-
-    ipr_type = await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'ipr_type' LIMIT 1")
-    )
-    ipr_type_id = str(ipr_type.scalar())
-
-    resp = await client.post("/api/ipr", json={
-        "codigo_bip": "ROLE-JUR-001",
-        "name": "Test IPR from JURIDICO",
-        "ipr_type_id": ipr_type_id,
-    }, headers=auth(juridico_token))
-    assert resp.status_code == 403
 
 
 @pytest.mark.asyncio

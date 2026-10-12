@@ -31,7 +31,7 @@ adicionales de escritura. Los endpoints verifican la identidad actual desde la D
 | Riesgo | `/riesgos/<uuid>`; mitigación y estado | DGI/admin editan; personas/jefaturas leen riesgos de sus IPR/división. Procesos relacionados tienen lector acotado, sin motor de mejora |
 | Firma | `/actos?id=<uuid>` o `/convenios?id=<uuid>`; transición autorizada | Categoría persistida; API comprueba umbral de monto y bloquea destinos imposibles; historial y contexto IPR preservados |
 | Rendición | `/rendiciones?id=<uuid>`; revisión SISREC | Destinos de categoría DB filtrados por roles existentes; captura, fases, observaciones e historial conservados |
-| IPR sin movimiento | `/ipr/<uuid>`; contexto y ciclo vigente | Asignación/división; se conserva el ciclo completo IPR/CORE/CDP mientras se decide si el alcance IPR será sólo consultivo |
+| IPR sin movimiento | `/ipr/<uuid>`; consulta del expediente y trabajo relacionado | Ámbito personal/divisional/institucional vigente; IPR de sólo lectura, sin creación, edición o transición |
 
 Los compromisos personales se consultan completos y paginados. Otras fuentes tienen
 cortes de atención de 5, 10 o 15 elementos; feed y UI declaran cuándo se alcanza el
@@ -39,22 +39,27 @@ corte. Los lectores de cada fuente permiten continuar la consulta paginada. Cuan
 no hay responsable individual registrado, la UI lo declara. Los plazos actuales son
 criterios de atención del modelo, no obligaciones legales nuevas.
 
-## Capturas y gates que permanecen
+## Expediente y acciones relacionadas
 
-La reducción de panoramas conserva el ciclo contextual IPR original hasta la decisión
-sobre consulta vs transición completa. No se ofrece una transición cuya captura haya
-sido retirada. Las reglas de régimen y gates permanecen en DB/API y su UI contextual.
+Por la decisión de alcance de Félix del 12 de octubre de 2026, el expediente IPR
+conserva consulta de estado/fase y responsables registrados. Sus secciones de trabajo
+abren compromisos, problemas, alertas, convenios y rendiciones mediante la identidad
+exacta del objeto. Las listas relacionadas están paginadas y distinguen fallo de carga
+de ausencia de registros. Los permisos de cada acción siguen perteneciendo a su API.
 
-| Gate/condición | Captura o acción conservada | Regresión pertinente |
-|---|---|---|
-| Admisibilidad y evidencias | Pestaña contextual de admisibilidad y documentos IPR | `test_admissibility`, `test_ipr_readiness` |
-| Resultado de evaluación según régimen | Asignaciones/resultados en evaluaciones IPR | `test_polyswitch`, `test_track_enforcement`, `test_ipr_bifurcation` |
-| Financiamiento/CDP y aprobación CORE | Presupuesto, CDP y sesiones/acuerdos CORE originales | `test_presupuesto`, `test_core_sessions`, `test_ciclo24` |
-| Formalización/ejecución y cambios | Contrato contextual, avances, modificaciones e ITO | `test_ipr_children`, `test_modifications`, `test_lifecycle_slas` |
-| Cierre técnico/financiero | Captura y aprobación de cierre IPR | `test_closure`, `test_ipr_lifecycle` |
-| Verificación de compromiso | Completar → supervisor devolver con motivo/verificar | `test_work_inbox`; recorrido con usuario responsable, supervisor y lector |
-| Firma según monto y estado | Detalle de acto/convenio con acciones y bloqueo explicado | `test_thresholds`, `test_convenios`, `test_actos`, `test_inbox_journeys` |
-| Revisión de rendición | Captura contextual, observación y transición autorizada | `test_rendiciones`, `test_sisrec`, `test_sisrec_8phase`, `test_dgi_data` |
+Antecedentes ofrece mecanismo y atributos registrados, historial completo, CDP,
+resoluciones, avances, organizaciones/territorio, hitos, evaluaciones, admisibilidad,
+certificación, parentesco, modificaciones, cierre y evaluación posterior. No presenta
+capturas o instrucciones de siguiente fase. `/api/ipr` sólo registra métodos GET;
+la lectura de CDP verifica el mismo acceso al expediente que los demás antecedentes.
+El estado y la fase mostrados son los almacenados, sin deducir un siguiente actor.
+
+Las acciones de compromisos, problemas, alertas, convenios y rendiciones no cambian
+el estado, la fase ni la asignación del IPR. Conservan sus propios historiales,
+transiciones y controles de autoridad. Los umbrales financieros que consumen actos y
+convenios siguen configurables. Se retiró la administración exclusiva de transición
+IPR, SNI, vías/fondos de financiamiento, admisibilidad y programas presupuestarios.
+Sus tablas y datos permanecen como antecedentes recuperables.
 
 ## Capacidades archivadas y recuperación
 
@@ -62,7 +67,9 @@ Se retiraron páginas, APIs exclusivas, componentes, DTO y dependencias sin cons
 de panoramas/cockpits, tablero de iniciativas/DMAIC, cuellos de botella, informes,
 comité TD, reuniones/calendario, exploradores generales de datos, vistas autónomas de
 cartera/formulación, equipo y captura de bugs. La bandeja tiene una representación
-activa. Las entidades, tablas, categorías y datos de dominio se conservan; el retiro de
+activa. También se retiraron creación/transiciones/capturas de IPR y los módulos
+autónomos CORE y presupuesto/CDP. Las entidades, tablas, categorías y datos de
+dominio se conservan; el retiro de
 una interfaz no elimina un expediente ni una fuente histórica.
 
 `/mis-compromisos` redirige a `/compromisos?mine=true`; `/mi-division` a la bandeja.
@@ -70,14 +77,18 @@ una interfaz no elimina un expediente ni una fuente histórica.
 los demás exploradores anteriores llevan a la bandeja. Los enlaces antiguos de un
 servicio redirigen a sus solicitudes. El código retirado se recupera desde Git en
 `6c387ed0aad8721f2b22202beb08f228e2235fe6`, además del checkpoint privado verificado
-del operador. El [índice de archivo](archive/README.md) describe la función histórica.
+del operador. El ciclo IPR/CORE/CDP anterior a este último recorte se recupera
+en `92d13a9e9524ccebdf59c676d6686862cd1aff04`. El [índice de archivo](archive/README.md) describe la función histórica.
 
 ## Verificación y consumo
 
 `test_inbox_journeys` comprueba con PostgreSQL real identidad independiente de alertas
 con texto igual, scope dueño/ajeno, plazos SLA antes/en/después del límite y con contratos
 de productos distintos, firma canónica y lectura acotada de procesos. Las suites
-conservadas cubren los gates y permisos del ciclo IPR. El recorrido observable usa
+conservadas cubren la consulta y permisos del expediente, las restricciones de los
+escritores retirados y las acciones relacionadas. `test_ipr_consultation` comprueba
+además que esas cinco acciones preservan la fase/asignación IPR y que los antecedentes
+registrados siguen accesibles. El recorrido observable usa
 identidades y expedientes ficticios en una base aislada; no usa cuentas o datos reales.
 
 Una entrega identifica un SHA y construye API/web desde ese mismo candidato. La

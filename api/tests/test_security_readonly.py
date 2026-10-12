@@ -105,21 +105,6 @@ class TestConsejeroWriteBlocked:
         )
         assert resp.status_code == 403
 
-    @pytest.mark.asyncio
-    async def test_create_progress_report_forbidden(self, client, consejero_token, seed_data):
-        if not seed_data["ipr_id"]:
-            pytest.skip("No IPR in test DB")
-        resp = await client.post(
-            f"/api/ipr/{seed_data['ipr_id']}/avances",
-            json={
-                "report_date": "2026-02-26",
-                "physical_progress": 50,
-                "financial_progress": 40,
-                "description": "CR should not create reports",
-            },
-            headers=auth(consejero_token),
-        )
-        assert resp.status_code == 403
 
     @pytest.mark.asyncio
     async def test_create_convenio_forbidden(self, client, consejero_token, catalog):

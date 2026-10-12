@@ -3,17 +3,6 @@ from uuid import UUID
 from datetime import date, datetime
 
 
-class IprMilestoneCreate(BaseModel):
-    milestone_type_id: UUID
-    description: str | None = None
-    planned_date: date
-
-
-class IprMilestoneUpdate(BaseModel):
-    actual_date: date | None = None
-    verification_notes: str | None = None
-
-
 class IprMilestoneItem(BaseModel):
     id: UUID
     milestone_type_code: str

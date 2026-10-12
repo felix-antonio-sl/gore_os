@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
@@ -16,23 +17,26 @@ interface TabCompromisosProps {
 }
 
 export function TabCompromisos({ iprId, canCreate }: TabCompromisosProps) {
+  const router = useRouter();
   const [compromisos, setCompromisos] = useState<PaginatedResponse<CompromisoListItem> | null>(null);
   const [loading, setLoading] = useState(true);
   const [showCompromisoDrawer, setShowCompromisoDrawer] = useState(false);
 
-  const loadCompromisos = () => {
+  const [page, setPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
+  const loadCompromisos = useCallback(() => {
     setLoading(true);
-    api
-      .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?ipr_id=${iprId}&page_size=50`)
+    setError(null);
+    api.get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?ipr_id=${iprId}&page=${page}&page_size=50`)
       .then(setCompromisos)
-      .catch(() => setCompromisos(null))
+      .catch((err) => { setCompromisos(null); setError(err instanceof Error ? err.message : "No se pudo consultar el trabajo relacionado."); })
       .finally(() => setLoading(false));
-  };
-
+  }, [iprId, page]);
   useEffect(() => {
-    loadCompromisos();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [iprId]);
+    let active = true;
+    queueMicrotask(() => { if (active) loadCompromisos(); });
+    return () => { active = false; };
+  }, [loadCompromisos]);
 
   const compromisoColumns = [
     { key: "description", label: "Descripción" },
@@ -68,11 +72,14 @@ export function TabCompromisos({ iprId, canCreate }: TabCompromisosProps) {
       <DataTable
         columns={compromisoColumns}
         data={compromisos?.items ?? []}
-        page={1}
-        totalPages={1}
+        page={page}
+        totalPages={compromisos?.total_pages ?? 1}
         total={compromisos?.total ?? 0}
-        onPageChange={() => {}}
+        onPageChange={setPage}
+        onRowClick={(row) => router.push(`/compromisos?id=${(row as CompromisoListItem).id}`)}
         isLoading={loading}
+        error={error}
+        onRetry={loadCompromisos}
         emptyTitle="Aún no hay compromisos"
         emptyDescription="Crea el primer compromiso de esta IPR."
       />

@@ -163,59 +163,6 @@ async def test_utm_value_from_db(client: AsyncClient, admin_token: str, db: Asyn
 # ===========================================================================
 
 
-@pytest.mark.asyncio
-async def test_budget_list_includes_classifier(client: AsyncClient, regional_token: str):
-    """Budget list endpoint returns item_label and allocation_label."""
-    resp = await client.get(
-        "/api/presupuesto?page=1&page_size=5",
-        headers=auth(regional_token),
-    )
-    assert resp.status_code == 200
-    data = resp.json()
-    assert "items" in data
-    if data["items"]:
-        item = data["items"][0]
-        # Fields should exist (may be null if no item/allocation assigned)
-        assert "item_label" in item
-        assert "allocation_label" in item
-        assert "program_type_label" in item
-
-
-@pytest.mark.asyncio
-async def test_budget_filter_by_item(client: AsyncClient, regional_token: str, db: AsyncSession):
-    """Budget list can be filtered by item code."""
-    # Get a valid item code
-    row = await db.execute(
-        text("SELECT code FROM ref.category WHERE scheme = 'budget_item' LIMIT 1")
-    )
-    item_code = row.scalar()
-    if not item_code:
-        pytest.skip("No budget_item codes in test DB")
-
-    resp = await client.get(
-        f"/api/presupuesto?page=1&page_size=5&item={item_code}",
-        headers=auth(regional_token),
-    )
-    assert resp.status_code == 200
-
-
-@pytest.mark.asyncio
-async def test_budget_filter_by_program_type(client: AsyncClient, regional_token: str, db: AsyncSession):
-    """Budget list can be filtered by program_type code."""
-    row = await db.execute(
-        text("SELECT code FROM ref.category WHERE scheme = 'program_type' LIMIT 1")
-    )
-    pt_code = row.scalar()
-    if not pt_code:
-        pytest.skip("No program_type codes in test DB")
-
-    resp = await client.get(
-        f"/api/presupuesto?page=1&page_size=5&program_type={pt_code}",
-        headers=auth(regional_token),
-    )
-    assert resp.status_code == 200
-
-
 # ===========================================================================
 # CORE GATE REFACTORED (reads from DB, not hardcoded)
 # ===========================================================================
@@ -231,51 +178,6 @@ async def test_core_gate_reads_from_db(client: AsyncClient, admin_token: str, db
     value = row.scalar()
     assert value is not None
     assert float(value) == 7000.0
-
-
-@pytest.mark.asyncio
-async def test_core_gate_below_threshold(client: AsyncClient, admin_token: str, db: AsyncSession):
-    """IPR below CORE threshold should not have core_approval gate."""
-    # Create a test IPR with low monto
-    ipr_type = await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'ipr_type' LIMIT 1")
-    )
-    ipr_type_id = str(ipr_type.scalar())
-
-    status_row = await db.execute(
-        text("SELECT id FROM ref.category WHERE scheme = 'ipr_state' AND code = 'CDP_EMITIDO' LIMIT 1")
-    )
-    status_id = str(status_row.scalar())
-
-    ipr_result = await db.execute(
-        text("""
-            INSERT INTO core.ipr (codigo_bip, name, ipr_type_id, status_id, ipr_nature, metadata)
-            VALUES ('TEST-CORE-LOW', 'Low value IPR', :ipr_type_id, :status_id, 'PROYECTO',
-                    '{"monto_total": 100000000}'::jsonb)
-            RETURNING id
-        """),
-        {"ipr_type_id": ipr_type_id, "status_id": status_id},
-    )
-    ipr_id = str(ipr_result.scalar())
-    await db.commit()
-
-    # Get transitions — should not have core_approval gate
-    resp = await client.get(
-        f"/api/ipr/{ipr_id}/transiciones",
-        headers=auth(admin_token),
-    )
-    assert resp.status_code == 200
-    data = resp.json()
-    # Check transitions — for F3→F4 gates
-    for t in data:
-        gates = t.get("gates", [])
-        core_gates = [g for g in gates if g.get("name") == "core_approval"]
-        # 100M CLP < 7000 UTM * 67294 = 471M CLP → no core gate
-        assert len(core_gates) == 0
-
-    # Cleanup
-    await db.execute(text("DELETE FROM core.ipr WHERE codigo_bip = 'TEST-CORE-LOW'"))
-    await db.commit()
 
 
 # ===========================================================================
@@ -328,18 +230,6 @@ async def test_glosa_thresholds_seeded(client: AsyncClient, admin_token: str, db
     assert codes["GLOSA_ANF_MAX"] == 10.0
     assert codes["GLOSA_EQUIPAMIENTO_MAX"] == 20.0
     assert codes["GLOSA_REMUNERACIONES_MAX"] == 30.0
-
-
-@pytest.mark.asyncio
-async def test_glosa_check_no_cdps(client: AsyncClient, admin_token: str, db: AsyncSession):
-    """Glosa check for an IPR with no CDPs should return empty gates."""
-    from app.routers.presupuesto import check_glosa_rules
-
-    # Use a non-existent IPR ID
-    import uuid
-    fake_id = uuid.uuid4()
-    gates = await check_glosa_rules(fake_id, db)
-    assert gates == []
 
 
 # ===========================================================================

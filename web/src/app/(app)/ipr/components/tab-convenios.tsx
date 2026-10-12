@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { StatusBadge } from "@/components/status-badge";
@@ -24,19 +24,21 @@ export function TabConvenios({ iprId, canCreate }: TabConveniosProps) {
   const [loading, setLoading] = useState(true);
   const [showConvenioDrawer, setShowConvenioDrawer] = useState(false);
 
-  const loadConvenios = () => {
+  const [page, setPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
+  const loadConvenios = useCallback(() => {
     setLoading(true);
-    api
-      .get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?ipr_id=${iprId}&page_size=50`)
+    setError(null);
+    api.get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?ipr_id=${iprId}&page=${page}&page_size=50`)
       .then(setConvenios)
-      .catch(() => setConvenios(null))
+      .catch((err) => { setConvenios(null); setError(err instanceof Error ? err.message : "No se pudo consultar el trabajo relacionado."); })
       .finally(() => setLoading(false));
-  };
-
+  }, [iprId, page]);
   useEffect(() => {
-    loadConvenios();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [iprId]);
+    let active = true;
+    queueMicrotask(() => { if (active) loadConvenios(); });
+    return () => { active = false; };
+  }, [loadConvenios]);
 
   const convenioColumns = [
     {
@@ -92,20 +94,20 @@ export function TabConvenios({ iprId, canCreate }: TabConveniosProps) {
             <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
           ))}
         </div>
-      ) : !convenios || convenios.items.length === 0 ? (
+      ) : !error && (!convenios || convenios.items.length === 0) ? (
         <EmptyState compact title="No hay convenios para este IPR." />
       ) : (
         <DataTable
           columns={convenioColumns}
-          data={convenios.items}
-          page={1}
-          totalPages={1}
-          total={convenios.total}
-          onPageChange={() => {}}
-          onRowClick={() => {
-            router.push("/convenios");
-          }}
+          data={convenios?.items ?? []}
+          page={page}
+          totalPages={convenios?.total_pages ?? 1}
+          total={convenios?.total ?? 0}
+          onPageChange={setPage}
+          onRowClick={(row) => router.push(`/convenios?id=${(row as ConvenioListItem).id}`)}
           isLoading={loading}
+        error={error}
+        onRetry={loadConvenios}
         />
       )}
       <IprConvenioDrawer

@@ -83,12 +83,6 @@ export interface CategoryRef {
   description?: string;
 }
 
-export interface CurrentActor {
-  role: string | null;
-  role_label: string;
-  action: string;
-}
-
 export interface IPRListItem {
   id: string;
   codigo_bip: string;
@@ -103,8 +97,6 @@ export interface IPRListItem {
   has_open_problems: boolean;
   executor_name: string | null;
   total_budget: number | null;
-  actor_role: string | null;
-  actor_action: string | null;
   phase_entered_at: string | null;
 }
 
@@ -187,67 +179,10 @@ export interface HistoryEntry {
   changed_at: string;
 }
 
-// ---------------------------------------------------------------------------
-// Presupuesto Types
-// ---------------------------------------------------------------------------
-export interface PresupuestoListItem {
-  id: string;
-  code: string;
-  name: string;
-  fiscal_year: number;
-  division_id: string | null;
-  division_name: string | null;
-  subtitle_label: string | null;
-  program_type_label: string | null;
-  item_label: string | null;
-  allocation_label: string | null;
-  program_code_label: string | null;
-  initial_amount: number;
-  current_amount: number | null;
-  committed_amount: number;
-  accrued_amount: number;
-  paid_amount: number;
-  execution_pct: number;
-}
-
 export interface CarryoverItem {
   id: string;
   fiscal_year: number;
   amount: number;
-}
-
-export interface BudgetCommitmentItem {
-  id: string;
-  commitment_number: string;
-  amount: number;
-  issued_at: string;
-  expires_at: string | null;
-  status_label: string | null;
-  ipr_id: string | null;
-  ipr_codigo_bip: string | null;
-}
-
-export interface PresupuestoDetail extends PresupuestoListItem {
-  subtitle_id: string | null;
-  item_id: string | null;
-  allocation_id: string | null;
-  item_label: string | null;
-  allocation_label: string | null;
-  fndr_amount: number | null;
-  sectorial_amount: number | null;
-  created_at: string;
-  carryovers: CarryoverItem[];
-  budget_commitments: BudgetCommitmentItem[];
-}
-
-export interface PresupuestoResumen {
-  group_key: string;
-  group_label: string;
-  initial_amount: number;
-  current_amount: number;
-  paid_amount: number;
-  execution_pct: number;
-  program_count: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -608,33 +543,6 @@ export interface AutoSuggestion {
 }
 
 // ---------------------------------------------------------------------------
-// IPR Lifecycle / Transitions
-// ---------------------------------------------------------------------------
-export interface GateStatus {
-  name: string;
-  met: boolean;
-  detail: string;
-}
-
-export interface IprTransition {
-  id: string;
-  code: string;
-  label: string;
-  target_phase: string | null;
-  phase_change: boolean;
-  gates: GateStatus[];
-  blocked: boolean;
-  allowed: boolean;
-  effects?: string[];
-}
-
-// Roles with IPR transition authority (matches backend _ASSIGN_ROLES)
-export const TRANSITION_ROLES: RoleCode[] = [
-  "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION",
-  "GOBERNADOR", "JEFE_DEPARTAMENTO", "ANALISTA",
-];
-
-// ---------------------------------------------------------------------------
 // Actos Administrativos Types
 // ---------------------------------------------------------------------------
 export interface ActoListItem {
@@ -677,22 +585,6 @@ export interface ActoTransition {
   label: string;
 }
 
-// ---------------------------------------------------------------------------
-// CORE Sessions (Consejo Regional)
-// ---------------------------------------------------------------------------
-export interface CoreSessionListItem {
-  id: string;
-  session_number: number;
-  session_type: string;
-  scheduled_at: string;
-  started_at: string | null;
-  ended_at: string | null;
-  summary: string | null;
-  status: "PROGRAMADA" | "EN_CURSO" | "FINALIZADA";
-  topic_count: number;
-  quorum_reached: boolean | null;
-}
-
 export interface TopicWithVotes {
   id: string;
   agreement_number: number;
@@ -714,32 +606,6 @@ export interface MemberAttendance {
   person_name: string;
   role_in_committee: string | null;
   has_voted_in_session: boolean;
-}
-
-export interface CoreSessionDetail extends CoreSessionListItem {
-  location: string | null;
-  minute_id: string | null;
-  topics: TopicWithVotes[];
-  members_present: number;
-  members_total: number;
-}
-
-// ---------------------------------------------------------------------------
-// Poly-Switch (Track Info + Evaluation Assignment)
-// ---------------------------------------------------------------------------
-export interface TrackInfo {
-  mechanism: string | null;
-  mechanism_label: string | null;
-  evaluator: string | null;
-  evaluator_label: string | null;
-  favorable_products: string[];
-  unfavorable_products: string[];
-  terminal_negative: string[];
-  thresholds: Record<string, number>;
-  sla_days: Record<string, number>;
-  required_attrs: string[];
-  mechanism_attrs: Record<string, string | number | boolean | null>;
-  evaluations: EvaluationAssignment[];
 }
 
 // ---------------------------------------------------------------------------

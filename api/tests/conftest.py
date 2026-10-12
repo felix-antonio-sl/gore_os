@@ -203,6 +203,25 @@ async def client(db):
         yield ac
 
 
+@pytest_asyncio.fixture(autouse=True)
+async def baseline_ipr(db, cleanup_test_artifacts):
+    """Synthetic lookup record; tests no longer depend on the retired IPR writer."""
+    assert TEST_DB_URL.database.endswith("_test"), "Only a test database may receive fixtures"
+    await db.execute(text("""
+        INSERT INTO core.ipr (
+            codigo_bip, name, ipr_nature, assignee_id, sponsor_division_id,
+            status_id, mcd_phase_id
+        )
+        SELECT 'BND-TEST-BASE', 'Expediente sintético de pruebas', 'PROYECTO',
+               u.id, u.division_id,
+               (SELECT id FROM ref.category WHERE scheme = 'ipr_state' AND code = 'EN_EJECUCION'),
+               (SELECT id FROM ref.category WHERE scheme = 'mcd_phase' AND code = 'F4')
+        FROM core."user" u WHERE u.email = 'analista.dipir@goreos.cl'
+        ON CONFLICT (codigo_bip) DO NOTHING
+    """))
+    await db.commit()
+
+
 # ---------------------------------------------------------------------------
 # Auth token fixtures — one per role
 # ---------------------------------------------------------------------------

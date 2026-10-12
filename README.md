@@ -8,7 +8,9 @@ Tras iniciar sesión, `/dashboard` abre la bandeja. Los detalles y acciones se a
 desde cada pendiente: compromisos, alertas, decisiones,
 escalamientos, solicitudes de servicios, riesgos, firmas, rendiciones e IPR.
 Las acciones disponibles proceden de la API y las categorías de la base de datos.
-Los módulos autónomos anteriores se conservan en Git como historia recuperable.
+El expediente IPR ofrece consulta y enlaces a compromisos, problemas, alertas,
+convenios y rendiciones. Sus transiciones y capturas, junto a CORE y presupuesto/CDP
+autónomos, se conservan en Git como historia recuperable.
 Este propósito de producto no acredita adopción ni ratificación institucional.
 
 ## Ejecutar

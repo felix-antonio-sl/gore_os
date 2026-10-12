@@ -1,6 +1,5 @@
 /** Shared constants and types for IPR detail components */
 
-import type { CurrentActor } from "@/types";
 
 export interface IprDetail {
   id: string;
@@ -24,7 +23,15 @@ export interface IprDetail {
   total_budget?: number;
   start_date?: string;
   end_date?: string;
-  current_actor?: CurrentActor | null;
+  ipr_type_label?: string | null;
+  status_label?: string | null;
+  assignee_name?: string | null;
+  sponsor_division_name?: string | null;
+  intended_outcome?: string | null;
+  commitment_count: number;
+  problem_count: number;
+  alert_count: number;
+  agreement_count: number;
 }
 
 export const alertBorderMap: Record<string, string> = {
@@ -62,22 +69,6 @@ export const MCD_PHASES = [
   { code: "F5", label: "Cierre" },
 ];
 
-/** Derive phase from status code — mirrors backend STATUS_PHASE_FIBER */
-export const STATUS_TO_PHASE: Record<string, string> = {
-  INGRESADO: "F0",
-  EN_REVISION: "F1", PRE_ADMISIBLE: "F1", ADMISIBLE: "F1", INADMISIBLE: "F1",
-  EN_EVALUACION: "F2",
-  RS: "F2", FI: "F2", FC: "F2", OT: "F2", AD: "F2", RF: "F2", ITF: "F2", AT: "F2",
-  CDP_EMITIDO: "F3",
-  EN_FORMALIZACION: "F4", FORMALIZADO: "F4",
-  EN_EJECUCION: "F4", EN_LICITACION: "F4",
-  ADJUDICADO: "F4", CONTRATO_FIRMADO: "F4", EN_OBRA: "F4",
-  RECEPCION_PROVISORIA: "F4", RECEPCION_DEFINITIVA: "F4", SUSPENDIDO: "F4",
-  EN_RENDICION: "F5", RENDICION_APROBADA: "F5",
-  EN_CIERRE_ADMINISTRATIVO: "F5", CERRADO: "F5",
-  TERMINADO_ANTICIPADAMENTE: "F5",
-};
-
 export const SECTOR_OPTIONS = [
   { value: "SPORTS", label: "Deporte" },
   { value: "CULTURE", label: "Cultura y Patrimonio" },
@@ -95,45 +86,3 @@ export const SECTOR_OPTIONS = [
 export const sectorLabel: Record<string, string> = Object.fromEntries(
   SECTOR_OPTIONS.map(o => [o.value, o.label])
 );
-
-export const TAB_GROUPS = [
-  { label: "Operación", tabs: ["compromisos", "problemas", "hitos", "avances", "alertas"] },
-  { label: "Finanzas", tabs: ["cdps", "convenios", "rendiciones", "resoluciones"] },
-  { label: "Requisitos", tabs: ["partes", "territorio", "evaluaciones", "parentesco"] },
-  { label: "Ciclo", tabs: ["admisibilidad", "modificaciones", "cierre", "evaluacion-expost"] },
-] as const;
-
-export const TAB_LABELS: Record<string, string> = {
-  compromisos: "Compromisos",
-  problemas: "Problemas",
-  hitos: "Hitos",
-  avances: "Avances",
-  alertas: "Alertas",
-  cdps: "Presupuesto",
-  convenios: "Convenios",
-  resumen: "Resumen",
-  rendiciones: "Rendiciones",
-  resoluciones: "Resoluciones",
-  partes: "Partes",
-  territorio: "Territorio",
-  evaluaciones: "Evaluación",
-  parentesco: "Parentesco",
-  admisibilidad: "Admisibilidad",
-  modificaciones: "Modificaciones",
-  cierre: "Cierre",
-  "evaluacion-expost": "Eval. Posterior",
-};
-
-/**
- * Satellite tabs most relevant at each phase. Used to *highlight* (never hide)
- * the contextually-active tabs so the IPR sidebar isn't blind to the phase.
- * Operación tabs stay available across all phases; this only adds an "ahora" cue.
- */
-export const PHASE_RELEVANT_TABS: Record<string, string[]> = {
-  F0: ["compromisos", "hitos"],
-  F1: ["admisibilidad", "partes", "territorio", "parentesco"],
-  F2: ["evaluaciones"],
-  F3: ["cdps"],
-  F4: ["convenios", "resoluciones", "hitos", "avances"],
-  F5: ["rendiciones", "cierre", "modificaciones", "evaluacion-expost"],
-};

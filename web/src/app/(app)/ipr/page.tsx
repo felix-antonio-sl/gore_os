@@ -11,7 +11,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Clickable } from "@/components/clickable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Download, AlertTriangle, RotateCw } from "lucide-react";
+import { Download, AlertTriangle, RotateCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCurrency } from "@/lib/format";
@@ -125,7 +125,6 @@ export default function IprPage() {
   const searchParams = useSearchParams();
   const { user } = useAuth();
 
-  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"].includes(user.role_code);
 
   // Role awareness
   const role = user?.role_code;
@@ -321,23 +320,6 @@ export default function IprPage() {
       render: (value: unknown) => <StatusBadge status={String(value ?? "")} size="sm" />,
     },
     {
-      key: "actor_role",
-      label: "Actor",
-      render: (value: unknown, row: unknown) => {
-        const role = String(value ?? "");
-        if (!role) return <span className="text-muted-foreground text-xs">—</span>;
-        const action = (row as Record<string, unknown>).actor_action as string | null;
-        return (
-          <div className="text-xs leading-tight" title={action ?? undefined}>
-            <span>{role}</span>
-            {action && (
-              <span className="block text-[10px] text-muted-foreground truncate max-w-[120px]">{action}</span>
-            )}
-          </div>
-        );
-      },
-    },
-    {
       key: "phase_entered_at",
       label: "Días",
       render: (value: unknown) => {
@@ -371,7 +353,7 @@ export default function IprPage() {
           isJefe
             ? "IPRs de tu división"
             : role === "ANALISTA"
-              ? "IPRs en formulación"
+              ? "Expedientes asignados"
               : "Intervenciones Públicas Regionales"
         }
         accentColor="indigo"
@@ -380,12 +362,6 @@ export default function IprPage() {
             <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "ipr")}>
               <Download className="size-4 mr-1" />CSV
             </Button>
-            {canCreate && (
-              <Button onClick={() => router.push("/ipr/nuevo")} size="sm">
-                <Plus className="size-4 mr-1" />
-                Nueva IPR
-              </Button>
-            )}
           </>
         }
       />

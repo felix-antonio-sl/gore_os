@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
@@ -16,23 +17,26 @@ interface TabProblemasProps {
 }
 
 export function TabProblemas({ iprId, canCreate }: TabProblemasProps) {
+  const router = useRouter();
   const [problemas, setProblemas] = useState<PaginatedResponse<ProblemaListItem> | null>(null);
   const [loading, setLoading] = useState(true);
   const [showProblemaDrawer, setShowProblemaDrawer] = useState(false);
 
-  const loadProblemas = () => {
+  const [page, setPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
+  const loadProblemas = useCallback(() => {
     setLoading(true);
-    api
-      .get<PaginatedResponse<ProblemaListItem>>(`/api/problemas?ipr_id=${iprId}&page_size=50`)
+    setError(null);
+    api.get<PaginatedResponse<ProblemaListItem>>(`/api/problemas?ipr_id=${iprId}&page=${page}&page_size=50`)
       .then(setProblemas)
-      .catch(() => setProblemas(null))
+      .catch((err) => { setProblemas(null); setError(err instanceof Error ? err.message : "No se pudo consultar el trabajo relacionado."); })
       .finally(() => setLoading(false));
-  };
-
+  }, [iprId, page]);
   useEffect(() => {
-    loadProblemas();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [iprId]);
+    let active = true;
+    queueMicrotask(() => { if (active) loadProblemas(); });
+    return () => { active = false; };
+  }, [loadProblemas]);
 
   const problemaColumns = [
     {
@@ -71,11 +75,14 @@ export function TabProblemas({ iprId, canCreate }: TabProblemasProps) {
       <DataTable
         columns={problemaColumns}
         data={problemas?.items ?? []}
-        page={1}
-        totalPages={1}
+        page={page}
+        totalPages={problemas?.total_pages ?? 1}
         total={problemas?.total ?? 0}
-        onPageChange={() => {}}
+        onPageChange={setPage}
+        onRowClick={(row) => router.push(`/problemas?id=${(row as ProblemaListItem).id}`)}
         isLoading={loading}
+        error={error}
+        onRetry={loadProblemas}
         emptyTitle="Aún no hay problemas registrados"
         emptyDescription="Registra el primer problema detectado en esta IPR."
       />

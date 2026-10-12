@@ -4,7 +4,7 @@ from app.core.config import get_settings
 from app.middleware.security import SecurityHeadersMiddleware
 
 from app.routers import auth, ipr, compromisos, problemas, alertas, dashboard, catalogs
-from app.routers import dgi_data, presupuesto, convenios, admin, search, actos, core_sessions
+from app.routers import dgi_data, convenios, admin, search, actos
 from app.routers import dgi_processes, dgi_coordination, dgi_escalation, dgi_services, risk, notifications
 
 settings = get_settings()
@@ -36,12 +36,10 @@ def create_app() -> FastAPI:
     app.include_router(dashboard.router)
     app.include_router(catalogs.router)
     app.include_router(dgi_data.router)
-    app.include_router(presupuesto.router)
     app.include_router(convenios.router)
     app.include_router(admin.router)
     app.include_router(search.router)
     app.include_router(actos.router)
-    app.include_router(core_sessions.router)
     app.include_router(dgi_processes.router)
     app.include_router(dgi_coordination.router)
     app.include_router(dgi_escalation.router)

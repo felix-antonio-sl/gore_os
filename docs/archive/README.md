@@ -55,3 +55,13 @@ Las categorías, tablas, datos y modelos de dominio se preservan. El lector acot
 de procesos se conserva únicamente para el contexto de riesgos. Los recorridos
 IPR/CORE/CDP completos permanecen disponibles mientras se decide si el lector IPR
 se reduce a consulta; sus capturas siguen satisfaciendo los gates DB.
+
+## Ciclo IPR, CORE y presupuesto/CDP
+
+La consulta del expediente y sus acciones relacionadas son la superficie mantenida.
+La implementación completa de transiciones/capturas IPR, sesiones y votaciones CORE,
+programas presupuestarios y emisión CDP se conserva en Git en
+`92d13a9e9524ccebdf59c676d6686862cd1aff04`, antes de la decisión de poda de Félix del
+12 de octubre de 2026. Se retiraron sus páginas, escritores y administración exclusiva.
+El SQL versionado, las entidades, vocabularios e historiales permanecen íntegros;
+consultar un antecedente no reabre ese motor.

@@ -20,11 +20,6 @@ from app.schemas.admin import (
     DivisionUpdate,
 )
 from app.schemas.threshold import ThresholdListItem, ThresholdCreate, ThresholdUpdate
-from app.schemas.parametric import (
-    Subv8FundItem, Subv8FundCreate, Subv8FundUpdate,
-    Subv8CeilingItem, Subv8CeilingCreate, Subv8CeilingUpdate,
-    FrilCategoryItem, FrilCategoryCreate, FrilCategoryUpdate,
-)
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -493,168 +488,20 @@ async def update_division(
 # GET /api/admin/financing-tracks — List all financing tracks
 # ---------------------------------------------------------------------------
 
-@router.get("/financing-tracks")
-async def list_financing_tracks(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    result = await db.execute(
-        text("""
-            SELECT id, code, label, evaluator_code, evaluator_label,
-                   favorable_products, unfavorable_products, terminal_negative,
-                   thresholds, required_attrs, sla_days, rs_validity_years, is_active
-            FROM core.financing_track
-            ORDER BY code
-        """)
-    )
-    return [dict(r) for r in result.mappings().all()]
-
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/financing-tracks — Create a financing track
 # ---------------------------------------------------------------------------
-
-@router.post("/financing-tracks", status_code=status.HTTP_201_CREATED)
-async def create_financing_track(
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    required = {"code", "label", "evaluator_code", "evaluator_label"}
-    missing = required - set(data.keys())
-    if missing:
-        raise HTTPException(status_code=422, detail=f"Campos requeridos faltantes: {missing}")
-
-    try:
-        result = await db.execute(
-            text("""
-                INSERT INTO core.financing_track (
-                    code, label, evaluator_code, evaluator_label,
-                    favorable_products, unfavorable_products, terminal_negative,
-                    thresholds, required_attrs, sla_days, rs_validity_years
-                ) VALUES (
-                    :code, :label, :evaluator_code, :evaluator_label,
-                    :favorable_products, :unfavorable_products, :terminal_negative,
-                    CAST(:thresholds AS jsonb), :required_attrs,
-                    CAST(:sla_days AS jsonb), :rs_validity_years
-                )
-                RETURNING id
-            """),
-            {
-                "code": data["code"],
-                "label": data["label"],
-                "evaluator_code": data["evaluator_code"],
-                "evaluator_label": data["evaluator_label"],
-                "favorable_products": data.get("favorable_products", []),
-                "unfavorable_products": data.get("unfavorable_products", []),
-                "terminal_negative": data.get("terminal_negative", []),
-                "thresholds": str(data.get("thresholds", {})).replace("'", '"'),
-                "required_attrs": data.get("required_attrs", []),
-                "sla_days": str(data.get("sla_days", {})).replace("'", '"'),
-                "rs_validity_years": data.get("rs_validity_years"),
-            },
-        )
-        row = result.mappings().first()
-        await db.commit()
-        return {"id": str(row["id"]), "code": data["code"]}
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(status_code=409, detail="Ya existe un track con ese código")
-    except DBAPIError:
-        await db.rollback()
-        raise
 
 
 # ---------------------------------------------------------------------------
 # GET /api/admin/financing-tracks/routing — Evaluator routing for an IPR
 # ---------------------------------------------------------------------------
 
-@router.get("/financing-tracks/routing")
-async def get_evaluator_routing(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-    ipr_id: UUID | None = None,
-):
-    """Given an IPR, returns its financing track evaluator info. Informational only."""
-    _require_admin(user)
-    if not ipr_id:
-        raise HTTPException(status_code=422, detail="ipr_id requerido")
-
-    row = (await db.execute(
-        text("""
-            SELECT ft.code AS track_code, ft.label AS track_label,
-                   ft.evaluator_code, ft.evaluator_label,
-                   ft.favorable_products, ft.sla_days, ft.rs_validity_years
-            FROM core.ipr i
-            JOIN core.financing_track ft ON ft.id = i.financing_track_id
-            WHERE i.id = :ipr_id AND i.deleted_at IS NULL AND ft.is_active = true
-        """),
-        {"ipr_id": str(ipr_id)},
-    )).mappings().first()
-
-    if not row:
-        raise HTTPException(
-            status_code=404,
-            detail="IPR no encontrado o sin track de financiamiento asignado",
-        )
-    return dict(row)
-
 
 # ---------------------------------------------------------------------------
 # GET /api/admin/financing-tracks/{code}/iprs — IPRs in a track
 # ---------------------------------------------------------------------------
-
-@router.get("/financing-tracks/{track_code}/iprs")
-async def list_track_iprs(
-    track_code: str,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-    page: int = Query(1, ge=1),
-    page_size: int = Query(25, ge=1, le=100),
-):
-    """List IPRs belonging to a specific financing track (by mechanism code)."""
-    _require_admin(user)
-
-    params: dict = {"track_code": track_code}
-    base_query = """
-        FROM core.ipr i
-        JOIN ref.category mech ON mech.id = i.mechanism_id AND mech.scheme = 'mechanism' AND mech.code = :track_code
-        LEFT JOIN ref.category st ON st.id = i.status_id
-        LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
-        LEFT JOIN core.organization exc ON exc.id = i.executor_id
-        WHERE i.deleted_at IS NULL
-    """
-
-    count_result = await db.execute(text(f"SELECT COUNT(*) AS total {base_query}"), params)
-    total = count_result.scalar() or 0
-
-    offset = (page - 1) * page_size
-    params["limit"] = page_size
-    params["offset"] = offset
-
-    rows_result = await db.execute(
-        text(f"""
-            SELECT i.id, i.codigo_bip, i.name,
-                   st.code AS status, st.label AS status_label,
-                   mcd.code AS mcd_phase,
-                   exc.name AS executor_name
-            {base_query}
-            ORDER BY i.codigo_bip ASC
-            LIMIT :limit OFFSET :offset
-        """),
-        params,
-    )
-    items = [dict(r) for r in rows_result.mappings().all()]
-
-    return {
-        "items": items,
-        "total": total,
-        "page": page,
-        "page_size": page_size,
-        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
-    }
 
 
 # ---------------------------------------------------------------------------
@@ -667,49 +514,6 @@ _TRACK_FIELDS = {
     "required_attrs", "rs_validity_years", "is_active",
 }
 _TRACK_JSONB_FIELDS = {"thresholds", "sla_days"}
-
-
-@router.patch("/financing-tracks/{track_id}")
-async def update_financing_track(
-    track_id: UUID,
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    existing = await db.execute(
-        text("SELECT id FROM core.financing_track WHERE id = :id"),
-        {"id": str(track_id)},
-    )
-    if not existing.first():
-        raise HTTPException(status_code=404, detail="Track no encontrado")
-
-    if not data:
-        return {"message": "Sin cambios"}
-
-    set_parts = []
-    params: dict = {"id": str(track_id)}
-
-    for key, val in data.items():
-        if key in _TRACK_FIELDS:
-            param = f"v_{key}"
-            set_parts.append(f"{key} = :{param}")
-            params[param] = val
-        elif key in _TRACK_JSONB_FIELDS:
-            import json
-            param = f"v_{key}"
-            set_parts.append(f"{key} = CAST(:{param} AS jsonb)")
-            params[param] = json.dumps(val) if isinstance(val, dict) else val
-
-    if not set_parts:
-        return {"message": "Sin campos válidos para actualizar"}
-
-    set_parts.append("updated_at = NOW()")
-    sql = text(f"UPDATE core.financing_track SET {', '.join(set_parts)} WHERE id = :id")
-    await db.execute(sql, params)
-    await db.commit()
-    return {"message": "Track actualizado"}
 
 
 # ===========================================================================
@@ -843,108 +647,15 @@ _SNI_LEVEL_FIELDS = {
 # GET /api/admin/sni-levels — List all SNI levels
 # ---------------------------------------------------------------------------
 
-@router.get("/sni-levels")
-async def list_sni_levels(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    result = await db.execute(
-        text("""
-            SELECT id, level_number, label, min_utm, max_utm,
-                   evaluator_code, requires_external_eval, is_active,
-                   created_at, updated_at
-            FROM core.sni_level_config
-            ORDER BY level_number
-        """)
-    )
-    return [dict(r) for r in result.mappings().all()]
-
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/sni-levels — Create a new SNI level
 # ---------------------------------------------------------------------------
 
-@router.post("/sni-levels", status_code=status.HTTP_201_CREATED)
-async def create_sni_level(
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    required = {"level_number", "label", "evaluator_code"}
-    missing = required - set(data.keys())
-    if missing:
-        raise HTTPException(status_code=422, detail=f"Campos requeridos faltantes: {missing}")
-
-    try:
-        result = await db.execute(
-            text("""
-                INSERT INTO core.sni_level_config (
-                    level_number, label, min_utm, max_utm,
-                    evaluator_code, requires_external_eval
-                ) VALUES (
-                    :level_number, :label, :min_utm, :max_utm,
-                    :evaluator_code, :requires_external_eval
-                )
-                RETURNING id
-            """),
-            {
-                "level_number": data["level_number"],
-                "label": data["label"],
-                "min_utm": data.get("min_utm", 0),
-                "max_utm": data.get("max_utm"),
-                "evaluator_code": data["evaluator_code"],
-                "requires_external_eval": data.get("requires_external_eval", False),
-            },
-        )
-        row = result.mappings().first()
-        await db.commit()
-        return {"id": str(row["id"]), "level_number": data["level_number"]}
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(status_code=409, detail="Ya existe un nivel con ese número")
-    except DBAPIError:
-        await db.rollback()
-        raise
-
 
 # ---------------------------------------------------------------------------
 # PATCH /api/admin/sni-levels/{id} — Update an SNI level
 # ---------------------------------------------------------------------------
-
-@router.patch("/sni-levels/{level_id}")
-async def update_sni_level(
-    level_id: UUID,
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    existing = await db.execute(
-        text("SELECT id FROM core.sni_level_config WHERE id = :id"),
-        {"id": str(level_id)},
-    )
-    if not existing.first():
-        raise HTTPException(status_code=404, detail="Nivel SNI no encontrado")
-
-    if not data:
-        return {"message": "Sin cambios"}
-
-    # Validate field names against allowlist
-    for key in data:
-        if key not in _SNI_LEVEL_FIELDS:
-            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
-
-    set_clauses = ", ".join(f"{k} = :{k}" for k in data)
-    params = {**data, "id": str(level_id)}
-    await db.execute(
-        text(f"UPDATE core.sni_level_config SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
-        params,
-    )
-    await db.commit()
-    return {"message": "Nivel SNI actualizado"}
 
 
 # ===========================================================================
@@ -962,209 +673,30 @@ _SUBV8_FUND_FIELDS = {
 # GET /api/admin/subv8-funds — List all subv8 funds
 # ---------------------------------------------------------------------------
 
-@router.get("/subv8-funds", response_model=list[Subv8FundItem])
-async def list_subv8_funds(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    result = await db.execute(
-        text("""
-            SELECT id, code, name, budget_regular, budget_special,
-                   budget_total, is_exclusive, sort_order, is_active
-            FROM core.subv8_fund
-            ORDER BY sort_order, code
-        """)
-    )
-    return [Subv8FundItem(**dict(r)) for r in result.mappings().all()]
-
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/subv8-funds — Create a subv8 fund
 # ---------------------------------------------------------------------------
-
-@router.post("/subv8-funds", status_code=status.HTTP_201_CREATED)
-async def create_subv8_fund(
-    data: Subv8FundCreate,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    try:
-        result = await db.execute(
-            text("""
-                INSERT INTO core.subv8_fund (
-                    code, name, budget_regular, budget_special,
-                    budget_total, is_exclusive, sort_order
-                ) VALUES (
-                    :code, :name, :budget_regular, :budget_special,
-                    :budget_total, :is_exclusive, :sort_order
-                )
-                RETURNING id
-            """),
-            {
-                "code": data.code,
-                "name": data.name,
-                "budget_regular": data.budget_regular,
-                "budget_special": data.budget_special,
-                "budget_total": data.budget_total,
-                "is_exclusive": data.is_exclusive,
-                "sort_order": data.sort_order,
-            },
-        )
-        row = result.mappings().first()
-        await db.commit()
-        return {"id": str(row["id"]), "code": data.code}
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(status_code=409, detail="Ya existe un fondo con ese código")
-    except DBAPIError:
-        await db.rollback()
-        raise
 
 
 # ---------------------------------------------------------------------------
 # PATCH /api/admin/subv8-funds/{fund_id} — Update a subv8 fund
 # ---------------------------------------------------------------------------
 
-@router.patch("/subv8-funds/{fund_id}")
-async def update_subv8_fund(
-    fund_id: UUID,
-    data: Subv8FundUpdate,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    existing = await db.execute(
-        text("SELECT id FROM core.subv8_fund WHERE id = :id"),
-        {"id": str(fund_id)},
-    )
-    if not existing.first():
-        raise HTTPException(status_code=404, detail="Fondo no encontrado")
-
-    updates = data.model_dump(exclude_unset=True)
-    if not updates:
-        return {"message": "Sin cambios"}
-
-    for key in updates:
-        if key not in _SUBV8_FUND_FIELDS:
-            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
-
-    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
-    updates["id"] = str(fund_id)
-    await db.execute(
-        text(f"UPDATE core.subv8_fund SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
-        updates,
-    )
-    await db.commit()
-    return {"message": "Fondo actualizado"}
-
 
 # ---------------------------------------------------------------------------
 # GET /api/admin/subv8-funds/{fund_id}/ceilings — List ceilings for a fund
 # ---------------------------------------------------------------------------
-
-@router.get("/subv8-funds/{fund_id}/ceilings", response_model=list[Subv8CeilingItem])
-async def list_fund_ceilings(
-    fund_id: UUID,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    # Verify fund exists
-    fund = await db.execute(
-        text("SELECT id FROM core.subv8_fund WHERE id = :id"),
-        {"id": str(fund_id)},
-    )
-    if not fund.first():
-        raise HTTPException(status_code=404, detail="Fondo no encontrado")
-
-    result = await db.execute(
-        text("""
-            SELECT c.id, c.fund_id, f.code AS fund_code, f.name AS fund_name,
-                   c.institution_type, c.area, c.max_amount, c.notes
-            FROM core.subv8_fund_ceiling c
-            JOIN core.subv8_fund f ON f.id = c.fund_id
-            WHERE c.fund_id = :fund_id
-            ORDER BY c.institution_type, c.area
-        """),
-        {"fund_id": str(fund_id)},
-    )
-    return [Subv8CeilingItem(**dict(r)) for r in result.mappings().all()]
 
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/subv8-funds/{fund_id}/ceilings — Create a ceiling under a fund
 # ---------------------------------------------------------------------------
 
-@router.post("/subv8-funds/{fund_id}/ceilings", status_code=status.HTTP_201_CREATED)
-async def create_fund_ceiling(
-    fund_id: UUID,
-    data: Subv8CeilingCreate,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    # Verify fund exists
-    fund = await db.execute(
-        text("SELECT id FROM core.subv8_fund WHERE id = :id"),
-        {"id": str(fund_id)},
-    )
-    if not fund.first():
-        raise HTTPException(status_code=404, detail="Fondo no encontrado")
-
-    try:
-        result = await db.execute(
-            text("""
-                INSERT INTO core.subv8_fund_ceiling (
-                    fund_id, institution_type, area, max_amount, notes
-                ) VALUES (
-                    :fund_id, :institution_type, :area, :max_amount, :notes
-                )
-                RETURNING id
-            """),
-            {
-                "fund_id": str(fund_id),
-                "institution_type": data.institution_type,
-                "area": data.area,
-                "max_amount": data.max_amount,
-                "notes": data.notes,
-            },
-        )
-        row = result.mappings().first()
-        await db.commit()
-        return {"id": str(row["id"]), "fund_id": str(fund_id)}
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(status_code=409, detail="Ya existe un tope para esa combinación fondo/tipo/área")
-    except DBAPIError:
-        await db.rollback()
-        raise
-
 
 # ---------------------------------------------------------------------------
 # GET /api/admin/subv8-fund-ceilings — List ALL ceilings flat (with fund info)
 # ---------------------------------------------------------------------------
-
-@router.get("/subv8-fund-ceilings", response_model=list[Subv8CeilingItem])
-async def list_all_ceilings(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    result = await db.execute(
-        text("""
-            SELECT c.id, c.fund_id, f.code AS fund_code, f.name AS fund_name,
-                   c.institution_type, c.area, c.max_amount, c.notes
-            FROM core.subv8_fund_ceiling c
-            JOIN core.subv8_fund f ON f.id = c.fund_id
-            ORDER BY f.sort_order, f.code, c.institution_type, c.area
-        """)
-    )
-    return [Subv8CeilingItem(**dict(r)) for r in result.mappings().all()]
 
 
 # ---------------------------------------------------------------------------
@@ -1174,60 +706,9 @@ async def list_all_ceilings(
 _SUBV8_CEILING_FIELDS = {"institution_type", "area", "max_amount", "notes"}
 
 
-@router.patch("/subv8-fund-ceilings/{ceiling_id}")
-async def update_ceiling(
-    ceiling_id: UUID,
-    data: Subv8CeilingUpdate,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    existing = await db.execute(
-        text("SELECT id FROM core.subv8_fund_ceiling WHERE id = :id"),
-        {"id": str(ceiling_id)},
-    )
-    if not existing.first():
-        raise HTTPException(status_code=404, detail="Tope no encontrado")
-
-    updates = data.model_dump(exclude_unset=True)
-    if not updates:
-        return {"message": "Sin cambios"}
-
-    for key in updates:
-        if key not in _SUBV8_CEILING_FIELDS:
-            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
-
-    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
-    updates["id"] = str(ceiling_id)
-    await db.execute(
-        text(f"UPDATE core.subv8_fund_ceiling SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
-        updates,
-    )
-    await db.commit()
-    return {"message": "Tope actualizado"}
-
-
 # ---------------------------------------------------------------------------
 # DELETE /api/admin/subv8-fund-ceilings/{ceiling_id} — Delete a ceiling
 # ---------------------------------------------------------------------------
-
-@router.delete("/subv8-fund-ceilings/{ceiling_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_ceiling(
-    ceiling_id: UUID,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    result = await db.execute(
-        text("DELETE FROM core.subv8_fund_ceiling WHERE id = :id RETURNING id"),
-        {"id": str(ceiling_id)},
-    )
-    if not result.first():
-        raise HTTPException(status_code=404, detail="Tope no encontrado")
-
-    await db.commit()
 
 
 # ===========================================================================
@@ -1245,105 +726,15 @@ _FRIL_CATEGORY_FIELDS = {
 # GET /api/admin/fril-categories — List all FRIL categories
 # ---------------------------------------------------------------------------
 
-@router.get("/fril-categories", response_model=list[FrilCategoryItem])
-async def list_fril_categories(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    result = await db.execute(
-        text("""
-            SELECT id, code, name, group_code, group_name, description,
-                   examples, max_utm, is_exempt_commune_limit, is_active, sort_order
-            FROM core.fril_category
-            ORDER BY sort_order, code
-        """)
-    )
-    return [FrilCategoryItem(**dict(r)) for r in result.mappings().all()]
-
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/fril-categories — Create a FRIL category
 # ---------------------------------------------------------------------------
 
-@router.post("/fril-categories", status_code=status.HTTP_201_CREATED)
-async def create_fril_category(
-    data: FrilCategoryCreate,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    try:
-        result = await db.execute(
-            text("""
-                INSERT INTO core.fril_category (
-                    code, name, group_code, group_name, description,
-                    examples, max_utm, is_exempt_commune_limit, sort_order
-                ) VALUES (
-                    :code, :name, :group_code, :group_name, :description,
-                    :examples, :max_utm, :is_exempt_commune_limit, :sort_order
-                )
-                RETURNING id
-            """),
-            {
-                "code": data.code,
-                "name": data.name,
-                "group_code": data.group_code,
-                "group_name": data.group_name,
-                "description": data.description,
-                "examples": data.examples,
-                "max_utm": data.max_utm,
-                "is_exempt_commune_limit": data.is_exempt_commune_limit,
-                "sort_order": data.sort_order,
-            },
-        )
-        row = result.mappings().first()
-        await db.commit()
-        return {"id": str(row["id"]), "code": data.code}
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(status_code=409, detail="Ya existe una categoría con ese código")
-    except DBAPIError:
-        await db.rollback()
-        raise
-
 
 # ---------------------------------------------------------------------------
 # PATCH /api/admin/fril-categories/{category_id} — Update a FRIL category
 # ---------------------------------------------------------------------------
-
-@router.patch("/fril-categories/{category_id}")
-async def update_fril_category(
-    category_id: UUID,
-    data: FrilCategoryUpdate,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    existing = await db.execute(
-        text("SELECT id FROM core.fril_category WHERE id = :id"),
-        {"id": str(category_id)},
-    )
-    if not existing.first():
-        raise HTTPException(status_code=404, detail="Categoría FRIL no encontrada")
-
-    updates = data.model_dump(exclude_unset=True)
-    if not updates:
-        return {"message": "Sin cambios"}
-
-    for key in updates:
-        if key not in _FRIL_CATEGORY_FIELDS:
-            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
-
-    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
-    updates["id"] = str(category_id)
-    await db.execute(
-        text(f"UPDATE core.fril_category SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
-        updates,
-    )
-    await db.commit()
-    return {"message": "Categoría FRIL actualizada"}
 
 
 # ===========================================================================
@@ -1358,93 +749,15 @@ _PROGRAM_CODE_FIELDS = {"label", "sort_order"}
 # GET /api/admin/budget-program-codes — List all budget program codes
 # ---------------------------------------------------------------------------
 
-@router.get("/budget-program-codes")
-async def list_budget_program_codes(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    result = await db.execute(
-        text("""
-            SELECT id, code, label, sort_order, created_at, updated_at
-            FROM ref.category
-            WHERE scheme = 'budget_program_code' AND deleted_at IS NULL
-            ORDER BY sort_order, code
-        """)
-    )
-    return [dict(r) for r in result.mappings().all()]
-
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/budget-program-codes — Create a budget program code
 # ---------------------------------------------------------------------------
 
-@router.post("/budget-program-codes", status_code=status.HTTP_201_CREATED)
-async def create_budget_program_code(
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    required = {"code", "label"}
-    missing = required - set(data.keys())
-    if missing:
-        raise HTTPException(status_code=422, detail=f"Campos requeridos faltantes: {missing}")
-
-    try:
-        result = await db.execute(
-            text("""
-                INSERT INTO ref.category (scheme, code, label, sort_order, created_by_id)
-                VALUES ('budget_program_code', :code, :label, :sort_order, :user_id)
-                RETURNING id, code
-            """),
-            {
-                "code": data["code"],
-                "label": data["label"],
-                "sort_order": data.get("sort_order", 0),
-                "user_id": str(user["id"]),
-            },
-        )
-        row = result.mappings().first()
-        await db.commit()
-        return {"id": str(row["id"]), "code": row["code"]}
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(status_code=409, detail="Ya existe un código de programa con ese code")
-
 
 # ---------------------------------------------------------------------------
 # PATCH /api/admin/budget-program-codes/{code_id} — Update a budget program code
 # ---------------------------------------------------------------------------
-
-@router.patch("/budget-program-codes/{code_id}")
-async def update_budget_program_code(
-    code_id: UUID,
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-
-    existing = await db.execute(
-        text("SELECT id FROM ref.category WHERE id = :id AND scheme = 'budget_program_code' AND deleted_at IS NULL"),
-        {"id": str(code_id)},
-    )
-    if not existing.first():
-        raise HTTPException(status_code=404, detail="Código de programa no encontrado")
-
-    updates = {k: v for k, v in data.items() if k in _PROGRAM_CODE_FIELDS}
-    if not updates:
-        return {"message": "Sin cambios"}
-
-    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
-    updates["id"] = str(code_id)
-    await db.execute(
-        text(f"UPDATE ref.category SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
-        updates,
-    )
-    await db.commit()
-    return {"message": "Actualizado"}
 
 
 # ===========================================================================
@@ -1459,103 +772,15 @@ _ADMISSIBILITY_ITEM_FIELDS = {"label", "description", "responsible_role", "sort_
 # GET /api/admin/admissibility-items — List admissibility items
 # ---------------------------------------------------------------------------
 
-@router.get("/admissibility-items")
-async def list_admissibility_items(
-    user: CurrentUser,
-    track_id: UUID | None = None,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    sql = """
-        SELECT ai.id, ai.financing_track_id, ai.code, ai.label, ai.description,
-               ai.responsible_role, ai.sort_order, ai.is_required,
-               ft.code AS track_code
-        FROM core.admissibility_item ai
-        JOIN core.financing_track ft ON ft.id = ai.financing_track_id
-        WHERE ai.deleted_at IS NULL
-    """
-    params: dict = {}
-    if track_id:
-        sql += " AND ai.financing_track_id = :track_id"
-        params["track_id"] = str(track_id)
-    sql += " ORDER BY ai.sort_order, ai.code"
-    rows = (await db.execute(text(sql), params)).mappings().all()
-    return [dict(r) for r in rows]
-
 
 # ---------------------------------------------------------------------------
 # POST /api/admin/admissibility-items — Create an admissibility item
 # ---------------------------------------------------------------------------
 
-@router.post("/admissibility-items", status_code=201)
-async def create_admissibility_item(
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    required = {"financing_track_id", "code", "label", "responsible_role"}
-    missing = required - data.keys()
-    if missing:
-        raise HTTPException(400, f"Campos requeridos: {missing}")
-    try:
-        row = (await db.execute(
-            text("""
-                INSERT INTO core.admissibility_item
-                  (financing_track_id, code, label, description, responsible_role, sort_order, is_required)
-                VALUES (:financing_track_id, :code, :label, :description, :responsible_role, :sort_order, :is_required)
-                RETURNING id, financing_track_id, code, label, description, responsible_role, sort_order, is_required
-            """),
-            {
-                "financing_track_id": str(data["financing_track_id"]),
-                "code": data["code"],
-                "label": data["label"],
-                "description": data.get("description"),
-                "responsible_role": data["responsible_role"],
-                "sort_order": data.get("sort_order", 0),
-                "is_required": data.get("is_required", True),
-            },
-        )).mappings().first()
-        await db.commit()
-        return dict(row)
-    except IntegrityError:
-        await db.rollback()
-        raise HTTPException(409, "Ya existe un ítem con ese código para este track")
-
 
 # ---------------------------------------------------------------------------
 # PATCH /api/admin/admissibility-items/{item_id} — Update an admissibility item
 # ---------------------------------------------------------------------------
-
-@router.patch("/admissibility-items/{item_id}")
-async def update_admissibility_item(
-    item_id: UUID,
-    data: dict,
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    _require_admin(user)
-    existing = await db.execute(
-        text("SELECT id FROM core.admissibility_item WHERE id = :id AND deleted_at IS NULL"),
-        {"id": str(item_id)},
-    )
-    if not existing.first():
-        raise HTTPException(404, "Ítem de admisibilidad no encontrado")
-    updates = {k: v for k, v in data.items() if k in _ADMISSIBILITY_ITEM_FIELDS}
-    if not updates:
-        return {"message": "Sin cambios"}
-    set_clause = ", ".join(f"{k} = :{k}" for k in updates)
-    updates["id"] = str(item_id)
-    row = (await db.execute(
-        text(f"""
-            UPDATE core.admissibility_item SET {set_clause}, updated_at = NOW()
-            WHERE id = :id
-            RETURNING id, financing_track_id, code, label, description, responsible_role, sort_order, is_required
-        """),
-        updates,
-    )).mappings().first()
-    await db.commit()
-    return dict(row)
 
 
 # ===========================================================================

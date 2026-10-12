@@ -17,12 +17,3 @@ class NotificationItem(BaseModel):
 
 class NotificationUnreadCount(BaseModel):
     count: int
-
-
-class NotificationCreate(BaseModel):
-    title: str
-    body: str | None = None
-    category: str
-    entity_type: str | None = None
-    entity_id: UUID | None = None
-    link: str | None = None

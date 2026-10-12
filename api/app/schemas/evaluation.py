@@ -3,27 +3,6 @@ from uuid import UUID
 from datetime import datetime
 
 
-class EvaluationAssignmentCreate(BaseModel):
-    evaluator_type_id: UUID | None = None
-    evaluator_organization_id: UUID | None = None
-    evaluator_name: str | None = None
-    deadline_at: datetime | None = None
-    rank_position: int | None = None
-    rank_total: int | None = None
-    convocatoria_code: str | None = None
-
-
-class EvaluationAssignmentUpdate(BaseModel):
-    result_id: UUID | None = None
-    observations: str | None = None
-    completed_at: datetime | None = None
-    deadline_at: datetime | None = None
-    numeric_score: float | None = None
-    rank_position: int | None = None
-    rank_total: int | None = None
-    convocatoria_code: str | None = None
-
-
 class EvaluationAssignmentItem(BaseModel):
     id: UUID
     ipr_id: UUID

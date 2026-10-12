@@ -40,7 +40,7 @@ no obligan a mantener todas las capacidades como módulos activos.
 
 | Documento | Contenido |
 |-----------|-----------|
-| [GORE_OS_Testing_Ciclo3.md](GORE_OS_Testing_Ciclo3.md) | Guía de testing primaria: suite completa, SISREC, tablas paramétricas, presupuesto |
+| [GORE_OS_Testing_Ciclo3.md](GORE_OS_Testing_Ciclo3.md) | Guía histórica de pruebas; contrastar suites y módulos vigentes con la bandeja y `api/tests/` |
 | [GORE_OS_Testing_Manual_v1.0.md](GORE_OS_Testing_Manual_v1.0.md) | Plan de pruebas manual/visual por rol (sesión C59) |
 
 ## ETL y pipeline de datos
