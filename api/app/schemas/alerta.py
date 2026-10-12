@@ -17,6 +17,7 @@ class AlertaListItem(BaseModel):
     acknowledged_at: datetime | None
     attended_at: datetime | None
     resolved_at: datetime | None
+    can_attend: bool = False
 
 
 class AlertaAttendRequest(BaseModel):

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/command";
 import { api } from "@/lib/api";
 import type { SearchResult } from "@/types";
-import { FileText, AlertCircle, ClipboardList, User } from "lucide-react";
+import { FileText, AlertCircle, ClipboardList } from "lucide-react";
 
 interface SearchResponse {
   results: SearchResult[];
@@ -22,21 +22,18 @@ const ENTITY_ICONS: Record<string, React.ReactNode> = {
   ipr: <FileText className="size-3.5 shrink-0 text-blue-500" />,
   compromiso: <ClipboardList className="size-3.5 shrink-0 text-green-500" />,
   problema: <AlertCircle className="size-3.5 shrink-0 text-orange-500" />,
-  persona: <User className="size-3.5 shrink-0 text-purple-500" />,
 };
 
 const ENTITY_LABELS: Record<string, string> = {
   ipr: "IPR",
   compromiso: "Compromisos",
   problema: "Problemas",
-  persona: "Personas",
 };
 
 const ENTITY_ROUTES: Record<string, (id: string) => string> = {
   ipr: (id) => `/ipr/${id}`,
   compromiso: (id) => `/compromisos?id=${id}`,
   problema: (id) => `/problemas?id=${id}`,
-  persona: () => `/datos?dominio=personas`,
 };
 
 interface GlobalSearchProps {

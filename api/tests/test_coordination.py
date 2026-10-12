@@ -1,15 +1,4 @@
-"""
-Integration tests for Wave B: Coordination, Escalation, Services, SLAs.
-
-35 tests covering:
-- AR decisions CRUD (5)
-- Escalation CRUD + FSM + auto-alert + code gen (8)
-- Service catalog CRUD (4)
-- Service requests CRUD + FSM + timing (6)
-- SLA CRUD + dashboard (5)
-- Division interactions CRUD + matrix (4)
-- Role restrictions (3)
-"""
+"""Decision follow-up, escalation, service request and SLA authority used by the inbox."""
 
 import pytest
 from httpx import AsyncClient
@@ -110,19 +99,6 @@ async def test_ar_decisions_delete(client: AsyncClient, dgi_token):
     assert del_resp.status_code == 204
 
 
-@pytest.mark.asyncio
-async def test_ar_prep_view(client: AsyncClient, dgi_token):
-    """AR prep view returns initiatives, alerts, decisions."""
-    resp = await client.get(
-        "/api/dgi/coordination/ar/prep",
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 200
-    data = resp.json()
-    assert "initiatives" in data
-    assert "alerts" in data
-    assert "decisions" in data
-    assert "count" in data["initiatives"]
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -704,100 +680,18 @@ async def test_sla_update(client: AsyncClient, dgi_token):
     assert resp.json()["target_days"] == 5
 
 
-@pytest.mark.asyncio
-async def test_sla_dashboard(client: AsyncClient, dgi_token):
-    """SLA dashboard returns summary structure."""
-    resp = await client.get(
-        "/api/dgi/services/sla-dashboard",
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 200
-    data = resp.json()
-    assert "global_completion_rate" in data
-    assert "active_requests" in data
-    assert "by_service" in data
 
 
 # ═══════════════════════════════════════════════════════════════════════════
 # DIVISION INTERACTIONS
 # ═══════════════════════════════════════════════════════════════════════════
 
-@pytest.mark.asyncio
-async def test_interaction_create(client: AsyncClient, dgi_token, catalog):
-    """Create a division interaction."""
-    resp = await client.post(
-        "/api/dgi/coordination/interactions",
-        json={
-            "division_id": catalog["division_id"],
-            "interaction_type": "PRESUPUESTO",
-            "notes": "Revisión ejecución Q3",
-        },
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 201
-    data = resp.json()
-    assert data["interaction_type"] == "PRESUPUESTO"
-    assert data["division_name"] is not None
 
 
-@pytest.mark.asyncio
-async def test_interaction_list(client: AsyncClient, dgi_token, catalog):
-    """List interactions with filters."""
-    await client.post(
-        "/api/dgi/coordination/interactions",
-        json={
-            "division_id": catalog["division_id"],
-            "interaction_type": "GENERAL",
-        },
-        headers=auth(dgi_token),
-    )
-
-    resp = await client.get(
-        "/api/dgi/coordination/interactions",
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 200
-    assert resp.json()["total"] >= 1
 
 
-@pytest.mark.asyncio
-async def test_interaction_update(client: AsyncClient, dgi_token, catalog):
-    """Update interaction notes."""
-    create_resp = await client.post(
-        "/api/dgi/coordination/interactions",
-        json={
-            "division_id": catalog["division_id"],
-            "interaction_type": "CARTERA",
-        },
-        headers=auth(dgi_token),
-    )
-    int_id = create_resp.json()["id"]
-
-    resp = await client.patch(
-        f"/api/dgi/coordination/interactions/{int_id}",
-        json={"notes": "Updated notes", "topics": ["IPR atrasados", "CDPs pendientes"]},
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 200
-    assert resp.json()["notes"] == "Updated notes"
-    assert len(resp.json()["topics"]) == 2
 
 
-@pytest.mark.asyncio
-async def test_interaction_matrix(client: AsyncClient, dgi_token):
-    """Matrix returns one row per division."""
-    resp = await client.get(
-        "/api/dgi/coordination/interactions/matrix",
-        headers=auth(dgi_token),
-    )
-    assert resp.status_code == 200
-    data = resp.json()
-    assert isinstance(data, list)
-    if len(data) > 0:
-        row = data[0]
-        assert "division_name" in row
-        assert "last_interaction" in row
-        assert "pending_agreements" in row
 
 
 # ═══════════════════════════════════════════════════════════════════════════

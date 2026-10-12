@@ -47,14 +47,12 @@ async def test_action_items_priority_ordering(client: AsyncClient, regional_toke
 
 @pytest.mark.asyncio
 async def test_action_items_encargado_no_decisions(client: AsyncClient, analista_token: str):
-    """ANALISTA should not see AR decisions, escalations, SLA, risks."""
+    """ANALISTA should not see AR decisions or escalations. Own SLA requests and related risks retain their reader scope."""
     resp = await client.get("/api/dashboard/action-items", headers=auth(analista_token))
     data = resp.json()
     categories = {item["category"] for item in data["items"]}
     assert "DECISION" not in categories
     assert "ESCALAMIENTO" not in categories
-    assert "SLA" not in categories
-    assert "RIESGO" not in categories
 
 
 @pytest.mark.asyncio

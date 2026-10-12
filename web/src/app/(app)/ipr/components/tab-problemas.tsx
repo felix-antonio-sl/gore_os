@@ -6,7 +6,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { IprProblemaDrawer } from "@/components/ipr-problema-drawer";
+import { ProblemaCreateDrawer } from "@/components/problema-create-drawer";
 import { Plus } from "lucide-react";
 import type { PaginatedResponse, ProblemaListItem } from "@/types";
 
@@ -79,7 +79,7 @@ export function TabProblemas({ iprId, canCreate }: TabProblemasProps) {
         emptyTitle="Aún no hay problemas registrados"
         emptyDescription="Registra el primer problema detectado en esta IPR."
       />
-      <IprProblemaDrawer
+      <ProblemaCreateDrawer
         iprId={iprId}
         open={showProblemaDrawer}
         onClose={() => setShowProblemaDrawer(false)}

@@ -2,12 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
 from app.middleware.security import SecurityHeadersMiddleware
+
 from app.routers import auth, ipr, compromisos, problemas, alertas, dashboard, catalogs
-from app.routers import dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports
-from app.routers import presupuesto, convenios, admin, reuniones
-from app.routers import search, actos, core_sessions, dgi_cartera, dgi_bottleneck, dgi_processes
-from app.routers import dgi_coordination, dgi_escalation, dgi_services, dgi_td_sessions
-from app.routers import risk, command_center, notifications, dev
+from app.routers import dgi_data, presupuesto, convenios, admin, search, actos, core_sessions
+from app.routers import dgi_processes, dgi_coordination, dgi_escalation, dgi_services, risk, notifications
 
 settings = get_settings()
 
@@ -37,28 +35,19 @@ def create_app() -> FastAPI:
     app.include_router(alertas.router)
     app.include_router(dashboard.router)
     app.include_router(catalogs.router)
-    app.include_router(dgi_cockpit.router)
-    app.include_router(dgi_initiatives.router)
     app.include_router(dgi_data.router)
-    app.include_router(dgi_reports.router)
     app.include_router(presupuesto.router)
     app.include_router(convenios.router)
     app.include_router(admin.router)
-    app.include_router(reuniones.router)
     app.include_router(search.router)
     app.include_router(actos.router)
     app.include_router(core_sessions.router)
-    app.include_router(dgi_cartera.router)
-    app.include_router(dgi_bottleneck.router)
     app.include_router(dgi_processes.router)
     app.include_router(dgi_coordination.router)
     app.include_router(dgi_escalation.router)
     app.include_router(dgi_services.router)
-    app.include_router(dgi_td_sessions.router)
     app.include_router(risk.router)
-    app.include_router(command_center.router)
     app.include_router(notifications.router)
-    app.include_router(dev.router)
 
     @app.get("/api/health")
     async def health():

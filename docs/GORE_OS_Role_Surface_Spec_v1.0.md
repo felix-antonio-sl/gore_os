@@ -1,5 +1,10 @@
 # GORE_OS — Especificacion Rol x Superficie v1.0
 
+> Referencia de dominio y snapshot histórico de superficies. El alcance activo,
+> sus lectores/acciones y las capacidades archivadas se describen en
+> [Bandeja de trabajo](GORE_OS_Bandeja_Trabajo.md). Las rutas o cifras anteriores
+> se conservan como trazabilidad y no presentan módulos retirados como activos.
+
 **Fecha**: 2026-03-22 | **Sesion**: C60
 **Objetivo**: Mapear cada rol a su superficie real de uso para fundamentar poda UX.
 **Fuentes**: User Journeys v3.2, sidebar.tsx, command-center.tsx, security.py, scope.py, PageGuard en 60 page.tsx

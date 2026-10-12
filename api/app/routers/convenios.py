@@ -819,6 +819,8 @@ async def get_valid_transitions(
     db: AsyncSession = Depends(get_db),
 ):
     """Return the valid destination states for this agreement's current state."""
+    if user["role_code"] not in WRITE_OPERATIONAL_ROLES:
+        return []
     result = await db.execute(
         text("""
             SELECT
@@ -848,7 +850,18 @@ async def get_valid_transitions(
         """),
         {"codes": valid_codes},
     )
-    return [dict(r) for r in dest_result.mappings().all()]
+    transitions = []
+    for destination in dest_result.mappings().all():
+        transition = dict(destination)
+        try:
+            await _validate_amount_thresholds(convenio_id, row["current_code"], transition["code"], db)
+        except HTTPException as error:
+            if error.status_code != status.HTTP_409_CONFLICT:
+                raise
+            transition["blocked"] = True
+            transition["reason"] = error.detail
+        transitions.append(transition)
+    return transitions
 
 
 # ---------------------------------------------------------------------------

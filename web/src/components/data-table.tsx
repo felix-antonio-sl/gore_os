@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { EmptyState } from "@/components/empty-state";
 import { AlertTriangle, RotateCw } from "lucide-react";
 
-interface Column {
+export interface Column {
   key: string;
   label: string;
   className?: string;

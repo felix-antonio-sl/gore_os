@@ -17,7 +17,7 @@ async def global_search(
     q: str = Query(..., min_length=2, max_length=100),
     limit: int = Query(default=5, ge=1, le=20),
 ):
-    """Búsqueda global en IPR, compromisos, problemas y personas."""
+    """Búsqueda global en IPR, compromisos y problemas."""
     term = f"%{q}%"
     role = user.get("role_code")
     params: dict = {"term": term, "limit": limit}
@@ -89,17 +89,6 @@ async def global_search(
             LIMIT :limit
         ) problema_results
 
-        UNION ALL
-
-        SELECT * FROM (
-            SELECT p.id::text, NULL AS code,
-                   p.names || ' ' || p.paternal_surname AS name,
-                   'persona' AS entity_type
-            FROM core.person p
-            WHERE p.deleted_at IS NULL
-              AND (p.names ILIKE :term OR p.paternal_surname ILIKE :term)
-            LIMIT :limit
-        ) persona_results
     """)
 
     rows = await db.execute(sql, params)

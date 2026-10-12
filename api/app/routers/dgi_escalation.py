@@ -32,12 +32,6 @@ router = APIRouter(prefix="/api/dgi/escalations", tags=["dgi"])
 # ---------------------------------------------------------------------------
 # FSM & config
 # ---------------------------------------------------------------------------
-_FSM: dict[str, set[str]] = {
-    "ABIERTO":    {"EN_GESTION", "CERRADO"},
-    "EN_GESTION": {"RESUELTO", "CERRADO"},
-    "RESUELTO":   {"CERRADO"},
-    "CERRADO":    set(),
-}
 
 _LEVEL_ESCALATED_TO: dict[str, str] = {
     "NIVEL_1": "JEFE_DGI",
@@ -179,6 +173,7 @@ _LIST_COLS = """
     lv.label        AS level_label,
     st.code         AS status,
     st.label        AS status_label,
+    COALESCE(st.valid_transitions, '[]'::jsonb) AS valid_transitions,
     e.situation,
     e.impact,
     e.options,
@@ -203,7 +198,7 @@ _LIST_FROM = """
 """
 
 
-def _row_to_item(r: dict) -> EscalationItemWaveB:
+def _row_to_item(r: dict, user: dict) -> EscalationItemWaveB:
     return EscalationItemWaveB(
         id=r["id"],
         code=r["code"],
@@ -224,6 +219,8 @@ def _row_to_item(r: dict) -> EscalationItemWaveB:
         alert_id=r["alert_id"],
         created_at=r["created_at"],
         created_by_name=r.get("created_by_name"),
+        allowed_statuses=(r["valid_transitions"] or []) if user["role_code"] in _WRITE_ROLES else [],
+        can_edit=user["role_code"] in _WRITE_ROLES and r["status"] != "CERRADO",
     )
 
 
@@ -247,7 +244,7 @@ async def get_active_escalations(
     now = datetime.now(timezone.utc)
     items = []
     for r in rows:
-        item = _row_to_item(dict(r)).model_dump()
+        item = _row_to_item(dict(r), user).model_dump()
         # Compute deadline semaphore
         if r["deadline"]:
             dl = r["deadline"]
@@ -364,7 +361,7 @@ async def list_escalations(
         LIMIT :limit OFFSET :offset
     """), params)).mappings().all()
 
-    items = [_row_to_item(dict(r)).model_dump() for r in rows]
+    items = [_row_to_item(dict(r), user).model_dump() for r in rows]
 
     return {
         "items": items,
@@ -476,7 +473,7 @@ async def create_escalation(
         text(f"SELECT {_LIST_COLS} {_LIST_FROM} WHERE e.id = :id"),
         {"id": new_id},
     )).mappings().first()
-    return _row_to_item(dict(row))
+    return _row_to_item(dict(row), user)
 
 
 # ---------------------------------------------------------------------------
@@ -496,7 +493,7 @@ async def get_escalation(
     )).mappings().first()
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Escalamiento no encontrado")
-    return _row_to_item(dict(row))
+    return _row_to_item(dict(row), user)
 
 
 # ---------------------------------------------------------------------------
@@ -514,7 +511,7 @@ async def update_escalation(
     eid = str(escalation_id)
 
     existing = (await db.execute(
-        text(f"SELECT e.id, st.code AS current_status {_LIST_FROM} WHERE e.id = :id AND e.deleted_at IS NULL"),
+        text(f"SELECT e.id, st.code AS current_status, COALESCE(st.valid_transitions, '[]'::jsonb) AS valid_transitions {_LIST_FROM} WHERE e.id = :id AND e.deleted_at IS NULL"),
         {"id": eid},
     )).mappings().first()
     if not existing:
@@ -542,7 +539,7 @@ async def update_escalation(
     # Status transition
     if body.status is not None:
         target = body.status.upper()
-        allowed = _FSM.get(current_status, set())
+        allowed = set(existing["valid_transitions"] or [])
         if target not in allowed:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -561,7 +558,7 @@ async def update_escalation(
             text(f"SELECT {_LIST_COLS} {_LIST_FROM} WHERE e.id = :id"),
             {"id": eid},
         )).mappings().first()
-        return _row_to_item(dict(row))
+        return _row_to_item(dict(row), user)
 
     updates.append("updated_at = NOW()")
     set_clause = ", ".join(updates)
@@ -589,7 +586,7 @@ async def update_escalation(
         text(f"SELECT {_LIST_COLS} {_LIST_FROM} WHERE e.id = :id"),
         {"id": eid},
     )).mappings().first()
-    return _row_to_item(dict(row))
+    return _row_to_item(dict(row), user)
 
 
 # ---------------------------------------------------------------------------

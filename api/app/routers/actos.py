@@ -587,6 +587,8 @@ async def get_valid_transitions(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    if user["role_code"] not in WRITE_OPERATIONAL_ROLES:
+        return []
     result = await db.execute(
         text("""
             SELECT

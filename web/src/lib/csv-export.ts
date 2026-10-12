@@ -1,4 +1,4 @@
-import type { Column } from "@/app/(app)/datos/domains/types";
+import type { Column } from "@/components/data-table";
 
 /**
  * Escapa un valor de celda para CSV:

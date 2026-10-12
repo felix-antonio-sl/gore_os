@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +13,6 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, ShieldAlert } from "lucide-react";
 import { formatDate, formatDateTime } from "@/lib/format";
-import { useAuth } from "@/lib/auth";
-import { DGI_ROLES } from "@/types";
 import type { RiskDetail } from "@/types";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -52,34 +50,11 @@ const FSM_LABELS: Record<string, string> = {
   CERRADO: "Cerrado",
 };
 
-const TRANSITIONS: Record<string, { target: string; label: string }[]> = {
-  IDENTIFICADO: [
-    { target: "EN_EVALUACION", label: "Iniciar Evaluación" },
-    { target: "ACEPTADO", label: "Aceptar Riesgo" },
-  ],
-  EN_EVALUACION: [
-    { target: "EN_MITIGACION", label: "Iniciar Mitigación" },
-    { target: "ACEPTADO", label: "Aceptar" },
-    { target: "CERRADO", label: "Cerrar" },
-  ],
-  EN_MITIGACION: [
-    { target: "MITIGADO", label: "Marcar Mitigado" },
-    { target: "CERRADO", label: "Cerrar" },
-  ],
-  MITIGADO: [{ target: "CERRADO", label: "Cerrar" }],
-  ACEPTADO: [{ target: "CERRADO", label: "Cerrar" }],
-  CERRADO: [],
-};
-
-const WRITE_ROLES = [...DGI_ROLES, "ADMIN_REGIONAL", "ADMIN_SISTEMA"];
-
 export default function RiesgoDetailPage() {
   const params = useParams();
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
 
-  const canEdit = user && WRITE_ROLES.includes(user.role_code);
 
   const [risk, setRisk] = useState<RiskDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -88,7 +63,7 @@ export default function RiesgoDetailPage() {
 
   const [mitigationPlan, setMitigationPlan] = useState("");
 
-  const fetchRisk = () => {
+  const fetchRisk = useCallback(() => {
     setLoading(true);
     api
       .get<RiskDetail>(`/api/risk/${params.id}`)
@@ -98,11 +73,11 @@ export default function RiesgoDetailPage() {
       })
       .catch(() => toast.error("Error al cargar riesgo"))
       .finally(() => setLoading(false));
-  };
+  }, [params.id]);
 
   useEffect(() => {
     fetchRisk();
-  }, [params.id]);
+  }, [fetchRisk]);
 
   const handleSave = async () => {
     if (!risk) return;
@@ -158,8 +133,9 @@ export default function RiesgoDetailPage() {
   }
 
   const isClosed = risk.status === "CERRADO";
+  const canEdit = risk.can_edit;
   const isEditable = canEdit && !isClosed;
-  const transitions = TRANSITIONS[risk.status ?? ""] || [];
+  const transitions = risk.allowed_statuses.map((target) => ({ target, label: FSM_LABELS[target] ?? target }));
 
   // Subject navigation
   const subjectHref = risk.subject_type === "core.ipr"
@@ -303,6 +279,8 @@ export default function RiesgoDetailPage() {
         description="Esta acción cambiará el estado del riesgo. ¿Desea continuar?"
         onConfirm={() => { if (confirmTransition) handleTransition(confirmTransition); }}
         loading={saving}
+        confirmLabel="Confirmar"
+        variant="default"
       />
     </div>
   );

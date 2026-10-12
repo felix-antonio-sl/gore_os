@@ -1,8 +1,13 @@
 # GORE_OS — Especificación de Usuarios y Journeys v3.0
 
+> Referencia de dominio y snapshot histórico de superficies. El alcance activo,
+> sus lectores/acciones y las capacidades archivadas se describen en
+> [Bandeja de trabajo](GORE_OS_Bandeja_Trabajo.md). Las rutas o cifras anteriores
+> se conservan como trazabilidad y no presentan módulos retirados como activos.
+
 **Versión**: 3.0
 **Fecha**: 2026-03-15
-**Estado**: Vigente
+**Estado**: Referencia de dominio; alcance de producto vigente en la bandeja
 **Fuentes**: SSOT Bundle v1.5.0, Omega v3.0.0, DGI User Stories v1.0, User Stories (818), Procesos (81), GORE_OS codebase
 **Autoridad**: Organigrama GORE 2026 > Ontología goreNubleBundle > Omega > CQs
 

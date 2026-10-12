@@ -5,10 +5,8 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { DataTable } from "@/components/data-table";
 import { PageHeader } from "@/components/page-header";
-import { EmptyState } from "@/components/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -25,7 +23,6 @@ import { formatDateTime } from "@/lib/format";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { useAuth } from "@/lib/auth";
 import { ESCALATION_LEVEL_COLORS, ESCALATION_STATUS_COLORS } from "@/lib/status-colors";
-import { DGI_ROLES } from "@/types";
 import type { PaginatedResponse, Escalation } from "@/types";
 
 const STATUS_TABS = ["TODOS", "ABIERTO", "EN_GESTION", "RESUELTO", "CERRADO"];
@@ -67,7 +64,7 @@ export default function EscalamientoPage() {
     [pathname, searchParams]
   );
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     setError(null);
     const statusParam = statusFilter && statusFilter !== "TODOS" ? `&status=${statusFilter}` : "";
@@ -84,11 +81,11 @@ export default function EscalamientoPage() {
         setError("No se pudieron cargar los escalamientos.");
       })
       .finally(() => setLoading(false));
-  };
+  }, [page, statusFilter]);
 
   useEffect(() => {
     fetchData();
-  }, [page, statusFilter]);
+  }, [fetchData]);
 
   const handleCreate = async () => {
     if (!form.situation.trim() || !form.impact.trim()) {

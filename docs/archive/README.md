@@ -41,3 +41,17 @@ Key artifacts:
 - Performance audits v3.0
 
 **Current state**: All normalization work documented here is **completed**. The current system has 98 CHECK constraints and 100% categorical univocity.
+
+## Capacidades retiradas de la bandeja
+
+La decisión de concentrar el producto en la bandeja y sus acciones retiró los
+panoramas/cockpits, tablero de iniciativas y DMAIC, cuellos de botella, informes,
+comité TD, reuniones/calendario, exploradores generales de datos, captura de bugs
+y vistas autónomas de cartera/formulación. Su fuente completa, pruebas y diseños
+se recuperan desde el historial Git en `6c387ed0aad8721f2b22202beb08f228e2235fe6`
+y el checkpoint privado del operador. No se duplican aquí como código activo.
+
+Las categorías, tablas, datos y modelos de dominio se preservan. El lector acotado
+de procesos se conserva únicamente para el contexto de riesgos. Los recorridos
+IPR/CORE/CDP completos permanecen disponibles mientras se decide si el lector IPR
+se reduce a consulta; sus capturas siguen satisfaciendo los gates DB.

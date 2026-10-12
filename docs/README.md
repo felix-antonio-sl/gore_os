@@ -15,13 +15,17 @@
 | [GORE_OS_Despliegue.md](GORE_OS_Despliegue.md) | Operación | Entrega fija de API y web, configuración privada y recuperación |
 | [MANIFESTO.md](../MANIFESTO.md) | Contexto | Filosofía Story-First y visión amplia previa; el alcance de entrega actual lo fija la bandeja |
 
-## Dominio y requisitos (vigente)
+## Dominio y requisitos de referencia
+
+El alcance activo y las rutas actuales los fija [la bandeja](GORE_OS_Bandeja_Trabajo.md).
+Los siguientes documentos conservan el dominio, historias y snapshots anteriores;
+no obligan a mantener todas las capacidades como módulos activos.
 
 | Documento | Contenido |
 |-----------|-----------|
 | [GORE_OS_User_Journeys_v3.0.md](GORE_OS_User_Journeys_v3.0.md) | 8 arquetipos, 16 journeys + IPR 360 transversal, 8 principios UX |
 | [GORE_OS_User_Action_Trees_v1.0.md](GORE_OS_User_Action_Trees_v1.0.md) | 24 usuarios × rutas → árboles de acción (lectura/escritura/destructiva) + endpoints + scoping IDOR |
-| [GORE_OS_Role_Surface_Spec_v1.0.md](GORE_OS_Role_Surface_Spec_v1.0.md) | Matriz 15 roles × páginas + recomendaciones de poda R1-R7 (implementadas) |
+| [GORE_OS_Role_Surface_Spec_v1.0.md](GORE_OS_Role_Surface_Spec_v1.0.md) | Matriz 15 roles × páginas + recomendaciones de poda R1-R7 (snapshot anterior; contrastar con la bandeja actual) |
 | [DGI_USER_STORIES_v1.0.md](DGI_USER_STORIES_v1.0.md) | 185 historias de usuario DGI (backlog de requisitos) |
 | [GORE_OS_Story_Coverage_v1.0.md](GORE_OS_Story_Coverage_v1.0.md) | Cobertura historia DGI→página: baseline C60 + re-snapshot 2026-06-14 (~67/127 `NUEVO` ya construidas; residual: 7 dominios sin UI) |
 | [AUDITORIA_RELACIONAL_v1.0.md](AUDITORIA_RELACIONAL_v1.0.md) | Mapa relacional: hubs de FKs, cadenas de navegación, queries reutilizables (cifras de cabecera = baseline 2026-01-30) |
@@ -46,11 +50,11 @@
 | [ETL_DATA_BOUNDARY.md](ETL_DATA_BOUNDARY.md) | **Operativo**: frontera fuentes canónicas vs staging runtime, workflow `stage_etl_data.sh` |
 | [ETL_ARCHITECTURE_v1.0.md](ETL_ARCHITECTURE_v1.0.md) | Diseño ETL original (8 dominios) — **implementado** en `api/scripts/etl/` (8 loaders; el roster final divergió del diseño) |
 
-## Specs de features
+## Specs históricas de features
 
 | Documento | Contenido |
 |-----------|-----------|
-| [SPEC_Bug_Capture_System_v1.0.md](SPEC_Bug_Capture_System_v1.0.md) | Captura de bugs in-app (FAB + drawer, solo dev) — implementado |
+| [SPEC_Bug_Capture_System_v1.0.md](SPEC_Bug_Capture_System_v1.0.md) | Diseño histórico de captura de bugs in-app; retirado del runtime al concentrar la bandeja |
 
 ## Decisiones de arquitectura (ADRs)
 

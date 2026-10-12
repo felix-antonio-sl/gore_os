@@ -83,7 +83,7 @@ async def test_sequential_act_numbers_unique(client, regional_token, db):
 async def test_advisory_locks_present_in_code_generators(db):
     """Verify that advisory locks are used in all code generators (structural test)."""
     import inspect
-    from app.routers import compromisos, convenios, actos, dgi_initiatives
+    from app.routers import compromisos, convenios, actos
 
     # Check that advisory lock pattern exists in each module
     modules_with_locks = {

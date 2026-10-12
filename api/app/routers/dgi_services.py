@@ -9,7 +9,7 @@ import math
 from datetime import date
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,25 +19,10 @@ from app.core.database import get_db
 from app.core.security import DGI_ROLES
 from app.core.audit import record_event
 
-from app.schemas.dgi import (
-    ServiceCreate,
-    ServiceUpdate,
-    ServiceItem,
-    ServiceRequestCreate,
-    ServiceRequestUpdate,
-    ServiceRequestItem,
-    SLACreate,
-    SLAUpdate,
-    SLAItem,
-    SLADashboardItem,
-    SLADashboardSummary,
-)
+from app.schemas.dgi import ServiceCreate, ServiceUpdate, ServiceItem, ServiceRequestCreate, ServiceRequestUpdate, ServiceRequestItem, SLACreate, SLAUpdate, SLAItem
 
 router = APIRouter(prefix="/api/dgi/services", tags=["dgi"])
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 _JEFE_DGI_ONLY = {"JEFE_DGI"}
 _DGI_MANAGE_ROLES = {"JEFE_DGI", "ESP_CONTROL_GESTION"}
@@ -109,10 +94,6 @@ async def _next_request_code(db: AsyncSession) -> str:
     return f"REQ-{year}-{max_seq + 1:04d}"
 
 
-# ---------------------------------------------------------------------------
-# Service SQL fragments
-# ---------------------------------------------------------------------------
-
 _SVC_COLS = """
     s.id,
     s.code,
@@ -147,17 +128,15 @@ def _row_to_service(r: dict) -> ServiceItem:
     )
 
 
-# ---------------------------------------------------------------------------
-# Request SQL fragments
-# ---------------------------------------------------------------------------
-
 _REQ_COLS = """
     req.id,
     req.code,
     req.service_id,
+    req.requester_id,
     svc.name        AS service_name,
     st.code         AS status,
     st.label        AS status_label,
+    COALESCE(st.valid_transitions, '[]'::jsonb) AS valid_transitions,
     rp.names || ' ' || rp.paternal_surname AS requester_name,
     org.name        AS division_name,
     req.description,
@@ -188,7 +167,9 @@ _REQ_FROM = """
 """
 
 
-def _row_to_request(r: dict) -> ServiceRequestItem:
+def _row_to_request(r: dict, user: dict) -> ServiceRequestItem:
+    is_requester = str(r["requester_id"]) == str(user["id"])
+    can_manage = user["role_code"] in DGI_ROLES and not is_requester
     return ServiceRequestItem(
         id=r["id"],
         code=r["code"],
@@ -208,16 +189,11 @@ def _row_to_request(r: dict) -> ServiceRequestItem:
         sla_days=r["sla_days"],
         is_overdue=bool(r["is_overdue"]),
         created_at=r["created_at"],
+        allowed_statuses=r["valid_transitions"] if can_manage else [],
+        can_assign=can_manage,
+        can_feedback=is_requester and r["status"] == "COMPLETADA",
     )
 
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SERVICE CATALOG
-# ═══════════════════════════════════════════════════════════════════════════
-
-# ---------------------------------------------------------------------------
-# 1. GET / — List services (all authenticated users)
-# ---------------------------------------------------------------------------
 @router.get("")
 async def list_services(
     user: CurrentUser,
@@ -248,10 +224,6 @@ async def list_services(
 
     return [_row_to_service(dict(r)).model_dump() for r in rows]
 
-
-# ---------------------------------------------------------------------------
-# 2. POST / — Create service (JEFE_DGI only)
-# ---------------------------------------------------------------------------
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=ServiceItem)
 async def create_service(
     body: ServiceCreate,
@@ -302,14 +274,6 @@ async def create_service(
     )).mappings().first()
     return _row_to_service(dict(row))
 
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SERVICE REQUESTS
-# ═══════════════════════════════════════════════════════════════════════════
-
-# ---------------------------------------------------------------------------
-# 8. GET /requests — List requests
-# ---------------------------------------------------------------------------
 @router.get("/requests")
 async def list_requests(
     user: CurrentUser,
@@ -355,7 +319,7 @@ async def list_requests(
         LIMIT :limit OFFSET :offset
     """), params)).mappings().all()
 
-    items = [_row_to_request(dict(r)).model_dump() for r in rows]
+    items = [_row_to_request(dict(r), user).model_dump() for r in rows]
 
     return {
         "items": items,
@@ -365,10 +329,6 @@ async def list_requests(
         "total_pages": total_pages,
     }
 
-
-# ---------------------------------------------------------------------------
-# 9. POST /requests — Create request (any authenticated user)
-# ---------------------------------------------------------------------------
 @router.post("/requests", status_code=status.HTTP_201_CREATED, response_model=ServiceRequestItem)
 async def create_request(
     body: ServiceRequestCreate,
@@ -433,12 +393,8 @@ async def create_request(
         text(f"SELECT {_REQ_COLS} {_REQ_FROM} WHERE req.id = :id"),
         {"id": new_id},
     )).mappings().first()
-    return _row_to_request(dict(row))
+    return _row_to_request(dict(row), user)
 
-
-# ---------------------------------------------------------------------------
-# 10. GET /requests/{id} — Request detail
-# ---------------------------------------------------------------------------
 @router.get("/requests/{request_id}", response_model=ServiceRequestItem)
 async def get_request(
     request_id: UUID,
@@ -454,22 +410,11 @@ async def get_request(
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Solicitud no encontrada")
 
-    # Non-DGI users can only see their own requests
-    if user.get("role_code") not in DGI_ROLES and str(row["requester_name"]) != "self":
-        # Check by requester_id
-        check = (await db.execute(
-            text("SELECT requester_id FROM core.dgi_service_request WHERE id = :id"),
-            {"id": str(request_id)},
-        )).mappings().first()
-        if check and str(check["requester_id"]) != str(user["id"]):
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo puede ver sus propias solicitudes")
+    if user["role_code"] not in DGI_ROLES and str(row["requester_id"]) != str(user["id"]):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo puede ver sus propias solicitudes")
 
-    return _row_to_request(dict(row))
+    return _row_to_request(dict(row), user)
 
-
-# ---------------------------------------------------------------------------
-# 11. PATCH /requests/{id} — Update request (assign, transition, feedback)
-# ---------------------------------------------------------------------------
 @router.patch("/requests/{request_id}", response_model=ServiceRequestItem)
 async def update_request(
     request_id: UUID,
@@ -528,7 +473,7 @@ async def update_request(
             text(f"SELECT {_REQ_COLS} {_REQ_FROM} WHERE req.id = :id"),
             {"id": rid},
         )).mappings().first()
-        return _row_to_request(dict(row))
+        return _row_to_request(dict(row), user)
 
     updates.append("updated_at = NOW()")
     set_clause = ", ".join(updates)
@@ -551,110 +496,8 @@ async def update_request(
         text(f"SELECT {_REQ_COLS} {_REQ_FROM} WHERE req.id = :id"),
         {"id": rid},
     )).mappings().first()
-    return _row_to_request(dict(row))
+    return _row_to_request(dict(row), user)
 
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SLA DASHBOARD
-# ═══════════════════════════════════════════════════════════════════════════
-
-# ---------------------------------------------------------------------------
-# 12. GET /sla-dashboard — SLA compliance dashboard
-# ---------------------------------------------------------------------------
-@router.get("/sla-dashboard", response_model=SLADashboardSummary)
-async def get_sla_dashboard(
-    user: CurrentUser,
-    db: AsyncSession = Depends(get_db),
-):
-    if user.get("role_code") not in DGI_ROLES:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo DGI")
-
-    rows = (await db.execute(text("""
-        SELECT
-            svc.id              AS service_id,
-            svc.name            AS service_name,
-            svc.area,
-            COUNT(req.id)       AS total_requests,
-            COUNT(req.id) FILTER (WHERE rst.code = 'COMPLETADA') AS completed,
-            AVG(EXTRACT(EPOCH FROM (req.completed_at - req.created_at)) / 86400)
-                FILTER (WHERE rst.code = 'COMPLETADA') AS avg_days,
-            COUNT(req.id) FILTER (
-                WHERE rst.code = 'COMPLETADA'
-                  AND svc.sla_days IS NOT NULL
-                  AND EXTRACT(EPOCH FROM (req.completed_at - req.created_at)) / 86400 > svc.sla_days
-            ) AS breaches
-        FROM core.dgi_service svc
-        LEFT JOIN core.dgi_service_request req ON req.service_id = svc.id AND req.deleted_at IS NULL
-        LEFT JOIN ref.category rst ON rst.id = req.status_id
-        WHERE svc.deleted_at IS NULL
-        GROUP BY svc.id, svc.name, svc.area
-        ORDER BY svc.area, svc.name
-    """))).mappings().all()
-
-    by_service = []
-    total_completed = 0
-    total_requests = 0
-    total_days_sum = 0.0
-    total_days_count = 0
-    total_breaches = 0
-
-    for r in rows:
-        tot = int(r["total_requests"])
-        comp = int(r["completed"])
-        rate = round(comp / tot * 100, 1) if tot > 0 else 0.0
-        avg = round(float(r["avg_days"]), 1) if r["avg_days"] else None
-        br = int(r["breaches"])
-
-        by_service.append(SLADashboardItem(
-            service_id=r["service_id"],
-            service_name=r["service_name"],
-            area=r["area"],
-            total_requests=tot,
-            completed=comp,
-            completion_rate=rate,
-            avg_days=avg,
-            breaches=br,
-        ))
-
-        total_requests += tot
-        total_completed += comp
-        total_breaches += br
-        if avg is not None:
-            total_days_sum += avg
-            total_days_count += 1
-
-    global_rate = round(total_completed / total_requests * 100, 1) if total_requests > 0 else 0.0
-    avg_resolution = round(total_days_sum / total_days_count, 1) if total_days_count > 0 else None
-
-    # Active requests count
-    active_row = (await db.execute(text("""
-        SELECT COUNT(*) AS cnt
-        FROM core.dgi_service_request req
-        JOIN ref.category st ON st.id = req.status_id
-        WHERE st.code NOT IN ('COMPLETADA', 'RECHAZADA') AND req.deleted_at IS NULL
-    """))).mappings().first()
-    active_requests = int(active_row["cnt"]) if active_row else 0
-
-    # Average satisfaction
-    sat_row = (await db.execute(text("""
-        SELECT AVG(satisfaction_score) AS avg_sat
-        FROM core.dgi_service_request
-        WHERE satisfaction_score IS NOT NULL AND deleted_at IS NULL
-    """))).mappings().first()
-    avg_satisfaction = round(float(sat_row["avg_sat"]), 1) if sat_row and sat_row["avg_sat"] else None
-
-    return SLADashboardSummary(
-        global_completion_rate=global_rate,
-        active_requests=active_requests,
-        avg_resolution_days=avg_resolution,
-        avg_satisfaction=avg_satisfaction,
-        by_service=by_service,
-    )
-
-
-# ---------------------------------------------------------------------------
-# 3. GET /{id} — Service detail + SLAs
-# ---------------------------------------------------------------------------
 @router.get("/{service_id}")
 async def get_service(
     service_id: UUID,
@@ -686,10 +529,6 @@ async def get_service(
 
     return service
 
-
-# ---------------------------------------------------------------------------
-# 4. PATCH /{id} — Update service
-# ---------------------------------------------------------------------------
 @router.patch("/{service_id}", response_model=ServiceItem)
 async def update_service(
     service_id: UUID,
@@ -744,14 +583,6 @@ async def update_service(
     )).mappings().first()
     return _row_to_service(dict(row))
 
-
-# ═══════════════════════════════════════════════════════════════════════════
-# SLAs
-# ═══════════════════════════════════════════════════════════════════════════
-
-# ---------------------------------------------------------------------------
-# 5. GET /{id}/slas — List SLAs for service
-# ---------------------------------------------------------------------------
 @router.get("/{service_id}/slas", response_model=list[SLAItem])
 async def list_slas(
     service_id: UUID,
@@ -778,10 +609,6 @@ async def list_slas(
         for r in rows
     ]
 
-
-# ---------------------------------------------------------------------------
-# 6. POST /{id}/slas — Create SLA
-# ---------------------------------------------------------------------------
 @router.post("/{service_id}/slas", status_code=status.HTTP_201_CREATED, response_model=SLAItem)
 async def create_sla(
     service_id: UUID,
@@ -840,10 +667,6 @@ async def create_sla(
         target_days=row["target_days"], target_hour=row["target_hour"], priority=row["priority"],
     )
 
-
-# ---------------------------------------------------------------------------
-# 7. PATCH /{id}/slas/{sla_id} — Update SLA
-# ---------------------------------------------------------------------------
 @router.patch("/{service_id}/slas/{sla_id}", response_model=SLAItem)
 async def update_sla(
     service_id: UUID,

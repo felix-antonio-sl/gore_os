@@ -67,7 +67,7 @@ async def test_analista_cannot_access_admin(client: AsyncClient, analista_token:
 @pytest.mark.asyncio
 async def test_analista_cannot_access_dgi(client: AsyncClient, analista_token: str):
     """ANALISTA should NOT access DGI-only endpoints."""
-    resp = await client.get("/api/dgi/cartera", headers=auth(analista_token))
+    resp = await client.get("/api/dgi/coordination/ar/decisions", headers=auth(analista_token))
     assert resp.status_code == 403
 
 
@@ -206,7 +206,7 @@ async def test_rtf_cannot_access_admin(client: AsyncClient, rtf_token: str):
 @pytest.mark.asyncio
 async def test_rtf_cannot_access_dgi(client: AsyncClient, rtf_token: str):
     """RTF should NOT access DGI-only endpoints."""
-    resp = await client.get("/api/dgi/cartera", headers=auth(rtf_token))
+    resp = await client.get("/api/dgi/coordination/ar/decisions", headers=auth(rtf_token))
     assert resp.status_code == 403
 
 
@@ -256,7 +256,7 @@ async def test_juridico_cannot_access_admin(client: AsyncClient, juridico_token:
 @pytest.mark.asyncio
 async def test_juridico_cannot_access_dgi(client: AsyncClient, juridico_token: str):
     """ASESOR_JURIDICO should NOT access DGI-only endpoints (uses /dgi/cartera which has guard)."""
-    resp = await client.get("/api/dgi/cartera", headers=auth(juridico_token))
+    resp = await client.get("/api/dgi/coordination/ar/decisions", headers=auth(juridico_token))
     assert resp.status_code == 403
 
 

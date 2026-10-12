@@ -38,7 +38,7 @@ async def test_login_wrong_password(client):
 
 async def test_protected_endpoint_no_token(client):
     """Accessing protected endpoint without token returns 401."""
-    resp = await client.get("/api/dashboard")
+    resp = await client.get("/api/dashboard/action-items")
     assert resp.status_code == 401
 
 
@@ -50,7 +50,7 @@ async def test_protected_endpoint_expired_token(client):
         algorithm="HS256",
     )
     resp = await client.get(
-        "/api/dashboard",
+        "/api/dashboard/action-items",
         headers={"Authorization": f"Bearer {expired}"},
     )
     assert resp.status_code == 401

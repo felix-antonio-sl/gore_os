@@ -8,8 +8,9 @@ from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.core.security import WRITE_OPERATIONAL_ROLES, PERSONAL_SCOPE_ROLES
+from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.core.audit import record_event
+from app.core.alerts import apply_alert_scope
 from app.schemas.alerta import AlertaListItem, AlertaAttendRequest
 
 router = APIRouter(prefix="/api/alertas", tags=["alertas"])
@@ -66,6 +67,7 @@ async def list_alertas(
     db: AsyncSession = Depends(get_db),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
+    alerta_id: UUID | None = None,
     severity: str | None = None,
     active_only: bool = True,
     alert_type: str | None = None,
@@ -74,9 +76,12 @@ async def list_alertas(
     date_from: date | None = None,
     date_to: date | None = None,
 ):
-    role = user["role_code"]
     params: dict = {}
     conditions = ["a.deleted_at IS NULL"]
+
+    if alerta_id:
+        conditions.append("a.id = :alerta_id")
+        params["alerta_id"] = str(alerta_id)
 
     if date_from:
         conditions.append("a.triggered_at::date >= :date_from")
@@ -103,51 +108,7 @@ async def list_alertas(
         conditions.append("at_cat.code = :alert_type")
         params["alert_type"] = alert_type
 
-    # Role-based IPR scope filters
-    # Personal scope roles → ipr.assignee_id, JEFE_DIVISION → ipr.sponsor_division_id
-    if role in PERSONAL_SCOPE_ROLES:
-        conditions.append("""
-            (
-                (a.subject_type = 'core.ipr' AND a.subject_id IN (
-                    SELECT id FROM core.ipr
-                    WHERE assignee_id = :user_id AND deleted_at IS NULL
-                ))
-                OR
-                (a.subject_type = 'core.operational_commitment' AND a.subject_id IN (
-                    SELECT oc.id FROM core.operational_commitment oc
-                    WHERE oc.responsible_id = :user_id AND oc.deleted_at IS NULL
-                ))
-                OR
-                (a.subject_type = 'core.ipr_problem' AND a.subject_id IN (
-                    SELECT pr.id FROM core.ipr_problem pr
-                    WHERE pr.detected_by_id = :user_id AND pr.deleted_at IS NULL
-                ))
-            )
-        """)
-        params["user_id"] = str(user["id"])
-
-    elif role == "JEFE_DIVISION" and user.get("division_id"):
-        conditions.append("""
-            (
-                (a.subject_type = 'core.ipr' AND a.subject_id IN (
-                    SELECT id FROM core.ipr
-                    WHERE sponsor_division_id = :div_id AND deleted_at IS NULL
-                ))
-                OR
-                (a.subject_type = 'core.operational_commitment' AND a.subject_id IN (
-                    SELECT oc.id FROM core.operational_commitment oc
-                    WHERE oc.division_id = :div_id AND oc.deleted_at IS NULL
-                ))
-                OR
-                (a.subject_type = 'core.ipr_problem' AND a.subject_id IN (
-                    SELECT pr.id FROM core.ipr_problem pr
-                    JOIN core.ipr ipr2 ON pr.ipr_id = ipr2.id
-                    WHERE ipr2.sponsor_division_id = :div_id
-                      AND ipr2.deleted_at IS NULL AND pr.deleted_at IS NULL
-                ))
-            )
-        """)
-        params["div_id"] = str(user["division_id"])
+    apply_alert_scope(conditions, params, user)
 
     where_clause = " AND ".join(conditions)
 
@@ -190,7 +151,7 @@ async def list_alertas(
         params,
     )
     rows = rows_result.mappings().all()
-    items = [AlertaListItem(**dict(r)) for r in rows]
+    items = [AlertaListItem(**dict(r), can_attend=user["role_code"] in WRITE_OPERATIONAL_ROLES and not r["resolved_at"]) for r in rows]
     total_pages = math.ceil(total / page_size) if page_size else 0
 
     return {
@@ -214,14 +175,11 @@ async def attend_alerta(
     db: AsyncSession = Depends(get_db),
 ):
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
-    # Verify alert exists and is not deleted
+    conditions = ["a.id = :id", "a.deleted_at IS NULL"]
+    params = {"id": str(alerta_id)}
+    apply_alert_scope(conditions, params, user)
     check_result = await db.execute(
-        text("""
-            SELECT id, attended_at, resolved_at
-            FROM core.alert
-            WHERE id = :id AND deleted_at IS NULL
-        """),
-        {"id": str(alerta_id)},
+        text(f"SELECT a.id, a.attended_at, a.resolved_at FROM core.alert a WHERE {' AND '.join(conditions)}"), params,
     )
     row = check_result.mappings().first()
     if not row:

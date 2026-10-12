@@ -1,5 +1,10 @@
 # GORE_OS — Arboles de Acciones por Usuario v1.0
 
+> Referencia de dominio y snapshot histórico de superficies. El alcance activo,
+> sus lectores/acciones y las capacidades archivadas se describen en
+> [Bandeja de trabajo](GORE_OS_Bandeja_Trabajo.md). Las rutas o cifras anteriores
+> se conservan como trazabilidad y no presentan módulos retirados como activos.
+
 **Fecha**: 2026-03-23 | **Sesion**: C61
 **Fuentes**: sidebar.tsx (ROLE_SECTIONS), 60 page.tsx, 29 routers (304 endpoints), security.py, scope.py, types/index.ts
 **Cobertura**: 24 usuarios de prueba, 15 roles, 39 rutas navegables (+ 21 redirect stubs de compatibilidad = 60 page.tsx bajo `web/src/app/(app)/`; la poda C60 SÍ está aplicada: creación en drawers, rutas legacy redirigen), 304 endpoints API

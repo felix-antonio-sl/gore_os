@@ -1,12 +1,17 @@
 # GORE_OS — Cobertura de User Stories DGI v1.0
 
+> Referencia de dominio y snapshot histórico de superficies. El alcance activo,
+> sus lectores/acciones y las capacidades archivadas se describen en
+> [Bandeja de trabajo](GORE_OS_Bandeja_Trabajo.md). Las rutas o cifras anteriores
+> se conservan como trazabilidad y no presentan módulos retirados como activos.
+
 > **Relación**: Este documento es un snapshot de cobertura (C60) del catálogo de 185 historias DGI. Para el detalle completo de cada historia (descripción, prioridad, fuente), ver [DGI_USER_STORIES_v1.0.md](DGI_USER_STORIES_v1.0.md) (C58).
 
 > **Re-snapshot 2026-06-14 (verificación a nivel página/router).** Desde C60 la capa DGI ganó las páginas `cuellos-de-botella`, `escalamiento`, `servicios`, `calendario`, `coordinacion` (+ `comite-td` y `coordinacion/divisiones` como tabs), con sus routers (`dgi_bottleneck`, `dgi_escalation`, `dgi_services`, `dgi_coordination`, `dgi_td_sessions`). De las 127 historias `NUEVO` del baseline, **~67 apuntan a páginas hoy construidas** (pasan a implementadas/parciales) y solo **~30 corresponden a UI genuinamente no construida** — la cobertura efectiva supera holgadamente el 26.5% del baseline C60.
 >
 > **Residual real (7 dominios sin UI, verificados inexistentes):** `/stakeholders` (mapa poder-interés, ADKAR, influencia, campeones), `/nps`, `/plan-trabajo`, `/kb/salud` (disciplina 5S), `/capacitaciones`, `/cambios` (resistencias, adopción), `/dgi/estructura` (Building Blocks Meyer, matriz RACI).
 >
-> Las tablas y filas siguientes son el **baseline C60** (estados pre-C61), conservadas para trazabilidad; el estado vigente de la capa DGI vive en CLAUDE.md.
+> Las tablas y filas siguientes son el **baseline C60** (estados pre-C61), conservadas para trazabilidad; el alcance vigente de la capa DGI vive en GORE_OS_Bandeja_Trabajo.md.
 
 Fecha: 2026-03-22 | Sesion: C60
 

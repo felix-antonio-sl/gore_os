@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,6 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { ArrowLeft, Clock, Shield } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
-import { useAuth } from "@/lib/auth";
 import type { Escalation } from "@/types";
 
 const LEVEL_COLORS: Record<string, string> = {
@@ -38,27 +37,10 @@ const FSM_LABELS: Record<string, string> = {
   CERRADO: "Cerrado",
 };
 
-const TRANSITIONS: Record<string, { target: string; label: string }[]> = {
-  ABIERTO: [
-    { target: "EN_GESTION", label: "Iniciar Gestión" },
-    { target: "CERRADO", label: "Cerrar" },
-  ],
-  EN_GESTION: [
-    { target: "RESUELTO", label: "Marcar Resuelto" },
-    { target: "CERRADO", label: "Cerrar" },
-  ],
-  RESUELTO: [{ target: "CERRADO", label: "Cerrar" }],
-  CERRADO: [],
-};
-
 export default function EscalamientoDetailPage() {
   const params = useParams();
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
-
-  const canEdit =
-    user && ["JEFE_DGI", "ESP_CONTROL_GESTION"].includes(user.role_code);
 
   const [esc, setEsc] = useState<Escalation | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,7 +53,7 @@ export default function EscalamientoDetailPage() {
   const [recommendation, setRecommendation] = useState("");
   const [resolvedDescription, setResolvedDescription] = useState("");
 
-  const fetchEsc = () => {
+  const fetchEsc = useCallback(() => {
     setLoading(true);
     api
       .get<Escalation>(`/api/dgi/escalations/${params.id}`)
@@ -84,11 +66,11 @@ export default function EscalamientoDetailPage() {
       })
       .catch(() => toast.error("Error al cargar escalamiento"))
       .finally(() => setLoading(false));
-  };
+  }, [params.id]);
 
   useEffect(() => {
     fetchEsc();
-  }, [params.id]);
+  }, [fetchEsc]);
 
   const handleSave = async () => {
     if (!esc) return;
@@ -155,9 +137,9 @@ export default function EscalamientoDetailPage() {
   }
 
   const isClosed = esc.status === "CERRADO";
-  const isEditable = canEdit && !isClosed;
+  const isEditable = esc.can_edit && !isClosed;
   const showResolution = esc.status === "RESUELTO" || esc.status === "CERRADO";
-  const transitions = TRANSITIONS[esc.status] || [];
+  const transitions = (esc.allowed_statuses ?? []).map((target) => ({ target, label: FSM_LABELS[target] ?? target }));
 
   // Deadline countdown
   let deadlineInfo: { text: string; color: string } | null = null;
@@ -346,6 +328,8 @@ export default function EscalamientoDetailPage() {
         description="Esta acción cambiará el estado del escalamiento. ¿Desea continuar?"
         onConfirm={() => { if (confirmTransition) handleTransition(confirmTransition); }}
         loading={saving}
+        confirmLabel="Confirmar"
+        variant="default"
       />
     </div>
   );

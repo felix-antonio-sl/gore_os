@@ -20,6 +20,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.deps import CurrentUser
 from app.core.security import DGI_ROLES
+from app.core.risks import risk_scope_where as _scope_where
 from app.core.audit import record_event
 from app.routers.notifications import create_notification
 
@@ -64,6 +65,7 @@ _LIST_COLS = """
     rp.code AS probability, rp.label AS probability_label,
     ri.code AS impact, ri.label AS impact_label,
     rs.code AS status, rs.label AS status_label,
+    COALESCE(rs.valid_transitions, '[]'::jsonb) AS valid_transitions,
     r.subject_type, r.subject_id,
     CASE r.subject_type
         WHEN 'core.ipr' THEN (SELECT i.codigo_bip || ' - ' || i.name FROM core.ipr i WHERE i.id = r.subject_id)
@@ -94,30 +96,6 @@ _DETAIL_FROM = f"""
 """
 
 
-def _scope_where(user: dict, params: dict) -> str:
-    """Return extra WHERE clause based on role scoping."""
-    role = user.get("role_code")
-    if role in ("ANALISTA", "RTF", "ASESOR_JURIDICO"):
-        params["user_id"] = str(user["id"])
-        return """
-            AND (
-                (r.subject_type = 'core.ipr' AND r.subject_id IN (
-                    SELECT id FROM core.ipr WHERE assignee_id = :user_id AND deleted_at IS NULL
-                ))
-            )
-        """
-    if role in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO", "JEFE_UNIDAD"):
-        div_id = user.get("division_id")
-        if div_id:
-            params["div_id"] = str(div_id)
-            return """
-                AND (
-                    (r.subject_type = 'core.ipr' AND r.subject_id IN (
-                        SELECT id FROM core.ipr WHERE sponsor_division_id = :div_id AND deleted_at IS NULL
-                    ))
-                )
-            """
-    return ""
 
 
 # ---------------------------------------------------------------------------
@@ -439,22 +417,31 @@ async def create_risk(body: dict, user: CurrentUser, db=Depends(get_db)):
         text(f"SELECT {_DETAIL_COLS} {_DETAIL_FROM} WHERE r.id = :id"),
         {"id": risk_id},
     )).mappings().first()
-    return dict(row)
+    return _risk_detail(dict(row), user)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 6. GET /api/risk/{id} — detail
 # ═══════════════════════════════════════════════════════════════════════════════
+def _risk_detail(row: dict, user: dict) -> dict:
+    can_edit = user["role_code"] in _WRITE_ROLES
+    row["allowed_statuses"] = row.pop("valid_transitions", []) if can_edit else []
+    row["can_edit"] = can_edit
+    return row
+
+
 @router.get("/{risk_id}")
 async def get_risk(risk_id: UUID, user: CurrentUser, db=Depends(get_db)):
     _require_read(user)
+    params = {"id": str(risk_id)}
+    scope = _scope_where(user, params)
     row = (await db.execute(
-        text(f"SELECT {_DETAIL_COLS} {_DETAIL_FROM} WHERE r.id = :id AND r.deleted_at IS NULL"),
-        {"id": str(risk_id)},
+        text(f"SELECT {_DETAIL_COLS} {_DETAIL_FROM} WHERE r.id = :id AND r.deleted_at IS NULL {scope}"), params,
     )).mappings().first()
     if not row:
         raise HTTPException(status_code=404, detail="Riesgo no encontrado")
-    return dict(row)
+    return _risk_detail(dict(row), user)
+
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -533,7 +520,7 @@ async def update_risk(risk_id: UUID, body: dict, user: CurrentUser, db=Depends(g
         text(f"SELECT {_DETAIL_COLS} {_DETAIL_FROM} WHERE r.id = :id"),
         {"id": str(risk_id)},
     )).mappings().first()
-    return dict(row)
+    return _risk_detail(dict(row), user)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

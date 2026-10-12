@@ -1,5 +1,4 @@
 import { AppShell } from "@/components/app-shell";
-import { BugReportFabLoader } from "@/components/bug-report-fab-loader";
 
 export default function AppLayout({
   children,
@@ -9,7 +8,6 @@ export default function AppLayout({
   return (
     <>
       <AppShell>{children}</AppShell>
-      <BugReportFabLoader />
     </>
   );
 }

@@ -1,73 +1,86 @@
 # Bandeja de trabajo GORE_OS
 
-El incremento vigente concentra la entrada del funcionario en los pendientes de
-su ámbito: qué debe atender, quién es el responsable registrado, en qué estado
-está y cuál es la siguiente acción disponible. Continúa el journey J1 y los
-principios P1/P2 de `GORE_OS_User_Journeys_v3.0.md`.
+La entrada del funcionario es `/dashboard`: pendientes de su ámbito, responsable,
+estado y siguiente acción disponible. Continúa J1 y los principios P1/P2 de
+[GORE_OS_User_Journeys_v3.0.md](GORE_OS_User_Journeys_v3.0.md). El producto concentra
+la bandeja transversal, sus detalles/acciones y la administración necesaria para
+identidades, permisos y categorías. Las historias y modelos conservan el dominio;
+los snapshots de superficies anteriores no definen el alcance activo.
 
-## Recorrido
+## Recorrido y autoridad
 
 1. Iniciar sesión con una cuenta activa y un rol registrado en PostgreSQL.
-2. Abrir `/dashboard`: la bandeja muestra pendientes priorizados, con búsqueda,
-   tipo y filtro de asignación personal. La navegación fija esta entrada para
-   las poblaciones operativa y DGI.
-3. Abrir un compromiso mediante `/compromisos?id=<uuid>`. La asignación del
-   compromiso gobierna este acceso personal, aunque la IPR tenga otro encargado.
-4. Ejecutar la acción que devuelve `allowed_actions`. Completar pasa a
-   `COMPLETADO`; deja la bandeja del ejecutor y aparece para la verificación del
-   supervisor habilitado. Devolver exige motivo y retorna a `EN_PROGRESO`.
-5. Volver a la bandeja o actualizarla para consultar el estado persistido.
+2. Consultar pendientes priorizados por temporalidad y gravedad; filtrar por tipo,
+   buscar texto o limitar la asignación a uno mismo.
+3. Abrir el enlace del objeto concreto y leer su contexto antes de actuar.
+4. Ejecutar sólo las acciones que la API devuelve para ese usuario y estado.
+5. Volver a la bandeja y comprobar el estado persistido.
 
-Un usuario de alcance personal no puede sustituir su responsable con un filtro,
-abrir o editar un compromiso ajeno. Un rol de solo lectura conserva la lectura
-permitida; la asignación por sí sola no le concede escritura. La API verifica
-la identidad y el rol desde la base, además de los controles de interfaz.
+La base es autoridad de las categorías, transiciones e historial. Se mantiene SQL
+parametrizado, sin ORM ni otra tabla de tareas. El ámbito de atención reutiliza las
+reglas de lectura de compromisos, alertas y riesgos; la atención no concede permisos
+adicionales de escritura. Los endpoints verifican la identidad actual desde la DB.
 
-## Autoridad y fuentes
+| Fuente de atención | Lector/acción conservada | Autoridad y límite |
+|---|---|---|
+| Compromiso | `/compromisos?id=<uuid>`; completar, devolver con motivo y verificar | `allowed_actions`, asignación personal y supervisor autorizado; triggers de transición/historial |
+| Alerta | `/alertas?id=<uuid>`; atender y consultar el sujeto | Identidad `core.alert.id`; mismo scope de listado y atención; atender registra fecha y no equivale a resolver |
+| Decisión AR | `/coordinacion?id=<uuid>`; responsable y estado | Roles DGI/ejecutivos leen; JEFE_DGI y ESP_CONTROL_GESTION editan; destinos de categoría DB |
+| Escalamiento | `/escalamiento/<uuid>`; contexto, gestión y resolución | Edición/destinos devueltos por API; FSM DB; roles lectores mantienen sólo consulta |
+| Solicitud SLA | `/servicios/solicitudes/<uuid>`; estado, asignación y feedback | DGI lee institucionalmente; los demás sólo solicitudes propias. Plazo canónico `dgi_service.sla_days`, sin plazo si NULL; comparación fraccional de días igual al lector |
+| Riesgo | `/riesgos/<uuid>`; mitigación y estado | DGI/admin editan; personas/jefaturas leen riesgos de sus IPR/división. Procesos relacionados tienen lector acotado, sin motor de mejora |
+| Firma | `/actos?id=<uuid>` o `/convenios?id=<uuid>`; transición autorizada | Categoría persistida; API comprueba umbral de monto y bloquea destinos imposibles; historial y contexto IPR preservados |
+| Rendición | `/rendiciones?id=<uuid>`; revisión SISREC | Destinos de categoría DB filtrados por roles existentes; captura, fases, observaciones e historial conservados |
+| IPR sin movimiento | `/ipr/<uuid>`; contexto y ciclo vigente | Asignación/división; se conserva el ciclo completo IPR/CORE/CDP mientras se decide si el alcance IPR será sólo consultivo |
 
-`core.operational_commitment` sigue siendo la autoridad del compromiso.
-`ref.category.valid_transitions`, `trg_commitment_state_transition` y
-`trg_commitment_history` validan y registran las transiciones. La API usa SQL
-parametrizado. `api/app/core/commitments.py` reúne las reglas existentes que
-resuelven las acciones del listado, detalle y bandeja; no crea otra tabla de
-tareas ni un motor de workflow.
+Los compromisos personales se consultan completos y paginados. Otras fuentes tienen
+cortes de atención de 5, 10 o 15 elementos; feed y UI declaran cuándo se alcanza el
+corte. Los lectores de cada fuente permiten continuar la consulta paginada. Cuando
+no hay responsable individual registrado, la UI lo declara. Los plazos actuales son
+criterios de atención del modelo, no obligaciones legales nuevas.
 
-El feed `/api/dashboard/action-items` consulta las nueve fuentes existentes:
-compromisos, alertas, decisiones AR, escalamientos, incumplimientos SLA, riesgos,
-firmas, rendiciones e IPR que requieren atención. Conserva las restricciones de
-lectura del dominio. Cuando el modelo no registra un responsable individual,
-la interfaz declara esa ausencia. El estado y su glosa proceden de la categoría
-persistida; “Sin resolver” deriva del filtro de alertas sin `resolved_at`.
+## Capturas y gates que permanecen
 
-La bandeja personal de compromisos cubre todos sus pendientes, paginados en la
-interfaz. Las demás fuentes conservan cortes de atención de 5, 10 o 15 elementos;
-el feed y la UI declaran cuando se alcanza ese corte. Los plazos de atención
-existentes no se convierten en nuevas obligaciones legales.
+La reducción de panoramas conserva el ciclo contextual IPR original hasta la decisión
+sobre consulta vs transición completa. No se ofrece una transición cuya captura haya
+sido retirada. Las reglas de régimen y gates permanecen en DB/API y su UI contextual.
 
-## Herramientas y recuperación
+| Gate/condición | Captura o acción conservada | Regresión pertinente |
+|---|---|---|
+| Admisibilidad y evidencias | Pestaña contextual de admisibilidad y documentos IPR | `test_admissibility`, `test_ipr_readiness` |
+| Resultado de evaluación según régimen | Asignaciones/resultados en evaluaciones IPR | `test_polyswitch`, `test_track_enforcement`, `test_ipr_bifurcation` |
+| Financiamiento/CDP y aprobación CORE | Presupuesto, CDP y sesiones/acuerdos CORE originales | `test_presupuesto`, `test_core_sessions`, `test_ciclo24` |
+| Formalización/ejecución y cambios | Contrato contextual, avances, modificaciones e ITO | `test_ipr_children`, `test_modifications`, `test_lifecycle_slas` |
+| Cierre técnico/financiero | Captura y aprobación de cierre IPR | `test_closure`, `test_ipr_lifecycle` |
+| Verificación de compromiso | Completar → supervisor devolver con motivo/verificar | `test_work_inbox`; recorrido con usuario responsable, supervisor y lector |
+| Firma según monto y estado | Detalle de acto/convenio con acciones y bloqueo explicado | `test_thresholds`, `test_convenios`, `test_actos`, `test_inbox_journeys` |
+| Revisión de rendición | Captura contextual, observación y transición autorizada | `test_rendiciones`, `test_sisrec`, `test_sisrec_8phase`, `test_dgi_data` |
 
-Los panoramas, cockpits DGI, indicadores, formulación, equipo y revisión jurídica
-se mantienen en `/panorama`. IPR, procesos, presupuesto, convenios, actos,
-servicios y las demás herramientas siguen sus rutas y permisos existentes.
-Los procesos de mejora no se convierten en tareas personales sin un contrato de
-asignación y acción aplicable.
+## Capacidades archivadas y recuperación
 
-`/mis-compromisos` redirige a `/compromisos?mine=true`; `/mi-division` redirige
-a `/panorama`. Se retiraron `AttentionStrip`, `ModuleMyWork`, el dashboard
-operativo legacy, su desglose ejecutivo y `ModuleDgiTeam`, que carecía de
-consumidor. La función de atención tiene una sola representación en la bandeja.
-Las versiones anteriores son recuperables desde el historial Git anterior a
-este incremento, con base `b8540f67`, y el checkpoint de saneamiento del operador.
+Se retiraron páginas, APIs exclusivas, componentes, DTO y dependencias sin consumidores
+de panoramas/cockpits, tablero de iniciativas/DMAIC, cuellos de botella, informes,
+comité TD, reuniones/calendario, exploradores generales de datos, vistas autónomas de
+cartera/formulación, equipo y captura de bugs. La bandeja tiene una representación
+activa. Las entidades, tablas, categorías y datos de dominio se conservan; el retiro de
+una interfaz no elimina un expediente ni una fuente histórica.
+
+`/mis-compromisos` redirige a `/compromisos?mine=true`; `/mi-division` a la bandeja.
+`/datos?dominio=rendiciones` conserva el enlace de rendición y los filtros al redirigir;
+los demás exploradores anteriores llevan a la bandeja. Los enlaces antiguos de un
+servicio redirigen a sus solicitudes. El código retirado se recupera desde Git en
+`6c387ed0aad8721f2b22202beb08f228e2235fe6`, además del checkpoint privado verificado
+del operador. El [índice de archivo](archive/README.md) describe la función histórica.
 
 ## Verificación y consumo
 
-La regresión está en `api/tests/test_work_inbox.py` y utiliza el circuito existente
-de integración contra PostgreSQL real. Debe comprobarse el recorrido observable
-con identidades y datos ficticios, además de las suites de compromisos, permisos
-y dashboard, lint y build del frontend.
+`test_inbox_journeys` comprueba con PostgreSQL real identidad independiente de alertas
+con texto igual, scope dueño/ajeno, plazos SLA antes/en/después del límite y con contratos
+de productos distintos, firma canónica y lectura acotada de procesos. Las suites
+conservadas cubren los gates y permisos del ciclo IPR. El recorrido observable usa
+identidades y expedientes ficticios en una base aislada; no usa cuentas o datos reales.
 
-Un despliegue consume una release identificada por SHA, con código e interfaz
-construidos desde ese mismo candidato. La API se ejecuta sin `--reload` y la web
-desde su build; ninguno depende del checkout de desarrollo. Se conserva la base
-vigente y la configuración privada externa. La evidencia técnica de este
-incremento no acredita adopción institucional ni disponibilidad de un runtime.
+Una entrega identifica un SHA y construye API/web desde ese mismo candidato. La
+configuración privada y base vigente permanecen fuera de la fuente pública. Las pruebas
+no acreditan adopción o ratificación institucional. El despliegue y recuperación del
+runtime se comprueban por separado siguiendo [la receta](GORE_OS_Despliegue.md).

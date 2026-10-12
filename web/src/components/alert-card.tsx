@@ -47,7 +47,7 @@ export function AlertCard({ alert, onAttend, onViewSubject }: AlertCardProps) {
             )}
             {(onAttend || onViewSubject) && (
               <div className="flex gap-2 mt-3">
-                {onAttend && !alert.attended_at && (
+                {onAttend && alert.can_attend && !alert.attended_at && (
                   <Button
                     size="sm"
                     variant="outline"

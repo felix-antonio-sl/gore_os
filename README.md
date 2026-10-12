@@ -4,9 +4,11 @@ Bandeja de trabajo para funcionarios del Gobierno Regional de Ñuble: muestra
 pendientes, responsable, estado y siguiente acción según la asignación y el rol.
 El desarrollo sigue Story-First sobre FastAPI, Next.js y PostgreSQL.
 
-Tras iniciar sesión, `/dashboard` abre la bandeja. Los panoramas por rol y sus
-herramientas se conservan en `/panorama`; los compromisos abren por su propio
-identificador, con las transiciones autorizadas por la API y la base de datos.
+Tras iniciar sesión, `/dashboard` abre la bandeja. Los detalles y acciones se abren
+desde cada pendiente: compromisos, alertas, decisiones,
+escalamientos, solicitudes de servicios, riesgos, firmas, rendiciones e IPR.
+Las acciones disponibles proceden de la API y las categorías de la base de datos.
+Los módulos autónomos anteriores se conservan en Git como historia recuperable.
 Este propósito de producto no acredita adopción ni ratificación institucional.
 
 ## Ejecutar

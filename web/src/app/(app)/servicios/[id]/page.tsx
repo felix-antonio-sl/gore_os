@@ -1,12 +1,6 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-
-export default function ServiceDetailRedirect() {
-  const router = useRouter();
-  useEffect(() => {
-    router.replace("/servicios");
-  }, [router]);
-  return null;
+export default async function ServicePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  redirect(`/servicios?service_id=${encodeURIComponent(id)}`);
 }

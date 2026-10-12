@@ -6,7 +6,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Button } from "@/components/ui/button";
-import { IprCompromisoDrawer } from "@/components/ipr-compromiso-drawer";
+import { CompromisoCreateDrawer } from "@/components/compromiso-create-drawer";
 import { Plus } from "lucide-react";
 import type { PaginatedResponse, CompromisoListItem } from "@/types";
 
@@ -76,7 +76,7 @@ export function TabCompromisos({ iprId, canCreate }: TabCompromisosProps) {
         emptyTitle="Aún no hay compromisos"
         emptyDescription="Crea el primer compromiso de esta IPR."
       />
-      <IprCompromisoDrawer
+      <CompromisoCreateDrawer
         iprId={iprId}
         open={showCompromisoDrawer}
         onClose={() => setShowCompromisoDrawer(false)}

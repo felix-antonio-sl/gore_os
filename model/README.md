@@ -2,6 +2,11 @@
 
 > Para el contrato de arquitectura y cambios: ver [../AGENTS.md](../AGENTS.md).
 
+Las historias, entidades y procesos conservan la trazabilidad sustantiva del
+dominio. El subconjunto realizado por el producto actual se define en la
+[bandeja de trabajo](../docs/GORE_OS_Bandeja_Trabajo.md); conservar una historia
+o una tabla no implica exponer un módulo autónomo en el runtime.
+
 ## Estructura
 
 ```text

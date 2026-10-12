@@ -161,6 +161,7 @@ export interface AlertaListItem {
   acknowledged_at: string | null;
   attended_at: string | null;
   resolved_at: string | null;
+  can_attend?: boolean;
 }
 
 export interface KPICardData {
@@ -1067,6 +1068,8 @@ export interface Escalation {
   alert_id: string | null;
   created_at: string;
   created_by_name: string | null;
+  allowed_statuses: string[];
+  can_edit: boolean;
 }
 
 export interface EscalationStats {
@@ -1232,6 +1235,8 @@ export interface RiskDetail extends RiskListItem {
   metadata: Record<string, unknown> | null;
   created_by_name: string | null;
   updated_at: string;
+  allowed_statuses: string[];
+  can_edit: boolean;
 }
 
 export interface RiskSummary {

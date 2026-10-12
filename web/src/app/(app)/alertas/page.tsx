@@ -12,7 +12,7 @@ import { AlertTriangle, Download, RotateCw } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
-import type { PaginatedResponse, AlertaListItem } from "@/types";
+import type { PaginatedResponse, AlertaListItem, CategoryRef } from "@/types";
 
 const CSV_COLUMNS = [
   { key: "severity", label: "Severidad" },
@@ -28,13 +28,7 @@ const NIVEL_OPTIONS = [
   { value: "INFO", label: "Info" },
 ];
 
-const TIPO_OPTIONS = [
-  { value: "COMPROMISO_VENCIDO", label: "Compromiso Vencido" },
-  { value: "COMPROMISO_PROXIMO", label: "Compromiso Próximo" },
-  { value: "PROBLEMA_CRITICO", label: "Problema Crítico" },
-  { value: "IPR_SIN_ACTIVIDAD", label: "IPR Sin Actividad" },
-  { value: "PRESUPUESTO", label: "Presupuesto" },
-];
+
 
 export default function AlertasPage() {
   const router = useRouter();
@@ -45,7 +39,11 @@ export default function AlertasPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [types, setTypes] = useState<CategoryRef[]>([]);
+  useEffect(() => { api.get<CategoryRef[]>("/api/catalogs/categories/alert_type").then(setTypes).catch(() => {}); }, []);
 
+  const selectedId = searchParams.get("id");
+  const page = Math.max(1, Number(searchParams.get("page") ?? 1));
   const nivel = searchParams.get("nivel") ?? "";
   const tipo = searchParams.get("tipo") ?? "";
   const soloActivas = searchParams.get("activas") !== "0";
@@ -73,7 +71,7 @@ export default function AlertasPage() {
   );
 
   const handleFilterChange = (key: string, value: string) => {
-    router.push(buildUrl({ [key]: value }));
+    router.push(buildUrl({ [key]: value, page: 1 }));
   };
 
   const handleClear = () => {
@@ -83,7 +81,9 @@ export default function AlertasPage() {
   useEffect(() => {
     let active = true;
     const params = new URLSearchParams();
-    params.set("page_size", "50");
+    params.set("page_size", "20");
+    params.set("page", String(page));
+    if (selectedId) { params.set("alerta_id", selectedId); params.set("active_only", "false"); }
     if (nivel) params.set("severity", nivel);
     if (tipo) params.set("alert_type", tipo);
     if (!soloActivas) params.set("active_only", "false");
@@ -112,7 +112,7 @@ export default function AlertasPage() {
     return () => {
       active = false;
     };
-  }, [nivel, tipo, soloActivas, dateFrom, dateTo, refreshKey]);
+  }, [nivel, tipo, soloActivas, dateFrom, dateTo, refreshKey, page, selectedId]);
 
   const handleAttend = async (id: string) => {
     try {
@@ -139,11 +139,11 @@ export default function AlertasPage() {
     } else if (type === "core.risk") {
       router.push(`/riesgos/${subjectId}`);
     } else if (type === "core.operational_commitment") {
-      router.push(`/compromisos`);
+      router.push(`/compromisos?id=${subjectId}`);
     } else if (type === "core.agreement") {
-      router.push(`/convenios`);
+      router.push(`/convenios?id=${subjectId}`);
     } else if (type === "core.ipr_problem") {
-      router.push(`/problemas`);
+      router.push(`/problemas?id=${subjectId}`);
     }
   };
 
@@ -163,7 +163,7 @@ export default function AlertasPage() {
       <FilterBar
         filters={[
           { key: "nivel", label: "Nivel", options: NIVEL_OPTIONS },
-          { key: "tipo", label: "Tipo", options: TIPO_OPTIONS },
+          { key: "tipo", label: "Tipo", options: types.map((type) => ({ value: type.code, label: type.label })) },
         ]}
         values={filterValues}
         onChange={handleFilterChange}
@@ -212,8 +212,12 @@ export default function AlertasPage() {
             />
           ))}
           <p className="text-xs text-muted-foreground text-right">
-            {data.total} alerta{data.total !== 1 ? "s" : ""} en total
+            Página {page} de {Math.max(1, data.total_pages)} · {data.total} alerta{data.total !== 1 ? "s" : ""} en total
           </p>
+          {data.total_pages > 1 ? <div className="flex gap-2 justify-end">
+            <Button variant="outline" disabled={page === 1} onClick={() => router.push(buildUrl({ page: page - 1 }))}>Anterior</Button>
+            <Button variant="outline" disabled={page >= data.total_pages} onClick={() => router.push(buildUrl({ page: page + 1 }))}>Siguiente</Button>
+          </div> : null}
         </div>
       )}
     </div>

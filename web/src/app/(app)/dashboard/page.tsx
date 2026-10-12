@@ -89,9 +89,6 @@ export default function WorkInboxPage() {
           <div className="flex flex-wrap items-center gap-3" aria-live="polite">
             <Badge variant="secondary">{data.scope_label}</Badge>
             <span className="text-sm">{data.summary}</span>
-            <Button asChild variant="link" size="sm" className="sm:ml-auto">
-              <Link href="/panorama">Ver panorama y herramientas</Link>
-            </Button>
           </div>
           <div className="flex flex-wrap gap-3">
             <Input aria-label="Buscar pendientes" placeholder="Buscar pendiente o responsable…" value={query}
