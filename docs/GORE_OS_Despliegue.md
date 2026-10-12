@@ -48,7 +48,9 @@ build resultante y el recorrido con una base aislada antes de consumirlo.
 ## Configuración y arranque
 
 Mantén fuera del repositorio un directorio privado con `api.env` y
-`production.env` (directorio 700, archivos 600). `api.env` conserva la conexión
+`production.env` (directorio 700, archivos 600). La API no monta código ni
+estado de desarrollo; la carpeta externa histórica de captura de bugs permanece
+conservada por el operador. `api.env` conserva la conexión
 PostgreSQL, JWT, CORS y el modo de API existentes; no cambia la autenticación al
 pasar a imágenes preparadas. `production.env` fija estos valores:
 
@@ -57,7 +59,6 @@ pasar a imágenes preparadas. `production.env` fija estos valores:
 | `GORE_REVISION` | SHA completo de la entrega y de ambas imágenes |
 | `GORE_API_IMAGE`, `GORE_WEB_IMAGE` | IDs inmutables locales o digests de las imágenes verificadas |
 | `GORE_CONFIG_DIR` | Directorio privado que contiene `api.env` |
-| `GORE_STATE_DIR` | Directorio privado para `dev-data`, si el modo existente lo utiliza |
 | `GORE_DOMAIN` | Host del proxy existente |
 | `GOREOS_BASICAUTH` | Valor BasicAuth existente; entre comillas simples en el archivo dotenv |
 
@@ -71,8 +72,8 @@ docker compose -p gore-os-production \
 ```
 
 La API ejecuta Uvicorn sin `--reload`; la web ejecuta `node server.js`. Sus
-imágenes incluyen el código. El único montaje de la API es el estado mutable de
-la herramienta de desarrollo; la web no monta código, dependencias ni builds.
+imágenes incluyen el código. La API no tiene montajes de código ni estado mutable
+de desarrollo; la web no monta código, dependencias ni builds.
 Los puertos siguen en loopback y ambas redes externas, las rutas TLS y el
 middleware BasicAuth del frontend se conservan. La API conserva su control JWT.
 

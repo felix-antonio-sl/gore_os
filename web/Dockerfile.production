@@ -6,6 +6,7 @@ ARG GORE_REVISION
 LABEL org.opencontainers.image.revision=${GORE_REVISION}
 
 ENV NODE_ENV=production HOSTNAME=0.0.0.0 PORT=3000
+USER root
 WORKDIR /app
 RUN find /app -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 COPY --chown=node:node .next/standalone ./
