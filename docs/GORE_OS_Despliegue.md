@@ -80,6 +80,36 @@ middleware BasicAuth del frontend se conservan. La API conserva su control JWT.
 una base con el esquema y las identidades autorizadas. Una base vacía no se
 aprovisiona por el mero hecho de desplegar una revisión de código.
 
+## Inicializar una base vacía autorizada
+
+La inicialización requiere una decisión expresa sobre esa base y un respaldo
+restaurado en laboratorio. Desde la entrega fija, la receta
+`scripts/bootstrap_empty_db.py` aplica el DDL y los catálogos de referencia
+canónicos, además de los 25 territorios (código, nombre, tipo y jerarquía).
+Excluye estadísticas, indicadores y organizaciones del seed territorial,
+usuarios nominales, miembros CORE, expedientes, demos, ETL y registros que
+simulen migraciones realizadas. No atribuye cargos ni ratificación institucional.
+
+```bash
+python3 "$release_dir/scripts/bootstrap_empty_db.py" \
+  --container goreos_db --database goreos_model --user goreos --prepare-only
+python3 "$release_dir/scripts/bootstrap_empty_db.py" \
+  --container goreos_db --database goreos_model --user goreos
+```
+
+El guard dentro de la transacción rechaza cualquier base con tablas o schemas
+de aplicación existentes. El DDL y los catálogos se aplican como una sola
+transacción; la receta no crea, elimina ni sustituye bases o volúmenes. Emite
+sólo los hashes de fuente, el hash del SQL preparado y las exclusiones.
+
+La cuenta inicial se prepara por separado, sólo cuando está autorizada. Utiliza
+una identidad técnica explícita y el rol de administración del sistema, con
+RUT, cargo, estamento, organización y división vacíos. La contraseña se genera
+privadamente y se conserva fuera del repositorio con permisos 600; la base
+recibe su hash con el mecanismo de autenticación existente. Esa cuenta habilita
+el acceso técnico y no representa a un funcionario. Verifica login, bandeja
+vacía y rechazos de acceso, y respalda y restaura después el nuevo estado.
+
 ## Recuperación
 
 Antes de sustituir contenedores, conserva los IDs de imágenes, configuración y
