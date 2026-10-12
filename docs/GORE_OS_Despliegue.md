@@ -122,6 +122,22 @@ ni puertos, restaurando sobre bases vacías creadas con `template0`. Excluye del
 volcado global sólo los `CREATE ROLE` que ya existen en ese clon. Compara
 recuentos y huellas sin emitir filas. No ejecutes trabajos cron en la copia.
 
+Para una copia custom de la base GORE inicializada, prepara los roles y el
+target vacío antes de ejecutar la receta versionada:
+
+```bash
+python3 "$release_dir/scripts/restore_empty_db.py" \
+  --container "$isolated_pg" --database goreos_model --user goreos \
+  --archive "$private_backup/goreos_model.dump"
+```
+
+Los CHECK de `core` consultan `ref.category`. La receta adelanta los TABLE DATA
+de `ref` y mantiene todas las entradas del dump, funciones, CHECK y triggers.
+Usa un archivo custom seekable dentro del contenedor privado y una sola
+transacción; no desactiva controles ni elimina objetos. Rechaza un target con
+tablas o schemas de aplicación. Verifica después sus recuentos y huellas contra
+la copia; cada nuevo estado de datos exige comprobar su recuperación.
+
 Prueba la receta de rollback en puertos de laboratorio y documenta qué recupera.
 Si sólo cambia el código, el rollback conserva la base original. Restaurar datos
 o reconectar un volumen anterior exige conocer su procedencia, compatibilidad y
