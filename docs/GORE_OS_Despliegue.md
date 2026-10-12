@@ -41,7 +41,10 @@ El servidor `standalone` de Next.js incluye las dependencias trazadas y
 `server.js`; la imagen añade `public` y `.next/static`, como exige la
 [documentación de Next.js](https://nextjs.org/docs/app/api-reference/config/next-config-js/output).
 Al reutilizar imágenes y dependencias ya verificadas, los argumentos
-`NODE_IMAGE` y `PYTHON_IMAGE` permiten fijar sus IDs locales o digests. Elimina
+`NODE_IMAGE` y `PYTHON_IMAGE` aceptan tags locales o referencias de repositorio
+con digest. Para reutilizar un ID local, asígnale un tag con
+`docker tag <ID> <tag-local>`, comprueba que `docker image inspect <tag-local>`
+devuelve el mismo ID y pasa ese tag al argumento de compilación. Elimina
 del contexto de compilación cualquier salida anterior. Verifica siempre el
 build resultante y el recorrido con una base aislada antes de consumirlo.
 
