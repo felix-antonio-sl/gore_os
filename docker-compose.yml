@@ -16,7 +16,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-CHANGE_THIS}
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=es_CL.UTF-8"
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./model/model_goreos/sql/goreos_ddl.sql:/docker-entrypoint-initdb.d/10-schema.sql:ro
@@ -48,7 +48,7 @@ services:
       ENV: ${ENV:-development}
       CORS_ORIGINS: '["http://localhost:3000","https://goreos.sanixai.com"]'
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     volumes:
       - ./api:/app
     healthcheck:
@@ -80,7 +80,7 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: https://goreos.sanixai.com
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - ./web:/app
       - /app/node_modules
@@ -116,7 +116,7 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
     ports:
-      - "5050:80"
+      - "127.0.0.1:5050:80"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     networks:

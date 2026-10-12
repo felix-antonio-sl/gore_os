@@ -1,0 +1,59 @@
+# Production consumes prepared images. PostgreSQL remains an external service.
+services:
+  api:
+    image: ${GORE_API_IMAGE:?Set the prepared API image ID or digest}
+    container_name: goreos_api
+    restart: unless-stopped
+    env_file:
+      - ${GORE_CONFIG_DIR:?Set the private configuration directory}/api.env
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ${GORE_STATE_DIR:?Set the private state directory}/dev-data:/app/dev-data
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - visor_model_default
+      - web
+    labels:
+      - "org.opencontainers.image.revision=${GORE_REVISION:?Set the fixed source revision}"
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.goreos-api.rule=Host(`${GORE_DOMAIN:-goreos.sanixai.com}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.goreos-api.entrypoints=websecure"
+      - "traefik.http.routers.goreos-api.priority=100"
+      - "traefik.http.routers.goreos-api.tls.certresolver=myresolver"
+      - "traefik.http.services.goreos-api.loadbalancer.server.port=8000"
+  web:
+    image: ${GORE_WEB_IMAGE:?Set the prepared web image ID or digest}
+    container_name: goreos_web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - visor_model_default
+      - web
+    labels:
+      - "org.opencontainers.image.revision=${GORE_REVISION:?Set the fixed source revision}"
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.goreos-web.rule=Host(`${GORE_DOMAIN:-goreos.sanixai.com}`)"
+      - "traefik.http.routers.goreos-web.entrypoints=websecure"
+      - "traefik.http.routers.goreos-web.tls.certresolver=myresolver"
+      - "traefik.http.routers.goreos-web.middlewares=goreos-auth@docker"
+      - "traefik.http.services.goreos-web.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.goreos-auth.basicauth.users=${GOREOS_BASICAUTH:?Preserve the existing private BasicAuth value}"
+
+networks:
+  visor_model_default:
+    external: true
+    name: visor_model_default
+  web:
+    external: true
+    name: web

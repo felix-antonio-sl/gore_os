@@ -1,0 +1,9 @@
+**
+!Dockerfile.production
+!.next/
+!.next/standalone/
+!.next/standalone/**
+!.next/static/
+!.next/static/**
+!public/
+!public/**

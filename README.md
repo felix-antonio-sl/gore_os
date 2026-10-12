@@ -11,6 +11,10 @@ Este propósito de producto no acredita adopción ni ratificación institucional
 
 ## Ejecutar
 
+Para instalar una revisión fija de API y web, usa la
+[receta de producción](docs/GORE_OS_Despliegue.md). Los comandos siguientes son
+para desarrollo local.
+
 Con `goreos_db` disponible en la red Docker `visor_model_default` y la red
 externa `web` configurada:
 
@@ -41,5 +45,7 @@ El baseline puede verificarse sin tocar `goreos_db` ni sus volúmenes:
 - [AGENTS.md](AGENTS.md) — contrato para cambiar y verificar el sistema.
 - [Bandeja de trabajo](docs/GORE_OS_Bandeja_Trabajo.md) — recorrido, fuentes,
   autoridad y límites del incremento vigente.
+- [Despliegue](docs/GORE_OS_Despliegue.md) — imágenes de la misma revisión,
+  configuración privada y recuperación.
 - [docs/README.md](docs/README.md) — catálogo de documentación vigente e histórica.
 - [model/README.md](model/README.md) — modelo semántico y fuentes de datos.

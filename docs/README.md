@@ -12,6 +12,7 @@
 | [README.md](../README.md) | Operador | Arranque y accesos locales |
 | [AGENTS.md](../AGENTS.md) | Devs, agentes | Arquitectura, reglas y verificaciones para cambios |
 | [GORE_OS_Bandeja_Trabajo.md](GORE_OS_Bandeja_Trabajo.md) | Producto y desarrollo | Entrada vigente: pendientes, responsable, estado y siguiente acción |
+| [GORE_OS_Despliegue.md](GORE_OS_Despliegue.md) | Operación | Entrega fija de API y web, configuración privada y recuperación |
 | [MANIFESTO.md](../MANIFESTO.md) | Contexto | Filosofía Story-First y visión amplia previa; el alcance de entrega actual lo fija la bandeja |
 
 ## Dominio y requisitos (vigente)
