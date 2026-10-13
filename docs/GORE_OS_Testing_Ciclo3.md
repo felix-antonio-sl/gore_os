@@ -1332,7 +1332,7 @@ Los siguientes tests pueden fallar debido a contaminacion de datos entre ejecuci
 
 **Nota**: Los tests no aislan completamente sus datos insertados. Si multiples tests fallan, resetear la DB de test:
 ```bash
-./scripts/setup_test_db.sh
+./scripts/setup_test_db.sh goreos_db goreos_test goreos  # solo si esta base es exclusiva del encargo
 ```
 
 ---

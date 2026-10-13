@@ -21,16 +21,26 @@ Desarrollar GORE_OS como sistema Story-First sobre FastAPI, Next.js y PostgreSQL
 
 ## Verificación
 
-Prepara la base de pruebas con el circuito existente y ejecuta primero la prueba focal:
+Ejecuta primero la prueba focal sobre la base ya preparada; añade controles por
+la superficie afectada. Preparar una base no es un paso rutinario de toda revisión.
 
 ```bash
-./scripts/setup_test_db.sh
 docker compose exec api pytest <ruta-o-k>
-npm --prefix web run lint
-npm --prefix web run build
 ```
 
-Amplía según el riesgo. Para cambios de journey, verifica el flujo observable además de la suite.
+Si el cambio requiere recrear el esquema, identifica una base de prueba exclusiva
+del encargo y su propietario. No recrees `goreos_test` compartida por conveniencia.
+La preparación exige contenedor y nombre explícitos y rechaza el borrado con
+conexiones abiertas; nunca usa `FORCE` ni termina sesiones ajenas:
+
+```bash
+./scripts/setup_test_db.sh <contenedor> <base_exclusiva_test> [usuario]
+docker compose exec -e TEST_DB_NAME=<base_exclusiva_test> api pytest <ruta-o-k>
+```
+
+Para frontend añade lint/build cuando corresponda. Para cambios de journey,
+verifica el flujo observable además de la suite. Conserva datos y trabajo
+concurrente; un recurso ocupado requiere otra base o esperar a su propietario.
 
 ## Seguridad y entrega
 

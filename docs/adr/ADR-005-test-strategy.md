@@ -26,5 +26,5 @@ All integration tests run against a real PostgreSQL instance (`goreos_test` DB),
 ## Trade-offs
 
 - **Slower than unit tests**: Each test hits a real DB. Full suite runs in ~30–60s inside the container.
-- **Requires goreos_test DB**: Must run `setup_test_db.sh` before first run or after schema changes.
+- **Requires goreos_test DB**: Prepare an invocation-owned test database before its first run or when schema changes require rebuilding it. Call `scripts/setup_test_db.sh <container> <owned_name_test> [db_user]` explicitly and set `TEST_DB_NAME` for that test run. Reuse a prepared database otherwise; do not reset the shared default or force existing connections closed.
 - **Known issue**: `test_initiatives::test_move_to_en_curso` may fail if the test DB accumulates 5+ EN_CURSO initiatives from prior runs. Clean with `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL` on `goreos_test`.

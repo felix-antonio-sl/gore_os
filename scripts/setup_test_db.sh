@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
-# Usage: ./scripts/setup_test_db.sh [container_name] [test_db_name] [db_user]
-# Defaults: goreos_db goreos_test goreos
+# Usage: ./scripts/setup_test_db.sh container_name test_db_name [db_user]
+# La base de prueba es explícita y exclusiva del encargo; nunca se fuerzan conexiones.
+# Default db_user: goreos
 set -euo pipefail
 
+if [[ "$#" -lt 2 || "$#" -gt 3 ]]; then
+    echo "uso: $0 <contenedor> <base_exclusiva_test> [usuario]" >&2
+    echo "La preparación recrea esa base; identifica su propietario antes de invocarla." >&2
+    exit 2
+fi
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-container="${1:-goreos_db}"
-test_db="${2:-goreos_test}"
+container="$1"
+test_db="$2"
 db_user="${3:-goreos}"
 sql_dir="$repo_root/model/model_goreos/sql"
 
@@ -67,7 +73,7 @@ done
 
 echo "Preparando $test_db desde fuentes versionadas..."
 docker exec "$container" psql -X -v ON_ERROR_STOP=1 -U "$db_user" -d postgres \
-    -c "DROP DATABASE IF EXISTS \"$test_db\" WITH (FORCE);"
+    -c "DROP DATABASE IF EXISTS \"$test_db\";"
 docker exec "$container" psql -X -v ON_ERROR_STOP=1 -U "$db_user" -d postgres \
     -c "CREATE DATABASE \"$test_db\" OWNER \"$db_user\";"
 
